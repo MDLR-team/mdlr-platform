@@ -29,32 +29,37 @@ const CommentsBlock: React.FC = () => {
   }, []);
 
   return (
-    <Box
-      sx={{
-        width: 300,
-        height: "100vh",
-        overflow: "auto",
-        borderRight: 1,
-        borderColor: "divider",
-        display: "flex",
-      }}
-    >
-      <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
-        <Typography variant="h6" component="div" sx={{ p: 2 }}>
-          Comments
-        </Typography>
+    <Wrapper>
+      <Box
+        sx={{
+          width: "auto",
+          position: "relative",
+          overflow: "auto",
+          borderRight: 1,
+          borderColor: "divider",
+          display: "flex",
+          backgroundColor: "white",
+        }}
+      >
+        <div
+          style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
+          <Typography variant="h6" component="div" sx={{ p: 2 }}>
+            Comments
+          </Typography>
 
-        <CommentList>
-          <List style={{ minHeight: "max-content" }}>
-            {comments.map((comment) => (
-              <MessageItem {...comment} key={comment.id} />
-            ))}
-          </List>
-        </CommentList>
+          <CommentList>
+            <List style={{ minHeight: "max-content" }}>
+              {comments.map((comment) => (
+                <MessageItem {...comment} key={comment.id} />
+              ))}
+            </List>
+          </CommentList>
 
-        <CommentMessage />
-      </div>
-    </Box>
+          <CommentMessage />
+        </div>
+      </Box>
+    </Wrapper>
   );
 };
 
@@ -70,6 +75,27 @@ const MessageItem: React.FC<Comment> = ({ content, created_at, id }) => {
     </MessageWrapper>
   );
 };
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  min-width: 300px;
+
+  position: fixed;
+  z-index: 100;
+
+  padding: 10px;
+  height: 100vh;
+
+  && > div {
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
+    border-radius: 0px;
+
+    border: 1px solid #e0e0e0;
+  }
+`;
 
 const MessageWrapper = styled.div`
   && {
