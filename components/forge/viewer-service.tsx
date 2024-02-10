@@ -52,8 +52,6 @@ class ViewerService {
       };
 
       Autodesk.Viewing.Initializer(options, () => {
-        console.log("aaa");
-
         resolve(null);
       });
     });
@@ -62,22 +60,11 @@ class ViewerService {
   public async loadDocument(urn: string) {
     const Autodesk = (window as any).Autodesk;
 
-    console.log("accdfff");
-
-    console.log("urn", urn);
-
     return new Promise((resolve, reject) => {
-      console.log("Autodesk", Autodesk);
-      console.log("urn", urn);
-
       Autodesk.Viewing.Document.load(`urn:${urn}`, (doc: any) => {
         const viewables = doc.getRoot().getDefaultGeometry();
 
-        console.log("aaaa", doc);
-
         this._viewer.loadDocumentNode(doc, viewables).then((model: any) => {
-          console.log("model", model);
-
           resolve(model);
         });
       });

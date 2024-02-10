@@ -4,8 +4,6 @@ import { supabase } from "./supabase-client";
 export async function getStaticProps() {
   const { data: projects, error } = await supabase.from("projects").select("*");
 
-  console.log("dsdds");
-
   if (error) {
     console.error(error);
     return {
@@ -19,8 +17,6 @@ export async function getStaticProps() {
 }
 
 export default function Projects({ projects }: any) {
-  console.log("projects", projects);
-
   return (
     <div>
       <h1>Projects</h1>

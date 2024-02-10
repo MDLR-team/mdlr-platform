@@ -11,22 +11,14 @@ import CommentService, { Comment } from "../comment-service/comment-service";
 import styled from "styled-components";
 
 import moment from "moment";
+import { useComment } from "../comment-provider/comment-provider";
+import { Icon, IconButton } from "@mui/material";
+import { AddOutlined, PlusOneOutlined } from "@mui/icons-material";
+import { useMarkup } from "../markup-provider/markup-provider";
 
 const CommentsBlock: React.FC = () => {
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [commentService] = useState(() => new CommentService(supabase));
-
-  useEffect(() => {
-    commentService.provideStates({
-      setComments,
-    });
-
-    commentService.init();
-
-    return () => {
-      commentService.dispose();
-    };
-  }, []);
+  const { comments, commentService } = useComment();
+  const { markupsExtension } = useMarkup();
 
   return (
     <Wrapper>
@@ -44,9 +36,21 @@ const CommentsBlock: React.FC = () => {
         <div
           style={{ display: "flex", flexDirection: "column", width: "100%" }}
         >
-          <Typography variant="h6" component="div" sx={{ p: 2 }}>
-            Comments
-          </Typography>
+          <div>
+            <Typography variant="h6" component="div" sx={{ p: 2 }}>
+              Comments
+            </Typography>
+
+            {/* MuiIcon button */}
+            <IconButton
+              style={{ position: "absolute", right: "10px", top: "10px" }}
+              onClick={() => markupsExtension?.enable(true)}
+            >
+              <AddOutlined />
+            </IconButton>
+          </div>
+
+          <CommentMessage />
 
           <CommentList>
             <List style={{ minHeight: "max-content" }}>
@@ -55,8 +59,6 @@ const CommentsBlock: React.FC = () => {
               ))}
             </List>
           </CommentList>
-
-          <CommentMessage />
         </div>
       </Box>
     </Wrapper>

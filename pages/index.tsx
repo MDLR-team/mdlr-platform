@@ -9,8 +9,6 @@ import Projects from "@/components/projects";
 export default function Home() {
   const [notes, setNotes] = useState<any[] | null>(null);
 
-  console.log("notes", notes);
-
   return (
     <>
       <Head>

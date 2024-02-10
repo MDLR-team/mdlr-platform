@@ -10,8 +10,6 @@ interface Comment {
 const Comments: React.FC = () => {
   const [comments, setComments] = useState<Comment[]>([]);
 
-  console.log('sdfs')
-
   useEffect(() => {
     const changes = supabase
       .channel("table-db-changes")

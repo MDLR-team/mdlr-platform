@@ -2,9 +2,11 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { use, useEffect, useRef, useState } from "react";
 import MarkupExtension from "./markup-extension";
+import { useViewer } from "./viewer-provider";
 
 const ViewerW = () => {
-  const [viewer, setViewer] = useState<any>();
+  const { viewer, setViewer } = useViewer();
+  const { isModelLoaded, setIsModelLoaded } = useViewer();
 
   const router = useRouter();
 
@@ -12,7 +14,6 @@ const ViewerW = () => {
   const viewerInit = useRef<any>();
 
   const [initialized, setInitialized] = useState(false);
-  const [isModelLoaded, setIsModelLoaded] = useState(false);
 
   useEffect(() => {
     if (!router.isReady || initialized) return;
@@ -52,32 +53,6 @@ const ViewerW = () => {
       },
     };
 
-    class MarkupsExtension extends Autodesk.Viewing.Extension {
-      constructor(viewer: any, options: any) {
-        super(viewer, options);
-
-        this.markupsExtension = null;
-      }
-
-      load() {
-        console.log("MarkupsExtension loaded");
-        this.markupsExtension = new MarkupExtension(this.viewer);
-        this.markupsExtension.enable(true);
-
-        return true;
-      }
-
-      unload() {
-        if (this.markupsExtension) {
-          this.markupsExtension.enable(false);
-          this.markupsExtension.dispose();
-          this.markupsExtension = null;
-        }
-
-        return true;
-      }
-    }
-
     Autodesk.Viewing.Initializer(options, () => {
       const config3d = {
         extensions: ["Autodesk.Viewing.MarkupsCore"],
@@ -96,20 +71,8 @@ const ViewerW = () => {
       loadModel(viewer, urn, {
         onSuccess: () => {
           setIsModelLoaded(true);
-
-          const extension = viewer.getExtension("Autodesk.Viewing.MarkupsCore");
-
-          console.log(extension);
         },
       });
-
-      // add the new extension to the viewer
-      Autodesk.Viewing.theExtensionManager.registerExtension(
-        "MarkupsExtension",
-        MarkupsExtension
-      );
-
-      viewer.loadExtension("MarkupsExtension");
     });
   };
 
