@@ -1,9 +1,6 @@
 import Head from "next/head";
-import Image from "next/image";
 
-import { cookies } from "next/headers";
-import { useEffect, useState } from "react";
-import Projects from "@/components/projects";
+import { useEffect } from "react";
 
 export default function Home() {
   useEffect(() => {

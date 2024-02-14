@@ -10,7 +10,7 @@ const ProjectsLayout: React.FC<ProjectsLayoutProps> = ({ children }) => {
     <Wrapper>
       <LeftPanel />
 
-      {children}
+      <ContentWrapper>{children}</ContentWrapper>
     </Wrapper>
   );
 };
@@ -23,6 +23,15 @@ const Wrapper = styled.div`
 
   display: flex;
   overflow: hidden;
+`;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+
+  row-gap: 16px;
 `;
 
 export default ProjectsLayout;
