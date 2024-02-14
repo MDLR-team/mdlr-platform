@@ -1,3 +1,5 @@
+import { AuthProvider } from "@/components/auth/auth-provider";
+import Wrapper from "@/components/layout/wrapper/wrapper";
 import type { AppProps } from "next/app";
 import { createGlobalStyle } from "styled-components";
 
@@ -6,7 +8,11 @@ const App = ({ Component, pageProps }: AppProps) => {
     <>
       <GlobalStyle />
 
-      <Component {...pageProps} />
+      <AuthProvider>
+        <Wrapper>
+          <Component {...pageProps} />
+        </Wrapper>
+      </AuthProvider>
     </>
   );
 };

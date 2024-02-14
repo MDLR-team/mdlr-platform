@@ -1,13 +1,14 @@
 import Head from "next/head";
 import Image from "next/image";
 
-import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { useEffect, useState } from "react";
 import Projects from "@/components/projects";
 
 export default function Home() {
-  const [notes, setNotes] = useState<any[] | null>(null);
+  useEffect(() => {
+    window.location.href = "/projects";
+  }, []);
 
   return (
     <>
@@ -17,10 +18,6 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Projects />
-
-      <div>Content here</div>
     </>
   );
 }
