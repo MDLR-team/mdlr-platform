@@ -1,3 +1,4 @@
+import ProjectService from "@/components/project/project-service";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { init } from "next/dist/compiled/webpack/webpack";
 
@@ -6,6 +7,8 @@ class CommentService {
 
   private _changes: any;
 
+  private _projectService: ProjectService | undefined;
+
   private $setComments: any;
 
   constructor(private _supabase: SupabaseClient) {
@@ -13,9 +16,12 @@ class CommentService {
   }
 
   private async _fetchInitialComments() {
+    const project_id = this._projectService!.id as string;
+
     const { data, error } = await this._supabase
       .from("comments") // Adjust if your table name is different
       .select("*")
+      .eq("project_id", project_id)
       .order("created_at", { ascending: true }); // Assuming you have a 'createdAt' column for sorting
 
     if (error) {
@@ -25,6 +31,14 @@ class CommentService {
     this._comments = new Map(data?.map((comment) => [comment.id, comment]));
 
     this._upateComments();
+  }
+
+  private _checkRelationToProject(entry: any): boolean {
+    if (entry && Object.keys(entry).length) {
+      if (entry.project_id === this._projectService?.id) return true;
+    }
+
+    return false;
   }
 
   // realtime changes will be handled here
@@ -41,15 +55,26 @@ class CommentService {
         (payload) => {
           const { old, new: newComment, eventType } = payload;
 
+          let needsUpdate = false;
+
           if (eventType === "INSERT") {
+            this._checkRelationToProject(newComment);
+
             this._comments.set(newComment.id, newComment as Comment);
+            needsUpdate = true;
           } else if (eventType === "UPDATE") {
+            this._checkRelationToProject(newComment);
+
             this._comments.set(newComment.id, newComment as Comment);
+            needsUpdate = true;
           } else if (eventType === "DELETE") {
+            this._checkRelationToProject(old);
+
             this._comments.delete(old.id);
+            needsUpdate = true;
           }
 
-          this._upateComments();
+          if (needsUpdate) this._upateComments();
         }
       )
       .subscribe();
@@ -67,9 +92,11 @@ class CommentService {
   }
 
   public provideStates(states: {
+    projectService: ProjectService;
     setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
   }) {
     this.$setComments = states.setComments;
+    this._projectService = states.projectService;
   }
 
   public dispose() {

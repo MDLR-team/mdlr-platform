@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import CommentService, { Comment } from "../comment-service/comment-service";
 import { supabase } from "@/components/supabase-client";
+import { useProject } from "@/components/project/project-provider";
 
 interface CommentContentProps {
   comments: Comment[];
@@ -12,11 +13,14 @@ const CommentContext = createContext<CommentContentProps | undefined>(
 );
 
 export function CommentProvider({ children }: any) {
+  const { projectService } = useProject();
+
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentService] = useState(() => new CommentService(supabase));
 
   useEffect(() => {
     commentService.provideStates({
+      projectService,
       setComments,
     });
 

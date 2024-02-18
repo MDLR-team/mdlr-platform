@@ -3,10 +3,13 @@ import { Box, TextField, Button } from "@mui/material";
 import { supabase } from "@/components/supabase-client";
 import { useMarkup } from "../../markup-provider/markup-provider";
 import styled from "styled-components";
+import { useProject } from "@/components/project/project-provider";
 
 const CommentMessage = () => {
   const [comment, setComment] = useState("");
   const { markupPosition, markupsExtension } = useMarkup();
+
+  const { projectService } = useProject();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Prevent the form from submitting in the traditional way
@@ -20,7 +23,11 @@ const CommentMessage = () => {
 
     try {
       const { data, error } = await supabase.from("comments").insert([
-        { content: comment, markup_position: markupPosition }, // Assuming 'content' is the column name
+        {
+          content: comment,
+          markup_position: markupPosition,
+          project_id: projectService!.id,
+        }, // Assuming 'content' is the column name
       ]);
 
       if (error) throw error;
