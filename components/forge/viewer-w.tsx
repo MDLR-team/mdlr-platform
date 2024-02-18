@@ -8,6 +8,8 @@ const ViewerW = () => {
   const { viewer, setViewer } = useViewer();
   const { isModelLoaded, setIsModelLoaded } = useViewer();
 
+  console.log("viewer", viewer);
+
   const router = useRouter();
 
   const viewerDiv = useRef<HTMLDivElement>(null);
@@ -83,6 +85,18 @@ const ViewerW = () => {
         width: "100%",
       }}
     >
+      <svg
+        style={{
+          position: "absolute",
+          width: "100%",
+          height: "100%",
+          zIndex: 2,
+          pointerEvents: "none",
+        }}
+        xmlns="http://www.w3.org/2000/svg"
+        id="comments_layer"
+      ></svg>
+
       <div
         ref={viewerDiv}
         style={{

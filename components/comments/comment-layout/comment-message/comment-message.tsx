@@ -31,7 +31,6 @@ const CommentMessage = () => {
       console.error("Error inserting comment:", error);
     }
 
-    markupsExtension?.clearActiveMarkup();
     markupsExtension?.enable(false);
   };
 

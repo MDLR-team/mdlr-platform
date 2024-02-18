@@ -1,24 +1,15 @@
 import CommentsExtension from "./comments-extension";
 
-interface MarkupExtensionOptions {
-  markupType?: "html" | "three";
-}
-
 class MarkupExtension {
   private _viewer: any;
-  private _scene: any;
   private _camera: any;
   private _domElement: any;
   private _enabled: boolean = false;
 
-  private _markupMesh: any;
-  private _htmlCircle: any;
+  private _searchMarkup: MarkupEntity | null;
+  private _markup: MarkupEntity | null;
 
-  private _activeMarkup: any;
-
-  private _markupType: "html" | "three";
-
-  private _overlayScene: string = "markup-selection-overlay-scene";
+  private _svgCanvas: HTMLElement;
 
   private _commentsExtension: CommentsExtension;
 
@@ -26,59 +17,22 @@ class MarkupExtension {
 
   constructor(viewer: any, options: any = {}) {
     this._viewer = viewer;
-    this._scene = viewer.impl.scene;
     this._camera = viewer.impl.camera;
     this._domElement = viewer.canvas;
 
-    this._markupType = options?.markupType || "html";
-
-    this._createOverlayScene();
-
-    if (this._markupType === "three") {
-      this.createMarkupMesh();
-    } else if (this._markupType === "html") {
-      this.createHtmlCircle();
-    }
+    this._svgCanvas = document.getElementById("comments_layer") as HTMLElement;
 
     this.mouseMove = this.mouseMove.bind(this);
     this.mouseDown = this.mouseDown.bind(this);
 
+    this._searchMarkup = null;
+    this._markup = null;
+
+    this._rerenderMarkupPosition = this._rerenderMarkupPosition.bind(this);
+
+    // Comment extension
     const commentsExtension = new CommentsExtension(this);
     this._commentsExtension = commentsExtension;
-  }
-
-  /**
-   * Creates an overlay scene for adding custom markups or meshes.
-   */
-  private _createOverlayScene() {
-    const overlayScene = this._overlayScene;
-
-    if (!this._viewer.overlays.hasScene(overlayScene)) {
-      this._viewer.overlays.addScene(overlayScene);
-    }
-  }
-
-  /**
-   * Creates a Three.js mesh to be used as a markup in the viewer.
-   */
-  private createMarkupMesh(needsMesh = false) {
-    const THREE = (window as any).THREE;
-
-    const geom = new THREE.SphereGeometry(3000, 8, 8);
-    const material = new THREE.MeshBasicMaterial({
-      color: 0x0000ff,
-      opacity: 1,
-      depthTest: false,
-      depthWrite: false,
-    });
-
-    const mesh = new THREE.Mesh(geom, material);
-
-    if (!needsMesh) {
-      this._markupMesh = mesh;
-    } else {
-      return mesh;
-    }
   }
 
   /**
@@ -123,11 +77,28 @@ class MarkupExtension {
     container.appendChild(text);
     container.appendChild(circle);
 
-    // Append the container to the DOM
-    document.body.appendChild(container);
+    return container;
+  }
 
-    // Save references to the container and circle for later use
-    this._htmlCircle = container;
+  /**
+   * creates a svg element to be used as a markup in the viewer.
+   */
+  public createMarkupSvg() {
+    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    g.setAttribute("pointer-events", "all");
+
+    const svg_background = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "path"
+    );
+    svg_background.setAttribute(
+      "d",
+      "M24 12C24 17 19 22 12 28C5 22 0 17 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12Z"
+    );
+    svg_background.setAttribute("fill", "black");
+    g.appendChild(svg_background);
+
+    return g;
   }
 
   /**
@@ -138,14 +109,45 @@ class MarkupExtension {
     this._enabled = flag;
 
     if (this._enabled) {
-      this._viewer.overlays.addMesh(this._markupMesh, this._overlayScene);
+      this._addSearchMarkup();
+
       this.setupEventListeners();
+
+      this._viewer.toolController.activateTool("measure");
+      this._addCameraChangedListener();
     } else {
-      this._viewer.overlays.removeMesh(this._markupMesh, this._overlayScene);
+      this._removeSearchMarkup();
+      this._removeMarkup();
+
       this.removeEventListeners();
+
+      this._viewer.toolController.deactivateTool("measure");
+      this._removeCameraChangedListener();
     }
 
     this._viewer.impl.invalidate(true);
+  }
+
+  private _rerenderMarkupPosition() {
+    const markup = this._markup;
+
+    if (markup) {
+      const position = markup.position;
+      const entity = markup.entity;
+
+      const { x, y } = this._toScreenXY(position);
+
+      entity.setAttribute("transform", `translate(${x - 12}, ${y - 28})`);
+    }
+  }
+
+  private _addCameraChangedListener() {
+    const Autodesk = (window as any).Autodesk;
+
+    this._viewer.addEventListener(
+      Autodesk.Viewing.CAMERA_CHANGE_EVENT,
+      this._rerenderMarkupPosition
+    );
   }
 
   /**
@@ -177,39 +179,45 @@ class MarkupExtension {
     this._viewer.impl.viewportToRay(pointer, ray);
     const rayIntersect = this._viewer.impl.rayIntersect(ray, true, null);
 
-    if (rayIntersect) {
-      const { intersectPoint } = rayIntersect;
+    const measureTool = this._viewer.loadedExtensions["Autodesk.Measure"];
+    const snapper = measureTool.measureTool.getSnapper();
+    const snapResult = snapper.getSnapResult();
+
+    const geomVertex = snapResult.geomVertex;
+
+    /* console.log("measureTool", snapper);
+    console.log("vertex", snapper.getVertex());
+    console.log("snap result", snapper.getSnapResult());
+    console.log("snap to pixel", snapper.getSnapToPixel()); */
+
+    //if (rayIntersect) {
+    if (geomVertex) {
+      //const { intersectPoint } = rayIntersect;
+      const { intersectPoint } = snapResult;
       const screenPos = this._viewer.worldToClient(intersectPoint);
 
-      if (this._markupType === "three") {
-        // Show and position the Three.js mesh
-        this._markupMesh.visible = true;
-        this._markupMesh.position.copy(intersectPoint);
-      } else if (this._markupType === "html") {
-        // Show and position the HTML circle
-        this._htmlCircle.style.display = "block";
-        this._htmlCircle.style.left = `${
-          screenPos.x - this._htmlCircle.offsetWidth / 2
-        }px`;
-        this._htmlCircle.style.top = `${
-          screenPos.y - this._htmlCircle.offsetHeight / 2
-        }px`;
-      }
+      // Show and position the HTML circle
+      const searchMarkup = this._searchMarkup;
+      if (searchMarkup) {
+        const { entity } = searchMarkup;
 
-      this._viewer.impl.invalidate(true);
+        entity.style.left = `${screenPos.x - entity.offsetWidth / 2}px`;
+        entity.style.top = `${screenPos.y - entity.offsetHeight / 2}px`;
+        entity.style.display = "block";
+      }
     } else {
-      if (this._markupType === "three") {
-        this._markupMesh.visible = false;
-      } else if (this._markupType === "html") {
-        this._htmlCircle.style.display = "none";
+      const searchMarkup = this._searchMarkup;
+      if (searchMarkup) {
+        const { entity } = searchMarkup;
+        entity.style.display = "none";
       }
-
-      this._viewer.impl.invalidate(true);
     }
   }
 
   //mousedown event that ask commentsExtension to add a comment and send the position of the markup
   private mouseDown(event: any) {
+    this._viewer.toolController.deactivateTool("measure");
+
     const THREE = (window as any).THREE;
 
     console.log("mouse down event", event);
@@ -228,31 +236,33 @@ class MarkupExtension {
         z: intersectPoint.z,
       });
 
-      if (this._activeMarkup) {
-        this._viewer.overlays.removeMesh(
-          this._activeMarkup,
-          this._overlayScene
-        );
-      }
+      this._removeSearchMarkup();
 
-      const activeMarkup = this.createMarkupMesh(true);
-      activeMarkup.position.copy(intersectPoint);
-
-      this._viewer.overlays.addMesh(activeMarkup, this._overlayScene);
-
-      this._activeMarkup = activeMarkup;
+      this._addMarkup(intersectPoint);
     }
   }
 
-  public clearActiveMarkup() {
-    if (this._activeMarkup) {
-      this._viewer.overlays.removeMesh(this._activeMarkup, this._overlayScene);
-      this._activeMarkup = null;
+  private _toScreenXY(position: { x: number; y: number; z: number }): {
+    x: number;
+    y: number;
+  } {
+    const THREE = (window as any).THREE;
+    const camera = this._camera;
 
-      this.$setMarkupPosition(null);
-    }
+    const viewerCanvas = this._viewer.canvas;
+
+    const widthHalf = 0.5 * viewerCanvas.clientWidth;
+    const heightHalf = 0.5 * viewerCanvas.clientHeight;
+
+    const worldPoint = new THREE.Vector3(position.x, position.y, position.z);
+
+    const point = worldPoint.clone().project(camera);
+
+    const x = Math.round(point.x * widthHalf + widthHalf);
+    const y = Math.round(-point.y * heightHalf + heightHalf);
+
+    return { x, y };
   }
-
   /**
    * Sets up necessary event listeners for interactive markup behavior.
    */
@@ -272,21 +282,6 @@ class MarkupExtension {
     // document.removeEventListener("mouseUp", this.mouseUp); */
   }
 
-  /**
-   * Removes the Three.js mesh from the overlay scene.
-   */
-  private removeMarkupMesh() {
-    this._viewer.overlays.removeMesh(this._markupMesh, this._overlayScene);
-  }
-
-  /**
-   * Removes the HTML circle from the document body.
-   */
-  private removeHtmlCircle() {
-    // this._domElement.removeChild(this._htmlCircle);
-    document.body.removeChild(this._htmlCircle);
-  }
-
   public get viewer() {
     return this._viewer;
   }
@@ -299,18 +294,70 @@ class MarkupExtension {
     this._commentsExtension.updateComments(comments);
   }
 
+  private _removeCameraChangedListener() {
+    const Autodesk = (window as any).Autodesk;
+
+    this._viewer.removeEventListener(
+      Autodesk.Viewing.CAMERA_CHANGE_EVENT,
+      this._rerenderMarkupPosition
+    );
+  }
+
+  private _addSearchMarkup() {
+    if (!this._searchMarkup) {
+      this._searchMarkup = {
+        entity: this.createHtmlCircle(),
+        position: { x: 0, y: 0, z: 0 },
+      };
+
+      document.body.appendChild(this._searchMarkup.entity);
+    }
+  }
+
+  private _addMarkup(position: { x: number; y: number; z: number }) {
+    if (!this._markup) {
+      this._markup = {
+        entity: this.createMarkupSvg(),
+        position,
+      };
+
+      this._svgCanvas.appendChild(this._markup.entity);
+    }
+
+    this._rerenderMarkupPosition();
+  }
+
+  private _removeMarkup() {
+    if (this._markup) {
+      this._svgCanvas.removeChild(this._markup.entity);
+      this._markup = null;
+    }
+  }
+
+  private _removeSearchMarkup() {
+    if (this._searchMarkup) {
+      document.body.removeChild(this._searchMarkup.entity);
+      this._searchMarkup = null;
+    }
+  }
+
   /**
    * Disposes of the MarkupExtension, cleaning up resources and event listeners.
    */
   public dispose() {
-    this.removeEventListeners();
+    this._commentsExtension.dispose();
 
-    if (this._markupType === "three") {
-      this.removeMarkupMesh();
-    } else if (this._markupType === "html") {
-      this.removeHtmlCircle();
-    }
+    this.removeEventListeners();
+    this._removeCameraChangedListener();
+
+    this._removeMarkup();
+    this._removeSearchMarkup();
   }
+}
+
+interface MarkupEntity {
+  position: { x: number; y: number; z: number };
+  entity: any;
 }
 
 export default MarkupExtension;

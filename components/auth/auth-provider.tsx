@@ -23,8 +23,6 @@ export function AuthProvider({ children }: any) {
 
   const [message, setMessage] = useState<Message | null>(null);
 
-  console.log("message", message);
-
   useEffect(() => {
     if (message) {
       const timer = setTimeout(() => {
