@@ -124,6 +124,13 @@ function loadModel(viewer: any, urn: string, options: loadModelOptions) {
 
         if (options.onSuccess) {
           options.onSuccess();
+
+          viewer.setLightPreset(1);
+          // set background color
+          viewer.setBackgroundColor(241, 240, 238, 241, 240, 238);
+
+          // hide the toolbar
+          viewer.toolbar.setVisible(false);
         }
       });
 
@@ -140,7 +147,6 @@ function loadModel(viewer: any, urn: string, options: loadModelOptions) {
 
     const Autodesk = (window as any).Autodesk;
 
-    viewer.setLightPreset(0);
     Autodesk.Viewing.Document.load(
       "urn:" + urn,
       onDocumentLoadSuccess,

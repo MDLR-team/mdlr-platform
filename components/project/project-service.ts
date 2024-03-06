@@ -32,15 +32,17 @@ class ProjectService {
       .eq("bim_id", bimId)
       .single();
 
-    if (findError) {
+    /* if (findError) {
       console.error("Error finding project:", findError);
       return { project: null, error: findError };
-    }
+    } */
 
     // If the project is found, return it
     if (projects) {
       return { project: projects, error: null };
     }
+
+    console.log("Not found", bimId);
 
     // If the project was not found, create a new one
     const { data: newProject, error: createError } = await supabase
@@ -53,6 +55,8 @@ class ProjectService {
       ])
       .select("*")
       .single();
+
+    console.log("newProject", newProject);
 
     if (createError) {
       console.error("Error creating new project:", createError);
@@ -90,12 +94,14 @@ class ProjectService {
     if (data) {
       const { project } = data;
 
-      this.id = project.id;
-      this.title = project.title;
-      this.bimId = project.bim_id;
-      this.createdAt = project.created_at;
+      if (project) {
+        this.id = project.id;
+        this.title = project.title;
+        this.bimId = project.bim_id;
+        this.createdAt = project.created_at;
 
-      this.$setIsReady(true);
+        this.$setIsReady(true);
+      }
     }
   }
 }

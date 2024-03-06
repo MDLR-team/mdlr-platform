@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, TextField, Button } from "@mui/material";
 import { supabase } from "@/components/supabase-client";
-import { useMarkup } from "../../markup-provider/markup-provider";
+import { useMarkup } from "../../../markup-provider/markup-provider";
 import styled from "styled-components";
 import { useProject } from "@/components/project/project-provider";
 
