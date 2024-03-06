@@ -1,15 +1,11 @@
 import React from "react";
 import CommentMessage from "./blocks/comment-message/comment-message";
-import { Comment } from "../comment-service/comment-service";
 import styled from "styled-components";
 
-import moment from "moment";
 import { useComment } from "../comment-provider/comment-provider";
-import { Box, Divider, IconButton, Paper } from "@mui/material";
-import { AddOutlined } from "@mui/icons-material";
+import { Box, IconButton, Paper } from "@mui/material";
 import { useMarkup } from "../markup-provider/markup-provider";
 import PlusIcon from "@/components/ui/icons/plus-icon";
-import CommentIcon from "@/components/ui/icons/comment-icon";
 import CommentsIcon from "@/components/ui/icons/comments-icon";
 import MessageItem from "./blocks/comment/comment";
 

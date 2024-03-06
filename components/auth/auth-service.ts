@@ -7,6 +7,7 @@ class AuthService {
   private $setIsAuthorized: any;
   private $setNeedsAuth: any;
   private $setMessage: any;
+  private $setUserMetadata: any;
 
   constructor(private _router: NextRouter, private _supabase: SupabaseClient) {}
 
@@ -74,6 +75,7 @@ class AuthService {
       this.$setIsAuthorized(true);
 
       this._userMetadata = userMetadata;
+      this.$setUserMetadata(this._userMetadata);
     } else {
       this.$setNeedsAuth(true);
     }
@@ -83,6 +85,7 @@ class AuthService {
     this.$setIsAuthorized = states.setIsAuthorized;
     this.$setNeedsAuth = states.setNeedsAuth;
     this.$setMessage = states.setMessage;
+    this.$setUserMetadata = states.setUserMetadata;
   }
 
   public dispose() {}
@@ -92,6 +95,7 @@ interface States {
   setIsAuthorized: (value: boolean) => void;
   setNeedsAuth: (value: boolean) => void;
   setMessage: (value: Message | null) => void;
+  setUserMetadata: (value: UserMetadata | null) => void;
 }
 
 export interface Message {

@@ -20,9 +20,11 @@ class CommentService {
 
     const { data, error } = await this._supabase
       .from("comments") // Adjust if your table name is different
-      .select("*")
+      .select(`*`)
       .eq("project_id", project_id)
       .order("created_at", { ascending: true }); // Assuming you have a 'createdAt' column for sorting
+
+    console.log("data", data);
 
     if (error) {
       console.error("Error fetching comments:", error);

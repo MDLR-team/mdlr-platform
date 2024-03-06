@@ -1,11 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import AuthService, { Message } from "./auth-service";
+import AuthService, { Message, UserMetadata } from "./auth-service";
 import { useRouter } from "next/router";
 import { createClient } from "@/utils/supabase/component";
 import { Alert, Snackbar } from "@mui/material";
 
 interface AuthContentProps {
   authService: AuthService;
+  userMetadata: UserMetadata | null;
 }
 
 const AuthContext = createContext<AuthContentProps | undefined>(undefined);
@@ -15,6 +16,7 @@ export function AuthProvider({ children }: any) {
   const supabase = createClient();
 
   const [isAuthorized, setIsAuthorized] = useState(false);
+  const [userMetadata, setUserMetadata] = useState<UserMetadata | null>(null);
   const [needsAuth, setNeedsAuth] = useState(false);
 
   const [authService] = useState(() => new AuthService(router, supabase));
@@ -40,6 +42,7 @@ export function AuthProvider({ children }: any) {
       setIsAuthorized,
       setNeedsAuth,
       setMessage,
+      setUserMetadata,
     });
 
     authService.init();
@@ -67,6 +70,7 @@ export function AuthProvider({ children }: any) {
     <AuthContext.Provider
       value={{
         authService,
+        userMetadata,
       }}
     >
       <Snackbar
