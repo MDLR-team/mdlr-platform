@@ -33,7 +33,7 @@ const Wrapper = styled.div`
 
   position: fixed;
 
-  z-index: 3;
+  z-index: 4;
 
   display: flex;
   pointer-events: none;
