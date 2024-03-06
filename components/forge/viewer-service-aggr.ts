@@ -14,14 +14,14 @@ class ViewerServiceAggr {
     this._viewer.setBackgroundColor(241, 240, 238, 241, 240, 238);
     this._viewer.setEnvMapBackground(false);
 
-    this._viewer.setQualityLevel(true, true);
+    this._viewer.setQualityLevel(false, false);
 
     this._viewer.setGroundShadow(false);
     this._viewer.setGroundReflection(false);
     this._viewer.setProgressiveRendering(true);
     this._viewer.setGhosting(false);
 
-    //viewer.toolbar.container.style.display = "none";
+    this._viewer.toolbar.container.style.display = "none";
     //viewer.setLightPreset(1);
   }
 

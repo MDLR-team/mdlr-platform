@@ -6,6 +6,7 @@ import { useComment } from "../comment-provider/comment-provider";
 interface MarkupProviderProps {
   markupsExtension: MarkupExtension | null;
   markupPosition: markupPosition | null;
+  setMarkupPosition: any;
 }
 
 const MarkupContext = createContext<MarkupProviderProps | undefined>(undefined);
@@ -63,6 +64,9 @@ export function MarkupProvider({ children }: any) {
     const registeredExtensions: Map<string, any> =
       Autodesk.Viewing.theExtensionManager.registeredExtensions;
 
+    console.log("Autodesk.Viewing", Autodesk.Viewing);
+    console.log("registeredExtensions", registeredExtensions);
+
     if (!registeredExtensions.has("MarkupsExtension")) {
       // add the new extension to the viewer
       Autodesk.Viewing.theExtensionManager.registerExtension(
@@ -87,6 +91,7 @@ export function MarkupProvider({ children }: any) {
       value={{
         markupsExtension,
         markupPosition,
+        setMarkupPosition,
       }}
     >
       {children}

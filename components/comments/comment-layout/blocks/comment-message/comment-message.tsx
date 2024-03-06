@@ -7,7 +7,7 @@ import { useProject } from "@/components/project/project-provider";
 
 const CommentMessage = () => {
   const [comment, setComment] = useState("");
-  const { markupPosition, markupsExtension } = useMarkup();
+  const { markupPosition, markupsExtension, setMarkupPosition } = useMarkup();
 
   const { projectService } = useProject();
 
@@ -39,6 +39,7 @@ const CommentMessage = () => {
     }
 
     markupsExtension?.enable(false);
+    setMarkupPosition(null);
   };
 
   if (!markupPosition) return <></>;
@@ -53,7 +54,7 @@ const CommentMessage = () => {
         onSubmit={handleSubmit}
       >
         <TextField
-          label="Write a comment..."
+          placeholder="Write a comment..."
           multiline
           fullWidth
           rows={2}
@@ -76,6 +77,16 @@ const Wrapper = styled.div`
     &,
     & * {
       font-size: 12px;
+    }
+  }
+
+  & form.MuiBox-root {
+    padding: 0px;
+    margin-bottom: 9px;
+    border-color: rgba(0, 0, 0, 0);
+
+    & .MuiFormControl-root {
+      margin-top: 0px;
     }
   }
 `;

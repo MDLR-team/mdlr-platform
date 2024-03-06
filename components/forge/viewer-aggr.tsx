@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import ViewerServiceAggr from "./viewer-service-aggr";
+import { Router } from "next/router";
 
 class Viewer extends React.Component {
   private _isViewerInitialized: boolean;
@@ -12,25 +13,39 @@ class Viewer extends React.Component {
 
   private _urns: string[];
 
+  public props: Readonly<ViewerProps>;
+
+  private $setViewer: any;
+  private $setIsModelLoaded: any;
+
   /**
    * Constructs the Viewer component.
    * @param props - The properties passed to the Viewer component.
    */
-  constructor(props: any) {
+  constructor(props: ViewerProps) {
     super(props);
+
+    this.props = props;
 
     this._isViewerInitialized = false;
 
     this._urns = [];
+
+    this.$setViewer = props.setViewer;
+    this.$setIsModelLoaded = props.setIsModelLoaded;
   }
 
   /**
    * Component lifecycle method called after the component has mounted.
    * This is where we initialize the viewer.
    */
-  public componentDidMount() {
-    if (!this._isViewerInitialized) {
-      this.initializeViewer();
+  public componentDidMount() {}
+
+  public componentDidUpdate(prevProps: ViewerProps) {
+    if (this.props.urns !== prevProps.urns) {
+      if (!this.props.urns) return;
+
+      this.updateUrns(this.props.urns);
     }
   }
 
@@ -44,6 +59,17 @@ class Viewer extends React.Component {
 
       this._viewer.finish();
       this._viewer = null;
+    }
+  }
+
+  /**
+   * Launches init
+   */
+  public updateUrns(urns: string[]) {
+    this._urns = urns;
+
+    if (!this._isViewerInitialized) {
+      this.initializeViewer();
     }
   }
 
@@ -77,6 +103,7 @@ class Viewer extends React.Component {
           viewerConfig: {
             disableBimWalkInfoIcon: true,
           },
+          extensions: ["Autodesk.Viewing.MarkupsCore"],
         };
 
         const view = new Autodesk.Viewing.AggregatedView();
@@ -85,6 +112,8 @@ class Viewer extends React.Component {
 
         this._viewer = view.viewer;
         this._view = view;
+
+        this.$setViewer(this._viewer);
 
         // viewer service
         const viewerService = new ViewerServiceAggr(this._viewer, view, this);
@@ -104,6 +133,9 @@ class Viewer extends React.Component {
     const viewerService = this._viewerService;
 
     await viewerService!.loadDocuments(urns);
+
+    // Once loading is completed
+    this.$setIsModelLoaded(true);
   }
 
   /**
@@ -119,11 +151,54 @@ class Viewer extends React.Component {
       return null;
     }
   }
+
+  public get setIsModelLoaded() {
+    return this.$setIsModelLoaded;
+  }
+
+  render() {
+    return (
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+        }}
+      >
+        <svg
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            zIndex: 2,
+            pointerEvents: "none",
+          }}
+          xmlns="http://www.w3.org/2000/svg"
+          id="comments_layer"
+        ></svg>
+
+        <div
+          ref={(div) => (this._viewerContainer = div)}
+          style={{
+            backgroundColor: "lightgray",
+            width: "100%",
+            height: "100%",
+          }}
+          className="forge-viewer"
+        ></div>
+      </div>
+    );
+  }
 }
 
 interface ForgeTokenResponse {
   access_token: string;
   expires_in: number;
+}
+
+interface ViewerProps {
+  urns: null | string[];
+  setViewer: (viewer: any) => void;
+  setIsModelLoaded: (isModelLoaded: boolean) => void;
 }
 
 export default Viewer;

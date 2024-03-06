@@ -15,7 +15,11 @@ const Bar = () => {
           alignItems: "center",
         }}
       >
-        <Logo />
+        <Logo
+          onClick={() => {
+            window.location.href = "/";
+          }}
+        />
 
         <TitleWrapper>
           <Title>Default title</Title>
@@ -43,6 +47,8 @@ const Logo = styled.div`
 
   border-radius: 50%;
   background-color: #f00;
+
+  cursor: pointer;
 `;
 
 const Title = styled.div`

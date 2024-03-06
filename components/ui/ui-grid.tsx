@@ -75,6 +75,10 @@ const ContentWrapper = styled.div`
     width: 100%;
     max-width: 250px;
   }
+
+  height: 100%;
+  position: relative;
+  overflow: hidden;
 `;
 
 const FooterWrapper = styled.div`
