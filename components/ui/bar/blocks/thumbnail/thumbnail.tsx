@@ -46,7 +46,7 @@ const Thumbnail = () => {
           flexDirection: "column",
         }}
       >
-        {!thumbnail && <p>We don't have any thumbs now.</p>}
+        {!thumbnail && <p>We don&#x27;t have any thumbs now.</p>}
         <Button variant="contained" onClick={handleAddThumbnail}>
           Add Thumbnail
         </Button>
