@@ -2,6 +2,7 @@ import MarkupExtension from "@/components/forge/markup-extension";
 import { useViewer } from "@/components/forge/viewer-provider";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useComment } from "../../services/project-services/comment-service/comment-provider";
+import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
 
 interface MarkupProviderProps {
   markupsExtension: MarkupExtension | null;
@@ -13,6 +14,8 @@ const MarkupContext = createContext<MarkupProviderProps | undefined>(undefined);
 
 export function MarkupProvider({ children }: any) {
   const { viewer, isModelLoaded } = useViewer();
+  const { globalStatesService } = useGlobalStates();
+  const { selectedCommentId } = useGlobalStates();
 
   const [markupPosition, setMarkupPosition] = useState<markupPosition | null>(
     null
@@ -36,7 +39,11 @@ export function MarkupProvider({ children }: any) {
 
       load() {
         console.log("MarkupsExtension loaded");
-        this.markupsExtension = new MarkupExtension(this.viewer);
+        this.markupsExtension = new MarkupExtension(
+          this.viewer,
+          undefined,
+          globalStatesService
+        );
         this.markupsExtension.provideStates({
           setMarkupPosition,
         });
@@ -85,6 +92,13 @@ export function MarkupProvider({ children }: any) {
 
     markupsExtension.updateComments(comments);
   }, [comments, markupsExtension]);
+
+  useEffect(() => {
+    if (!markupsExtension) return;
+    if (!selectedCommentId) return;
+
+    markupsExtension.selectComment(selectedCommentId);
+  }, [selectedCommentId, markupsExtension]);
 
   return (
     <MarkupContext.Provider

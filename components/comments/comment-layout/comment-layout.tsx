@@ -10,24 +10,15 @@ import CommentsIcon from "@/components/ui/icons/comments-icon";
 import MessageItem from "./blocks/comment/comment";
 import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
 import { useViewer } from "@/components/forge/viewer-provider";
+import { CommentList, Header, List } from "./comment-layout.styled";
 
 const CommentsBlock: React.FC = () => {
+  const { globalStatesService } = useGlobalStates();
   const { comments, commentService } = useComment();
   const { markupsExtension } = useMarkup();
   const { isCommentsPanelOpen } = useGlobalStates();
 
   const { viewer } = useViewer();
-
-  const navigateToComment = (markup_position: any) => {
-    if (markup_position) {
-      const position = markup_position;
-
-      const camera = viewer.getCamera();
-      const navapi = viewer.navigation;
-
-      navapi.setTarget(position);
-    }
-  };
 
   if (!isCommentsPanelOpen) return null;
 
@@ -61,7 +52,11 @@ const CommentsBlock: React.FC = () => {
           {comments.map((comment) => (
             <MessageItem
               {...comment}
-              navigateToComment={navigateToComment}
+              selectComment={() => {
+                if (!comment.markup_position) return;
+
+                globalStatesService.selectComment(comment.id);
+              }}
               key={comment.id}
             />
           ))}
@@ -70,36 +65,5 @@ const CommentsBlock: React.FC = () => {
     </Paper>
   );
 };
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  & .MuiIconButton-root[data-add="comment"] {
-    background-color: #fae57e;
-    border-radius: 50% !important;
-
-    &:hover {
-      background-color: #f9e05e;
-    }
-  }
-`;
-
-const CommentList = styled.div`
-  justify-content: flex-end;
-  overflow-y: auto;
-  height: 100%;
-  box-sizing: border-box;
-
-  overflow-y: scroll;
-`;
-
-const List = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-  min-height: max-content;
-`;
 
 export default CommentsBlock;

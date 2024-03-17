@@ -10,8 +10,6 @@ const ViewerW = () => {
   const { isModelLoaded, setIsModelLoaded } = useViewer();
   const { setViewerService } = useViewer();
 
-  console.log("viewer", viewer);
-
   const router = useRouter();
   const [urns, setUrns] = useState<string[] | null>(null);
 

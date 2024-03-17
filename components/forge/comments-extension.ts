@@ -1,8 +1,10 @@
+import GlobalStatesService from "../services/project-services/global-states-service/global-states-service";
 import MarkupExtension from "./markup-extension";
 
 class CommentsExtension {
   private _markupExtension: MarkupExtension;
   private _viewer: any;
+  private _globalStatesService: GlobalStatesService;
   private _camera: any;
 
   private _renderType: "mesh" | "svg" = "svg";
@@ -15,6 +17,7 @@ class CommentsExtension {
   constructor(markupExtension: MarkupExtension) {
     this._markupExtension = markupExtension;
     this._viewer = markupExtension.viewer;
+    this._globalStatesService = markupExtension.globalStatesService;
     this._camera = this._viewer.getCamera();
 
     this._svgCanvas = document.getElementById("comments_layer") as HTMLElement;
@@ -24,6 +27,7 @@ class CommentsExtension {
     this._createOverlayScene();
 
     this._onCameraChange = this._onCameraChange.bind(this);
+    this.selectComment = this.selectComment.bind(this);
 
     this._addEventListeners();
   }
@@ -82,6 +86,16 @@ class CommentsExtension {
           }
         }
       });
+    }
+
+    // check if selected comment is still in view
+    const selectedCommentId = this._globalStatesService.selectedCommentId;
+    if (selectedCommentId) {
+      const comment = this._comments.get(selectedCommentId);
+      if (comment) {
+        const position = this._toScreenXY(comment.position);
+        this._globalStatesService.updateSelectedCommentPosition(position);
+      }
     }
   }
 
@@ -177,7 +191,7 @@ class CommentsExtension {
 
     // add event click for svg and navigate to comment
     svg.addEventListener("click", () => {
-      this.navigateToComment(id);
+      this._globalStatesService.selectComment(id);
     });
 
     // for mesh
@@ -313,6 +327,19 @@ class CommentsExtension {
       const navapi = viewer.navigation;
 
       navapi.setTarget(position);
+    }
+  }
+
+  public selectComment(id: number | string | null) {
+    if (!id) return;
+
+    const comment = this._comments.get(id);
+
+    if (comment) {
+      this.navigateToComment(comment.id);
+
+      const position = this._toScreenXY(comment.position);
+      this._globalStatesService.updateSelectedCommentPosition(position);
     }
   }
 

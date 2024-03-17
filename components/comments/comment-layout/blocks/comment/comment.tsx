@@ -4,14 +4,14 @@ import moment from "moment";
 import styled from "styled-components";
 
 interface MessageItemProps extends Comment {
-  navigateToComment: (markup_position: any) => void;
+  selectComment: (id: any) => void;
 }
 
 const MessageItem: React.FC<MessageItemProps> = ({
   content,
   created_at,
   markup_position,
-  navigateToComment,
+  selectComment,
   id,
 }) => {
   // date to comment format when if it was recently we can show "just now" or "1 minute ago" or "x dayes ago" or "x months ago"
@@ -21,7 +21,7 @@ const MessageItem: React.FC<MessageItemProps> = ({
     <Wrapper>
       <Box
         sx={{ display: "flex", flexDirection: "column", gap: "9px" }}
-        onClick={() => markup_position && navigateToComment(markup_position)}
+        onClick={selectComment}
       >
         <Box sx={{ display: "flex", columnGap: "9px" }}>
           <Avatar />

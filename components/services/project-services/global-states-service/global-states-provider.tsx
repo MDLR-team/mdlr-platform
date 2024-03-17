@@ -1,11 +1,15 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import GlobalStatesService from "./global-states-service";
+import GlobalStatesService, {
+  SelectedCommentPositionXY,
+} from "./global-states-service";
 import { useRouter } from "next/router";
 
 interface GlobalStatesProps {
   globalStatesService: GlobalStatesService;
   isSettingsPanelOpen: boolean;
   isCommentsPanelOpen: boolean;
+  selectedCommentId: string | null;
+  selectedCommentPosition: SelectedCommentPositionXY | null;
 }
 
 const GlobalStatesContext = createContext<GlobalStatesProps | undefined>(
@@ -22,18 +26,32 @@ export function GlobalStatesProvider({ children }: any) {
   const [isCommentsPanelOpen, setIsCommentsPanelOpen] =
     useState<boolean>(false);
 
+  const [selectedCommentId, setSelectedCommentId] = useState<string | null>(
+    null
+  );
+  const [selectedCommentPosition, setSelectedCommentPosition] =
+    useState<SelectedCommentPositionXY | null>(null);
+
   useEffect(() => {
     if (!router.isReady) return;
 
     globalStatesService.provideStates({
       setIsSettingsPanelOpen,
       setIsCommentsPanelOpen,
+      setSelectedCommentId,
+      setSelectedCommentPosition,
     });
   }, [router]);
 
   return (
     <GlobalStatesContext.Provider
-      value={{ globalStatesService, isSettingsPanelOpen, isCommentsPanelOpen }}
+      value={{
+        globalStatesService,
+        isSettingsPanelOpen,
+        isCommentsPanelOpen,
+        selectedCommentId,
+        selectedCommentPosition,
+      }}
     >
       {children}
     </GlobalStatesContext.Provider>
