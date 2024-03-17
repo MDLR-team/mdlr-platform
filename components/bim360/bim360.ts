@@ -80,6 +80,31 @@ class Bim360Service {
     return items;
   };
 
+  static readonly getThumbnail = async (urn: string) => {
+    const credentials = await this.getInternalToken();
+    const derivativesApi = new ForgeSDK.DerivativesApi();
+
+    try {
+      const thumbnail = await derivativesApi.getThumbnail(
+        urn,
+        {
+          width: 100, // Specify desired width
+          height: 100, // Specify desired height
+        },
+        internalAuthClient,
+        credentials
+      );
+
+      console.log("thumbnail", thumbnail);
+
+      // If successful, 'thumbnail' contains the image data
+      return thumbnail.body;
+    } catch (error) {
+      console.error("Error fetching thumbnail", error);
+      throw error;
+    }
+  };
+
   // List BIM 360 Model versions
   static readonly getModelVersions = async (href: string) => {
     const credentials = await this.getInternalToken();

@@ -1,7 +1,6 @@
 import axios from "axios";
 import React from "react";
 import ViewerServiceAggr from "./viewer-service-aggr";
-import { Router } from "next/router";
 
 class Viewer extends React.Component {
   private _isViewerInitialized: boolean;
@@ -16,6 +15,7 @@ class Viewer extends React.Component {
   public props: Readonly<ViewerProps>;
 
   private $setViewer: any;
+  private $setViewerService: any;
   private $setIsModelLoaded: any;
 
   /**
@@ -33,6 +33,7 @@ class Viewer extends React.Component {
 
     this.$setViewer = props.setViewer;
     this.$setIsModelLoaded = props.setIsModelLoaded;
+    this.$setViewerService = props.setViewerService;
   }
 
   /**
@@ -117,6 +118,7 @@ class Viewer extends React.Component {
 
         // viewer service
         const viewerService = new ViewerServiceAggr(this._viewer, view, this);
+        this.$setViewerService(viewerService);
         this._viewerService = viewerService;
 
         this.loadModels();
@@ -198,6 +200,7 @@ interface ForgeTokenResponse {
 interface ViewerProps {
   urns: null | string[];
   setViewer: (viewer: any) => void;
+  setViewerService: (viewerService: ViewerServiceAggr) => void;
   setIsModelLoaded: (isModelLoaded: boolean) => void;
 }
 

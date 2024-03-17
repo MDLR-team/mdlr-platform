@@ -2,16 +2,34 @@ import React from "react";
 import CommentMessage from "./blocks/comment-message/comment-message";
 import styled from "styled-components";
 
-import { useComment } from "../comment-provider/comment-provider";
+import { useComment } from "../../services/project-services/comment-service/comment-provider";
 import { Box, IconButton, Paper } from "@mui/material";
 import { useMarkup } from "../markup-provider/markup-provider";
 import PlusIcon from "@/components/ui/icons/plus-icon";
 import CommentsIcon from "@/components/ui/icons/comments-icon";
 import MessageItem from "./blocks/comment/comment";
+import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
+import { useViewer } from "@/components/forge/viewer-provider";
 
 const CommentsBlock: React.FC = () => {
   const { comments, commentService } = useComment();
   const { markupsExtension } = useMarkup();
+  const { isCommentsPanelOpen } = useGlobalStates();
+
+  const { viewer } = useViewer();
+
+  const navigateToComment = (markup_position: any) => {
+    if (markup_position) {
+      const position = markup_position;
+
+      const camera = viewer.getCamera();
+      const navapi = viewer.navigation;
+
+      navapi.setTarget(position);
+    }
+  };
+
+  if (!isCommentsPanelOpen) return null;
 
   return (
     <Paper sx={{ flexDirection: "column" }}>
@@ -41,7 +59,11 @@ const CommentsBlock: React.FC = () => {
       <CommentList>
         <List>
           {comments.map((comment) => (
-            <MessageItem {...comment} key={comment.id} />
+            <MessageItem
+              {...comment}
+              navigateToComment={navigateToComment}
+              key={comment.id}
+            />
           ))}
         </List>
       </CommentList>
@@ -76,7 +98,7 @@ const CommentList = styled.div`
 const List = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 9px;
   min-height: max-content;
 `;
 

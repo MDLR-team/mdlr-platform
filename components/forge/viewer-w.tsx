@@ -8,6 +8,9 @@ import Viewer from "./viewer-aggr";
 const ViewerW = () => {
   const { viewer, setViewer } = useViewer();
   const { isModelLoaded, setIsModelLoaded } = useViewer();
+  const { setViewerService } = useViewer();
+
+  console.log("viewer", viewer);
 
   const router = useRouter();
   const [urns, setUrns] = useState<string[] | null>(null);
@@ -25,6 +28,7 @@ const ViewerW = () => {
       urns={urns}
       setViewer={setViewer}
       setIsModelLoaded={setIsModelLoaded}
+      setViewerService={setViewerService}
     />
   );
 };

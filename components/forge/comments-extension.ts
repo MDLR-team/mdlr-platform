@@ -120,6 +120,7 @@ class CommentsExtension {
   public createMarkupSvg(content: string | number) {
     const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
     g.setAttribute("pointer-events", "all");
+    g.setAttribute("cursor", "pointer");
 
     const svg_background = document.createElementNS(
       "http://www.w3.org/2000/svg",
@@ -173,6 +174,11 @@ class CommentsExtension {
   ) {
     const mesh = this.createMarkupMesh();
     const svg = this.createMarkupSvg(this._comments.size + 1);
+
+    // add event click for svg and navigate to comment
+    svg.addEventListener("click", () => {
+      this.navigateToComment(id);
+    });
 
     // for mesh
     if (this._renderType === "mesh") {
@@ -293,7 +299,23 @@ class CommentsExtension {
     this._viewer.impl.invalidate(true);
   }
 
-  
+  // navigate camera to center of xyz of comment
+  public navigateToComment(id: number | string) {
+    const comment = this._comments.get(id);
+
+    const THREE = (window as any).THREE;
+
+    if (comment) {
+      const position = comment.position;
+      const viewer = this._viewer;
+
+      const camera = viewer.getCamera();
+      const navapi = viewer.navigation;
+
+      navapi.setTarget(position);
+    }
+  }
+
   public dispose() {
     this._removeEventListeners();
 

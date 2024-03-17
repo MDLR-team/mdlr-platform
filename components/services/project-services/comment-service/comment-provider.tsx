@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import CommentService, { Comment } from "../comment-service/comment-service";
+import CommentService, { Comment } from "./comment-service";
 import { supabase } from "@/components/supabase-client";
-import { useProject } from "@/components/project/project-provider";
+import { useProject } from "@/components/services/project-services/project-service/project-provider";
 
 interface CommentContentProps {
   comments: Comment[];

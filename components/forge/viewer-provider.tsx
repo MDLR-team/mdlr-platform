@@ -1,18 +1,21 @@
-import { useRouter } from "next/router";
-import { createContext, useContext, useEffect, useState } from "react";
-import base64url from "base64url";
+import { createContext, useContext, useState } from "react";
+import ViewerServiceAggr from "./viewer-service-aggr";
 
 interface ViewerContentProps {
   viewer: any;
   setViewer: (value: any) => void;
   isModelLoaded: boolean;
   setIsModelLoaded: (value: boolean) => void;
+  setViewerService: (value: ViewerServiceAggr) => void;
 }
 
 const ViewerContext = createContext<ViewerContentProps | null>(null);
 
 export function ViewerProvider({ children }: any) {
   const [viewer, setViewer] = useState<any>(null);
+  const [viewerService, setViewerService] = useState<ViewerServiceAggr | null>(
+    null
+  );
   const [isModelLoaded, setIsModelLoaded] = useState<boolean>(false);
 
   return (
@@ -22,6 +25,7 @@ export function ViewerProvider({ children }: any) {
         setViewer,
         isModelLoaded,
         setIsModelLoaded,
+        setViewerService,
       }}
     >
       {children}

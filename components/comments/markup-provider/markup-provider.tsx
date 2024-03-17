@@ -1,7 +1,7 @@
 import MarkupExtension from "@/components/forge/markup-extension";
 import { useViewer } from "@/components/forge/viewer-provider";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useComment } from "../comment-provider/comment-provider";
+import { useComment } from "../../services/project-services/comment-service/comment-provider";
 
 interface MarkupProviderProps {
   markupsExtension: MarkupExtension | null;

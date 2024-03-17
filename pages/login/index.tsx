@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 
 import { createClient } from "@/utils/supabase/component";
-import { useAuth } from "@/components/auth/auth-provider";
+import { useAuth } from "@/components/services/app-services/auth/auth-provider";
 import styled from "styled-components";
 
 const LoginPage = () => {

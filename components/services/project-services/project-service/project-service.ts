@@ -2,6 +2,8 @@ import { NextRouter } from "next/router";
 import base64url from "base64url";
 
 import { SupabaseClient } from "@supabase/supabase-js";
+import { Project } from "@/components/types/supabase-data.types";
+import { supabase } from "@/components/supabase-client";
 
 class ProjectService {
   private _router: any;
@@ -12,8 +14,11 @@ class ProjectService {
   public title: string | null = null;
   public bimId: string | null = null;
   public createdAt: string | null = null;
+  public thumbnail: string | null = null;
 
   private $setIsReady: any;
+  private $setTitle: any;
+  private $setThumbnail: any;
 
   constructor(private _supabase: SupabaseClient) {}
 
@@ -38,11 +43,10 @@ class ProjectService {
     } */
 
     // If the project is found, return it
+
     if (projects) {
       return { project: projects, error: null };
     }
-
-    console.log("Not found", bimId);
 
     // If the project was not found, create a new one
     const { data: newProject, error: createError } = await supabase
@@ -81,6 +85,66 @@ class ProjectService {
     return projectId;
   }
 
+  public async updateMetadata(metadata: Partial<Project>) {
+    const { data, error } = await this._supabase
+      .from("projects")
+      .update(metadata)
+      .eq("id", this.id);
+
+    if (error) {
+      console.error("Error updating project metadata:", error);
+    } else {
+      console.log("Project metadata updated:", data);
+    }
+
+    if (metadata.title) {
+      this.title = metadata.title;
+      this.$setTitle(this.title);
+    }
+
+    if (metadata.thumbnail) {
+      this.thumbnail = metadata.thumbnail;
+      this.$setThumbnail(this.thumbnail);
+    }
+
+    return { data, error };
+  }
+
+  public async uploadThumbnailFromBase64(
+    base64: string,
+    _fileName?: string
+  ): Promise<string | null> {
+    const blob = dataURLToBlob(base64);
+
+    // Generate a unique file name for the thumbnail
+    // Adjust the naming convention as necessary
+    const __fileName = `${this.id}-${Date.now()}.png`;
+    const fileName = _fileName || __fileName;
+
+    const { data, error } = await this._supabase.storage
+      .from("thumbs")
+      .upload(fileName, blob, {
+        cacheControl: "3600",
+        upsert: true, // Set to true if you want to overwrite existing files with the same name
+      });
+
+    if (error) {
+      console.error("Failed to upload thumbnail:", error.message);
+    } else {
+      console.log("Thumbnail uploaded successfully:", fileName);
+    }
+
+    const supabaseURL =
+      "https://ixuszjrnviwgquuqfbmk.supabase.co/storage/v1/object/public/";
+
+    if (data) {
+      const thumbnailURL = `${supabaseURL}thumbs/${data!.path}`;
+      return thumbnailURL;
+    }
+
+    return null;
+  }
+
   public async provideStates(states: States) {
     if (this._wasInitialized) return;
 
@@ -88,6 +152,8 @@ class ProjectService {
 
     this._router = states.router;
     this.$setIsReady = states.setIsReady;
+    this.$setTitle = states.setTitle;
+    this.$setThumbnail = states.setThumbnail;
 
     const data = await this.init();
 
@@ -99,23 +165,33 @@ class ProjectService {
         this.title = project.title;
         this.bimId = project.bim_id;
         this.createdAt = project.created_at;
+        this.thumbnail = project.thumbnail;
 
+        this.$setTitle(this.title);
+        this.$setThumbnail(project.thumbnail);
         this.$setIsReady(true);
       }
     }
   }
 }
 
-interface ProjectType {
-  id: string;
-  title: string;
-  bim_id: string;
-  created_at: string;
+// Utility function to convert a data URL to a Blob
+function dataURLToBlob(dataURL: string) {
+  const byteString = atob(dataURL.split(",")[1]);
+  const mimeString = dataURL.split(",")[0].split(":")[1].split(";")[0];
+  const ab = new ArrayBuffer(byteString.length);
+  const ia = new Uint8Array(ab);
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+  return new Blob([ab], { type: mimeString });
 }
 
 interface States {
   router: NextRouter;
   setIsReady: (value: boolean) => void;
+  setTitle: (value: string) => void;
+  setThumbnail: (value: string | null) => void;
 }
 
 export default ProjectService;

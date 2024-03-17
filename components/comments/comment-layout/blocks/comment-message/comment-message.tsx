@@ -3,8 +3,8 @@ import { Box, TextField, Button } from "@mui/material";
 import { supabase } from "@/components/supabase-client";
 import { useMarkup } from "../../../markup-provider/markup-provider";
 import styled from "styled-components";
-import { useProject } from "@/components/project/project-provider";
-import { useAuth } from "@/components/auth/auth-provider";
+import { useProject } from "@/components/services/project-services/project-service/project-provider";
+import { useAuth } from "@/components/services/app-services/auth/auth-provider";
 
 const CommentMessage = () => {
   const [comment, setComment] = useState("");

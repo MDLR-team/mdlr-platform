@@ -1,4 +1,4 @@
-import { AuthProvider } from "@/components/auth/auth-provider";
+import { AuthProvider } from "@/components/services/app-services/auth/auth-provider";
 import Wrapper from "@/components/layout/wrapper/wrapper";
 import type { AppProps } from "next/app";
 import { createGlobalStyle } from "styled-components";
@@ -23,10 +23,12 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: "Roboto", sans-serif;
+    background-color: #F1F0EE;
 
     &, & * {
       color: #333333;
       font-size: 12px;
+      box-sizing: border-box;
     }
   }
 
@@ -67,7 +69,7 @@ const GlobalStyle = createGlobalStyle`
   & .MuiPaper-root {
     & {
       & {
-        border-radius: 9px !important;
+        border-radius: 8px !important;
         box-shadow: none !important;
         position: relative;
         display: flex;
@@ -80,7 +82,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   // IconButtons
-  & .MuiButtonBase-root {
+  & .MuiButtonBase-root.MuiIconButton-root {
     min-width: 27px;
     width: 27px;
     height: 27px;
@@ -104,12 +106,22 @@ const GlobalStyle = createGlobalStyle`
   }
 
   // MuiButton
-  & .MuiButton-root {
-    border-radius: 9px !important;
-    background-color: #f9e05e !important;
-    box-shadow: none !important;
+  && .MuiButton-root {
+    border-radius: 8px !important;
     min-width: max-content;
     height: 33px;
+
+    &.MuiButton-contained {
+      box-shadow: none !important;
+    }
+
+    &.MuiButton-containedPrimary {
+      background-color: #f9e05e;
+      
+      &:hover {
+        background-color: #f9e05e;
+      }
+    }
 
     &, & * {
       color: #333333 !important;

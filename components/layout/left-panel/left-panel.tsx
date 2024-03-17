@@ -1,4 +1,4 @@
-import { useAuth } from "@/components/auth/auth-provider";
+import { useAuth } from "@/components/services/app-services/auth/auth-provider";
 import { Menu, MenuItem, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import styled from "styled-components";

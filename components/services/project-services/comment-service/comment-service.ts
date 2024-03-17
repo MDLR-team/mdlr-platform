@@ -1,4 +1,4 @@
-import ProjectService from "@/components/project/project-service";
+import ProjectService from "@/components/services/project-services/project-service/project-service";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { init } from "next/dist/compiled/webpack/webpack";
 
@@ -115,6 +115,7 @@ export interface Comment {
   id: string;
   content: string;
   created_at: string;
+  markup_position: { x: number; y: number; z: number } | null;
 }
 
 export default CommentService;
