@@ -1,3 +1,4 @@
+import ActiveCommentService from "../services/project-services/active-comment-service/active-comment-service";
 import GlobalStatesService from "../services/project-services/global-states-service/global-states-service";
 import CommentsExtension from "./comments-extension";
 
@@ -5,6 +6,7 @@ class MarkupExtension {
   private _viewer: any;
   private _camera: any;
   private _globalStatesService: GlobalStatesService;
+  private _activeCommentService: ActiveCommentService;
   private _domElement: any;
   private _enabled: boolean = false;
 
@@ -19,11 +21,13 @@ class MarkupExtension {
 
   constructor(
     viewer: any,
-    options: any = {},
-    globalStatesService: GlobalStatesService
+    globalStatesService: GlobalStatesService,
+    activeCommentService: ActiveCommentService
   ) {
     this._viewer = viewer;
     this._globalStatesService = globalStatesService;
+    this._activeCommentService = activeCommentService;
+
     this._camera = viewer.impl.camera;
     this._domElement = viewer.canvas;
 
@@ -291,6 +295,10 @@ class MarkupExtension {
     return this._globalStatesService;
   }
 
+  public get activeCommentService() {
+    return this._activeCommentService;
+  }
+
   public provideStates(states: any) {
     this.$setMarkupPosition = states.setMarkupPosition;
   }
@@ -299,8 +307,8 @@ class MarkupExtension {
     this._commentsExtension.updateComments(comments);
   }
 
-  public selectComment(id: string | number) {
-    this._commentsExtension.selectComment(id);
+  public selectComment(id: string | number, needsNavigate: boolean) {
+    this._commentsExtension.selectComment(id, needsNavigate);
   }
 
   private _removeCameraChangedListener() {

@@ -1,0 +1,93 @@
+import { Wrapper } from "@/components/comments/comment-layout/blocks/comment-message/comment-message";
+import { useAuth } from "@/components/services/app-services/auth/auth-provider";
+import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
+import { useProject } from "@/components/services/project-services/project-service/project-provider";
+import { supabase } from "@/components/supabase-client";
+import { Box, Button, IconButton, TextField } from "@mui/material";
+import { useState } from "react";
+import PencilIcon from "../icons/pencil-icon";
+
+const ActiveCommentMessage = () => {
+  const [comment, setComment] = useState("");
+  const { activeComment, activeCommentService, isPenMode, isPaperMode } =
+    useActiveComment();
+
+  const { userMetadata } = useAuth();
+  const { projectService } = useProject();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Prevent the form from submitting in the traditional way
+
+    const annotation = activeCommentService.annotation;
+
+    try {
+      const { data, error } = await supabase.from("comments").insert([
+        {
+          content: comment,
+          markup_position: null,
+          project_id: projectService!.id,
+          author_id: userMetadata!.id,
+          parent_id: activeComment!.id,
+          annotation: annotation.length ? annotation : null,
+        }, // Assuming 'content' is the column name
+      ]);
+
+      if (error) throw error;
+
+      console.log("Comment added:", data);
+      setComment(""); // Reset the input field after successful submission
+    } catch (error) {
+      console.error("Error inserting comment:", error);
+    }
+
+    activeCommentService.saveAnnotation([]); // Clear the annotation after submission
+    activeCommentService.togglePenMode(false); // Disable pen mode after submission
+    setComment("");
+  };
+
+  return (
+    <Wrapper>
+      <Box
+        component="form"
+        sx={{ p: 2, borderTop: 1, borderColor: "divider", flexShrink: 0 }}
+        noValidate
+        autoComplete="off"
+        onSubmit={handleSubmit}
+      >
+        <TextField
+          placeholder="Write a comment..."
+          multiline
+          fullWidth
+          rows={2}
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          variant="outlined"
+          required
+          margin="normal"
+        />
+
+        <Box sx={{ display: "flex", gap: "9px" }}>
+          <Button
+            size="small"
+            type="submit"
+            variant="contained"
+            color="primary"
+          >
+            Submit
+          </Button>
+
+          {activeComment?.view_state && isPaperMode && (
+            <IconButton
+              data-active={isPenMode ? "true" : "false"}
+              onClick={() => activeCommentService.togglePenMode(true)}
+            >
+              <PencilIcon />
+            </IconButton>
+          )}
+        </Box>
+      </Box>
+    </Wrapper>
+  );
+};
+
+export default ActiveCommentMessage;

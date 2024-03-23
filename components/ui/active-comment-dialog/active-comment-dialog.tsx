@@ -4,27 +4,29 @@ import {
   List,
 } from "@/components/comments/comment-layout/comment-layout.styled";
 import { useComment } from "@/components/services/project-services/comment-service/comment-provider";
-import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
-import { Paper, IconButton, Typography, Button, Box } from "@mui/material";
+import { Paper, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { supabase } from "@/components/supabase-client";
-import { useViewer } from "@/components/forge/viewer-provider";
+import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
+import ActiveCommentMessage from "../active-comment-message/active-comment-message";
 
 const ActiveCommentDialog = () => {
-  const { globalStatesService, selectedCommentId, selectedCommentPosition } =
-    useGlobalStates();
+  const {
+    activeCommentService,
+    activeComment,
+    activeCommentPosition,
+    childComments,
+  } = useActiveComment();
 
   const { comments } = useComment();
-  const { viewer } = useViewer();
 
-  if (!selectedCommentPosition) return null;
+  if (!activeComment) return null;
 
   return (
     <Paper
       sx={{
         position: "absolute",
-        left: `${selectedCommentPosition.x}px`,
-        top: `${selectedCommentPosition.y}px`,
+        left: `${activeCommentPosition?.x || 0}px`,
+        top: `${activeCommentPosition?.y || 0}px`,
         minWidth: "250px",
         maxWidth: "250px",
         display: "flex",
@@ -42,7 +44,7 @@ const ActiveCommentDialog = () => {
       >
         <div />
         <IconButton
-          onClick={() => globalStatesService.deselectComment()}
+          onClick={() => activeCommentService.deselectComment()}
           sx={{ fontSize: "12px !important" }}
         >
           <CloseIcon fontSize="small" />
@@ -51,17 +53,17 @@ const ActiveCommentDialog = () => {
 
       <CommentList>
         <List>
-          {comments
-            .filter((comment) => comment.id === selectedCommentId)
-            .map((comment) => (
-              <MessageItem
-                {...comment}
-                selectComment={() => {}}
-                key={comment.id}
-              />
-            ))}
+          {childComments.map((comment) => (
+            <MessageItem
+              {...comment}
+              selectComment={() => {}}
+              key={comment.id}
+            />
+          ))}
         </List>
       </CommentList>
+
+      <ActiveCommentMessage />
     </Paper>
   );
 };

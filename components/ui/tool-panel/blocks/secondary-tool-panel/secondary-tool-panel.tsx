@@ -1,4 +1,5 @@
 import { useViewer } from "@/components/forge/viewer-provider";
+import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
 import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
 import { supabase } from "@/components/supabase-client";
 import CommentIcon from "@/components/ui/icons/comment-icon";
@@ -9,8 +10,9 @@ import { useEffect, useMemo } from "react";
 const SecondaryToolPanel = () => {
   const { commentAdding, commentPointSelected, globalStatesService } =
     useGlobalStates();
-  const { selectedComment, isViewStateEditing, selectedCommentId } =
-    useGlobalStates();
+
+  const { activeCommentService, activeComment, isPaperMode, isPaperEditing } =
+    useActiveComment();
   const { viewer } = useViewer();
 
   const isCommentPointAdding = useMemo(
@@ -19,12 +21,12 @@ const SecondaryToolPanel = () => {
   );
 
   const isCommentNeedsViewAdjustment = useMemo(
-    () => selectedComment && !selectedComment.view_state && !isViewStateEditing,
-    [selectedComment, isViewStateEditing]
+    () => activeComment && !activeComment.view_state && !isPaperEditing,
+    [activeComment, isPaperEditing]
   );
 
   const saveView = async () => {
-    if (!selectedCommentId) return;
+    if (!activeComment) return;
 
     const viewState = viewer.getState({ viewport: true });
 
@@ -32,19 +34,15 @@ const SecondaryToolPanel = () => {
       await supabase
         .from("comments")
         .update({ view_state: viewState })
-        .eq("id", selectedCommentId);
-
-      globalStatesService.toggleViewStateEditing(false);
+        .eq("id", activeComment.id);
     } catch (error) {
       console.error("Error updating comment:", error);
     }
+
+    activeCommentService.togglePaperMode(false);
   };
 
-  if (
-    !isCommentPointAdding &&
-    !isCommentNeedsViewAdjustment &&
-    !isViewStateEditing
-  )
+  if (!isCommentPointAdding && !isCommentNeedsViewAdjustment && !isPaperEditing)
     return null;
 
   return (
@@ -83,12 +81,12 @@ const SecondaryToolPanel = () => {
             </IconButton>
 
             <Box>
-              <b>"Adjust View"</b> for Comment, then add <b>replies</b> and{" "}
+              <b>Adjust View</b> for Comment, then add <b>replies</b> and{" "}
               <b>annotations.</b>
             </Box>
 
             <Button
-              onClick={() => globalStatesService.toggleViewStateEditing(true)}
+              onClick={() => activeCommentService.togglePaperMode(true)}
               size={"small"}
               variant="contained"
               color="primary"
@@ -98,18 +96,25 @@ const SecondaryToolPanel = () => {
           </>
         )}
 
-        {isViewStateEditing && (
-          <Button
-            onClick={() => {
-              saveView();
-              globalStatesService.toggleViewStateEditing(false);
-            }}
-            size={"small"}
-            variant="contained"
-            color="primary"
-          >
-            Save View
-          </Button>
+        {isPaperEditing && (
+          <>
+            <IconButton data-active="true">
+              <FitIcon />
+            </IconButton>
+
+            <Box>
+              Once you finish, click <b>Save View</b>
+            </Box>
+
+            <Button
+              onClick={() => saveView()}
+              size={"small"}
+              variant="contained"
+              color="primary"
+            >
+              Save View
+            </Button>
+          </>
         )}
       </Paper>
     </Box>

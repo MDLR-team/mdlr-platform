@@ -1,3 +1,4 @@
+import ActiveCommentService from "../services/project-services/active-comment-service/active-comment-service";
 import GlobalStatesService from "../services/project-services/global-states-service/global-states-service";
 import MarkupExtension from "./markup-extension";
 
@@ -5,6 +6,7 @@ class CommentsExtension {
   private _markupExtension: MarkupExtension;
   private _viewer: any;
   private _globalStatesService: GlobalStatesService;
+  private _activeCommentService: ActiveCommentService;
   private _camera: any;
 
   private _renderType: "mesh" | "svg" = "svg";
@@ -18,6 +20,8 @@ class CommentsExtension {
     this._markupExtension = markupExtension;
     this._viewer = markupExtension.viewer;
     this._globalStatesService = markupExtension.globalStatesService;
+    this._activeCommentService = markupExtension.activeCommentService;
+
     this._camera = this._viewer.getCamera();
 
     this._svgCanvas = document.getElementById("comments_layer") as HTMLElement;
@@ -89,12 +93,13 @@ class CommentsExtension {
     }
 
     // check if selected comment is still in view
-    const selectedCommentId = this._globalStatesService.selectedCommentId;
-    if (selectedCommentId) {
-      const comment = this._comments.get(selectedCommentId);
+    const activeComment = this._activeCommentService.activeComment;
+
+    if (activeComment) {
+      const comment = this._comments.get(activeComment.id);
       if (comment) {
         const position = this._toScreenXY(comment.position);
-        this._globalStatesService.updateSelectedCommentPosition(position);
+        this._activeCommentService.updateCommentPosition(position);
       }
     }
   }
@@ -191,7 +196,7 @@ class CommentsExtension {
 
     // add event click for svg and navigate to comment
     svg.addEventListener("click", () => {
-      this._globalStatesService.selectComment(id);
+      this._activeCommentService.selectComment(id);
     });
 
     // for mesh
@@ -330,16 +335,16 @@ class CommentsExtension {
     }
   }
 
-  public selectComment(id: number | string | null) {
+  public selectComment(id: number | string | null, needsNavigate: boolean) {
     if (!id) return;
 
     const comment = this._comments.get(id);
 
     if (comment) {
-      this.navigateToComment(comment.id);
+      if (needsNavigate) this.navigateToComment(comment.id);
 
       const position = this._toScreenXY(comment.position);
-      this._globalStatesService.updateSelectedCommentPosition(position);
+      this._activeCommentService.updateCommentPosition(position);
     }
   }
 

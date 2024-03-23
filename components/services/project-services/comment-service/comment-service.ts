@@ -1,6 +1,6 @@
 import ProjectService from "@/components/services/project-services/project-service/project-service";
 import { SupabaseClient } from "@supabase/supabase-js";
-import { init } from "next/dist/compiled/webpack/webpack";
+import { v4 as uuidv4 } from "uuid";
 
 class CommentService {
   private _comments: Map<string | number, Comment>;
@@ -10,6 +10,7 @@ class CommentService {
   private _projectService: ProjectService | undefined;
 
   private $setComments: any;
+  private $setCommentLogId: any;
 
   private _eventSubscribers = new Map<string, EventCallback[]>();
 
@@ -97,6 +98,7 @@ class CommentService {
     this._emit("COMMENTS_UPDATED", this._comments);
 
     this.$setComments(sortedComments);
+    this.$setCommentLogId(uuidv4());
   }
 
   public init() {
@@ -107,8 +109,10 @@ class CommentService {
   public provideStates(states: {
     projectService: ProjectService;
     setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
+    setCommentLogId: React.Dispatch<React.SetStateAction<string>>;
   }) {
     this.$setComments = states.setComments;
+    this.$setCommentLogId = states.setCommentLogId;
     this._projectService = states.projectService;
   }
 
@@ -160,6 +164,7 @@ export interface Comment {
   markup_position: { x: number; y: number; z: number } | null;
   view_state: any | null;
   parent_id: string | null;
+  annotation: any[] | null;
 }
 
 export default CommentService;

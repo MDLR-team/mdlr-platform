@@ -5,26 +5,17 @@ import React, {
   useState,
   ReactNode,
 } from "react";
-import GlobalStatesService, {
-  SelectedCommentPositionXY,
-} from "./global-states-service";
+import GlobalStatesService from "./global-states-service";
 import { useRouter } from "next/router";
-import { Comment } from "../comment-service/comment-service";
 
 // Interface definitions for global states
 interface GlobalStatesProps {
   globalStatesService: GlobalStatesService;
   isSettingsPanelOpen: boolean;
   isCommentsPanelOpen: boolean;
-  selectedCommentId: string | null;
-  selectedCommentPosition: SelectedCommentPositionXY | null;
-  selectedComment: Comment | null;
-  isPaperOpen: boolean;
   commentAdding: boolean;
   commentAwaitingSelection: boolean;
   commentPointSelected: boolean;
-  commentAdjustingView: boolean;
-  isViewStateEditing: boolean;
 }
 
 // Context creation
@@ -50,24 +41,11 @@ export const GlobalStatesProvider: React.FC<ProviderProps> = ({ children }) => {
   const [isSettingsPanelOpen, setIsSettingsPanelOpen] = useState(false);
   const [isCommentsPanelOpen, setIsCommentsPanelOpen] = useState(false);
 
-  // Comment-related States
-  const [selectedCommentId, setSelectedCommentId] = useState<string | null>(
-    null
-  );
-  const [selectedCommentPosition, setSelectedCommentPosition] =
-    useState<SelectedCommentPositionXY | null>(null);
-  const [selectedComment, setSelectedComment] = useState<Comment | null>(null);
-
-  // Paper.js canvas open state
-  const [isPaperOpen, setPaperOpen] = useState(false);
-  const [isViewStateEditing, setIsViewStateEditing] = useState(false);
-
   // States related to the comment adding process
   const [commentAdding, setCommentAdding] = useState(false);
   const [commentAwaitingSelection, setCommentAwaitingSelection] =
     useState(false);
   const [commentPointSelected, setCommentPointSelected] = useState(false);
-  const [commentAdjustingView, setCommentAdjustingView] = useState(false);
 
   // Effect hook for initializing and updating global states
   useEffect(() => {
@@ -78,15 +56,9 @@ export const GlobalStatesProvider: React.FC<ProviderProps> = ({ children }) => {
     globalStatesService.provideStates({
       setIsSettingsPanelOpen,
       setIsCommentsPanelOpen,
-      setSelectedCommentId,
-      setSelectedCommentPosition,
-      setSelectedComment,
-      setPaperOpen,
       setCommentAdding,
       setCommentAwaitingSelection,
       setCommentPointSelected,
-      setCommentAdjustingView,
-      setIsViewStateEditing,
     });
   }, [router.isReady]); // Depend on router readiness
 
@@ -95,15 +67,9 @@ export const GlobalStatesProvider: React.FC<ProviderProps> = ({ children }) => {
     globalStatesService,
     isSettingsPanelOpen,
     isCommentsPanelOpen,
-    selectedCommentId,
-    selectedCommentPosition,
-    selectedComment,
-    isPaperOpen,
     commentAdding,
     commentAwaitingSelection,
     commentPointSelected,
-    commentAdjustingView,
-    isViewStateEditing,
   };
 
   // Render provider with context

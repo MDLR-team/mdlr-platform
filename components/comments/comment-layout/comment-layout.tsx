@@ -1,6 +1,5 @@
 import React from "react";
 import CommentMessage from "./blocks/comment-message/comment-message";
-import styled from "styled-components";
 
 import { useComment } from "../../services/project-services/comment-service/comment-provider";
 import { Box, IconButton, Paper } from "@mui/material";
@@ -9,16 +8,14 @@ import PlusIcon from "@/components/ui/icons/plus-icon";
 import CommentsIcon from "@/components/ui/icons/comments-icon";
 import MessageItem from "./blocks/comment/comment";
 import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
-import { useViewer } from "@/components/forge/viewer-provider";
 import { CommentList, Header, List } from "./comment-layout.styled";
+import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
 
 const CommentsBlock: React.FC = () => {
-  const { globalStatesService } = useGlobalStates();
-  const { comments, commentService } = useComment();
+  const { comments } = useComment();
+  const { activeCommentService } = useActiveComment();
   const { markupsExtension } = useMarkup();
   const { isCommentsPanelOpen } = useGlobalStates();
-
-  const { viewer } = useViewer();
 
   if (!isCommentsPanelOpen) return null;
 
@@ -49,18 +46,17 @@ const CommentsBlock: React.FC = () => {
 
       <CommentList>
         <List>
-          {comments.map((comment, i) => (
-            <MessageItem
-              {...comment}
-              index={comments.length - i}
-              selectComment={() => {
-                if (!comment.markup_position) return;
-
-                globalStatesService.selectComment(comment.id);
-              }}
-              key={comment.id}
-            />
-          ))}
+          {comments
+            .filter((comment) => !comment.parent_id)
+            .map((comment, i) => (
+              <MessageItem
+                {...comment}
+                selectComment={() =>
+                  activeCommentService.selectComment(comment.id)
+                }
+                key={comment.id}
+              />
+            ))}
         </List>
       </CommentList>
     </Paper>

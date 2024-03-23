@@ -1,14 +1,10 @@
-import axios from "axios";
 import { useRouter } from "next/router";
-import { use, useEffect, useRef, useState } from "react";
-import MarkupExtension from "./markup-extension";
+import { useEffect, useState } from "react";
 import { useViewer } from "./viewer-provider";
 import Viewer from "./viewer-aggr";
 
 const ViewerW = () => {
-  const { viewer, setViewer } = useViewer();
-  const { isModelLoaded, setIsModelLoaded } = useViewer();
-  const { setViewerService } = useViewer();
+  const { setViewer, setIsModelLoaded, setViewerService } = useViewer();
 
   const router = useRouter();
   const [urns, setUrns] = useState<string[] | null>(null);
