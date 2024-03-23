@@ -1,24 +1,36 @@
+import PaperCanvas from "@/components/paper/paper";
+import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
 import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
 import { Box } from "@mui/material";
 import styled from "styled-components";
 
 const ViewStateMode = () => {
-  const { isViewStateEditing, isPaperOpen } = useGlobalStates();
+  const { isPaperMode, isPaperEditing } = useActiveComment();
 
-  if (!isViewStateEditing && !isPaperOpen) return null;
+  if (!isPaperMode) return null;
 
   return (
-    <FloatingWrapper>
-      <Darkarea />
-      <Darkarea />
-      <Darkarea />
-      <Darkarea />
-      <Box sx={{ border: "2px solid black" }}></Box>
-      <Darkarea />
-      <Darkarea />
-      <Darkarea />
-      <Darkarea />
-    </FloatingWrapper>
+    <>
+      <FloatingWrapper
+        data-mode={isPaperMode && isPaperEditing ? "edit" : "workspace"}
+      >
+        <Darkarea />
+        <Darkarea />
+        <Darkarea />
+        <Darkarea />
+        <Box sx={{ border: "2px solid black" }}></Box>
+        <Darkarea />
+        <Darkarea />
+        <Darkarea />
+        <Darkarea />
+      </FloatingWrapper>
+
+      {isPaperMode && !isPaperEditing && (
+        <FloatingWrapper data-type="draw">
+          <PaperCanvas />
+        </FloatingWrapper>
+      )}
+    </>
   );
 };
 
@@ -32,11 +44,20 @@ const FloatingWrapper = styled.div`
   top: 0;
   left: 0;
 
-  pointer-events: none;
+  &&[data-mode="edit"] {
+    pointer-events: none;
+  }
 
-  display: grid;
-  grid-template-columns: ${offset}px auto ${offset}px;
-  grid-template-rows: ${offset}px auto ${offset}px;
+  &&[data-mode="edit"],
+  &&[data-mode="workspace"] {
+    display: grid;
+    grid-template-columns: ${offset}px auto ${offset}px;
+    grid-template-rows: ${offset}px auto ${offset}px;
+  }
+
+  &&[data-mode="draw"] {
+    display: flex;
+  }
 `;
 
 const Darkarea = styled.div`

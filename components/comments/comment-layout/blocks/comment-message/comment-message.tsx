@@ -78,7 +78,7 @@ const CommentMessage = () => {
   );
 };
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   &&&& {
     &,
     & * {

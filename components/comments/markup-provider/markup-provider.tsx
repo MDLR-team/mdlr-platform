@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useComment } from "../../services/project-services/comment-service/comment-provider";
 import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
 import hotkeys from "hotkeys-js";
+import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
 
 interface MarkupProviderProps {
   markupsExtension: MarkupExtension | null;
@@ -16,7 +17,7 @@ const MarkupContext = createContext<MarkupProviderProps | undefined>(undefined);
 export function MarkupProvider({ children }: any) {
   const { viewer, isModelLoaded } = useViewer();
   const { globalStatesService } = useGlobalStates();
-  const { selectedCommentId } = useGlobalStates();
+  const { activeComment, activeCommentService } = useActiveComment();
 
   const [markupPosition, setMarkupPosition] = useState<markupPosition | null>(
     null
@@ -41,8 +42,8 @@ export function MarkupProvider({ children }: any) {
       load() {
         this.markupsExtension = new MarkupExtension(
           this.viewer,
-          undefined,
-          globalStatesService
+          globalStatesService,
+          activeCommentService
         );
         this.markupsExtension.provideStates({
           setMarkupPosition,
@@ -92,10 +93,10 @@ export function MarkupProvider({ children }: any) {
 
   useEffect(() => {
     if (!markupsExtension) return;
-    if (!selectedCommentId) return;
+    if (!activeComment) return;
 
-    markupsExtension.selectComment(selectedCommentId);
-  }, [selectedCommentId, markupsExtension]);
+    markupsExtension.selectComment(activeComment.id, false);
+  }, [activeComment, markupsExtension]);
 
   // Hotkey for toggling comment adding
   // Hotkey bindings
@@ -106,7 +107,7 @@ export function MarkupProvider({ children }: any) {
       switch (handler.key) {
         case "esc":
           markupsExtension?.enable(false);
-          globalStatesService.toggleViewStateEditing(false);
+          activeCommentService.togglePaperMode(false);
           break;
         default:
           break;

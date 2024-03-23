@@ -1,4 +1,3 @@
-import { Paper } from "@mui/material";
 import styled from "styled-components";
 import Bar from "./bar/bar";
 import CommentsBlock from "../comments/comment-layout/comment-layout";

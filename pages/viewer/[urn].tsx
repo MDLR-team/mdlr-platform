@@ -14,8 +14,8 @@ const ViewerPage = () => {
       <ProjectProvider>
         <ViewerProvider>
           <CommentProvider>
-            <MarkupProvider>
-              <ActiveCommentProvider>
+            <ActiveCommentProvider>
+              <MarkupProvider>
                 <div
                   style={{
                     display: "flex",
@@ -24,14 +24,12 @@ const ViewerPage = () => {
                     position: "relative",
                   }}
                 >
-                  <PaperCanvas />
-
                   <UIGrid />
 
                   <ViewerW />
                 </div>
-              </ActiveCommentProvider>
-            </MarkupProvider>
+              </MarkupProvider>
+            </ActiveCommentProvider>
           </CommentProvider>
         </ViewerProvider>
       </ProjectProvider>

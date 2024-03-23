@@ -3,10 +3,12 @@ import CommentService, { Comment } from "./comment-service";
 import { supabase } from "@/components/supabase-client";
 import { useProject } from "@/components/services/project-services/project-service/project-provider";
 import { useGlobalStates } from "../global-states-service/global-states-provider";
+import { v4 as uuidv4 } from "uuid";
 
 interface CommentContentProps {
   comments: Comment[];
   commentService: CommentService;
+  commentLogId: string;
 }
 
 const CommentContext = createContext<CommentContentProps | undefined>(
@@ -14,10 +16,11 @@ const CommentContext = createContext<CommentContentProps | undefined>(
 );
 
 export function CommentProvider({ children }: any) {
-  const { globalStatesService, selectedCommentId } = useGlobalStates();
+  const { globalStatesService } = useGlobalStates();
   const { projectService } = useProject();
 
   const [comments, setComments] = useState<Comment[]>([]);
+  const [commentLogId, setCommentLogId] = useState<string>(uuidv4());
   const [commentService] = useState(() => new CommentService(supabase));
 
   useEffect(() => {
@@ -26,6 +29,7 @@ export function CommentProvider({ children }: any) {
     commentService.provideStates({
       projectService,
       setComments,
+      setCommentLogId,
     });
 
     commentService.init();
@@ -35,38 +39,12 @@ export function CommentProvider({ children }: any) {
     };
   }, []);
 
-  useEffect(() => {
-    const handleCommentsUpdated = (comments: Map<string, Comment>) => {
-      const selectedCommentId = globalStatesService.selectedCommentId;
-
-      console.log("selectedCommentIsssd", selectedCommentId);
-
-      if (selectedCommentId) {
-        const comment = comments.get(selectedCommentId as string);
-
-        globalStatesService.setSelectedComment(comment as Comment);
-      }
-    };
-
-    commentService.on("COMMENTS_UPDATED", handleCommentsUpdated);
-
-    if (selectedCommentId) {
-      const comments = commentService.comments;
-      const comment = comments.get(selectedCommentId);
-
-      globalStatesService.setSelectedComment(comment as Comment);
-    }
-
-    return () => {
-      commentService.off("COMMENTS_UPDATED", handleCommentsUpdated);
-    };
-  }, [comments, selectedCommentId]);
-
   return (
     <CommentContext.Provider
       value={{
         comments,
         commentService,
+        commentLogId,
       }}
     >
       {children}

@@ -1,35 +1,127 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, use, useContext, useEffect, useState } from "react";
 import { supabase } from "@/components/supabase-client";
 import { useProject } from "@/components/services/project-services/project-service/project-provider";
-import ActiveCommentService from "./active-comment-service";
+import ActiveCommentService, { PointXY } from "./active-comment-service";
 import { useGlobalStates } from "../global-states-service/global-states-provider";
 import { useComment } from "../comment-service/comment-provider";
+import { Comment } from "../comment-service/comment-service";
+import hotkeys from "hotkeys-js";
+import { useViewer } from "@/components/forge/viewer-provider";
 
-interface ActiveCommentContentProps {}
+interface ActiveCommentContentProps {
+  activeCommentService: ActiveCommentService;
+  activeComment: Comment | null;
+  activeCommentPosition: { x: number; y: number };
+  isPaperMode: boolean;
+  isPaperEditing: boolean;
+  isPenMode: boolean;
+  childComments: Comment[];
+}
 
 const ActiveCommentContext = createContext<
   ActiveCommentContentProps | undefined
 >(undefined);
 
 export function ActiveCommentProvider({ children }: any) {
-  const { globalStatesService, selectedCommentId } = useGlobalStates();
-  const { commentService } = useComment();
+  const { globalStatesService } = useGlobalStates();
+  const { commentService, commentLogId } = useComment();
+  const { viewer } = useViewer();
 
   const [activeCommentService] = useState(
     () =>
       new ActiveCommentService(supabase, globalStatesService, commentService)
   );
 
+  // Comment-related States
+  const [activeComment, setActiveComment] = useState<Comment | null>(null);
+  const [activeCommentPosition, setActiveCommentPosition] = useState<PointXY>({
+    x: 0,
+    y: 0,
+  });
+
+  const [isPaperMode, setIsPaperMode] = useState(false);
+  const [isPaperEditing, setIsPaperEditing] = useState(false);
+
+  const [childComments, setChildComments] = useState<Comment[]>([]);
+
+  const [isPenMode, setIsPenMode] = useState(false);
+
   useEffect(() => {
+    if (!viewer) return;
+
+    activeCommentService.provideStates({
+      setActiveComment,
+      setActiveCommentPosition,
+      setIsPaperMode,
+      setIsPaperEditing,
+      setIsPenMode,
+      setChildComments,
+      viewer,
+    });
     activeCommentService.init();
 
     return () => {
       activeCommentService.dispose();
     };
-  }, []);
+  }, [viewer]);
+
+  useEffect(() => {
+    activeCommentService.checkActiveComment();
+  }, [commentLogId]);
+
+  useEffect(() => {
+    if (isPenMode) {
+      const hotKeyString = "esc, enter, p"; // Added 'p' to the hotkey string
+      const hotKeyCallback = (event: KeyboardEvent, handler: any) => {
+        event.preventDefault();
+        switch (handler.key) {
+          case "esc":
+            activeCommentService.togglePenMode(false);
+            break;
+          case "enter":
+            activeCommentService.togglePenMode(false);
+            break;
+          case "p": // Added case for 'p' key
+            activeCommentService.togglePenMode(false);
+            break;
+          default:
+            break;
+        }
+      };
+
+      hotkeys(hotKeyString, hotKeyCallback);
+      return () => hotkeys.unbind(hotKeyString, hotKeyCallback);
+    } else {
+      const hotkeyString = "p";
+
+      const hotkeyCallback = (event: KeyboardEvent, handler: any) => {
+        event.preventDefault();
+        switch (handler.key) {
+          case "p":
+            activeCommentService.togglePenMode(true);
+            break;
+          default:
+            break;
+        }
+      };
+
+      hotkeys(hotkeyString, hotkeyCallback);
+      return () => hotkeys.unbind(hotkeyString, hotkeyCallback);
+    }
+  }, [isPenMode]);
 
   return (
-    <ActiveCommentContext.Provider value={{}}>
+    <ActiveCommentContext.Provider
+      value={{
+        activeCommentService,
+        activeComment,
+        activeCommentPosition,
+        isPaperMode,
+        isPaperEditing,
+        isPenMode,
+        childComments,
+      }}
+    >
       {children}
     </ActiveCommentContext.Provider>
   );
