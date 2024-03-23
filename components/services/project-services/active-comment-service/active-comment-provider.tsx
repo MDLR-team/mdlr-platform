@@ -1,6 +1,5 @@
-import { createContext, use, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "@/components/supabase-client";
-import { useProject } from "@/components/services/project-services/project-service/project-provider";
 import ActiveCommentService, { PointXY } from "./active-comment-service";
 import { useGlobalStates } from "../global-states-service/global-states-provider";
 import { useComment } from "../comment-service/comment-provider";
@@ -11,11 +10,12 @@ import { useViewer } from "@/components/forge/viewer-provider";
 interface ActiveCommentContentProps {
   activeCommentService: ActiveCommentService;
   activeComment: Comment | null;
-  activeCommentPosition: { x: number; y: number };
+  activeCommentPosition: PointXY | null;
   isPaperMode: boolean;
   isPaperEditing: boolean;
   isPenMode: boolean;
   childComments: Comment[];
+  annotation: any[];
 }
 
 const ActiveCommentContext = createContext<
@@ -34,10 +34,8 @@ export function ActiveCommentProvider({ children }: any) {
 
   // Comment-related States
   const [activeComment, setActiveComment] = useState<Comment | null>(null);
-  const [activeCommentPosition, setActiveCommentPosition] = useState<PointXY>({
-    x: 0,
-    y: 0,
-  });
+  const [activeCommentPosition, setActiveCommentPosition] =
+    useState<PointXY | null>(null);
 
   const [isPaperMode, setIsPaperMode] = useState(false);
   const [isPaperEditing, setIsPaperEditing] = useState(false);
@@ -45,6 +43,7 @@ export function ActiveCommentProvider({ children }: any) {
   const [childComments, setChildComments] = useState<Comment[]>([]);
 
   const [isPenMode, setIsPenMode] = useState(false);
+  const [annotation, setAnnotation] = useState<any[]>([]);
 
   useEffect(() => {
     if (!viewer) return;
@@ -56,6 +55,7 @@ export function ActiveCommentProvider({ children }: any) {
       setIsPaperEditing,
       setIsPenMode,
       setChildComments,
+      setAnnotation,
       viewer,
     });
     activeCommentService.init();
@@ -120,6 +120,7 @@ export function ActiveCommentProvider({ children }: any) {
         isPaperEditing,
         isPenMode,
         childComments,
+        annotation,
       }}
     >
       {children}

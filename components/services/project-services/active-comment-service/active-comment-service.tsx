@@ -1,6 +1,8 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import GlobalStatesService from "../global-states-service/global-states-service";
 import CommentService, { Comment } from "../comment-service/comment-service";
+import MarkupExtension from "@/components/forge/markup-extension";
+import paper, { Path, Tool } from "paper";
 
 class ActiveCommentService {
   private _activeComment: Comment | null = null;
@@ -9,6 +11,7 @@ class ActiveCommentService {
   private _isPenMode: boolean = false;
 
   private _viewer: any;
+  private _markupExtension?: MarkupExtension;
 
   private $setActiveComment: any;
   private $setActiveCommentPosition: any;
@@ -16,8 +19,10 @@ class ActiveCommentService {
   private $setIsPaperEditing: any;
   private $setIsPenMode: any;
   private $setChildComments: any;
+  private $setAnnotation: any;
 
   private _childComments: Map<string, Comment>;
+
   private _annotation: any[];
 
   constructor(
@@ -26,6 +31,7 @@ class ActiveCommentService {
     private _commentService: CommentService
   ) {
     this._childComments = new Map();
+
     this._annotation = [];
   }
 
@@ -37,9 +43,16 @@ class ActiveCommentService {
       this.$setActiveComment(comment);
 
       this.checkActiveComment();
+
+      // also check if the comment has a view state
+      if (this._isPaperMode && !this._activeComment?.view_state) {
+        this.togglePaperMode(false);
+      }
     } else {
       this.deselectComment();
     }
+
+    this._markupExtension?.enable(false);
   }
 
   public togglePaperMode(v?: boolean) {
@@ -79,6 +92,9 @@ class ActiveCommentService {
 
     this._isPenMode = v !== undefined ? v : !this._isPenMode;
     this.$setIsPenMode(this._isPenMode);
+
+    this._annotation = [];
+    this.$setAnnotation([]);
   }
 
   public deselectComment() {
@@ -87,6 +103,8 @@ class ActiveCommentService {
 
     this._activeComment = null;
     this.$setActiveComment(null);
+
+    this.$setActiveCommentPosition(null);
   }
 
   public init() {
@@ -131,14 +149,26 @@ class ActiveCommentService {
     this.$setIsPaperEditing = states.setIsPaperEditing;
     this.$setIsPenMode = states.setIsPenMode;
     this.$setChildComments = states.setChildComments;
+    this.$setAnnotation = states.setAnnotation;
 
     this._viewer = states.viewer;
   }
 
+  public provideMarkupExtension(markupExtension: MarkupExtension) {
+    this._markupExtension = markupExtension;
+  }
+
   public saveAnnotation(lines: any) {
     this._annotation = lines;
+    this.$setAnnotation(lines);
+  }
 
-    console.log("asdasdasd", this._annotation);
+  public addAnnotationLine(line: any) {
+    this._annotation.push(line);
+
+    console.log("added");
+
+    this.$setAnnotation([...this._annotation]);
   }
 
   public get annotation() {
@@ -150,7 +180,12 @@ class ActiveCommentService {
   }
 
   public dispose() {
-    return;
+    this.deselectComment();
+
+    this._childComments.clear();
+
+    this._annotation = [];
+    this.$setAnnotation([]);
   }
 }
 

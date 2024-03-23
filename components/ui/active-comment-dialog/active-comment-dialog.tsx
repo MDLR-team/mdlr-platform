@@ -19,7 +19,7 @@ const ActiveCommentDialog = () => {
 
   const { comments } = useComment();
 
-  if (!activeComment) return null;
+  if (!activeComment || !activeCommentPosition) return null;
 
   return (
     <Paper

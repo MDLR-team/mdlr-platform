@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import paper, { Path, Tool } from "paper";
 import { Box } from "@mui/material";
-import { useViewer } from "../forge/viewer-provider";
 import { useActiveComment } from "../services/project-services/active-comment-service/active-comment-provider";
-import { v4 as uuidv4 } from "uuid";
+import {
+  deparseNormalizedCoords,
+  transformPointToNormalizedCoords,
+} from "../services/project-services/active-comment-service/utils/point-2-normalized-coord";
 
 const PaperCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -11,12 +13,10 @@ const PaperCanvas: React.FC = () => {
 
   const { isPaperMode, isPenMode, activeCommentService, activeComment } =
     useActiveComment();
-  const { viewer } = useViewer();
-  const [userLines, setUserLines] = useState<paper.Path[]>([]); // State to keep track of lines
 
-  const { childComments } = useActiveComment();
+  const { childComments, annotation } = useActiveComment();
 
-  const [screenLogId, setScreenLogId] = useState<string>(uuidv4);
+  const [line, setLine] = useState<paper.Path | null>(null);
 
   useEffect(() => {
     if (!isPaperMode) return;
@@ -30,6 +30,9 @@ const PaperCanvas: React.FC = () => {
     // Adjust canvas to fit the window size and consider device pixel ratio
     // Define a function to resize and scale the canvas
     const resizeCanvas = () => {
+      // clear the canvas
+      paper.project.clear();
+
       const canvas = canvasRef.current;
 
       const dpr = window.devicePixelRatio || 1; // Get device pixel ratio
@@ -49,8 +52,8 @@ const PaperCanvas: React.FC = () => {
 
       // Clear previous drawings and setup for new drawing
       paper.project.clear();
-      setScreenLogId(uuidv4()); // Trigger re-render if needed
 
+      // Draw existing annotations from childComments
       const redrawAnnotations = () => {
         // Clear existing loaded lines from the canvas
         paper.project.activeLayer.children.forEach((child) => {
@@ -81,8 +84,35 @@ const PaperCanvas: React.FC = () => {
       // Listen for changes in childComments to redraw annotations
       redrawAnnotations();
 
-      // Update Paper.js view size
-      (paper.project.view as any).setViewSize(canvas!.width, canvas!.height);
+      // Draw existing user annotations
+      const redrawUserAnnotations = () => {
+        // Clear existing user annotations from the canvas
+        paper.project.activeLayer.children.forEach((child) => {
+          if (child.data && child.data.drawnBy === "user") {
+            child.remove();
+          }
+        });
+
+        const annotation = activeCommentService.annotation;
+
+        // Draw existing user annotations
+        annotation.forEach((line) => {
+          const path = new Path({
+            strokeColor: "red",
+            strokeWidth: 2,
+            data: { drawnBy: "user" }, // Mark this path as drawn by user
+          });
+          line.forEach((point: any) => {
+            const paperPoint = deparseNormalizedCoords(point, canvas);
+
+            path.add(paperPoint);
+          });
+          path.simplify(10);
+        });
+      };
+
+      // Listen for changes in user annotations to redraw annotations
+      redrawUserAnnotations();
     };
 
     // Initial resize
@@ -91,43 +121,10 @@ const PaperCanvas: React.FC = () => {
     // Resize the canvas when the window resizes
     window.addEventListener("resize", resizeCanvas);
 
-    // Listen for 'P' key press to save and clear lines
-    const handleKeyPress = (event: KeyboardEvent) => {
-      if (event.key === "A" || event.key === "a") {
-        setUserLines((lines: paper.Path[]) => {
-          const transformedLines = lines.map((line, i) => {
-            const newPath = line.segments.map((segment) => {
-              const point = { x: segment.point.x, y: segment.point.y };
-
-              return transformPointToNormalizedCoords(point, canvas);
-            });
-            return newPath; // This newPath is an array of normalized points
-          });
-
-          // Save lines to ActiveCommentService
-          activeCommentService.saveAnnotation(transformedLines);
-
-          //remove the lines from the canvas
-          paper.project.activeLayer.children.forEach((child) => {
-            if (child.data && child.data.drawnBy === "user") {
-              child.remove();
-            }
-          });
-
-          return [];
-        });
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyPress);
-
     return () => {
       window.removeEventListener("resize", resizeCanvas);
-      window.removeEventListener("keydown", handleKeyPress);
-
-      paper.project.clear();
     };
-  }, [isPaperMode, activeComment, childComments]);
+  }, [isPaperMode, activeComment, childComments, annotation]);
 
   useEffect(() => {
     if (!isPenMode) return;
@@ -135,41 +132,43 @@ const PaperCanvas: React.FC = () => {
     const tool = new Tool();
 
     tool.onMouseDown = (event: paper.ToolEvent) => {
-      const point = { x: event.point.x, y: event.point.y };
-
       const path = new Path({
-        segments: [point],
+        segments: [event.point],
         strokeColor: "red",
         strokeWidth: 2,
         fullySelected: false,
         data: {
-          drawnBy: "user",
+          drawnBy: "user2",
         },
       });
-      setUserLines((prevLines) => [...prevLines, path]); // Add the new path to lines state
+
+      setLine(path);
     };
 
-    tool.onMouseDrag = (event: paper.ToolEvent) => {
-      const point = { x: event.point.x, y: event.point.y };
-
-      if (userLines.length > 0) {
-        const currentPath = userLines[userLines.length - 1];
-        currentPath.add(point);
-      }
-    };
+    tool.onMouseDrag = (event: paper.ToolEvent) => line?.add(event.point);
 
     tool.onMouseUp = () => {
-      // Simplify the last drawn path
-      if (userLines.length > 0) {
-        const currentPath = userLines[userLines.length - 1];
-        currentPath.simplify(10);
+      if (line) {
+        line.simplify(10);
+
+        const formattedPoints: any[] = [];
+        line.segments.forEach((segment) => {
+          formattedPoints.push(
+            transformPointToNormalizedCoords(segment.point, canvasRef.current!)
+          );
+        });
+
+        activeCommentService.addAnnotationLine(formattedPoints);
+
+        line.remove();
+        setLine(null);
       }
     };
 
     return () => {
       tool.remove();
     };
-  }, [isPenMode, userLines]);
+  }, [isPenMode, line]);
 
   if (!isPaperMode) return null;
 
@@ -191,35 +190,6 @@ const PaperCanvas: React.FC = () => {
     </Box>
   );
 };
-
-// Helper function to transform point to normalized coordinates
-function transformPointToNormalizedCoords(point: any, canvas: any) {
-  const rect = canvas.getBoundingClientRect();
-  const centerX = rect.width / 2;
-  const centerY = rect.height / 2;
-  const normalizedX = (point.x - centerX) / centerX; // Maps to [-1, 1]
-  const normalizedY = -(point.y - centerY) / centerY; // Maps to [-1, 1], Y is inverted
-
-  // Adjust for aspect ratio if width is wider than height
-  const aspectRatio = rect.width / rect.height;
-
-  return { x: normalizedX * aspectRatio, y: normalizedY };
-}
-
-// Helper function to convert normalized coordinates back to canvas pixel coordinates
-function deparseNormalizedCoords(normalizedPoint: any, canvas: any) {
-  const rect = canvas.getBoundingClientRect();
-
-  const centerX = rect.width / 2;
-  const centerY = rect.height / 2;
-  const aspectRatio = rect.width / rect.height;
-
-  // Adjust coordinates based on aspect ratio
-  const x = (normalizedPoint.x / aspectRatio) * centerX + centerX;
-  const y = -(normalizedPoint.y * centerY) + centerY;
-
-  return new paper.Point(x, y);
-}
 
 // Create a new Paper.js tool for drawing
 /* const tool = new Tool();
@@ -255,5 +225,40 @@ function deparseNormalizedCoords(normalizedPoint: any, canvas: any) {
         path.simplify(10);
       }
     }; */
+
+/**
+     * 
+     *  // Listen for 'P' key press to save and clear lines
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === "A" || event.key === "a") {
+        /* setUserLines((lines: paper.Path[]) => {
+          const transformedLines = lines.map((line, i) => {
+            const newPath = line.segments.map((segment) => {
+              const point = { x: segment.point.x, y: segment.point.y };
+
+              return transformPointToNormalizedCoords(point, canvas);
+            });
+            return newPath; // This newPath is an array of normalized points
+          });
+
+          // Save lines to ActiveCommentService
+          activeCommentService.saveAnnotation(transformedLines);
+
+          //remove the lines from the canvas
+          paper.project.activeLayer.children.forEach((child) => {
+            if (child.data && child.data.drawnBy === "user") {
+              child.remove();
+            }
+          });
+
+          return [];
+        }); 
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+     */
+
+//(paper.project.view as any).setViewSize(canvas!.width, canvas!.height);
 
 export default PaperCanvas;

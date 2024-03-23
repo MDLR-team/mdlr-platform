@@ -26,7 +26,9 @@ class MarkupExtension {
   ) {
     this._viewer = viewer;
     this._globalStatesService = globalStatesService;
+
     this._activeCommentService = activeCommentService;
+    this._activeCommentService.provideMarkupExtension(this);
 
     this._camera = viewer.impl.camera;
     this._domElement = viewer.canvas;
@@ -121,6 +123,8 @@ class MarkupExtension {
     this._globalStatesService.toggleCommentAdding(flag);
 
     if (this._enabled) {
+      this.activeCommentService.deselectComment();
+
       this._addSearchMarkup();
 
       this.setupEventListeners();

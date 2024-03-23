@@ -65,6 +65,12 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  & .MuiFormControl-root {
+    & .MuiInputBase-root {
+      padding: 8px;
+    }
+  }
+
   // Papers
   & .MuiPaper-root {
     & {
