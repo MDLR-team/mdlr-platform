@@ -76,6 +76,9 @@ class CommentService {
             needsUpdate = true;
           }
 
+          if (needsUpdate)
+            console.log("%ceventType", "color: green", eventType);
+
           if (needsUpdate) this._upateComments();
         }
       )
@@ -116,6 +119,8 @@ export interface Comment {
   content: string;
   created_at: string;
   markup_position: { x: number; y: number; z: number } | null;
+  view_state: any | null;
+  parent_id: string | null;
 }
 
 export default CommentService;

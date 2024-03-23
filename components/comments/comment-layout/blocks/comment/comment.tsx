@@ -1,3 +1,4 @@
+import { useViewer } from "@/components/forge/viewer-provider";
 import { Comment } from "@/components/services/project-services/comment-service/comment-service";
 import { Box } from "@mui/material";
 import moment from "moment";
@@ -12,8 +13,11 @@ const MessageItem: React.FC<MessageItemProps> = ({
   created_at,
   markup_position,
   selectComment,
+  view_state,
   id,
 }) => {
+  const { viewer } = useViewer();
+
   // date to comment format when if it was recently we can show "just now" or "1 minute ago" or "x dayes ago" or "x months ago"
   const time = moment(created_at).fromNow();
 
@@ -40,6 +44,16 @@ const MessageItem: React.FC<MessageItemProps> = ({
 
         <Box sx={{ wordWrap: "break-word" }}>{content}</Box>
       </Box>
+
+      {view_state && (
+        <a
+          onClick={() => {
+            viewer.restoreState(view_state);
+          }}
+        >
+          sdfsdf
+        </a>
+      )}
     </Wrapper>
   );
 };

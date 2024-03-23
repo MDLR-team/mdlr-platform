@@ -1,6 +1,7 @@
 class GlobalStatesService {
   private _isSettingsPanelOpen: boolean = false;
   private _isCommentsPanelOpen: boolean = false;
+  private _isPaperOpen: boolean = false;
 
   private _selectedCommentId: string | number | null = null;
   private _selectedCommentPosition: SelectedCommentPositionXY | null = null;
@@ -9,6 +10,7 @@ class GlobalStatesService {
   private $setIsCommentsPanelOpen: any;
   private $setSelectedCommentId: any;
   private $setSelectedCommentPosition: any;
+  private $setPaperOpen: any;
 
   constructor() {}
 
@@ -24,6 +26,11 @@ class GlobalStatesService {
       v !== undefined ? v : !this._isCommentsPanelOpen;
 
     this.$setIsCommentsPanelOpen(this._isCommentsPanelOpen);
+  }
+
+  public togglePaper(v?: boolean) {
+    this._isPaperOpen = v !== undefined ? v : !this._isPaperOpen;
+    this.$setPaperOpen(this._isPaperOpen);
   }
 
   public selectComment(id: string | number) {
@@ -49,6 +56,7 @@ class GlobalStatesService {
     this.$setIsCommentsPanelOpen = states.setIsCommentsPanelOpen;
     this.$setSelectedCommentId = states.setSelectedCommentId;
     this.$setSelectedCommentPosition = states.setSelectedCommentPosition;
+    this.$setPaperOpen = states.setPaperOpen;
   }
 
   public setInitalValues() {
@@ -56,6 +64,7 @@ class GlobalStatesService {
     this.$setIsCommentsPanelOpen(this._isCommentsPanelOpen);
     this.$setSelectedCommentId(this._selectedCommentId);
     this.$setSelectedCommentPosition(this._selectedCommentPosition);
+    this.$setPaperOpen(this._isPaperOpen);
   }
 
   public get selectedCommentId() {
@@ -68,6 +77,7 @@ interface States {
   setIsCommentsPanelOpen: any;
   setSelectedCommentId: any;
   setSelectedCommentPosition: any;
+  setPaperOpen: any;
 }
 
 export interface SelectedCommentPositionXY {

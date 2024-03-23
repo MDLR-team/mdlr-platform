@@ -5,6 +5,7 @@ import ViewerW from "@/components/forge/viewer-w";
 import { ProjectProvider } from "@/components/services/project-services/project-service/project-provider";
 import UIGrid from "@/components/ui/ui-grid";
 import { GlobalStatesProvider } from "@/components/services/project-services/global-states-service/global-states-provider";
+import PaperCanvas from "@/components/paper/paper";
 
 const ViewerPage = () => {
   return (
@@ -21,6 +22,8 @@ const ViewerPage = () => {
                   position: "relative",
                 }}
               >
+                <PaperCanvas />
+
                 <UIGrid />
 
                 <ViewerW />

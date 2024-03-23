@@ -10,6 +10,7 @@ interface GlobalStatesProps {
   isCommentsPanelOpen: boolean;
   selectedCommentId: string | null;
   selectedCommentPosition: SelectedCommentPositionXY | null;
+  isPaperOpen: boolean;
 }
 
 const GlobalStatesContext = createContext<GlobalStatesProps | undefined>(
@@ -32,6 +33,8 @@ export function GlobalStatesProvider({ children }: any) {
   const [selectedCommentPosition, setSelectedCommentPosition] =
     useState<SelectedCommentPositionXY | null>(null);
 
+  const [isPaperOpen, setPaperOpen] = useState<boolean>(false);
+
   useEffect(() => {
     if (!router.isReady) return;
 
@@ -40,6 +43,7 @@ export function GlobalStatesProvider({ children }: any) {
       setIsCommentsPanelOpen,
       setSelectedCommentId,
       setSelectedCommentPosition,
+      setPaperOpen,
     });
   }, [router]);
 
@@ -51,6 +55,7 @@ export function GlobalStatesProvider({ children }: any) {
         isCommentsPanelOpen,
         selectedCommentId,
         selectedCommentPosition,
+        isPaperOpen,
       }}
     >
       {children}
