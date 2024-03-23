@@ -5,9 +5,12 @@ import { useMarkup } from "../../../markup-provider/markup-provider";
 import styled from "styled-components";
 import { useProject } from "@/components/services/project-services/project-service/project-provider";
 import { useAuth } from "@/components/services/app-services/auth/auth-provider";
+import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
 
 const CommentMessage = () => {
   const [comment, setComment] = useState("");
+
+  const { commentAdding, commentPointSelected } = useGlobalStates();
   const { markupPosition, markupsExtension, setMarkupPosition } = useMarkup();
 
   const { projectService } = useProject();
@@ -24,8 +27,6 @@ const CommentMessage = () => {
     }
 
     try {
-      console.log("userMetadata", userMetadata);
-
       const { data, error } = await supabase.from("comments").insert([
         {
           content: comment,
@@ -47,7 +48,7 @@ const CommentMessage = () => {
     setMarkupPosition(null);
   };
 
-  if (!markupPosition) return <></>;
+  if (!(commentAdding && commentPointSelected)) return <></>;
 
   return (
     <Wrapper>
@@ -69,7 +70,7 @@ const CommentMessage = () => {
           required
           margin="normal"
         />
-        <Button type="submit" variant="contained" color="primary">
+        <Button size="small" type="submit" variant="contained" color="primary">
           Submit
         </Button>
       </Box>

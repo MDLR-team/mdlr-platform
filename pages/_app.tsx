@@ -111,6 +111,10 @@ const GlobalStyle = createGlobalStyle`
     min-width: max-content;
     height: 33px;
 
+    &.MuiButton-sizeSmall {
+      height: 27px;
+    }
+
     &.MuiButton-contained {
       box-shadow: none !important;
     }

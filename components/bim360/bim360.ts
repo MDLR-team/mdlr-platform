@@ -95,8 +95,6 @@ class Bim360Service {
         credentials
       );
 
-      console.log("thumbnail", thumbnail);
-
       // If successful, 'thumbnail' contains the image data
       return thumbnail.body;
     } catch (error) {

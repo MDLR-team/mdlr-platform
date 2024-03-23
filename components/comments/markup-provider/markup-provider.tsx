@@ -3,6 +3,7 @@ import { useViewer } from "@/components/forge/viewer-provider";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useComment } from "../../services/project-services/comment-service/comment-provider";
 import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
+import hotkeys from "hotkeys-js";
 
 interface MarkupProviderProps {
   markupsExtension: MarkupExtension | null;
@@ -38,7 +39,6 @@ export function MarkupProvider({ children }: any) {
       }
 
       load() {
-        console.log("MarkupsExtension loaded");
         this.markupsExtension = new MarkupExtension(
           this.viewer,
           undefined,
@@ -71,9 +71,6 @@ export function MarkupProvider({ children }: any) {
     const registeredExtensions: Map<string, any> =
       Autodesk.Viewing.theExtensionManager.registeredExtensions;
 
-    console.log("Autodesk.Viewing", Autodesk.Viewing);
-    console.log("registeredExtensions", registeredExtensions);
-
     if (!registeredExtensions.has("MarkupsExtension")) {
       // add the new extension to the viewer
       Autodesk.Viewing.theExtensionManager.registerExtension(
@@ -99,6 +96,26 @@ export function MarkupProvider({ children }: any) {
 
     markupsExtension.selectComment(selectedCommentId);
   }, [selectedCommentId, markupsExtension]);
+
+  // Hotkey for toggling comment adding
+  // Hotkey bindings
+  useEffect(() => {
+    const hotKeyString = "esc";
+    const hotKeyCallback = (event: KeyboardEvent, handler: any) => {
+      event.preventDefault();
+      switch (handler.key) {
+        case "esc":
+          markupsExtension?.enable(false);
+          globalStatesService.toggleViewStateEditing(false);
+          break;
+        default:
+          break;
+      }
+    };
+
+    hotkeys(hotKeyString, hotKeyCallback);
+    return () => hotkeys.unbind(hotKeyString, hotKeyCallback);
+  }, [markupsExtension]);
 
   return (
     <MarkupContext.Provider

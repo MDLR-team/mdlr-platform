@@ -114,6 +114,7 @@ class MarkupExtension {
    */
   enable(flag: boolean) {
     this._enabled = flag;
+    this._globalStatesService.toggleCommentAdding(flag);
 
     if (this._enabled) {
       this._addSearchMarkup();
@@ -192,14 +193,7 @@ class MarkupExtension {
 
     const geomVertex = snapResult.geomVertex;
 
-    /* console.log("measureTool", snapper);
-    console.log("vertex", snapper.getVertex());
-    console.log("snap result", snapper.getSnapResult());
-    console.log("snap to pixel", snapper.getSnapToPixel()); */
-
-    //if (rayIntersect) {
     if (geomVertex) {
-      //const { intersectPoint } = rayIntersect;
       const { intersectPoint } = snapResult;
       const screenPos = this._viewer.worldToClient(intersectPoint);
 
@@ -227,8 +221,6 @@ class MarkupExtension {
 
     const THREE = (window as any).THREE;
 
-    console.log("mouse down event", event);
-
     const pointer = this.getPointer(event, this._domElement);
     const ray = new THREE.Ray();
     this._viewer.impl.viewportToRay(pointer, ray);
@@ -246,6 +238,8 @@ class MarkupExtension {
       this._removeSearchMarkup();
 
       this._addMarkup(intersectPoint);
+
+      this._globalStatesService.toggleCommentPointSelected(true);
     }
   }
 

@@ -5,10 +5,13 @@ import CommentsBlock from "../comments/comment-layout/comment-layout";
 import Share from "../layout/share/share";
 import ToolPanel from "./tool-panel/tool-panel";
 import ActiveCommentDialog from "./active-comment-dialog/active-comment-dialog";
+import ViewStateMode from "./view-state-mode/view-state-mode";
 
 const UIGrid = () => {
   return (
     <>
+      <ViewStateMode />
+
       <FloatingWrapper>
         <ActiveCommentDialog />
       </FloatingWrapper>

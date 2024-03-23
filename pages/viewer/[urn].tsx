@@ -6,6 +6,7 @@ import { ProjectProvider } from "@/components/services/project-services/project-
 import UIGrid from "@/components/ui/ui-grid";
 import { GlobalStatesProvider } from "@/components/services/project-services/global-states-service/global-states-provider";
 import PaperCanvas from "@/components/paper/paper";
+import { ActiveCommentProvider } from "@/components/services/project-services/active-comment-service/active-comment-provider";
 
 const ViewerPage = () => {
   return (
@@ -14,20 +15,22 @@ const ViewerPage = () => {
         <ViewerProvider>
           <CommentProvider>
             <MarkupProvider>
-              <div
-                style={{
-                  display: "flex",
-                  width: "100vw",
-                  height: "100vh",
-                  position: "relative",
-                }}
-              >
-                <PaperCanvas />
+              <ActiveCommentProvider>
+                <div
+                  style={{
+                    display: "flex",
+                    width: "100vw",
+                    height: "100vh",
+                    position: "relative",
+                  }}
+                >
+                  <PaperCanvas />
 
-                <UIGrid />
+                  <UIGrid />
 
-                <ViewerW />
-              </div>
+                  <ViewerW />
+                </div>
+              </ActiveCommentProvider>
             </MarkupProvider>
           </CommentProvider>
         </ViewerProvider>

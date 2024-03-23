@@ -17,21 +17,6 @@ const ActiveCommentDialog = () => {
   const { comments } = useComment();
   const { viewer } = useViewer();
 
-  const saveView = async () => {
-    if (!selectedCommentId) return;
-
-    const viewState = viewer.getState({ viewport: true });
-
-    try {
-      await supabase
-        .from("comments")
-        .update({ view_state: viewState })
-        .eq("id", selectedCommentId);
-    } catch (error) {
-      console.error("Error updating comment:", error);
-    }
-  };
-
   if (!selectedCommentPosition) return null;
 
   return (
@@ -77,17 +62,6 @@ const ActiveCommentDialog = () => {
             ))}
         </List>
       </CommentList>
-
-      {/* <Button onClick={saveView}>Save Viewer</Button> */}
-      <Box
-        sx={{
-          Width: "10px",
-          height: "10px",
-          backgroundColor: "lightgrey",
-          opacity: 0.2,
-        }}
-        onClick={() => globalStatesService.togglePaper(true)}
-      ></Box>
     </Paper>
   );
 };

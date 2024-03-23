@@ -11,6 +11,8 @@ class CommentService {
 
   private $setComments: any;
 
+  private _eventSubscribers = new Map<string, EventCallback[]>();
+
   constructor(private _supabase: SupabaseClient) {
     this._comments = new Map();
   }
@@ -23,8 +25,6 @@ class CommentService {
       .select(`*`)
       .eq("project_id", project_id)
       .order("created_at", { ascending: true }); // Assuming you have a 'createdAt' column for sorting
-
-    console.log("data", data);
 
     if (error) {
       console.error("Error fetching comments:", error);
@@ -88,7 +88,15 @@ class CommentService {
   }
 
   private _upateComments() {
-    this.$setComments(Array.from(this._comments.values()).reverse());
+    const sortedComments = Array.from(this._comments.values()).sort((a, b) => {
+      return (
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+    });
+
+    this._emit("COMMENTS_UPDATED", this._comments);
+
+    this.$setComments(sortedComments);
   }
 
   public init() {
@@ -104,6 +112,35 @@ class CommentService {
     this._projectService = states.projectService;
   }
 
+  // Subscribe to an event
+  public on(event: string, callback: EventCallback) {
+    const subscribers = this._eventSubscribers.get(event) || [];
+    subscribers.push(callback);
+    this._eventSubscribers.set(event, subscribers);
+  }
+
+  // Unsubscribe from an event
+  public off(event: string, callback: EventCallback) {
+    const subscribers = this._eventSubscribers.get(event) || [];
+    const subscriberIndex = subscribers.indexOf(callback);
+    if (subscriberIndex > -1) {
+      subscribers.splice(subscriberIndex, 1);
+      this._eventSubscribers.set(event, subscribers);
+    }
+  }
+
+  // Emit an event
+  private _emit(event: string, ...args: any[]) {
+    const subscribers = this._eventSubscribers.get(event) || [];
+    subscribers.forEach((callback) => {
+      callback(...args);
+    });
+  }
+
+  public get comments() {
+    return this._comments;
+  }
+
   public dispose() {
     if (this._changes) {
       this._supabase.removeChannel(this._changes);
@@ -113,6 +150,8 @@ class CommentService {
     this._comments.clear();
   }
 }
+
+type EventCallback = (...args: any[]) => void;
 
 export interface Comment {
   id: string;

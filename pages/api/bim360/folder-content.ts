@@ -21,8 +21,6 @@ export default async function listFolderContentHandler(
         folderId
       );
 
-      console.log("folderContent", folderContent);
-
       // Return the folder content
       res.status(200).json(folderContent);
     } catch (err) {

@@ -49,9 +49,10 @@ const CommentsBlock: React.FC = () => {
 
       <CommentList>
         <List>
-          {comments.map((comment) => (
+          {comments.map((comment, i) => (
             <MessageItem
               {...comment}
+              index={comments.length - i}
               selectComment={() => {
                 if (!comment.markup_position) return;
 

@@ -2,10 +2,12 @@ import React, { useEffect, useRef } from "react";
 import paper, { Path, Tool } from "paper";
 import { Box } from "@mui/material";
 import { useGlobalStates } from "../services/project-services/global-states-service/global-states-provider";
+import { useViewer } from "../forge/viewer-provider";
 
 const PaperCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const { isPaperOpen } = useGlobalStates();
+  const { viewer } = useViewer();
 
   useEffect(() => {
     if (!isPaperOpen) return;
@@ -76,6 +78,10 @@ const PaperCanvas: React.FC = () => {
       if (path) {
         path.simplify(10);
         path.fullySelected = false;
+
+        path.segments.forEach((segment) => {
+          create3DMarkerFrom2DPoint(segment.point.x, segment.point.y, viewer);
+        });
       }
     };
 
@@ -106,5 +112,20 @@ const PaperCanvas: React.FC = () => {
     </Box>
   );
 };
+
+// Example function to convert and create a marker
+function create3DMarkerFrom2DPoint(x2d: number, y2d: number, viewer: any) {
+  if (!viewer) return;
+
+  // Convert 2D screen coordinates to 3D world coordinates
+  const result = viewer.clientToWorld(x2d, y2d, true);
+
+  if (result && result.point) {
+    // result.point contains the 3D world coordinates
+    const point3d = result.point;
+
+    console.log("point3d", point3d);
+  }
+}
 
 export default PaperCanvas;
