@@ -30,6 +30,7 @@ const ExplodedCommentLayout: React.FC<ExplodedCommentLayoutProps> = ({
     >
       {Array.from(commentBBoxes.entries()).map(([key, bbox], i) => (
         <Box
+          key={i}
           sx={{
             position: "absolute",
             left: `${bbox.x}px`,
