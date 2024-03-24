@@ -82,7 +82,7 @@ const ActiveCommentDialog = () => {
         </List>
       </CommentList>
 
-      {viewType === "assembled" && <ActiveCommentMessage />}
+      <ActiveCommentMessage />
     </Paper>
   );
 };

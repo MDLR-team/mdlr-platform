@@ -46,7 +46,7 @@ const ActiveCommentMessage = () => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper style={{ backgroundColor: "white", borderRadius: "9px" }}>
       <Box
         component="form"
         sx={{ p: 2, borderTop: 1, borderColor: "divider", flexShrink: 0 }}

@@ -147,6 +147,12 @@ class ActiveCommentService {
     }
   }
 
+  public toggleViewType(viewType: "assembled" | "exploded") {
+    this._viewType = viewType;
+
+    this.$setViewType(viewType);
+  }
+
   public provideStates(states: any) {
     this.$setActiveComment = states.setActiveComment;
     this.$setActiveCommentPosition = states.setActiveCommentPosition;
