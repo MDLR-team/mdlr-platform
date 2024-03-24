@@ -8,6 +8,7 @@ import { Paper, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
 import ActiveCommentMessage from "../active-comment-message/active-comment-message";
+import MiniComment from "@/components/comments/comment-layout/blocks/comment/mini-comment";
 
 const ActiveCommentDialog = () => {
   const {
@@ -15,9 +16,8 @@ const ActiveCommentDialog = () => {
     activeComment,
     activeCommentPosition,
     childComments,
+    viewType,
   } = useActiveComment();
-
-  const { comments } = useComment();
 
   if (!activeComment || !activeCommentPosition) return null;
 
@@ -32,38 +32,57 @@ const ActiveCommentDialog = () => {
         display: "flex",
         flexDirection: "column",
         pointerEvents: "all",
+        ...(viewType === "exploded"
+          ? {
+              background: "transparent",
+            }
+          : {}),
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "2px",
-        }}
-      >
-        <div />
-        <IconButton
-          onClick={() => activeCommentService.deselectComment()}
-          sx={{ fontSize: "12px !important" }}
+      {viewType === "assembled" && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "2px",
+          }}
         >
-          <CloseIcon fontSize="small" />
-        </IconButton>
-      </div>
+          <div />
+          <IconButton
+            onClick={() => activeCommentService.deselectComment()}
+            sx={{ fontSize: "12px !important" }}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </div>
+      )}
 
       <CommentList>
         <List>
-          {childComments.map((comment) => (
-            <MessageItem
-              {...comment}
-              selectComment={() => {}}
-              key={comment.id}
-            />
-          ))}
+          {childComments
+            .filter((comment) => {
+              if (viewType === "assembled") return true;
+
+              return !comment.annotation;
+            })
+            .map((comment) => (
+              <>
+                {viewType === "assembled" ? (
+                  <MessageItem
+                    {...comment}
+                    selectComment={() => {}}
+                    key={comment.id}
+                  />
+                ) : (
+                  <MiniComment {...comment} key={comment.id} />
+                )}
+              </>
+            ))}
         </List>
       </CommentList>
 
-      <ActiveCommentMessage />
+      {viewType === "assembled" && <ActiveCommentMessage />}
     </Paper>
   );
 };

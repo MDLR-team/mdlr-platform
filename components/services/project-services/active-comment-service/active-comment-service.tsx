@@ -20,6 +20,9 @@ class ActiveCommentService {
   private $setIsPenMode: any;
   private $setChildComments: any;
   private $setAnnotation: any;
+  private $setViewType: any;
+
+  private _viewType: "assembled" | "exploded";
 
   private _childComments: Map<string, Comment>;
 
@@ -30,6 +33,8 @@ class ActiveCommentService {
     private _globalStateService: GlobalStatesService,
     private _commentService: CommentService
   ) {
+    this._viewType = "assembled";
+
     this._childComments = new Map();
 
     this._annotation = [];
@@ -150,8 +155,11 @@ class ActiveCommentService {
     this.$setIsPenMode = states.setIsPenMode;
     this.$setChildComments = states.setChildComments;
     this.$setAnnotation = states.setAnnotation;
+    this.$setViewType = states.setViewType;
 
     this._viewer = states.viewer;
+
+    this.$setViewType(this._viewType);
   }
 
   public provideMarkupExtension(markupExtension: MarkupExtension) {
@@ -166,8 +174,6 @@ class ActiveCommentService {
   public addAnnotationLine(line: any) {
     this._annotation.push(line);
 
-    console.log("added");
-
     this.$setAnnotation([...this._annotation]);
   }
 
@@ -177,6 +183,10 @@ class ActiveCommentService {
 
   public get activeComment() {
     return this._activeComment;
+  }
+
+  public get childComments() {
+    return this._childComments;
   }
 
   public dispose() {

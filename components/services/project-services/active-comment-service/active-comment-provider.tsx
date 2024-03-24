@@ -16,6 +16,7 @@ interface ActiveCommentContentProps {
   isPenMode: boolean;
   childComments: Comment[];
   annotation: any[];
+  viewType: "assembled" | "exploded";
 }
 
 const ActiveCommentContext = createContext<
@@ -45,6 +46,10 @@ export function ActiveCommentProvider({ children }: any) {
   const [isPenMode, setIsPenMode] = useState(false);
   const [annotation, setAnnotation] = useState<any[]>([]);
 
+  const [viewType, setViewType] = useState<"assembled" | "exploded">(
+    "assembled"
+  );
+
   useEffect(() => {
     if (!viewer) return;
 
@@ -57,6 +62,7 @@ export function ActiveCommentProvider({ children }: any) {
       setChildComments,
       setAnnotation,
       viewer,
+      setViewType,
     });
     activeCommentService.init();
 
@@ -121,6 +127,7 @@ export function ActiveCommentProvider({ children }: any) {
         isPenMode,
         childComments,
         annotation,
+        viewType,
       }}
     >
       {children}
