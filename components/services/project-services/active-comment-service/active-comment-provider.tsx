@@ -6,6 +6,7 @@ import { useComment } from "../comment-service/comment-provider";
 import { Comment } from "../comment-service/comment-service";
 import hotkeys from "hotkeys-js";
 import { useViewer } from "@/components/forge/viewer-provider";
+import { useProject } from "../project-service/project-provider";
 
 interface ActiveCommentContentProps {
   activeCommentService: ActiveCommentService;
@@ -24,13 +25,12 @@ const ActiveCommentContext = createContext<
 >(undefined);
 
 export function ActiveCommentProvider({ children }: any) {
-  const { globalStatesService } = useGlobalStates();
-  const { commentService, commentLogId } = useComment();
+  const { projectService } = useProject();
+  const { commentLogId } = useComment();
   const { viewer } = useViewer();
 
   const [activeCommentService] = useState(
-    () =>
-      new ActiveCommentService(supabase, globalStatesService, commentService)
+    () => projectService.activeCommentService
   );
 
   // Comment-related States
@@ -45,6 +45,7 @@ export function ActiveCommentProvider({ children }: any) {
 
   const [isPenMode, setIsPenMode] = useState(false);
   const [annotation, setAnnotation] = useState<any[]>([]);
+  const [markup2d, setMarkup2d] = useState<PointXY | null>(null);
 
   const [viewType, setViewType] = useState<"assembled" | "exploded">(
     "assembled"

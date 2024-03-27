@@ -7,14 +7,15 @@ class CommentService {
 
   private _changes: any;
 
-  private _projectService: ProjectService | undefined;
-
   private $setComments: any;
   private $setCommentLogId: any;
 
   private _eventSubscribers = new Map<string, EventCallback[]>();
 
-  constructor(private _supabase: SupabaseClient) {
+  private _supabase: SupabaseClient;
+
+  constructor(private _projectService: ProjectService) {
+    this._supabase = _projectService.supabase;
     this._comments = new Map();
   }
 
@@ -107,13 +108,11 @@ class CommentService {
   }
 
   public provideStates(states: {
-    projectService: ProjectService;
     setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
     setCommentLogId: React.Dispatch<React.SetStateAction<string>>;
   }) {
     this.$setComments = states.setComments;
     this.$setCommentLogId = states.setCommentLogId;
-    this._projectService = states.projectService;
   }
 
   // Subscribe to an event

@@ -1,5 +1,4 @@
 import React from "react";
-import CommentMessage from "./blocks/comment-message/comment-message";
 
 import { useComment } from "../../services/project-services/comment-service/comment-provider";
 import { Box, IconButton, Paper } from "@mui/material";
@@ -41,8 +40,6 @@ const CommentsBlock: React.FC = () => {
           </IconButton>
         </Box>
       </Header>
-
-      <CommentMessage />
 
       <CommentList>
         <List>

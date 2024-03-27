@@ -68,6 +68,11 @@ const GlobalStyle = createGlobalStyle`
   & .MuiFormControl-root {
     & .MuiInputBase-root {
       padding: 8px;
+
+      // small size
+      &.MuiInputBase-sizeSmall {
+        padding: 5px;
+      }
     }
   }
 
@@ -76,6 +81,7 @@ const GlobalStyle = createGlobalStyle`
     & {
       & {
         border-radius: 8px !important;
+        border: 1px solid #E0E0E0 !important;
         box-shadow: none !important;
         position: relative;
         display: flex;

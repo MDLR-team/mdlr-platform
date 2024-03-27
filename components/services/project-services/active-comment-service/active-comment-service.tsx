@@ -3,6 +3,7 @@ import GlobalStatesService from "../global-states-service/global-states-service"
 import CommentService, { Comment } from "../comment-service/comment-service";
 import MarkupExtension from "@/components/forge/markup-extension";
 import paper, { Path, Tool } from "paper";
+import ProjectService from "../project-service/project-service";
 
 class ActiveCommentService {
   private _activeComment: Comment | null = null;
@@ -28,16 +29,20 @@ class ActiveCommentService {
 
   private _annotation: any[];
 
-  constructor(
-    private _supabase: SupabaseClient,
-    private _globalStateService: GlobalStatesService,
-    private _commentService: CommentService
-  ) {
+  private _supabase: SupabaseClient;
+  private _globalStateService: GlobalStatesService;
+  private _commentService: CommentService;
+
+  constructor(private _projectService: ProjectService) {
     this._viewType = "assembled";
 
     this._childComments = new Map();
 
     this._annotation = [];
+
+    this._supabase = _projectService.supabase;
+    this._globalStateService = _projectService.globalStatesService;
+    this._commentService = _projectService.commentService;
   }
 
   public selectComment(id: string | number) {

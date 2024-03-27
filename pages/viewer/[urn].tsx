@@ -10,8 +10,8 @@ import { ActiveCommentProvider } from "@/components/services/project-services/ac
 
 const ViewerPage = () => {
   return (
-    <GlobalStatesProvider>
-      <ProjectProvider>
+    <ProjectProvider>
+      <GlobalStatesProvider>
         <ViewerProvider>
           <CommentProvider>
             <ActiveCommentProvider>
@@ -32,8 +32,8 @@ const ViewerPage = () => {
             </ActiveCommentProvider>
           </CommentProvider>
         </ViewerProvider>
-      </ProjectProvider>
-    </GlobalStatesProvider>
+      </GlobalStatesProvider>
+    </ProjectProvider>
   );
 };
 

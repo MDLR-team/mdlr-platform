@@ -16,18 +16,14 @@ const CommentContext = createContext<CommentContentProps | undefined>(
 );
 
 export function CommentProvider({ children }: any) {
-  const { globalStatesService } = useGlobalStates();
   const { projectService } = useProject();
 
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentLogId, setCommentLogId] = useState<string>(uuidv4());
-  const [commentService] = useState(() => new CommentService(supabase));
+  const [commentService] = useState(() => projectService.commentService);
 
   useEffect(() => {
-    globalStatesService.provideCommentService(commentService);
-
     commentService.provideStates({
-      projectService,
       setComments,
       setCommentLogId,
     });

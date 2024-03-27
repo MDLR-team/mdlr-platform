@@ -1,4 +1,6 @@
-import MarkupExtension from "@/components/forge/markup-extension";
+import MarkupExtension, {
+  Markup2DPosition,
+} from "@/components/forge/markup-extension";
 import { useViewer } from "@/components/forge/viewer-provider";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useComment } from "../../services/project-services/comment-service/comment-provider";
@@ -10,6 +12,7 @@ interface MarkupProviderProps {
   markupsExtension: MarkupExtension | null;
   markupPosition: markupPosition | null;
   setMarkupPosition: any;
+  markup2DPosition: Markup2DPosition | null;
 }
 
 const MarkupContext = createContext<MarkupProviderProps | undefined>(undefined);
@@ -22,6 +25,8 @@ export function MarkupProvider({ children }: any) {
   const [markupPosition, setMarkupPosition] = useState<markupPosition | null>(
     null
   );
+  const [markup2DPosition, setMarkup2DPosition] =
+    useState<Markup2DPosition | null>(null);
 
   const [markupsExtension, setMarkupsExtension] =
     useState<MarkupExtension | null>(null);
@@ -47,6 +52,7 @@ export function MarkupProvider({ children }: any) {
         );
         this.markupsExtension.provideStates({
           setMarkupPosition,
+          setMarkup2DPosition,
         });
 
         this.markupsExtension.enable(false);
@@ -124,6 +130,7 @@ export function MarkupProvider({ children }: any) {
         markupsExtension,
         markupPosition,
         setMarkupPosition,
+        markup2DPosition,
       }}
     >
       {children}

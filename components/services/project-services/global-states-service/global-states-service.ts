@@ -1,4 +1,5 @@
 import CommentService, { Comment } from "../comment-service/comment-service";
+import ProjectService from "../project-service/project-service";
 
 class GlobalStatesService {
   private _isSettingsPanelOpen: boolean = false;
@@ -14,9 +15,7 @@ class GlobalStatesService {
   private $setCommentAwaitingSelection: any;
   private $setCommentPointSelected: any;
 
-  private _commentService: CommentService | undefined;
-
-  constructor() {}
+  constructor(private _projectService: ProjectService) {}
 
   public toggleSettingsPanel(v?: boolean) {
     this._isSettingsPanelOpen =
@@ -75,9 +74,7 @@ class GlobalStatesService {
     this.$setCommentPointSelected(this._commentPointSelected);
   }
 
-  public provideCommentService(commentService: CommentService) {
-    this._commentService = commentService;
-  }
+  public dispose() {}
 }
 
 interface States {

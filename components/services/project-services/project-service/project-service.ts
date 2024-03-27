@@ -4,6 +4,9 @@ import base64url from "base64url";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Project } from "@/components/types/supabase-data.types";
 import { supabase } from "@/components/supabase-client";
+import GlobalStatesService from "../global-states-service/global-states-service";
+import CommentService from "../comment-service/comment-service";
+import ActiveCommentService from "../active-comment-service/active-comment-service";
 
 class ProjectService {
   private _router: any;
@@ -20,7 +23,15 @@ class ProjectService {
   private $setTitle: any;
   private $setThumbnail: any;
 
-  constructor(private _supabase: SupabaseClient) {}
+  private _globalStatesService: GlobalStatesService;
+  private _commentService: CommentService;
+  private _activeCommentService: ActiveCommentService;
+
+  constructor(private _supabase: SupabaseClient) {
+    this._globalStatesService = new GlobalStatesService(this);
+    this._commentService = new CommentService(this);
+    this._activeCommentService = new ActiveCommentService(this);
+  }
 
   private async init() {
     const { query } = this._router;
@@ -172,6 +183,28 @@ class ProjectService {
         this.$setIsReady(true);
       }
     }
+  }
+
+  public get globalStatesService() {
+    return this._globalStatesService;
+  }
+
+  public get commentService() {
+    return this._commentService;
+  }
+
+  public get activeCommentService() {
+    return this._activeCommentService;
+  }
+
+  public get supabase() {
+    return this._supabase;
+  }
+
+  public dispose() {
+    this._globalStatesService.dispose();
+    this._commentService.dispose();
+    this._activeCommentService.dispose();
   }
 }
 

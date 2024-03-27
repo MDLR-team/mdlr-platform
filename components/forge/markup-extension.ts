@@ -12,12 +12,14 @@ class MarkupExtension {
 
   private _searchMarkup: MarkupEntity | null;
   private _markup: MarkupEntity | null;
+  private _markup2d: { x: number; y: number } | null;
 
   private _svgCanvas: HTMLElement;
 
   private _commentsExtension: CommentsExtension;
 
   private $setMarkupPosition: any;
+  private $setMarkup2dPosition: any;
 
   constructor(
     viewer: any,
@@ -40,6 +42,7 @@ class MarkupExtension {
 
     this._searchMarkup = null;
     this._markup = null;
+    this._markup2d = null;
 
     this._rerenderMarkupPosition = this._rerenderMarkupPosition.bind(this);
 
@@ -152,6 +155,7 @@ class MarkupExtension {
       const entity = markup.entity;
 
       const { x, y } = this._toScreenXY(position);
+      this._setMarkup2d({ x, y });
 
       entity.setAttribute("transform", `translate(${x - 12}, ${y - 28})`);
     }
@@ -305,6 +309,7 @@ class MarkupExtension {
 
   public provideStates(states: any) {
     this.$setMarkupPosition = states.setMarkupPosition;
+    this.$setMarkup2dPosition = states.setMarkup2DPosition;
   }
 
   public updateComments(comments: any) {
@@ -348,10 +353,19 @@ class MarkupExtension {
     this._rerenderMarkupPosition();
   }
 
+  private _setMarkup2d(position: { x: number; y: number } | null) {
+    this._markup2d = position;
+
+    if (typeof this.$setMarkup2dPosition === "function") {
+      this.$setMarkup2dPosition(position);
+    }
+  }
+
   private _removeMarkup() {
     if (this._markup) {
       this._svgCanvas.removeChild(this._markup.entity);
       this._markup = null;
+      this._setMarkup2d(null);
     }
   }
 
@@ -366,6 +380,10 @@ class MarkupExtension {
    * Disposes of the MarkupExtension, cleaning up resources and event listeners.
    */
   public dispose() {
+    this._markup = null;
+    this._searchMarkup = null;
+    this._markup2d = null;
+
     this._commentsExtension.dispose();
 
     this.removeEventListeners();
@@ -379,6 +397,11 @@ class MarkupExtension {
 interface MarkupEntity {
   position: { x: number; y: number; z: number };
   entity: any;
+}
+
+export interface Markup2DPosition {
+  x: number;
+  y: number;
 }
 
 export default MarkupExtension;

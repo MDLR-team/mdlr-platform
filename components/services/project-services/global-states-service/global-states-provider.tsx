@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import GlobalStatesService from "./global-states-service";
 import { useRouter } from "next/router";
+import { useProject } from "../project-service/project-provider";
 
 // Interface definitions for global states
 interface GlobalStatesProps {
@@ -30,12 +31,16 @@ interface ProviderProps {
 
 // Context provider component
 export const GlobalStatesProvider: React.FC<ProviderProps> = ({ children }) => {
+  const { projectService } = useProject();
+
   // Router for handling routing-related logic
   const router = useRouter();
 
   // State definitions
   // Service instance
-  const [globalStatesService] = useState(new GlobalStatesService());
+  const [globalStatesService] = useState(
+    () => projectService.globalStatesService
+  );
 
   // UI Panel States
   const [isSettingsPanelOpen, setIsSettingsPanelOpen] = useState(false);

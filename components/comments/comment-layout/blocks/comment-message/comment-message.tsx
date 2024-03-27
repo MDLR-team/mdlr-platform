@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Box, TextField, Button } from "@mui/material";
 import { supabase } from "@/components/supabase-client";
 import { useMarkup } from "../../../markup-provider/markup-provider";
@@ -9,12 +9,19 @@ import { useGlobalStates } from "@/components/services/project-services/global-s
 
 const CommentMessage = () => {
   const [comment, setComment] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const { commentAdding, commentPointSelected } = useGlobalStates();
   const { markupPosition, markupsExtension, setMarkupPosition } = useMarkup();
 
   const { projectService } = useProject();
   const { userMetadata } = useAuth();
+
+  useEffect(() => {
+    if (commentAdding && commentPointSelected) {
+      inputRef.current?.focus();
+    }
+  }, [commentAdding, commentPointSelected]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Prevent the form from submitting in the traditional way
@@ -54,7 +61,11 @@ const CommentMessage = () => {
     <Wrapper>
       <Box
         component="form"
-        sx={{ p: 2, borderTop: 1, borderColor: "divider", flexShrink: 0 }}
+        sx={{
+          margin: `0px !important`,
+          flexShrink: 0,
+          display: "flex",
+        }}
         noValidate
         autoComplete="off"
         onSubmit={handleSubmit}
@@ -63,12 +74,16 @@ const CommentMessage = () => {
           placeholder="Write a comment..."
           multiline
           fullWidth
-          rows={2}
+          autoFocus
+          minRows={1}
+          maxRows={4}
+          size="small"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          variant="outlined"
+          variant="standard"
           required
           margin="normal"
+          inputRef={inputRef}
         />
         <Button size="small" type="submit" variant="contained" color="primary">
           Submit
@@ -88,11 +103,21 @@ export const Wrapper = styled.div`
 
   & form.MuiBox-root {
     padding: 0px;
-    margin-bottom: 9px;
     border-color: rgba(0, 0, 0, 0);
 
     & .MuiFormControl-root {
       margin-top: 0px;
+      margin-bottom: 0px;
+
+      & .MuiInputBase-root {
+        &::before {
+          display: none;
+        }
+
+        &::after {
+          display: none;
+        }
+      }
     }
   }
 `;

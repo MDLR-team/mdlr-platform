@@ -5,6 +5,7 @@ import Share from "../layout/share/share";
 import ToolPanel from "./tool-panel/tool-panel";
 import ActiveCommentDialog from "./active-comment-dialog/active-comment-dialog";
 import ViewStateMode from "./view-state-mode/view-state-mode";
+import CommentForm from "./floating-dialogs/comment-form/comment-form";
 
 const UIGrid = () => {
   return (
@@ -12,6 +13,7 @@ const UIGrid = () => {
       <ViewStateMode />
 
       <FloatingWrapper>
+        <CommentForm />
         <ActiveCommentDialog />
       </FloatingWrapper>
 
