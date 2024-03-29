@@ -18,6 +18,7 @@ interface ActiveCommentContentProps {
   childComments: Comment[];
   annotation: any[];
   viewType: "assembled" | "exploded";
+  markup2d: PointXY | null;
 }
 
 const ActiveCommentContext = createContext<
@@ -64,6 +65,7 @@ export function ActiveCommentProvider({ children }: any) {
       setAnnotation,
       viewer,
       setViewType,
+      setMarkup2d,
     });
     activeCommentService.init();
 
@@ -129,6 +131,7 @@ export function ActiveCommentProvider({ children }: any) {
         childComments,
         annotation,
         viewType,
+        markup2d,
       }}
     >
       {children}

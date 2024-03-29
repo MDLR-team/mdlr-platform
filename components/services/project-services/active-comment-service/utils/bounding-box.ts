@@ -6,7 +6,6 @@ function getAnnotationBoundingBox(lines: any) {
 
   lines.forEach((line: any) => {
     const lineBounds = line.bounds;
-    console.log("lineBounds", lineBounds);
 
     if (boundingBox.isEmpty()) {
       // Initialize the bounding box with the bounds of the first line

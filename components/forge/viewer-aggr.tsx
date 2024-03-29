@@ -178,6 +178,18 @@ class Viewer extends React.Component {
           id="comments_layer"
         ></svg>
 
+        <svg
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            zIndex: 3,
+            pointerEvents: "none",
+          }}
+          xmlns="http://www.w3.org/2000/svg"
+          id="comments_2d_layer"
+        ></svg>
+
         <div
           ref={(div) => (this._viewerContainer = div)}
           style={{

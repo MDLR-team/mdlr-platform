@@ -161,6 +161,7 @@ export interface Comment {
   content: string;
   created_at: string;
   markup_position: { x: number; y: number; z: number } | null;
+  markup_position_2d: { x: number; y: number } | null;
   view_state: any | null;
   parent_id: string | null;
   annotation: any[] | null;

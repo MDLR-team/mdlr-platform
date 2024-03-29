@@ -60,6 +60,15 @@ const ToolPanel = () => {
             >
               <AutoAwesomeMotionOutlinedIcon sx={{ fontSize: 16 }} />
             </IconButton>
+
+            <IconButton
+              data-active={commentAdding ? "true" : "false"}
+              onClick={() => {
+                activeCommentService.toggleAwaitingPinAddition(true);
+              }}
+            >
+              <CommentIcon />
+            </IconButton>
           </>
         )}
       </Paper>

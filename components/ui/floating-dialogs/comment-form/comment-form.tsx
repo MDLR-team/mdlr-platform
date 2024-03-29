@@ -7,8 +7,6 @@ const CommentForm = () => {
   const { commentAdding, commentPointSelected } = useGlobalStates();
   const { markup2DPosition } = useMarkup();
 
-  console.log("markup2DPosition", markup2DPosition);
-
   if (!(commentAdding && commentPointSelected)) return <></>;
 
   if (!markup2DPosition) return <></>;

@@ -22,6 +22,13 @@ class ViewerServiceAggr {
     this._viewer.setGhosting(false);
 
     this._viewer.toolbar.container.style.display = "none";
+
+    const viewerCube = document.getElementsByClassName("viewcubeWrapper")[0];
+
+    viewerCube?.setAttribute(
+      "style",
+      "left: auto; top: auto; right: 10px; bottom: 10px;  border: 1px solid grey;"
+    );
     //viewer.setLightPreset(1);
   }
 

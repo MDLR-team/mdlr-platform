@@ -9,8 +9,13 @@ import PencilIcon from "../icons/pencil-icon";
 
 const ActiveCommentMessage = () => {
   const [comment, setComment] = useState("");
-  const { activeComment, activeCommentService, isPenMode, isPaperMode } =
-    useActiveComment();
+  const {
+    activeComment,
+    activeCommentService,
+    isPenMode,
+    isPaperMode,
+    markup2d,
+  } = useActiveComment();
 
   const { userMetadata } = useAuth();
   const { projectService } = useProject();
@@ -29,6 +34,7 @@ const ActiveCommentMessage = () => {
           author_id: userMetadata!.id,
           parent_id: activeComment!.id,
           annotation: annotation.length ? annotation : null,
+          markup_position_2d: markup2d,
         }, // Assuming 'content' is the column name
       ]);
 
