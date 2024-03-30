@@ -65,7 +65,34 @@ class AuthService {
       return null;
     }
 
-    return data.user as UserMetadata;
+    const userMetadata = data.user as UserMetadata;
+
+    // Retrieve additional information from the 'profiles' table
+    const { data: profileData, error: profileError } = await this._supabase
+      .from("profiles")
+      .select("username")
+      .eq("user_id", userMetadata.id)
+      .single();
+
+    if (profileError) {
+      console.error(profileError);
+      return null;
+    }
+
+    const profile = profileData as any;
+    userMetadata.username = profile.username || profile.email || "Any";
+
+    // Add initials to userMetadata
+    const nameParts = userMetadata.username!.split(" ");
+    if (nameParts.length > 1) {
+      userMetadata.initials =
+        nameParts[0].charAt(0).toUpperCase() +
+        nameParts[1].charAt(0).toUpperCase();
+    } else {
+      userMetadata.initials = nameParts[0].charAt(0).toUpperCase();
+    }
+
+    return userMetadata;
   }
 
   public async init() {
@@ -117,6 +144,8 @@ export interface UserMetadata {
   role: string;
   updated_at: string;
   user_metadata: any;
+  username?: string;
+  initials?: string;
   [key: string]: any;
 }
 

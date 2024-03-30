@@ -144,6 +144,23 @@ const GlobalStyle = createGlobalStyle`
       text-transform: none !important;
     }
   }
+
+  // Forge Viewer
+  & .forge-spinner {
+    display: none !important;
+  }
+
+  & .adsk-control.adsk-toolbar {
+    display: none !important;
+  }
+
+  & .viewcubeWrapper {
+    left: auto !important;
+    top: auto !important;
+    right: 10px !important;
+    bottom: 10px !important;
+    border: 1px solid grey;
+  }
 `;
 
 export default App;

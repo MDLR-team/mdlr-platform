@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useAuth } from "@/components/services/app-services/auth/auth-provider";
 import WorkspaceIcon from "../../icons/workspace-icon";
 import stc from "string-to-color";
+import Avatar from "@/components/layout/avatar/avatar";
 
 const LeftBar = () => {
   const menuItems = ["Personal", "Favourites", "Shared", "Recent", "Trash"];
@@ -13,11 +14,14 @@ const LeftBar = () => {
 
   return (
     <>
-      <Paper sx={{ backgroundColor: "transparent" }}>
+      <Paper
+        sx={{ backgroundColor: "transparent", cursor: "pointer" }}
+        data-type="user-profile"
+      >
         <Box sx={{ display: "flex", gap: "9px", alignItems: "center" }}>
-          <AvatarCss style={{ cursor: "pointer" }} />
+          <Avatar username={userMetadata?.username!} size="large" />
 
-          <Box>{userMetadata?.email}</Box>
+          <Box>{userMetadata?.username}</Box>
         </Box>
       </Paper>
 

@@ -24,15 +24,18 @@ class ViewerServiceAggr {
     this._viewer.setProgressiveRendering(true);
     this._viewer.setGhosting(false);
 
-    this._viewer.toolbar.container.style.display = "none";
+    const hotkeyManager = new (window as any).Autodesk.Viewing.HotkeyManager();
+    //this._viewer.setHotkeyManager(hotkeyManager);
+    hotkeyManager.deactivate();
+    this._viewer._hotkeyManager.deactivate();
 
-    const viewerCube = document.getElementsByClassName("viewcubeWrapper")[0];
-
-    viewerCube?.setAttribute(
-      "style",
-      "left: auto; top: auto; right: 10px; bottom: 10px;  border: 1px solid grey;"
-    );
-    //viewer.setLightPreset(1);
+    try {
+      (window as any).NOP_VIEWER.impl.controls.handleKeyUp = function (e: any) {
+        e.preventDefault();
+      };
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   public loadDocuments(urns: string[]): Promise<void> {
@@ -59,6 +62,8 @@ class ViewerServiceAggr {
 
         if (callbackAmount === urns.length - 1) {
           resolve();
+
+          this._viewer.fitToView();
 
           this._viewer.removeEventListener(
             Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT,

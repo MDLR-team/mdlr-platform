@@ -117,6 +117,8 @@ class Viewer extends React.Component {
         this._viewer = view.viewer;
         this._view = view;
 
+        this._viewer.loadSpinner.style.display = "none";
+
         this.$setViewer(this._viewer);
 
         // viewer service

@@ -38,10 +38,6 @@ const ToolPanel = () => {
         </IconButton>
 
         <IconButton>
-          <PencilIcon />
-        </IconButton>
-
-        <IconButton>
           <MeasureIcon />
         </IconButton>
 

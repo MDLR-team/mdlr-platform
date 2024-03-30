@@ -26,6 +26,7 @@ class CommentService {
       .from("comments") // Adjust if your table name is different
       .select(`*`)
       .eq("project_id", project_id)
+      .not("author_id", "is", null) // Exclude comments where author_id is null
       .order("created_at", { ascending: true }); // Assuming you have a 'createdAt' column for sorting
 
     if (error) {
