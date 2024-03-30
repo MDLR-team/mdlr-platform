@@ -98,7 +98,7 @@ class Markup2DService {
       id: comment.id,
       index: 2,
       position: comment.markup_position_2d!,
-      svg: createMarkupSvg(3, "default"),
+      svg: createMarkupSvg(comment.author_username, "default"),
     };
     this._commentMarkups.set(comment.id, newMarkup);
 
@@ -170,8 +170,6 @@ class Markup2DService {
         this._pendingMarkupService.id === activeComment.id
       )
         return; // Already adding a comment
-
-      console.log("aaaaa");
 
       this._pendingMarkupService = new PendingMarkup2DService(
         this._projectService

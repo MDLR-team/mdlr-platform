@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import ProjectService from "./project-service";
+import ProjectService, { ProjectUser } from "./project-service";
 import { useRouter } from "next/router";
 import { supabase } from "@/components/supabase-client";
 import { useAuth } from "../../app-services/auth/auth-provider";
@@ -9,6 +9,7 @@ interface ProjectContentProps {
   isReady: boolean;
   title: string;
   thumbnail: string | null;
+  projectUsers: ProjectUser[];
 }
 
 const ProjectContext = createContext<ProjectContentProps | undefined>(
@@ -27,6 +28,8 @@ export function ProjectProvider({ children }: any) {
   const [title, setTitle] = useState<string>("");
   const [thumbnail, setThumbnail] = useState<string | null>(null);
 
+  const [projectUsers, setProjectUsers] = useState<ProjectUser[]>([]);
+
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -37,12 +40,13 @@ export function ProjectProvider({ children }: any) {
       setIsReady,
       setTitle,
       setThumbnail,
+      setProjectUsers,
     });
   }, [router]);
 
   return (
     <ProjectContext.Provider
-      value={{ projectService, isReady, title, thumbnail }}
+      value={{ projectService, isReady, title, thumbnail, projectUsers }}
     >
       {isReady && children}
     </ProjectContext.Provider>

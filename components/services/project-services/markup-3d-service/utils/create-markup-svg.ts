@@ -1,7 +1,7 @@
+import stc from "string-to-color";
+
 function createMarkupSvg(content: string | number, type: MarkupSVGType) {
   const svgNS = "http://www.w3.org/2000/svg";
-
-  content = "AM";
 
   const g = document.createElementNS(svgNS, "g");
   g.setAttribute("cursor", "pointer");
@@ -29,7 +29,7 @@ function createMarkupSvg(content: string | number, type: MarkupSVGType) {
       "d",
       "M24 13.5C24 19.299 19.299 24 13.5 24C7.70101 24 3 19.299 3 13.5C3 7.70101 7.70101 3 13.5 3C19.299 3 24 7.70101 24 13.5Z"
     );
-    path2.setAttribute("fill", "#57D799");
+    path2.setAttribute("fill", stc(content.toString()));
 
     const text = document.createElementNS(svgNS, "text");
     text.setAttribute("x", "14");
@@ -38,7 +38,7 @@ function createMarkupSvg(content: string | number, type: MarkupSVGType) {
     text.setAttribute("dominant-baseline", "middle");
     text.setAttribute("fill", "#333333");
     text.style.fontSize = "10px"; // Set font size using CSS property
-    text.textContent = String(content);
+    text.textContent = getInitials(content.toString());
 
     g.appendChild(path2);
     g.appendChild(text);
@@ -46,6 +46,18 @@ function createMarkupSvg(content: string | number, type: MarkupSVGType) {
 
   return g;
 }
+
+const getInitials = (username: string) => {
+  const nameParts = username!.split(" ");
+  if (nameParts.length > 1) {
+    return (
+      nameParts[0].charAt(0).toUpperCase() +
+      nameParts[1].charAt(0).toUpperCase()
+    );
+  } else {
+    return nameParts[0].charAt(0).toUpperCase();
+  }
+};
 
 type MarkupSVGType = "default" | "placing" | "pending";
 

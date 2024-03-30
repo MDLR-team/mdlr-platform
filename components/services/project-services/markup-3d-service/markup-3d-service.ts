@@ -99,7 +99,7 @@ class Markup3DService {
       id: comment.id,
       index: 2,
       position: comment.markup_position!,
-      svg: createMarkupSvg(2, "default"),
+      svg: createMarkupSvg(comment.author_username, "default"),
     };
     this._commentMarkups.set(comment.id, newMarkup);
 

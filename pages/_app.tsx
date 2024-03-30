@@ -93,6 +93,17 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  & .MuiPopover-paper {
+    &, & * {
+      font-size: 12px !important;
+      color: #333333;
+    }
+
+    & .MuiMenuItem-root {
+      border-radius: 8px !important;
+    }
+  }
+
   // IconButtons
   & .MuiButtonBase-root.MuiIconButton-root {
     min-width: 27px;

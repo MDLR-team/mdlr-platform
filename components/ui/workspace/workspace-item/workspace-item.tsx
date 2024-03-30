@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import React from "react";
 import { Project } from "@/components/types/supabase-data.types";
+import Avatar from "@/components/layout/avatar/avatar";
 
 interface WorkspaceItemProps {
   data: Project;
@@ -13,6 +14,8 @@ const CatalogItem: React.FC<WorkspaceItemProps> = ({ data }) => {
     e.preventDefault(); // Prevent default link behavior
     window.location.href = `/viewer/${data.bim_urn}`; // Navigate with a full page reload
   };
+
+  const userprojects = data.userprojects;
 
   return (
     <Wrapper onClick={handleNavigate}>
@@ -36,11 +39,14 @@ const CatalogItem: React.FC<WorkspaceItemProps> = ({ data }) => {
           <Box>Modified 12 hours ago</Box>
         </Box>
 
-        <Box sx={{ display: "flex" }}>
-          <Ava color={"#91C8FA"} />
-          <Ava color={"#C6BAF9"} />
-          <Ava color={"#FBFD78"} />
-          <Ava color={"#50A764"} />
+        <Box sx={{ display: "flex" }} data-type="users">
+          {userprojects.map((userproject, i) => (
+            <Avatar
+              key={i}
+              username={userproject?.username || ""}
+              size={"small"}
+            />
+          ))}
         </Box>
       </Box>
     </Wrapper>
@@ -64,6 +70,12 @@ const Wrapper = styled.div`
     & {
       background-color: #e4e2df;
       border: 1px solid #999999;
+    }
+  }
+
+  & [data-type="users"] {
+    & > * {
+      margin-left: -8px;
     }
   }
 `;

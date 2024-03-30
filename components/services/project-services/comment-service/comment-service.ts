@@ -22,6 +22,8 @@ class CommentService {
   private async _fetchInitialComments() {
     const project_id = this._projectService!.id as string;
 
+    const projectUsers = this._projectService.projectUsers;
+
     const { data, error } = await this._supabase
       .from("comments") // Adjust if your table name is different
       .select(`*`)
@@ -33,7 +35,16 @@ class CommentService {
       console.error("Error fetching comments:", error);
     }
 
-    this._comments = new Map(data?.map((comment) => [comment.id, comment]));
+    this._comments = new Map(
+      data?.map((comment) => [
+        comment.id,
+        {
+          ...comment,
+          author_username:
+            projectUsers.get(comment.author_id)?.username || "Unknown",
+        },
+      ])
+    );
 
     this._upateComments();
   }
@@ -48,6 +59,10 @@ class CommentService {
 
   // realtime changes will be handled here
   private _handleRealtimeChanges() {
+    const projectUsers = this._projectService.projectUsers;
+
+    console.log("projectUsers", projectUsers);
+
     const changes = this._supabase
       .channel("table-db-changes")
       .on(
@@ -62,15 +77,27 @@ class CommentService {
 
           let needsUpdate = false;
 
+          console.log("aaadd");
+
           if (eventType === "INSERT") {
             this._checkRelationToProject(newComment);
 
-            this._comments.set(newComment.id, newComment as Comment);
+            console.log("aaaaa", newComment);
+
+            this._comments.set(newComment.id, {
+              ...newComment,
+              author_username:
+                projectUsers.get(newComment.author_id)?.username || "Unknown",
+            } as Comment);
             needsUpdate = true;
           } else if (eventType === "UPDATE") {
             this._checkRelationToProject(newComment);
 
-            this._comments.set(newComment.id, newComment as Comment);
+            this._comments.set(newComment.id, {
+              ...newComment,
+              author_username:
+                projectUsers.get(newComment.author_id)?.username || "Unknown",
+            } as Comment);
             needsUpdate = true;
           } else if (eventType === "DELETE") {
             this._checkRelationToProject(old);
@@ -105,9 +132,9 @@ class CommentService {
     this.$setCommentLogId(uuidv4());
   }
 
-  public init() {
-    this._fetchInitialComments();
-    this._handleRealtimeChanges();
+  public async init() {
+    await this._fetchInitialComments();
+    await this._handleRealtimeChanges();
   }
 
   public provideStates(states: {
@@ -168,6 +195,8 @@ export interface Comment {
   view_state: any | null;
   parent_id: string | null;
   annotation: any[] | null;
+  author_id: string;
+  author_username: string;
 }
 
 export default CommentService;

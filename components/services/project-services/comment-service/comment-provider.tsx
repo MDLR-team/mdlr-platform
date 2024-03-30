@@ -28,8 +28,6 @@ export function CommentProvider({ children }: any) {
       setCommentLogId,
     });
 
-    commentService.init();
-
     return () => {
       commentService.dispose();
     };

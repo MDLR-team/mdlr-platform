@@ -23,9 +23,12 @@ class ProjectService {
   public createdAt: string | null = null;
   public thumbnail: string | null = null;
 
+  public projectUsers: Map<string, ProjectUser>;
+
   private $setIsReady: any;
   private $setTitle: any;
   private $setThumbnail: any;
+  private $setProjectUsers: any;
 
   private _globalStatesService: GlobalStatesService;
   private _commentService: CommentService;
@@ -44,6 +47,8 @@ class ProjectService {
     this._activeCommentService = new ActiveCommentService(this);
     this._viewerServiceAggr = new ViewerServiceAggr(this);
 
+    this.projectUsers = new Map();
+
     this._markup3DService = new Markup3DService(this);
     this._markup2DService = new Markup2DService(this);
   }
@@ -59,9 +64,20 @@ class ProjectService {
 
     let { data: projects, error: findError } = await supabase
       .from("projects")
-      .select("*")
+      .select(
+        `
+        *,
+        userprojects!inner(
+          user_id
+        )
+      `
+      )
       .eq("bim_id", bimId)
       .single();
+
+    let { data: profileData, error: profileError } = await supabase
+      .from("profiles")
+      .select("*");
 
     /* if (findError) {
       console.error("Error finding project:", findError);
@@ -71,7 +87,7 @@ class ProjectService {
     // If the project is found, return it
 
     if (projects) {
-      return { project: projects, error: null };
+      return { project: projects, profiles: profileData, error: null };
     }
 
     // If the project was not found, create a new one
@@ -85,8 +101,6 @@ class ProjectService {
       ])
       .select("*")
       .single();
-
-    console.log("newProject", newProject);
 
     if (createError) {
       console.error("Error creating new project:", createError);
@@ -180,22 +194,47 @@ class ProjectService {
     this.$setIsReady = states.setIsReady;
     this.$setTitle = states.setTitle;
     this.$setThumbnail = states.setThumbnail;
+    this.$setProjectUsers = states.setProjectUsers;
 
     const data = await this.init();
 
     if (data) {
-      const { project } = data;
+      const { project, profiles } = data;
 
-      if (project) {
+      if (project && profiles) {
         this.id = project.id;
         this.title = project.title;
         this.bimId = project.bim_id;
         this.createdAt = project.created_at;
         this.thumbnail = project.thumbnail;
 
+        // Populate the projectUsers map
+        this.projectUsers.clear();
+
+        const profilesMap = new Map(
+          profiles.map((profile: any) => [profile.user_id, profile])
+        );
+
+        project.userprojects.forEach((userproject: any) => {
+          const profile = profilesMap.get(userproject.user_id);
+
+          if (profile) {
+            const projectUser: ProjectUser = {
+              id: profile.user_id,
+              username: profile.username,
+            };
+
+            this.projectUsers.set(profile.user_id, projectUser);
+          }
+        });
+
+        this.$setProjectUsers(Array.from(this.projectUsers.values()));
+
         this.$setTitle(this.title);
         this.$setThumbnail(project.thumbnail);
         this.$setIsReady(true);
+
+        this._commentService.init();
       }
     }
   }
@@ -233,6 +272,8 @@ class ProjectService {
   }
 
   public dispose() {
+    this.projectUsers.clear();
+
     this._globalStatesService.dispose();
     this._commentService.dispose();
     this._activeCommentService.dispose();
@@ -255,11 +296,17 @@ function dataURLToBlob(dataURL: string) {
   return new Blob([ab], { type: mimeString });
 }
 
+export interface ProjectUser {
+  id: string;
+  username: string;
+}
+
 interface States {
   router: NextRouter;
   setIsReady: (value: boolean) => void;
   setTitle: (value: string) => void;
   setThumbnail: (value: string | null) => void;
+  setProjectUsers: (value: ProjectUser[]) => void;
 }
 
 export default ProjectService;

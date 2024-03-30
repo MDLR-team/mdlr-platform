@@ -6,4 +6,5 @@ export interface Project {
   bim_client_id: string;
   bim_urn: string;
   thumbnail: string;
+  userprojects: { user_id: string; username?: string }[];
 }

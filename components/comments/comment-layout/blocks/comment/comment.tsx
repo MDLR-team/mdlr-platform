@@ -1,4 +1,5 @@
 import { useViewer } from "@/components/forge/viewer-provider";
+import Avatar from "@/components/layout/avatar/avatar";
 import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
 import { Comment } from "@/components/services/project-services/comment-service/comment-service";
 import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
@@ -18,6 +19,8 @@ const MessageItem: React.FC<MessageItemProps> = ({
   selectComment,
   view_state,
   annotation,
+  author_id,
+  author_username,
   id,
 }) => {
   const { viewer } = useViewer();
@@ -42,18 +45,18 @@ const MessageItem: React.FC<MessageItemProps> = ({
           }}
         >
           <Box sx={{ display: "flex", columnGap: "9px" }}>
-            <Avatar />
+            <Avatar username={author_username} size="small" />
 
             <Box sx={{ display: "flex", gap: "2px", flexDirection: "column" }}>
               <Box sx={{ display: "flex", gap: "9px" }}>
-                <Box sx={{ fontWeight: "500" }}>name</Box>
-                <Box sx={{ color: "#999999" }}>{time}</Box>
+                <Box sx={{ fontWeight: "500" }}>{author_username}</Box>
+                {/*  <Box sx={{ color: "#999999" }}>{time}</Box> */}
               </Box>
 
               <Box
                 sx={{ color: "#999999", fontSize: "9px", fontWeight: "500" }}
               >
-                Comment #{id}
+                {time}
               </Box>
             </Box>
           </Box>
@@ -93,15 +96,6 @@ const Wrapper = styled.div`
       background-color: #f5f5f5;
     }
   }
-`;
-
-const Avatar = styled.div`
-  min-width: 24px;
-  min-height: 24px;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background-color: black;
 `;
 
 export default MessageItem;
