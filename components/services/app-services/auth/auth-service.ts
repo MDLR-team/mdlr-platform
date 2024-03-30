@@ -81,6 +81,10 @@ class AuthService {
     }
   }
 
+  public get userMetadata() {
+    return this._userMetadata;
+  }
+
   public provideStates(states: States) {
     this.$setIsAuthorized = states.setIsAuthorized;
     this.$setNeedsAuth = states.setNeedsAuth;

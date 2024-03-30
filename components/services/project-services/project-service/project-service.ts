@@ -7,6 +7,10 @@ import { supabase } from "@/components/supabase-client";
 import GlobalStatesService from "../global-states-service/global-states-service";
 import CommentService from "../comment-service/comment-service";
 import ActiveCommentService from "../active-comment-service/active-comment-service";
+import Markup3DService from "../markup-3d-service/markup-3d-service";
+import ViewerServiceAggr from "@/components/forge/viewer-service-aggr";
+import AuthService from "../../app-services/auth/auth-service";
+import Markup2DService from "../markup-2d-service/markup-2d-service";
 
 class ProjectService {
   private _router: any;
@@ -26,11 +30,22 @@ class ProjectService {
   private _globalStatesService: GlobalStatesService;
   private _commentService: CommentService;
   private _activeCommentService: ActiveCommentService;
+  private _viewerServiceAggr: ViewerServiceAggr;
 
-  constructor(private _supabase: SupabaseClient) {
+  private _markup3DService: Markup3DService;
+  private _markup2DService: Markup2DService;
+
+  constructor(
+    private _supabase: SupabaseClient,
+    private _authService: AuthService
+  ) {
     this._globalStatesService = new GlobalStatesService(this);
     this._commentService = new CommentService(this);
     this._activeCommentService = new ActiveCommentService(this);
+    this._viewerServiceAggr = new ViewerServiceAggr(this);
+
+    this._markup3DService = new Markup3DService(this);
+    this._markup2DService = new Markup2DService(this);
   }
 
   private async init() {
@@ -197,14 +212,34 @@ class ProjectService {
     return this._activeCommentService;
   }
 
+  public get viewerServiceAggr() {
+    return this._viewerServiceAggr;
+  }
+
+  public get markup3DService() {
+    return this._markup3DService;
+  }
+
+  public get markup2DService() {
+    return this._markup2DService;
+  }
+
   public get supabase() {
     return this._supabase;
+  }
+
+  public get authService() {
+    return this._authService;
   }
 
   public dispose() {
     this._globalStatesService.dispose();
     this._commentService.dispose();
     this._activeCommentService.dispose();
+    this._viewerServiceAggr.dispose();
+
+    this._markup3DService.dispose();
+    this._markup2DService.dispose();
   }
 }
 

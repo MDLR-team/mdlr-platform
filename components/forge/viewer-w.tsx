@@ -2,8 +2,10 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useViewer } from "./viewer-provider";
 import Viewer from "./viewer-aggr";
+import { useProject } from "../services/project-services/project-service/project-provider";
 
 const ViewerW = () => {
+  const { projectService } = useProject();
   const { setViewer, setIsModelLoaded, setViewerService } = useViewer();
 
   const router = useRouter();
@@ -19,6 +21,7 @@ const ViewerW = () => {
 
   return (
     <Viewer
+      projectService={projectService}
       urns={urns}
       setViewer={setViewer}
       setIsModelLoaded={setIsModelLoaded}

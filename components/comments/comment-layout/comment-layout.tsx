@@ -2,18 +2,18 @@ import React from "react";
 
 import { useComment } from "../../services/project-services/comment-service/comment-provider";
 import { Box, IconButton, Paper } from "@mui/material";
-import { useMarkup } from "../markup-provider/markup-provider";
 import PlusIcon from "@/components/ui/icons/plus-icon";
 import CommentsIcon from "@/components/ui/icons/comments-icon";
 import MessageItem from "./blocks/comment/comment";
 import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
 import { CommentList, Header, List } from "./comment-layout.styled";
 import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
+import { useMarkup3D } from "@/components/services/project-services/markup-3d-service/markup-3d-provider";
 
 const CommentsBlock: React.FC = () => {
   const { comments } = useComment();
   const { activeCommentService } = useActiveComment();
-  const { markupsExtension } = useMarkup();
+  const { markup3DService } = useMarkup3D();
   const { isCommentsPanelOpen } = useGlobalStates();
 
   if (!isCommentsPanelOpen) return null;
@@ -34,7 +34,7 @@ const CommentsBlock: React.FC = () => {
           <IconButton
             data-type="exception"
             data-add="comment"
-            onClick={() => markupsExtension?.enable(true)}
+            onClick={() => markup3DService.toggleAddComment()}
           >
             <PlusIcon />
           </IconButton>

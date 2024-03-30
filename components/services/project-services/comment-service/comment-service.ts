@@ -97,6 +97,8 @@ class CommentService {
     });
 
     this._emit("COMMENTS_UPDATED", this._comments);
+    this._projectService.markup3DService.updateMarkups();
+    this._projectService.markup2DService.updateMarkups();
 
     this.$setComments(sortedComments);
     this.$setCommentLogId(uuidv4());

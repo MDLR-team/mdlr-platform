@@ -44,7 +44,7 @@ const PaperCanvas: React.FC = () => {
         }}
         ref={parentRef}
       >
-        <canvas ref={canvasRef} />
+        <canvas className="paper-canvas" ref={canvasRef} />
       </Box>
 
       <ExplodedCommentLayout {...{ commentBBoxes }} />

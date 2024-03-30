@@ -1,11 +1,14 @@
+import ProjectService from "../services/project-services/project-service/project-service";
 import Viewer from "./viewer-aggr";
 
 class ViewerServiceAggr {
-  constructor(
-    private _viewer: any,
-    private _view: any,
-    private _viewerAggr: Viewer
-  ) {}
+  private _viewer: any;
+  private _view: any;
+
+  constructor(private _projectService: ProjectService) {
+    this._viewer = null;
+    this._view = null;
+  }
 
   /**
    * Adjusts the scene's visual settings in the Forge Viewer.
@@ -89,6 +92,30 @@ class ViewerServiceAggr {
         resolve(bubble);
       });
     });
+  }
+
+  public get viewer() {
+    return this._viewer;
+  }
+
+  public get view() {
+    return this._view;
+  }
+
+  public provideViewer(viewer: any, view: any) {
+    this._viewer = viewer;
+    this._view = view;
+
+    this._projectService.markup3DService.provideViewer(viewer);
+  }
+
+  public dispose() {
+    if (this._viewer) {
+      const Autodesk = (window as any).Autodesk;
+
+      this._viewer.finish();
+      this._viewer = null;
+    }
   }
 }
 

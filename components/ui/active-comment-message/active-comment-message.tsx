@@ -1,4 +1,3 @@
-import { Wrapper } from "@/components/comments/comment-layout/blocks/comment-message/comment-message";
 import { useAuth } from "@/components/services/app-services/auth/auth-provider";
 import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
 import { useProject } from "@/components/services/project-services/project-service/project-provider";
@@ -6,6 +5,7 @@ import { supabase } from "@/components/supabase-client";
 import { Box, Button, IconButton, TextField } from "@mui/material";
 import { useState } from "react";
 import PencilIcon from "../icons/pencil-icon";
+import styled from "styled-components";
 
 const ActiveCommentMessage = () => {
   const [comment, setComment] = useState("");
@@ -95,5 +95,34 @@ const ActiveCommentMessage = () => {
     </Wrapper>
   );
 };
+
+export const Wrapper = styled.div`
+  &&&& {
+    &,
+    & * {
+      font-size: 12px;
+    }
+  }
+
+  & form.MuiBox-root {
+    padding: 0px;
+    border-color: rgba(0, 0, 0, 0);
+
+    & .MuiFormControl-root {
+      margin-top: 0px;
+      margin-bottom: 0px;
+
+      & .MuiInputBase-root {
+        &::before {
+          display: none;
+        }
+
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+`;
 
 export default ActiveCommentMessage;

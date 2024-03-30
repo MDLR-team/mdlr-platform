@@ -1,10 +1,12 @@
 import axios from "axios";
 import React from "react";
 import ViewerServiceAggr from "./viewer-service-aggr";
+import ProjectService from "../services/project-services/project-service/project-service";
 
 class Viewer extends React.Component {
   private _isViewerInitialized: boolean;
 
+  private _projectService: ProjectService;
   private _viewer: any | null;
   private _viewerContainer: any;
   private _view: any;
@@ -26,6 +28,7 @@ class Viewer extends React.Component {
     super(props);
 
     this.props = props;
+    this._projectService = props.projectService;
 
     this._isViewerInitialized = false;
 
@@ -117,7 +120,9 @@ class Viewer extends React.Component {
         this.$setViewer(this._viewer);
 
         // viewer service
-        const viewerService = new ViewerServiceAggr(this._viewer, view, this);
+        const viewerService = this._projectService.viewerServiceAggr;
+        viewerService.provideViewer(this._viewer, this._view);
+
         this.$setViewerService(viewerService);
         this._viewerService = viewerService;
 
@@ -183,11 +188,23 @@ class Viewer extends React.Component {
             position: "absolute",
             width: "100%",
             height: "100%",
+            zIndex: 2,
+            pointerEvents: "none",
+          }}
+          xmlns="http://www.w3.org/2000/svg"
+          id="markup_3d_layer"
+        ></svg>
+
+        <svg
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
             zIndex: 3,
             pointerEvents: "none",
           }}
           xmlns="http://www.w3.org/2000/svg"
-          id="comments_2d_layer"
+          id="markup_2d_layer"
         ></svg>
 
         <div
@@ -210,6 +227,7 @@ interface ForgeTokenResponse {
 }
 
 interface ViewerProps {
+  projectService: ProjectService;
   urns: null | string[];
   setViewer: (viewer: any) => void;
   setViewerService: (viewerService: ViewerServiceAggr) => void;

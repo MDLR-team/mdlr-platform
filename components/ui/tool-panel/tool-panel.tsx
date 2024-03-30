@@ -4,16 +4,18 @@ import CommentIcon from "../icons/comment-icon";
 import PencilIcon from "../icons/pencil-icon";
 import MeasureIcon from "../icons/measure-icon";
 import SecondaryToolPanel from "./blocks/secondary-tool-panel/secondary-tool-panel";
-import { useMarkup } from "@/components/comments/markup-provider/markup-provider";
 import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
 
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AutoAwesomeMotionOutlinedIcon from "@mui/icons-material/AutoAwesomeMotionOutlined";
 import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
+import { useMarkup3D } from "@/components/services/project-services/markup-3d-service/markup-3d-provider";
+import { useMarkup2D } from "@/components/services/project-services/markup-2d-service/markup-2d-provider";
 
 const ToolPanel = () => {
   const { commentAdding, globalStatesService } = useGlobalStates();
-  const { markupPosition, markupsExtension } = useMarkup();
+  const { markup3DService } = useMarkup3D();
+  const { markup2DService } = useMarkup2D();
 
   const { isPaperMode, viewType, activeCommentService } = useActiveComment();
 
@@ -29,9 +31,7 @@ const ToolPanel = () => {
         <IconButton
           data-active={commentAdding ? "true" : "false"}
           onClick={() => {
-            globalStatesService.toggleCommentsPanel(true);
-
-            markupsExtension?.enable(true);
+            markup3DService.toggleAddComment();
           }}
         >
           <CommentIcon />
@@ -64,7 +64,7 @@ const ToolPanel = () => {
             <IconButton
               data-active={commentAdding ? "true" : "false"}
               onClick={() => {
-                activeCommentService.toggleAwaitingPinAddition(true);
+                markup2DService.toggleAddComment();
               }}
             >
               <CommentIcon />

@@ -141,7 +141,7 @@ class CommentsExtension {
     g.setAttribute("pointer-events", "all");
     g.setAttribute("cursor", "pointer");
 
-    const svg_background = document.createElementNS(
+    /*  const svg_background = document.createElementNS(
       "http://www.w3.org/2000/svg",
       "path"
     );
@@ -173,7 +173,7 @@ class CommentsExtension {
     text.setAttribute("text-anchor", "middle");
     text.setAttribute("dominant-baseline", "middle");
 
-    g.appendChild(text);
+    g.appendChild(text); */
 
     return g;
   }

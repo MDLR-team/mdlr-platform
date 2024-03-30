@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import ProjectService from "./project-service";
 import { useRouter } from "next/router";
 import { supabase } from "@/components/supabase-client";
+import { useAuth } from "../../app-services/auth/auth-provider";
 
 interface ProjectContentProps {
   projectService: ProjectService;
@@ -17,7 +18,11 @@ const ProjectContext = createContext<ProjectContentProps | undefined>(
 export function ProjectProvider({ children }: any) {
   const router = useRouter();
 
-  const [projectService] = useState(() => new ProjectService(supabase));
+  const { authService } = useAuth();
+
+  const [projectService] = useState(
+    () => new ProjectService(supabase, authService)
+  );
 
   const [title, setTitle] = useState<string>("");
   const [thumbnail, setThumbnail] = useState<string | null>(null);

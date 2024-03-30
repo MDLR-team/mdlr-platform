@@ -25,8 +25,8 @@ const ActiveCommentDialog = () => {
     <Paper
       sx={{
         position: "absolute",
-        left: `${activeCommentPosition?.x || 0}px`,
-        top: `${activeCommentPosition?.y || 0}px`,
+        left: `${activeCommentPosition?.x + 27 + 10 || 0}px`,
+        top: `${activeCommentPosition?.y - 27 || 0}px`,
         minWidth: "250px",
         maxWidth: "250px",
         display: "flex",
@@ -62,9 +62,7 @@ const ActiveCommentDialog = () => {
         <List>
           {childComments
             .filter((comment) => {
-              if (viewType === "assembled") return true;
-
-              return !comment.annotation;
+              return !comment.markup_position_2d;
             })
             .map((comment) => (
               <>
@@ -81,8 +79,6 @@ const ActiveCommentDialog = () => {
             ))}
         </List>
       </CommentList>
-
-      <ActiveCommentMessage />
     </Paper>
   );
 };
