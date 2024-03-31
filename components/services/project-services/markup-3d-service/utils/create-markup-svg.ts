@@ -37,8 +37,11 @@ function createMarkupSvg(content: string | number, type: MarkupSVGType) {
     text.setAttribute("text-anchor", "middle");
     text.setAttribute("dominant-baseline", "middle");
     text.setAttribute("fill", "#333333");
+
     text.style.fontSize = "10px"; // Set font size using CSS property
     text.textContent = getInitials(content.toString());
+
+    text.style.pointerEvents = "none"; // Disable pointer events
 
     g.appendChild(path2);
     g.appendChild(text);

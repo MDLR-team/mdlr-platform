@@ -45,8 +45,6 @@ class WorkspaceService {
       });
     });
 
-    console.log(projects);
-
     this._projects = projects;
     this.$setProjects(projects);
     this.$setIsReady(true);

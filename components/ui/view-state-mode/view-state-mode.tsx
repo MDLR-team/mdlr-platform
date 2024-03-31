@@ -34,8 +34,6 @@ const ViewStateMode = () => {
   );
 };
 
-const offset = 55;
-
 const FloatingWrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -51,8 +49,9 @@ const FloatingWrapper = styled.div`
   &&[data-mode="edit"],
   &&[data-mode="workspace"] {
     display: grid;
-    grid-template-columns: ${offset}px auto ${offset}px;
-    grid-template-rows: ${offset}px auto ${offset}px;
+
+    grid-template-columns: 5px auto 5px;
+    grid-template-rows: 58px auto 5px;
   }
 
   &&[data-mode="draw"] {

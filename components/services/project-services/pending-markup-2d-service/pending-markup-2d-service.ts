@@ -26,7 +26,6 @@ class PendingMarkup2DService {
     this._canvas = document.getElementsByClassName(
       "paper-canvas"
     )[0] as HTMLElement;
-    console.log("this._canvas", this._canvas);
 
     this._svgCanvas = document.getElementById("markup_2d_layer");
     this._pendingMarkup = null;

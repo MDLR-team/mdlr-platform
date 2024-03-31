@@ -61,8 +61,6 @@ class CommentService {
   private _handleRealtimeChanges() {
     const projectUsers = this._projectService.projectUsers;
 
-    console.log("projectUsers", projectUsers);
-
     const changes = this._supabase
       .channel("table-db-changes")
       .on(
@@ -77,12 +75,8 @@ class CommentService {
 
           let needsUpdate = false;
 
-          console.log("aaadd");
-
           if (eventType === "INSERT") {
             this._checkRelationToProject(newComment);
-
-            console.log("aaaaa", newComment);
 
             this._comments.set(newComment.id, {
               ...newComment,

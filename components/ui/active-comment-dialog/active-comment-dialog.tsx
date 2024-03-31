@@ -32,11 +32,7 @@ const ActiveCommentDialog = () => {
         display: "flex",
         flexDirection: "column",
         pointerEvents: "all",
-        ...(viewType === "exploded"
-          ? {
-              background: "transparent",
-            }
-          : {}),
+        gap: "0px",
       }}
     >
       {viewType === "assembled" && (
@@ -50,35 +46,42 @@ const ActiveCommentDialog = () => {
         >
           <div />
           <IconButton
+            sx={{
+              minWidth: "18px !important",
+              minHeight: "18px !important",
+              width: "18px !important",
+              height: "18px !important",
+              fontSize: "12px !important",
+            }}
+            size="small"
             onClick={() => activeCommentService.deselectComment()}
-            sx={{ fontSize: "12px !important" }}
           >
             <CloseIcon fontSize="small" />
           </IconButton>
         </div>
       )}
 
-      <CommentList>
-        <List>
-          {childComments
-            .filter((comment) => {
-              return !comment.markup_position_2d;
-            })
-            .map((comment) => (
-              <>
-                {viewType === "assembled" ? (
+      {
+        <CommentList>
+          <List>
+            {childComments
+              .filter((comment) => {
+                if (comment.parent_id) return;
+
+                return !comment.markup_position_2d;
+              })
+              .map((comment) => (
+                <>
                   <MessageItem
                     {...comment}
                     selectComment={() => {}}
                     key={comment.id}
                   />
-                ) : (
-                  <MiniComment {...comment} key={comment.id} />
-                )}
-              </>
-            ))}
-        </List>
-      </CommentList>
+                </>
+              ))}
+          </List>
+        </CommentList>
+      }
     </Paper>
   );
 };
