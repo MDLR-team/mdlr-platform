@@ -1,13 +1,8 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import GlobalStatesService from "../global-states-service/global-states-service";
 import CommentService, { Comment } from "../comment-service/comment-service";
-import MarkupExtension from "@/components/forge/markup-extension";
-import paper, { Path, Tool } from "paper";
 import ProjectService from "../project-service/project-service";
-import {
-  transformPointToNormalizedCoords,
-  deparseNormalizedCoords,
-} from "./utils/point-2-normalized-coord";
+import { transformPointToNormalizedCoords } from "./utils/point-2-normalized-coord";
 import { toScreenXY } from "../markup-3d-service/utils/to-screen-xy";
 
 class ActiveCommentService {
@@ -19,7 +14,6 @@ class ActiveCommentService {
   private _isAwaitingPinAddition: boolean = false;
 
   private _viewer: any;
-  private _markupExtension?: MarkupExtension;
 
   private $setActiveComment: any;
   private $setActiveCommentPosition: any;
@@ -76,8 +70,6 @@ class ActiveCommentService {
     } else {
       this.deselectComment();
     }
-
-    this._markupExtension?.enable(false);
   }
 
   public togglePaperMode(v?: boolean) {
@@ -100,6 +92,12 @@ class ActiveCommentService {
       this._projectService.markup2DService.toggleEnabled(true);
     } else {
       this._projectService.markup2DService.toggleEnabled(false);
+    }
+
+    if (this._isPaperMode) {
+      this._projectService.markup3DService.toggleTransparentMarkup(true);
+    } else {
+      this._projectService.markup3DService.toggleTransparentMarkup(false);
     }
   }
 
@@ -232,10 +230,6 @@ class ActiveCommentService {
     this._viewer = states.viewer;
 
     this.$setViewType(this._viewType);
-  }
-
-  public provideMarkupExtension(markupExtension: MarkupExtension) {
-    this._markupExtension = markupExtension;
   }
 
   public saveAnnotation(lines: any) {

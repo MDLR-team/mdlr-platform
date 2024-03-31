@@ -93,6 +93,17 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  & .MuiPopover-paper {
+    &, & * {
+      font-size: 12px !important;
+      color: #333333;
+    }
+
+    & .MuiMenuItem-root {
+      border-radius: 8px !important;
+    }
+  }
+
   // IconButtons
   & .MuiButtonBase-root.MuiIconButton-root {
     min-width: 27px;
@@ -143,6 +154,23 @@ const GlobalStyle = createGlobalStyle`
       color: #333333 !important;
       text-transform: none !important;
     }
+  }
+
+  // Forge Viewer
+  & .forge-spinner {
+    display: none !important;
+  }
+
+  & .adsk-control.adsk-toolbar {
+    display: none !important;
+  }
+
+  & .viewcubeWrapper {
+    left: auto !important;
+    top: auto !important;
+    right: 10px !important;
+    bottom: 10px !important;
+    border: 1px solid grey;
   }
 `;
 

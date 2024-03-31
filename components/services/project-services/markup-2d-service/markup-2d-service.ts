@@ -1,5 +1,6 @@
 import { deparseNormalizedCoords } from "../active-comment-service/utils/point-2-normalized-coord";
 import { Comment } from "../comment-service/comment-service";
+import { createMarkupComment } from "../markup-3d-service/utils/create-markup-comment";
 import { createMarkupSvg } from "../markup-3d-service/utils/create-markup-svg";
 import PendingMarkup2DService from "../pending-markup-2d-service/pending-markup-2d-service";
 import ProjectService from "../project-service/project-service";
@@ -8,6 +9,9 @@ class Markup2DService {
   private _svgCanvas: HTMLElement | null = null;
 
   private _commentMarkups: Map<string, Markup2D>;
+
+  private _hoveredMarkup: Markup2D | null;
+  private _selectedMarkup: Markup2D | null;
 
   private _isAddingComment: boolean;
   private _pendingMarkupService: PendingMarkup2DService | null;
@@ -23,8 +27,13 @@ class Markup2DService {
 
     this._commentMarkups = new Map();
 
+    this._hoveredMarkup = null;
+    this._selectedMarkup = null;
+
     this._isAddingComment = false;
     this._pendingMarkupService = null;
+
+    this._onCameraChange = this._onCameraChange.bind(this);
   }
 
   /**
@@ -94,15 +103,68 @@ class Markup2DService {
    * @param comment - The comment to add a markup for.
    */
   private _addMarkup(comment: Comment) {
+    const svgMarkup = createMarkupSvg(comment.author_username, "default");
+    const htmlElement = createMarkupComment(comment.content);
+
     const newMarkup = {
       id: comment.id,
       index: 2,
       position: comment.markup_position_2d!,
-      svg: createMarkupSvg(3, "default"),
+      svg: svgMarkup,
+      htmlElement: htmlElement,
     };
     this._commentMarkups.set(comment.id, newMarkup);
 
     this._svgCanvas?.appendChild(newMarkup.svg);
+
+    // Attach event listeners
+    svgMarkup.addEventListener("mouseover", () =>
+      this._onMarkupHover(newMarkup, true)
+    );
+    svgMarkup.addEventListener("mouseout", () =>
+      this._onMarkupHover(newMarkup, false)
+    );
+    //svgMarkup.addEventListener("click", () => this._onMarkupClick(newMarkup));
+  }
+
+  private _onMarkupHover(markup: Markup2D, isHover: boolean) {
+    const commentLayer2d = document.getElementById(
+      "comment_2d_layer"
+    ) as HTMLElement;
+
+    if (isHover) {
+      this._hoveredMarkup = markup;
+      commentLayer2d.appendChild(markup.htmlElement!);
+
+      const { x, y } = deparseNormalizedCoords(
+        markup.position,
+        this._svgCanvas!
+      );
+      markup.htmlElement!.style.left = `${x + 27 + 10}px`;
+      markup.htmlElement!.style.top = `${y - 27}px`;
+    } else {
+      //if (this._selectedMarkup !== markup) {
+      // Only hide if not selected
+      commentLayer2d.removeChild(markup.htmlElement!);
+      this._hoveredMarkup = null;
+    }
+  }
+
+  private _onMarkupClick(markup: Markup2D) {
+    if (this._selectedMarkup === markup) {
+      // If already selected, deselect and hide message
+      markup.htmlElement!.style.display = "none";
+      this._selectedMarkup = null;
+    } else {
+      // Hide previously selected markup message
+      if (this._selectedMarkup) {
+        this._selectedMarkup.htmlElement!.style.display = "none";
+      }
+
+      // Select new markup and show message
+      this._selectedMarkup = markup;
+      markup.htmlElement!.style.display = "block";
+    }
   }
 
   /**
@@ -154,6 +216,35 @@ class Markup2DService {
   }
 
   /**
+   * Sets up event listeners for camera changes and window resizing.
+   */
+  private _addEventListeners() {
+    console.log("Adding event listeners");
+
+    window.addEventListener("resize", this._onCameraChange);
+
+    this._onCameraChange();
+  }
+
+  /**
+   * Adjusts markup positions based on the current camera view.
+   */
+  private _onCameraChange() {
+    if (!this._svgCanvas) return;
+
+    this._commentMarkups.forEach((markup) => {
+      const { x, y } = deparseNormalizedCoords(
+        markup.position,
+        this._svgCanvas
+      );
+
+      console.log("x:", x, "y:", y);
+
+      markup.svg.setAttribute("transform", `translate(${x}, ${y - 27})`);
+    });
+  }
+
+  /**
    * Toggles the addition of a new comment and its corresponding markup.
    * @param v - Optional boolean flag to explicitly set the toggle state.
    */
@@ -170,8 +261,6 @@ class Markup2DService {
         this._pendingMarkupService.id === activeComment.id
       )
         return; // Already adding a comment
-
-      console.log("aaaaa");
 
       this._pendingMarkupService = new PendingMarkup2DService(
         this._projectService
@@ -200,6 +289,8 @@ class Markup2DService {
 
     if (this._enabled) {
       this.updateMarkups();
+
+      this._addEventListeners();
     } else {
       this.dispose();
     }
@@ -208,6 +299,12 @@ class Markup2DService {
   public dispose() {
     this._enabled = false;
     this._clearMarkups();
+
+    if (this._hoveredMarkup) {
+      this._onMarkupHover(this._hoveredMarkup, false);
+    }
+
+    window.removeEventListener("resize", this._onCameraChange);
 
     this._pendingMarkupService?.dispose();
     this._pendingMarkupService = null;
@@ -218,6 +315,7 @@ interface Markup2D {
   id: string;
   position: { x: number; y: number };
   svg: SVGElement;
+  htmlElement?: HTMLElement;
 }
 
 export default Markup2DService;

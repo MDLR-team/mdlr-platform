@@ -17,37 +17,42 @@ const ToolPanel = () => {
   const { markup3DService } = useMarkup3D();
   const { markup2DService } = useMarkup2D();
 
-  const { isPaperMode, viewType, activeCommentService } = useActiveComment();
+  const { isPaperMode, isPaperEditing, viewType, activeCommentService } =
+    useActiveComment();
 
   return (
     <Box sx={{ position: "relative" }}>
       <SecondaryToolPanel />
 
       <Paper sx={{ display: "flex", gap: "6px", minWidth: "max-content" }}>
-        <IconButton data-active="true">
-          <CursorIcon />
-        </IconButton>
-
-        <IconButton
-          data-active={commentAdding ? "true" : "false"}
-          onClick={() => {
-            markup3DService.toggleAddComment();
-          }}
-        >
-          <CommentIcon />
-        </IconButton>
-
-        <IconButton>
-          <PencilIcon />
-        </IconButton>
-
-        <IconButton>
-          <MeasureIcon />
-        </IconButton>
-
-        {isPaperMode && (
+        {!isPaperMode && (
           <>
+            <IconButton data-active="true">
+              <CursorIcon />
+            </IconButton>
+
             <IconButton
+              data-active={commentAdding ? "true" : "false"}
+              onClick={() => {
+                markup3DService.toggleAddComment();
+              }}
+            >
+              <CommentIcon />
+            </IconButton>
+
+            <IconButton>
+              <MeasureIcon />
+            </IconButton>
+          </>
+        )}
+
+        {isPaperMode && !isPaperEditing && (
+          <>
+            <IconButton data-active="true">
+              <CursorIcon />
+            </IconButton>
+
+            {/* <IconButton
               data-active={viewType === "assembled" ? "true" : "false"}
               onClick={() => activeCommentService.toggleViewType("assembled")}
             >
@@ -59,7 +64,7 @@ const ToolPanel = () => {
               onClick={() => activeCommentService.toggleViewType("exploded")}
             >
               <AutoAwesomeMotionOutlinedIcon sx={{ fontSize: 16 }} />
-            </IconButton>
+        </IconButton> */}
 
             <IconButton
               data-active={commentAdding ? "true" : "false"}

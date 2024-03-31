@@ -61,6 +61,11 @@ class Viewer extends React.Component {
     if (this._viewer) {
       const Autodesk = (window as any).Autodesk;
 
+      this._viewer.removeEventListener(
+        Autodesk.Viewing.AGGREGATE_SELECTION_CHANGED_EVENT,
+        this.handleSelectionChanged
+      );
+
       this._viewer.finish();
       this._viewer = null;
     }
@@ -117,6 +122,11 @@ class Viewer extends React.Component {
         this._viewer = view.viewer;
         this._view = view;
 
+        this._viewer.addEventListener(
+          Autodesk.Viewing.AGGREGATE_SELECTION_CHANGED_EVENT,
+          this.handleSelectionChanged
+        );
+
         this.$setViewer(this._viewer);
 
         // viewer service
@@ -163,6 +173,10 @@ class Viewer extends React.Component {
     return this.$setIsModelLoaded;
   }
 
+  private handleSelectionChanged = () => {
+    this._viewer.clearSelection();
+  };
+
   render() {
     return (
       <div
@@ -206,6 +220,17 @@ class Viewer extends React.Component {
           xmlns="http://www.w3.org/2000/svg"
           id="markup_2d_layer"
         ></svg>
+
+        <div
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            zIndex: 3,
+            pointerEvents: "none",
+          }}
+          id="comment_2d_layer"
+        ></div>
 
         <div
           ref={(div) => (this._viewerContainer = div)}

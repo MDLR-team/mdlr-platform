@@ -12,14 +12,38 @@ class WorkspaceService {
   private async _init() {
     const supabase = this._supabase;
 
-    let { data, error } = await supabase
+    let { data: projectData, error: projectError } = await supabase
       .from("projects")
-      .select("*")
+      .select(
+        `
+        *,
+        userprojects!inner(
+          user_id
+        )
+      `
+      )
       .not("bim_id", "is", null)
       .not("bim_urn", "is", null)
       .order("created_at", { ascending: false });
 
-    const projects = data as Project[];
+    let { data: profileData, error: profileError } = await supabase
+      .from("profiles")
+      .select("*");
+
+    const projects = projectData as Project[];
+
+    const profiles = profileData as any;
+    const profilesMap = new Map();
+    profiles.forEach((profile: any) => {
+      profilesMap.set(profile.user_id, profile);
+    });
+
+    projects.forEach((project) => {
+      project.userprojects.forEach((userproject: any) => {
+        const profile = profilesMap.get(userproject.user_id);
+        userproject.username = profile?.username;
+      });
+    });
 
     this._projects = projects;
     this.$setProjects(projects);

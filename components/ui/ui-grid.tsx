@@ -42,7 +42,7 @@ const FloatingWrapper = styled.div`
   width: 100%;
   height: 100%;
   position: fixed;
-  z-index: 3;
+  z-index: 4;
   top: 0;
   left: 0;
 
@@ -56,7 +56,7 @@ const Wrapper = styled.div`
 
   position: fixed;
 
-  z-index: 4;
+  z-index: 5;
 
   display: flex;
   pointer-events: none;

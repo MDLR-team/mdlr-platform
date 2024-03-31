@@ -1,25 +1,60 @@
-import { Box, Button, IconButton, Paper } from "@mui/material";
+import { Box, Button, IconButton, Menu, MenuItem, Paper } from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail";
 import styled from "styled-components";
 import { useAuth } from "@/components/services/app-services/auth/auth-provider";
 import WorkspaceIcon from "../../icons/workspace-icon";
 import stc from "string-to-color";
+import Avatar from "@/components/layout/avatar/avatar";
+import { useState } from "react";
 
 const LeftBar = () => {
   const menuItems = ["Personal", "Favourites", "Shared", "Recent", "Trash"];
   const workspaceIcons = ["Workspace #1", "Workspace #2", "Workspace #3"];
 
-  const { userMetadata } = useAuth();
+  const { userMetadata, authService } = useAuth();
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleSignOut = () => {
+    authService.logOut();
+  };
 
   return (
     <>
-      <Paper sx={{ backgroundColor: "transparent" }}>
+      <Paper
+        sx={{ backgroundColor: "transparent", cursor: "pointer" }}
+        data-type="user-profile"
+        onClick={handleClick}
+      >
         <Box sx={{ display: "flex", gap: "9px", alignItems: "center" }}>
-          <AvatarCss style={{ cursor: "pointer" }} />
+          <Avatar username={userMetadata?.username!} size="large" />
 
-          <Box>{userMetadata?.email}</Box>
+          <Box>{userMetadata?.username}</Box>
         </Box>
       </Paper>
+
+      <Menu
+        id="user-profile-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        <MenuItem sx={{ minWidth: "215px" }} onClick={handleSignOut}>
+          Sign Out
+        </MenuItem>
+      </Menu>
 
       <Paper
         title="Workspaces"

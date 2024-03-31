@@ -15,8 +15,6 @@ export default async function getThumbnail(
         return res.status(400).send("URN is required");
       }
 
-      console.log("urn", urn);
-
       const thumbnail = await Bim360Service.getThumbnail(urn);
 
       // Assuming the service returns an image buffer and the image is a PNG.

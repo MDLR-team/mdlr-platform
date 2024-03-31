@@ -35,6 +35,7 @@ class Markup3DService {
     this._onCameraChange = this._onCameraChange.bind(this);
 
     this.toggleEnabled = this.toggleEnabled.bind(this);
+    this.toggleTransparentMarkup = this.toggleTransparentMarkup.bind(this);
   }
 
   /**
@@ -99,7 +100,7 @@ class Markup3DService {
       id: comment.id,
       index: 2,
       position: comment.markup_position!,
-      svg: createMarkupSvg(2, "default"),
+      svg: createMarkupSvg(comment.author_username, "default"),
     };
     this._commentMarkups.set(comment.id, newMarkup);
 
@@ -234,9 +235,26 @@ class Markup3DService {
     }
   }
 
-  public dispose() {
-    console.log("hh");
+  public toggleTransparentMarkup(v: boolean) {
+    if (v) {
+      const activeCommentService = this._projectService.activeCommentService;
+      const activeComment = activeCommentService.activeComment;
 
+      this._commentMarkups.forEach((markup) => {
+        if (!activeComment || markup.id === activeComment.id) return;
+
+        markup.svg.style.opacity = "0.3";
+        markup.svg.style.filter = "grayscale(100%)";
+      });
+    } else {
+      this._commentMarkups.forEach((markup) => {
+        markup.svg.style.opacity = "1";
+        markup.svg.style.filter = "none";
+      });
+    }
+  }
+
+  public dispose() {
     this._enabled = false;
     this._clearMarkups();
 

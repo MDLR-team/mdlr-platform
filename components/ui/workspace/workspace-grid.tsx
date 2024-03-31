@@ -34,6 +34,13 @@ const Wrapper = styled.div`
 
   display: flex;
   pointer-events: none;
+
+  && *[data-type="user-profile"] {
+    &: hover {
+      background-color: #e4e2df;
+      border: 1px solid #999999 !important;
+    }
+  }
 `;
 
 const Grid = styled.div`
