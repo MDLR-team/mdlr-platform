@@ -31,12 +31,12 @@ export class ProjectProvider extends Component<
   constructor(props: ProjectProviderProps) {
     super(props);
 
-    console.log("ProjectProviderProps props", props);
+    /* console.log("ProjectProviderProps props", props);
 
     if (!props.init.current) {
       props.init.current = true;
       return;
-    }
+    } */
 
     this.state = {
       title: "",
