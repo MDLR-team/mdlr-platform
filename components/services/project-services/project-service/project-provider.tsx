@@ -48,7 +48,7 @@ export class ProjectProvider extends Component<
   }
 
   componentDidMount() {
-    if (!this.state.projectService) return;
+    if (!this.state?.projectService) return;
 
     const { projectService } = this.state;
 
