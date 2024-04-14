@@ -55,7 +55,7 @@ export const GlobalStatesProvider: React.FC<ProviderProps> = ({ children }) => {
   // Effect hook for initializing and updating global states
   useEffect(() => {
     // Only proceed once the router is ready
-    if (!router.isReady) return;
+    if (!router?.isReady) return;
 
     // Provide component states to the global state service
     globalStatesService.provideStates({
@@ -65,7 +65,7 @@ export const GlobalStatesProvider: React.FC<ProviderProps> = ({ children }) => {
       setCommentAwaitingSelection,
       setCommentPointSelected,
     });
-  }, [router.isReady]); // Depend on router readiness
+  }, [router?.isReady]); // Depend on router readiness
 
   // Context provider value
   const value = {

@@ -31,6 +31,8 @@ export class ProjectProvider extends Component<
   constructor(props: ProjectProviderProps) {
     super(props);
 
+    console.log("ProjectProviderProps props", props);
+
     if (!props.init.current) {
       props.init.current = true;
       return;
@@ -56,7 +58,7 @@ export class ProjectProvider extends Component<
       setProjectUsers: this.setProjectUsers,
     });
 
-    if (this.props.nextRouter.isReady) {
+    if (this.props.nextRouter?.isReady) {
       this.fetchProjectDetails();
     }
   }
@@ -89,7 +91,7 @@ export class ProjectProvider extends Component<
   render() {
     return (
       <ProjectContext.Provider value={this.state}>
-        {this.state.isReady && this.props.children}
+        {this.state?.isReady && this.props.children}
       </ProjectContext.Provider>
     );
   }

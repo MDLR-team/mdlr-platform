@@ -36,7 +36,7 @@ const ExplorerCore = () => {
   );
 
   useEffect(() => {
-    if (!router.isReady) return;
+    if (!router?.isReady) return;
 
     explorerService.provideStates({
       project_id,
@@ -46,7 +46,7 @@ const ExplorerCore = () => {
     });
 
     explorerService.init();
-  }, [router.isReady, project_id, folder_id]);
+  }, [router?.isReady, project_id, folder_id]);
 
   return (
     <>

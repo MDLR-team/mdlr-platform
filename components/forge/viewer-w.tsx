@@ -12,12 +12,12 @@ const ViewerW = () => {
   const [urns, setUrns] = useState<string[] | null>(null);
 
   useEffect(() => {
-    if (!router.isReady) return;
+    if (!router?.isReady) return;
 
     // Assuming 'urn' query parameter can be a single value or an array
     const newUrns = [router.query.urn as string];
     setUrns(newUrns);
-  }, [router.isReady]);
+  }, [router?.isReady]);
 
   return (
     <Viewer

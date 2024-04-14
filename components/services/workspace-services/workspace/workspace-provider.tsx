@@ -22,7 +22,7 @@ export function WorkspaceProvider({ children }: any) {
   const [isReady, setIsReady] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!router.isReady) return;
+    if (!router?.isReady) return;
 
     workspaceService.provideStates({
       setProjects,
