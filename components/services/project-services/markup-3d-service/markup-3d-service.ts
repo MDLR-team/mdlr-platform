@@ -3,11 +3,14 @@ import PendingMarkup3DService from "../pending-markup-3d-service/pending-markup-
 import ProjectService from "../project-service/project-service";
 import { createMarkupSvg } from "./utils/create-markup-svg";
 import { toScreenXY } from "./utils/to-screen-xy";
+import { v4 as uuidv4 } from "uuid";
 
 class Markup3DService {
   private _svgCanvas: HTMLElement | null = null;
   private _viewer: any;
   private _camera: any;
+
+  private _uuid: string;
 
   private _commentMarkups: Map<string, Markup3D>;
 
@@ -18,8 +21,14 @@ class Markup3DService {
 
   private _enabled: boolean;
 
+  private _measureEnabled: boolean;
+
+  private $setMeasureEnabled: any;
+
   constructor(private _projectService: ProjectService) {
     this._enabled = false;
+
+    this._uuid = uuidv4();
 
     this._svgCanvas = document.getElementById("markup_3d_layer");
 
@@ -27,6 +36,8 @@ class Markup3DService {
 
     this._isAddingComment = false;
     this._pendingMarkupService = null;
+
+    this._measureEnabled = false;
 
     this.updateMarkups = this.updateMarkups.bind(this);
     this._addMarkup = this._addMarkup.bind(this);
@@ -36,6 +47,8 @@ class Markup3DService {
 
     this.toggleEnabled = this.toggleEnabled.bind(this);
     this.toggleTransparentMarkup = this.toggleTransparentMarkup.bind(this);
+    this.toggleAddComment = this.toggleAddComment.bind(this);
+    this.toggleMeasure = this.toggleMeasure.bind(this);
   }
 
   /**
@@ -199,11 +212,17 @@ class Markup3DService {
     this._isAddingComment = v ?? !this._isAddingComment;
 
     if (this._isAddingComment) {
+      this.toggleMeasure(false);
+
       if (this._pendingMarkupService) return; // Already adding a comment
 
       this._pendingMarkupService = new PendingMarkup3DService(
         this._projectService
       );
+
+      console.log("this", this);
+      console.log("this!!", this.$states);
+
       this._pendingMarkupService.provideStates(this.$states);
     } else {
       this._pendingMarkupService?.dispose();
@@ -211,8 +230,35 @@ class Markup3DService {
     }
   }
 
+  public toggleMeasure(v: boolean) {
+    if (this._measureEnabled === v) return;
+
+    const viewer = this._viewer;
+
+    if (v) {
+      this.toggleAddComment(false);
+      viewer.toolController.activateTool("measure");
+
+      this.$setMeasureEnabled(true);
+    } else {
+      const measureTool = viewer.toolController.getTool("measure");
+      measureTool.deleteMeasurements();
+
+      viewer.toolController.deactivateTool("measure");
+
+      this.$setMeasureEnabled(false);
+    }
+
+    this._measureEnabled = v;
+  }
+
   public provideStates(states: any) {
+    this.$setMeasureEnabled = states.setMeasureEnabled;
+
     this.$states = states;
+
+    console.log("this.$states", this.$states);
+    console.log("this", this);
   }
 
   public get pendingMarkupService() {
@@ -258,9 +304,11 @@ class Markup3DService {
     this._enabled = false;
     this._clearMarkups();
 
+    this._measureEnabled = false;
+
     const Autodesk = (window as any).Autodesk;
 
-    this._viewer.removeEventListener(
+    this._viewer?.removeEventListener(
       Autodesk.Viewing.CAMERA_CHANGE_EVENT,
       this._onCameraChange
     );

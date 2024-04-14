@@ -16,10 +16,8 @@ const ProjectContext = createContext<ProjectContentProps | undefined>(
   undefined
 );
 
-export function ProjectProvider({ children }: any) {
+export function ProjectProvider({ children, authService }: any) {
   const router = useRouter();
-
-  const { authService } = useAuth();
 
   const [projectService] = useState(
     () => new ProjectService(supabase, authService)
@@ -42,6 +40,10 @@ export function ProjectProvider({ children }: any) {
       setThumbnail,
       setProjectUsers,
     });
+
+    return () => {
+      projectService.dispose();
+    };
   }, [router]);
 
   return (

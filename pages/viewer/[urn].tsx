@@ -7,28 +7,34 @@ import { GlobalStatesProvider } from "@/components/services/project-services/glo
 import { ActiveCommentProvider } from "@/components/services/project-services/active-comment-service/active-comment-provider";
 import { Markup3DProvider } from "@/components/services/project-services/markup-3d-service/markup-3d-provider";
 import { Markup2DProvider } from "@/components/services/project-services/markup-2d-service/markup-2d-provider";
+import { HotkeyProvider } from "@/components/services/project-services/hotkey-service/hotkey-provider";
+import { useAuth } from "@/components/services/app-services/auth/auth-provider";
 
 const ViewerPage = () => {
+  const { authService } = useAuth();
+
   return (
-    <ProjectProvider>
+    <ProjectProvider authService={authService}>
       <GlobalStatesProvider>
         <ViewerProvider>
           <CommentProvider>
             <ActiveCommentProvider>
               <Markup3DProvider>
                 <Markup2DProvider>
-                  <div
-                    style={{
-                      display: "flex",
-                      width: "100vw",
-                      height: "100vh",
-                      position: "relative",
-                    }}
-                  >
-                    <UIGrid />
+                  <HotkeyProvider>
+                    <div
+                      style={{
+                        display: "flex",
+                        width: "100vw",
+                        height: "100vh",
+                        position: "relative",
+                      }}
+                    >
+                      <UIGrid />
 
-                    <ViewerW />
-                  </div>
+                      <ViewerW />
+                    </div>
+                  </HotkeyProvider>
                 </Markup2DProvider>
               </Markup3DProvider>
             </ActiveCommentProvider>

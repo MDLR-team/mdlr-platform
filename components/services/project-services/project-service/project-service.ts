@@ -11,11 +11,15 @@ import Markup3DService from "../markup-3d-service/markup-3d-service";
 import ViewerServiceAggr from "@/components/forge/viewer-service-aggr";
 import AuthService from "../../app-services/auth/auth-service";
 import Markup2DService from "../markup-2d-service/markup-2d-service";
+import HotkeyService from "../hotkey-service/hotkey-service";
+import { v4 as uuidv4 } from "uuid";
 
 class ProjectService {
   private _router: any;
 
   private _wasInitialized: boolean = false;
+
+  private _uuid: string;
 
   public id: string | null = null;
   public title: string | null = null;
@@ -38,6 +42,8 @@ class ProjectService {
   private _markup3DService: Markup3DService;
   private _markup2DService: Markup2DService;
 
+  private _hotkeyService: HotkeyService;
+
   constructor(
     private _supabase: SupabaseClient,
     private _authService: AuthService
@@ -51,6 +57,10 @@ class ProjectService {
 
     this._markup3DService = new Markup3DService(this);
     this._markup2DService = new Markup2DService(this);
+
+    this._hotkeyService = new HotkeyService(this);
+
+    this._uuid = uuidv4();
   }
 
   private async init() {
@@ -251,6 +261,10 @@ class ProjectService {
     return this._activeCommentService;
   }
 
+  public get hotkeyService() {
+    return this._hotkeyService;
+  }
+
   public get viewerServiceAggr() {
     return this._viewerServiceAggr;
   }
@@ -281,6 +295,8 @@ class ProjectService {
 
     this._markup3DService.dispose();
     this._markup2DService.dispose();
+
+  this._hotkeyService.dispose();
   }
 }
 

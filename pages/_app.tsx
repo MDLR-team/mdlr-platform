@@ -126,6 +126,10 @@ const GlobalStyle = createGlobalStyle`
       min-width: 18px;
       min-height: 18px;
     }
+
+    &.Mui-disabled {
+      opacity: 0.4;
+    }
   }
 
   // MuiButton

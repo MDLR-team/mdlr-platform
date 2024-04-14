@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import AuthService, { Message, UserMetadata } from "./auth-service";
 import { useRouter } from "next/router";
 import { createClient } from "@/utils/supabase/component";
@@ -19,7 +19,19 @@ export function AuthProvider({ children }: any) {
   const [userMetadata, setUserMetadata] = useState<UserMetadata | null>(null);
   const [needsAuth, setNeedsAuth] = useState(false);
 
-  const [authService] = useState(() => new AuthService(router, supabase));
+  // Use useRef to hold the authService instance
+  const authServiceRef = useRef<AuthService | null>(null);
+  const authAmount = useRef(0);
+
+  // Initialize authService only once
+  if (!authServiceRef.current) {
+    authAmount.current += 1;
+
+    console.log("AuthAmount:", authAmount.current);
+    authServiceRef.current = new AuthService(router, supabase);
+  }
+
+  const authService = authServiceRef.current;
 
   const [isAuthPage, setIsAuthPage] = useState(false);
 

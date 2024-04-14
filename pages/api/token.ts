@@ -1,10 +1,10 @@
 import APS from "forge-apis";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export const CLIENT_ID = "jTrywvL2rTwPtAOgTGafvHrhGcXOCcY0NyhLVn7dUYIQ1kHj";
+export const CLIENT_ID = "CDZCpxk2OBTmXKuhyXnUFvRyywe2C5GFrXqmG5aEts1anjkl";
 export const CLIENT_SECRET =
-  "g37jTm0rSnbAwZRAuHQJuqjTdXR6rN0ik78THusLAFC24RjC7pYEVSo2nQ5AxUSp";
-export const BIM_ACCOUNT_ID = "b.192e6153-6585-42a2-b2eb-f3e8d583808e";
+  "XWlwODmghb2204eAjukPjNVAbvAYX5TDMzf8B7jKep1AHMKEv1fAdHAtDfGl5Zk9";
+export const BIM_ACCOUNT_ID = "b.85cbcc08-494b-463b-84e5-54a5eb5840f0";
 
 const publicAuthClient = new APS.AuthClientTwoLegged(
   CLIENT_ID,

@@ -1,6 +1,8 @@
 import { Project } from "@/components/types/supabase-data.types";
 import { SupabaseClient } from "@supabase/supabase-js";
 
+export const CLIENT_ID = "CDZCpxk2OBTmXKuhyXnUFvRyywe2C5GFrXqmG5aEts1anjkl";
+
 class WorkspaceService {
   private _projects: any[] = [];
 
@@ -23,8 +25,11 @@ class WorkspaceService {
       `
       )
       .not("bim_id", "is", null)
+      .eq("bim_client_id", CLIENT_ID)
       .not("bim_urn", "is", null)
       .order("created_at", { ascending: false });
+
+    console.log("projectData", projectData);
 
     let { data: profileData, error: profileError } = await supabase
       .from("profiles")

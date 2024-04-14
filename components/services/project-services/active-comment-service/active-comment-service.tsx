@@ -74,7 +74,7 @@ class ActiveCommentService {
 
   public togglePaperMode(v?: boolean) {
     this._isPaperMode = v !== undefined ? v : !this._isPaperMode;
-    this.$setIsPaperMode(this._isPaperMode);
+    if (this.$setIsPaperMode) this.$setIsPaperMode(this._isPaperMode);
 
     if (this._isPaperMode && !this._activeComment?.view_state) {
       this._togglePaperEditing(true);
@@ -99,6 +99,9 @@ class ActiveCommentService {
     } else {
       this._projectService.markup3DService.toggleTransparentMarkup(false);
     }
+
+    const hotkeyService = this._projectService.hotkeyService;
+    hotkeyService.updateCommentBindings();
   }
 
   public updateViewerState() {
@@ -111,7 +114,7 @@ class ActiveCommentService {
   private _togglePaperEditing(v?: boolean) {
     this._isPaperEditing = v !== undefined ? v : !this._isPaperEditing;
 
-    this.$setIsPaperEditing(this._isPaperEditing);
+    if (this.$setIsPaperEditing) this.$setIsPaperEditing(this._isPaperEditing);
   }
 
   public togglePenMode(v?: boolean) {
@@ -122,6 +125,9 @@ class ActiveCommentService {
 
     this._annotation = [];
     this.$setAnnotation([]);
+
+    const hotkeyService = this._projectService.hotkeyService;
+    hotkeyService.updateCommentBindings();
   }
 
   public deselectComment() {
@@ -131,9 +137,9 @@ class ActiveCommentService {
     this.togglePaperMode(false);
 
     this._activeComment = null;
-    this.$setActiveComment(null);
+    if (this.$setActiveComment) this.$setActiveComment(null);
 
-    this.$setActiveCommentPosition(null);
+    if (this.$setActiveCommentPosition) this.$setActiveCommentPosition(null);
 
     this._removeCameraChangedListener();
   }
@@ -177,7 +183,7 @@ class ActiveCommentService {
   private _removeCameraChangedListener() {
     const Autodesk = (window as any).Autodesk;
 
-    this._viewer.removeEventListener(
+    this._viewer?.removeEventListener(
       Autodesk.Viewing.CAMERA_CHANGE_EVENT,
       this.updateCommentPosition
     );
@@ -285,13 +291,20 @@ class ActiveCommentService {
     return this._childComments;
   }
 
+  public get isPaperMode() {
+    return this._isPaperMode;
+  }
+
+  public get isPaperEditing() {
+    return this._isPaperEditing;
+  }
+
   public dispose() {
     this.deselectComment();
 
     this._childComments.clear();
 
     this._annotation = [];
-    this.$setAnnotation([]);
   }
 }
 

@@ -1,10 +1,9 @@
-import { useViewer } from "@/components/forge/viewer-provider";
 import Avatar from "@/components/layout/avatar/avatar";
 import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
 import { Comment } from "@/components/services/project-services/comment-service/comment-service";
-import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
 import FitIcon from "@/components/ui/icons/fir-icon";
 import PencilIcon from "@/components/ui/icons/pencil-icon";
+import ResolveIcon from "@/components/ui/icons/resolve-icon";
 import { Box, IconButton } from "@mui/material";
 import moment from "moment";
 import styled from "styled-components";
@@ -19,12 +18,8 @@ const MessageItem: React.FC<MessageItemProps> = ({
   selectComment,
   view_state,
   annotation,
-  author_id,
   author_username,
-  id,
 }) => {
-  const { viewer } = useViewer();
-  const { globalStatesService } = useGlobalStates();
   const { activeCommentService } = useActiveComment();
 
   // date to comment format when if it was recently we can show "just now" or "1 minute ago" or "x dayes ago" or "x months ago"
@@ -61,14 +56,18 @@ const MessageItem: React.FC<MessageItemProps> = ({
             </Box>
           </Box>
 
-          {view_state && (
+          <Box data-type={"action-panel"} sx={{ display: "flex", gap: "0px" }}>
+            <IconButton>
+              <ResolveIcon />
+            </IconButton>
+
             <IconButton
+              disabled={view_state ? false : true}
               onClick={() => activeCommentService.togglePaperMode(true)}
-              sx={{ border: "1px solid #f9e05e" }}
             >
               <FitIcon />
             </IconButton>
-          )}
+          </Box>
 
           {annotation && (
             <IconButton>
@@ -94,6 +93,14 @@ const Wrapper = styled.div`
 
     &:hover {
       background-color: #f5f5f5;
+
+      & div[data-type="action-panel"] {
+        display: flex;
+      }
+    }
+
+    & div[data-type="action-panel"] {
+      display: none;
     }
   }
 `;

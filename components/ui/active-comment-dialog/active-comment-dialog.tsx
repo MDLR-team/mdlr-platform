@@ -35,31 +35,29 @@ const ActiveCommentDialog = () => {
         gap: "0px",
       }}
     >
-      {viewType === "assembled" && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "2px",
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "2px",
+        }}
+      >
+        <div />
+        <IconButton
+          sx={{
+            minWidth: "18px !important",
+            minHeight: "18px !important",
+            width: "18px !important",
+            height: "18px !important",
+            fontSize: "12px !important",
           }}
+          size="small"
+          onClick={() => activeCommentService.deselectComment()}
         >
-          <div />
-          <IconButton
-            sx={{
-              minWidth: "18px !important",
-              minHeight: "18px !important",
-              width: "18px !important",
-              height: "18px !important",
-              fontSize: "12px !important",
-            }}
-            size="small"
-            onClick={() => activeCommentService.deselectComment()}
-          >
-            <CloseIcon fontSize="small" />
-          </IconButton>
-        </div>
-      )}
+          <CloseIcon fontSize="small" />
+        </IconButton>
+      </div>
 
       {
         <CommentList>

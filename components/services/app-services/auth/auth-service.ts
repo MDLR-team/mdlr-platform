@@ -9,7 +9,9 @@ class AuthService {
   private $setMessage: any;
   private $setUserMetadata: any;
 
-  constructor(private _router: NextRouter, private _supabase: SupabaseClient) {}
+  constructor(private _router: NextRouter, private _supabase: SupabaseClient) {
+    console.log("AuthService initialized");
+  }
 
   // Login
   public async logIn(email: string, password: string) {

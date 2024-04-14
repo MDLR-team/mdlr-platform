@@ -8,6 +8,7 @@ import { PointXY } from "../active-comment-service/active-comment-service";
 interface Markup3DContentProps {
   markup3DService: Markup3DService;
   markupPosition: PointXY | null;
+  measureEnabled: boolean;
 }
 
 const Markup3DContext = createContext<Markup3DContentProps | undefined>(
@@ -21,9 +22,12 @@ export function Markup3DProvider({ children }: any) {
   const markup3DService = projectService.markup3DService;
 
   const [markupPosition, setMarkupPosition] = useState<null | PointXY>(null);
+  const [measureEnabled, setMeasureEnabled] = useState(false);
+
   useEffect(() => {
     markup3DService.provideStates({
       setMarkupPosition,
+      setMeasureEnabled,
     });
   }, []);
 
@@ -50,6 +54,7 @@ export function Markup3DProvider({ children }: any) {
       value={{
         markup3DService,
         markupPosition,
+        measureEnabled,
       }}
     >
       {children}

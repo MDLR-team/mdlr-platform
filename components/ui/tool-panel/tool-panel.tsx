@@ -14,7 +14,7 @@ import { useMarkup2D } from "@/components/services/project-services/markup-2d-se
 
 const ToolPanel = () => {
   const { commentAdding, globalStatesService } = useGlobalStates();
-  const { markup3DService } = useMarkup3D();
+  const { markup3DService, measureEnabled } = useMarkup3D();
   const { markup2DService } = useMarkup2D();
 
   const { isPaperMode, isPaperEditing, viewType, activeCommentService } =
@@ -40,7 +40,12 @@ const ToolPanel = () => {
               <CommentIcon />
             </IconButton>
 
-            <IconButton>
+            <IconButton
+              data-active={measureEnabled ? "true" : "false"}
+              onClick={() => {
+                markup3DService.toggleMeasure(true);
+              }}
+            >
               <MeasureIcon />
             </IconButton>
           </>
