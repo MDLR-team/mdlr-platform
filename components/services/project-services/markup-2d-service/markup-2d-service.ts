@@ -238,8 +238,6 @@ class Markup2DService {
         this._svgCanvas
       );
 
-      console.log("x:", x, "y:", y);
-
       markup.svg.setAttribute("transform", `translate(${x}, ${y - 27})`);
     });
   }

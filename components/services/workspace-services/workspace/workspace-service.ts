@@ -29,8 +29,6 @@ class WorkspaceService {
       .not("bim_urn", "is", null)
       .order("created_at", { ascending: false });
 
-    console.log("projectData", projectData);
-
     let { data: profileData, error: profileError } = await supabase
       .from("profiles")
       .select("*");

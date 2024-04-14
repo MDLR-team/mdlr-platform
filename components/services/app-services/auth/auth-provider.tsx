@@ -1,113 +1,131 @@
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import React, { Component } from "react";
 import AuthService, { Message, UserMetadata } from "./auth-service";
-import { useRouter } from "next/router";
 import { createClient } from "@/utils/supabase/component";
 import { Alert, Snackbar } from "@mui/material";
+import { withRouter } from "next/router";
+
+const AuthContext = React.createContext<AuthContentProps | undefined>(
+  undefined
+);
 
 interface AuthContentProps {
   authService: AuthService;
   userMetadata: UserMetadata | null;
 }
 
-const AuthContext = createContext<AuthContentProps | undefined>(undefined);
+interface AuthProviderState {
+  isAuthorized: boolean;
+  userMetadata: UserMetadata | null;
+  needsAuth: boolean;
+  isAuthPage: boolean;
+  message: Message | null;
+}
 
-export function AuthProvider({ children }: any) {
-  const router = useRouter();
-  const supabase = createClient();
+interface AuthProviderProps {
+  children: React.ReactNode;
+  router: any; // Use appropriate type for Next.js Router
+}
 
-  const [isAuthorized, setIsAuthorized] = useState(false);
-  const [userMetadata, setUserMetadata] = useState<UserMetadata | null>(null);
-  const [needsAuth, setNeedsAuth] = useState(false);
+class AuthProvider extends Component<AuthProviderProps, AuthProviderState> {
+  private authService: AuthService;
+  private messageTimer?: NodeJS.Timeout;
 
-  // Use useRef to hold the authService instance
-  const authServiceRef = useRef<AuthService | null>(null);
-  const authAmount = useRef(0);
+  constructor(props: AuthProviderProps) {
+    super(props);
+    const supabase = createClient();
 
-  // Initialize authService only once
-  if (!authServiceRef.current) {
-    authAmount.current += 1;
+    this.state = {
+      isAuthorized: false,
+      userMetadata: null,
+      needsAuth: false,
+      isAuthPage: false,
+      message: null,
+    };
 
-    console.log("AuthAmount:", authAmount.current);
-    authServiceRef.current = new AuthService(router, supabase);
+    this.authService = new AuthService(props.router, supabase);
   }
 
-  const authService = authServiceRef.current;
-
-  const [isAuthPage, setIsAuthPage] = useState(false);
-
-  const [message, setMessage] = useState<Message | null>(null);
-
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => {
-        setMessage(null);
-      }, 2000);
-
-      return () => {
-        clearTimeout(timer);
-      };
-    }
-  }, [message]);
-
-  useEffect(() => {
-    authService.provideStates({
-      setIsAuthorized,
-      setNeedsAuth,
-      setMessage,
-      setUserMetadata,
+  componentDidMount() {
+    this.authService.provideStates({
+      setIsAuthorized: this.setIsAuthorized,
+      setNeedsAuth: this.setNeedsAuth,
+      setMessage: this.setMessage,
+      setUserMetadata: this.setUserMetadata,
     });
 
-    authService.init();
+    this.authService.init();
 
-    return () => {
-      authService.dispose();
-    };
-  }, []);
+    this.checkAuthPage();
+  }
 
-  useEffect(() => {
-    if (needsAuth && !isAuthPage) {
-      router.push("/login");
+  componentWillUnmount() {
+    this.authService.dispose();
+    if (this.messageTimer) {
+      clearTimeout(this.messageTimer);
     }
-  }, [needsAuth, isAuthPage]);
+  }
 
-  useEffect(() => {
-    if (router.pathname === "/login") {
-      setIsAuthPage(true);
-    } else {
-      setIsAuthPage(false);
+  componentDidUpdate(prevProps: AuthProviderProps) {
+    if (prevProps.router.pathname !== this.props.router.pathname) {
+      this.checkAuthPage();
     }
-  }, [router.pathname]);
+  }
 
-  return (
-    <AuthContext.Provider
-      value={{
-        authService,
-        userMetadata,
-      }}
-    >
-      <Snackbar
-        open={message !== null}
-        autoHideDuration={1000}
-        onEnded={() => setMessage(null)}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "center",
+  checkAuthPage = () => {
+    const isLoginPage = this.props.router.pathname === "/login";
+    this.setState({ isAuthPage: isLoginPage });
+  };
+
+  setIsAuthorized = (isAuthorized: boolean) => this.setState({ isAuthorized });
+  setUserMetadata = (userMetadata: UserMetadata | null) =>
+    this.setState({ userMetadata });
+  setNeedsAuth = (needsAuth: boolean) => this.setState({ needsAuth });
+  setMessage = (message: Message | null) => {
+    this.setState({ message });
+    if (message) {
+      this.messageTimer = setTimeout(() => {
+        this.setState({ message: null });
+      }, 2000);
+    }
+  };
+
+  render() {
+    const { children } = this.props;
+    const { isAuthorized, isAuthPage, message } = this.state;
+
+    return (
+      <AuthContext.Provider
+        value={{
+          authService: this.authService,
+          userMetadata: this.state.userMetadata,
         }}
       >
-        <Alert severity={message?.type || "error"}>
-          {message?.message || ""}
-        </Alert>
-      </Snackbar>
+        <Snackbar
+          open={message !== null}
+          autoHideDuration={1000}
+          onClose={() => this.setMessage(null)}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+        >
+          <Alert severity={message?.type || "error"}>
+            {message?.message || ""}
+          </Alert>
+        </Snackbar>
 
-      {(isAuthorized || isAuthPage) && <>{children}</>}
-    </AuthContext.Provider>
-  );
+        {(isAuthorized || isAuthPage) && children}
+      </AuthContext.Provider>
+    );
+  }
 }
 
-export function useAuth() {
-  const context = useContext(AuthContext);
+export default withRouter(AuthProvider);
+
+export const useAuth = () => {
+  const context = React.useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within a AuthProvider");
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
-}
+};

@@ -1,4 +1,4 @@
-import { AuthProvider } from "@/components/services/app-services/auth/auth-provider";
+import AuthProvider from "@/components/services/app-services/auth/auth-provider";
 import Wrapper from "@/components/layout/wrapper/wrapper";
 import type { AppProps } from "next/app";
 import { createGlobalStyle } from "styled-components";

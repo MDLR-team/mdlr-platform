@@ -61,6 +61,8 @@ class ProjectService {
     this._hotkeyService = new HotkeyService(this);
 
     this._uuid = uuidv4();
+
+    console.log("project Service created", this._uuid);
   }
 
   private async init() {
@@ -296,7 +298,9 @@ class ProjectService {
     this._markup3DService.dispose();
     this._markup2DService.dispose();
 
-  this._hotkeyService.dispose();
+    console.log("project Service disposed", this._uuid);
+
+    this._hotkeyService.dispose();
   }
 }
 

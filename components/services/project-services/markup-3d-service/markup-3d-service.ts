@@ -220,9 +220,6 @@ class Markup3DService {
         this._projectService
       );
 
-      console.log("this", this);
-      console.log("this!!", this.$states);
-
       this._pendingMarkupService.provideStates(this.$states);
     } else {
       this._pendingMarkupService?.dispose();
@@ -256,9 +253,6 @@ class Markup3DService {
     this.$setMeasureEnabled = states.setMeasureEnabled;
 
     this.$states = states;
-
-    console.log("this.$states", this.$states);
-    console.log("this", this);
   }
 
   public get pendingMarkupService() {

@@ -1,64 +1,106 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import React, { Component } from "react";
+import { NextRouter } from "next/router"; // Assuming you are using Next.js as mentioned earlier.
 import ProjectService, { ProjectUser } from "./project-service";
-import { useRouter } from "next/router";
 import { supabase } from "@/components/supabase-client";
-import { useAuth } from "../../app-services/auth/auth-provider";
+import { withRouter } from "next/router";
+import AuthService from "../../app-services/auth/auth-service";
 
-interface ProjectContentProps {
-  projectService: ProjectService;
-  isReady: boolean;
+interface ProjectProviderProps {
+  children: React.ReactNode;
+  authService: AuthService; // Type assuming AuthService is correctly typed elsewhere
+  nextRouter: NextRouter; // This type should match your router's type, adjust accordingly if not using Next.js
+  init: React.MutableRefObject<boolean>;
+}
+
+interface ProjectProviderState {
   title: string;
   thumbnail: string | null;
   projectUsers: ProjectUser[];
+  isReady: boolean;
+  projectService: ProjectService;
 }
 
-const ProjectContext = createContext<ProjectContentProps | undefined>(
-  undefined
-);
+export const ProjectContext = React.createContext<
+  ProjectProviderState | undefined
+>(undefined);
 
-export function ProjectProvider({ children, authService }: any) {
-  const router = useRouter();
+export class ProjectProvider extends Component<
+  ProjectProviderProps,
+  ProjectProviderState
+> {
+  constructor(props: ProjectProviderProps) {
+    super(props);
 
-  const [projectService] = useState(
-    () => new ProjectService(supabase, authService)
-  );
+    if (!props.init.current) {
+      props.init.current = true;
+      return;
+    }
 
-  const [title, setTitle] = useState<string>("");
-  const [thumbnail, setThumbnail] = useState<string | null>(null);
+    this.state = {
+      title: "",
+      thumbnail: null,
+      projectUsers: [],
+      isReady: false,
+      projectService: new ProjectService(supabase, props.authService),
+    };
+  }
 
-  const [projectUsers, setProjectUsers] = useState<ProjectUser[]>([]);
-
-  const [isReady, setIsReady] = useState(false);
-
-  useEffect(() => {
-    if (!router.isReady) return;
+  componentDidMount() {
+    const { projectService } = this.state;
 
     projectService.provideStates({
-      router,
-      setIsReady,
-      setTitle,
-      setThumbnail,
-      setProjectUsers,
+      router: this.props.nextRouter,
+      setIsReady: this.setIsReady,
+      setTitle: this.setTitle,
+      setThumbnail: this.setThumbnail,
+      setProjectUsers: this.setProjectUsers,
     });
 
-    return () => {
-      projectService.dispose();
-    };
-  }, [router]);
+    if (this.props.nextRouter.isReady) {
+      this.fetchProjectDetails();
+    }
+  }
 
-  return (
-    <ProjectContext.Provider
-      value={{ projectService, isReady, title, thumbnail, projectUsers }}
-    >
-      {isReady && children}
-    </ProjectContext.Provider>
-  );
+  componentWillUnmount() {
+    // this.state.projectService.dispose();
+  }
+
+  fetchProjectDetails = () => {
+    // Example of fetching project details here
+    this.setState({ isReady: true }); // Example of setting state directly
+  };
+
+  setIsReady = (isReady: boolean) => {
+    this.setState({ isReady });
+  };
+
+  setTitle = (title: string) => {
+    this.setState({ title });
+  };
+
+  setThumbnail = (thumbnail: string | null) => {
+    this.setState({ thumbnail });
+  };
+
+  setProjectUsers = (projectUsers: ProjectUser[]) => {
+    this.setState({ projectUsers });
+  };
+
+  render() {
+    return (
+      <ProjectContext.Provider value={this.state}>
+        {this.state.isReady && this.props.children}
+      </ProjectContext.Provider>
+    );
+  }
 }
 
 export function useProject() {
-  const context = useContext(ProjectContext);
+  const context = React.useContext(ProjectContext);
   if (!context) {
     throw new Error("useProject must be used within a ProjectProvider");
   }
   return context;
 }
+
+export default ProjectProvider;
