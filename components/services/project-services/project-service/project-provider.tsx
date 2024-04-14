@@ -89,6 +89,8 @@ export class ProjectProvider extends Component<
   };
 
   render() {
+    if (!this.state?.projectService) return null;
+
     return (
       <ProjectContext.Provider value={this.state}>
         {this.state?.isReady && this.props.children}
