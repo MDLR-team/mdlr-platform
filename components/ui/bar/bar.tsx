@@ -59,7 +59,7 @@ const Bar = () => {
   );
 };
 
-const Logo = styled.div`
+export const Logo = styled.div`
   position: relative;
   min-width: 27px;
   width: 27px;
@@ -80,7 +80,7 @@ const Title = styled.div`
   font-size: 15px;
 `;
 
-const TitleWrapper = styled.div`
+export const TitleWrapper = styled.div`
   border: 1px solid transparent;
   display: flex;
   overflow: hidden;

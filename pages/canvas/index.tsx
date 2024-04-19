@@ -1,6 +1,18 @@
 import NodeStickerType from "@/components/canvas/node-types/node-sticker-type";
 import NodeTableType from "@/components/canvas/node-types/node-table-type";
 import NodeThumbType from "@/components/canvas/node-types/node-thumb-type";
+import CommentsBlock from "@/components/comments/comment-layout/comment-layout";
+import Share from "@/components/ui/canvas-ui/share/share";
+import Bar from "@/components/ui/canvas-ui/bar/bar";
+import ToolPanel from "@/components/ui/canvas-ui/tool-panel/tool-panel";
+import UIGrid from "@/components/ui/ui-grid";
+import {
+  BarWrapper,
+  ContentWrapper,
+  FooterWrapper,
+  Grid,
+  Wrapper,
+} from "@/components/ui/ui-grid.styled";
 import React, { useCallback, useRef } from "react";
 import ReactFlow, {
   Background,
@@ -84,25 +96,51 @@ const ReactflowComponent = () => {
 
   return (
     <div
-      className="wrapper"
-      style={{ width: "100vw", height: "100vh" }}
-      ref={reactFlowWrapper}
+      style={{
+        display: "flex",
+        width: "100vw",
+        height: "100vh",
+        position: "relative",
+      }}
     >
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        onConnectStart={onConnectStart}
-        onConnectEnd={onConnectEnd}
-        nodeTypes={nodeTypes}
-        fitView
-        fitViewOptions={{ padding: 2 }}
-        nodeOrigin={[0.5, 0]}
+      {/* UI Grid */}
+      <Wrapper>
+        <Grid>
+          <BarWrapper>
+            <Bar />
+            <Share />
+          </BarWrapper>
+
+          <ContentWrapper></ContentWrapper>
+
+          <FooterWrapper>
+            <ToolPanel />
+          </FooterWrapper>
+        </Grid>
+      </Wrapper>
+      {/* End UI Grid */}
+
+      <div
+        className="wrapper"
+        style={{ width: "100vw", height: "100vh" }}
+        ref={reactFlowWrapper}
       >
-        <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
-      </ReactFlow>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          onConnectStart={onConnectStart}
+          onConnectEnd={onConnectEnd}
+          nodeTypes={nodeTypes}
+          fitView
+          fitViewOptions={{ padding: 2 }}
+          nodeOrigin={[0.5, 0]}
+        >
+          <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
+        </ReactFlow>
+      </div>
     </div>
   );
 };

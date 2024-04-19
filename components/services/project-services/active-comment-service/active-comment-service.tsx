@@ -107,7 +107,15 @@ class ActiveCommentService {
   public updateViewerState() {
     const activeComment = this._activeComment;
 
+    console.log("activeComment.view_state", activeComment!.view_state);
+
     if (!activeComment) return;
+
+    console.log("activeComment.view_state", activeComment.view_state);
+
+    const viewport = activeComment.view_state.viewport;
+    const { eye, target } = viewport;
+
     this._viewer.restoreState(activeComment.view_state);
   }
 
