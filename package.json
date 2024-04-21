@@ -32,6 +32,7 @@
     "react": "^18",
     "react-dom": "^18",
     "reactflow": "^11.11.1",
+    "rxjs": "^7.8.1",
     "stc": "^2.0.14",
     "string-to-color": "^2.2.2",
     "styled-components": "^6.1.8",

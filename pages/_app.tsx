@@ -66,8 +66,29 @@ const GlobalStyle = createGlobalStyle`
   }
 
   & .MuiFormControl-root {
+    & .MuiInput-root {
+      &::before, &::after {
+        display: none;
+      }
+
+      & input {
+        padding: 0px;
+      }
+    }
+
+    & .MuiFormControlLabel-root {
+      &, & * {
+        font-size: 12px !important;
+      }
+    }
+
     & .MuiInputBase-root {
       padding: 8px;
+      
+
+      &, & * {
+        font-size: 12px !important;
+      }
 
       // small size
       &.MuiInputBase-sizeSmall {
@@ -101,6 +122,35 @@ const GlobalStyle = createGlobalStyle`
 
     & .MuiMenuItem-root {
       border-radius: 8px !important;
+    }
+  }
+
+  // Tabs
+  & .MuiTabs-root {
+    min-height: 27px !important;
+    height: 27px !important;
+    border-radius: 9px !important;
+    border: 1px solid black !important;
+
+    & .MuiButtonBase-root {
+      &, & * {
+        min-height: 27px !important;
+        height: 27px !important;
+        font-size: 12px !important;
+        text-transform: none !important;
+        padding: 0px 18px !important;
+      }
+
+      &.Mui-selected {
+        color: white !important;
+        background-color: black !important;
+        border-radius: 8px !important;
+      }
+    }
+
+    & .MuiTabs-indicator {
+      background-color: grey !important;
+      display: none !important;
     }
   }
 
@@ -157,6 +207,13 @@ const GlobalStyle = createGlobalStyle`
     &, & * {
       color: #333333 !important;
       text-transform: none !important;
+    }
+  }
+
+  // Divider
+  & .MuiDivider-root {
+    &.MuiDivider-vertical {
+      height: 20px;
     }
   }
 

@@ -4,7 +4,7 @@ import { Handle, Position } from "reactflow";
 
 const handleStyle = { left: 10 };
 
-const NodeThumbType = ({ data, isConnectable }: any) => {
+const NodeApiThumbType = ({ data, isConnectable }: any) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -23,6 +23,7 @@ const NodeThumbType = ({ data, isConnectable }: any) => {
         position={Position.Top}
         isConnectable={isConnectable}
       />
+
       <Box
         sx={{
           width: "150px",
@@ -45,12 +46,17 @@ const NodeThumbType = ({ data, isConnectable }: any) => {
 
       <Handle
         type="source"
+        position={Position.Right}
+        isConnectable={isConnectable}
+      />
+
+      <Handle
+        type="source"
         position={Position.Bottom}
-        id="b"
         isConnectable={isConnectable}
       />
     </div>
   );
 };
 
-export default NodeThumbType;
+export default NodeApiThumbType;

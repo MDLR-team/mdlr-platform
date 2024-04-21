@@ -1,11 +1,6 @@
-import NodeStickerType from "@/components/canvas/node-types/node-sticker-type";
-import NodeTableType from "@/components/canvas/node-types/node-table-type";
-import NodeThumbType from "@/components/canvas/node-types/node-thumb-type";
-import CommentsBlock from "@/components/comments/comment-layout/comment-layout";
 import Share from "@/components/ui/canvas-ui/share/share";
 import Bar from "@/components/ui/canvas-ui/bar/bar";
 import ToolPanel from "@/components/ui/canvas-ui/tool-panel/tool-panel";
-import UIGrid from "@/components/ui/ui-grid";
 import {
   BarWrapper,
   ContentWrapper,
@@ -13,90 +8,40 @@ import {
   Grid,
   Wrapper,
 } from "@/components/ui/ui-grid.styled";
-import React, { useCallback, useRef } from "react";
+import React, { useRef } from "react";
 import ReactFlow, {
   Background,
   BackgroundVariant,
+  NodeChange,
   ReactFlowProvider,
-  addEdge,
-  useEdgesState,
-  useNodesState,
-  useReactFlow,
 } from "reactflow";
 
 import "reactflow/dist/style.css";
-
-const initialNodes = [
-  {
-    id: "0",
-    type: "thumbnail",
-    data: { label: "Node" },
-    position: { x: 0, y: 50 },
-  },
-];
-
-let id = 1;
-const getId = () => `${id++}`;
+import {
+  NodeProvider,
+  nodeTypes,
+  useNodes,
+} from "@/components/canvas/node-service/node-provider";
+import { Box } from "@mui/material";
 
 const ReactflowComponent = () => {
   const reactFlowWrapper = useRef(null);
-  const connectingNodeId = useRef(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const { screenToFlowPosition } = useReactFlow();
-  const onConnect = useCallback((params: any) => {
-    // reset the start node on connections
-    connectingNodeId.current = null;
-    setEdges((eds) => addEdge(params, eds));
-  }, []);
 
-  const onConnectStart = useCallback((_: any, { nodeId }: any) => {
-    connectingNodeId.current = nodeId;
-  }, []);
+  const { nodeSevice } = useNodes();
 
-  const typeByStep = ["sticker", "table"];
-  const step = useRef(0);
-
-  const onConnectEnd = useCallback(
-    (event: any) => {
-      if (!connectingNodeId.current) return;
-
-      const targetIsPane = event.target.classList.contains("react-flow__pane");
-
-      if (targetIsPane) {
-        // we need to remove the wrapper bounds, in order to get the correct position
-        const id = getId();
-        const newNode = {
-          id,
-          position: screenToFlowPosition({
-            x: event.clientX,
-            y: event.clientY,
-          }),
-          type: typeByStep[step.current] || "sticker",
-          data: { label: `Node ${id}` },
-          origin: [0.5, 0.0],
-        };
-
-        step.current = (step.current + 1) % typeByStep.length;
-
-        setNodes((nds) => nds.concat(newNode));
-        setEdges((eds: any) =>
-          eds.concat({ id, source: connectingNodeId.current, target: id })
-        );
-      }
-    },
-    [screenToFlowPosition]
-  );
-
-  const nodeTypes = {
-    thumbnail: NodeThumbType,
-    sticker: NodeStickerType,
-    table: NodeTableType,
-  };
+  const {
+    nodes,
+    edges,
+    onNodesChange,
+    onEdgesChange,
+    onConnect,
+    onConnectStart,
+    onConnectEnd,
+  } = useNodes();
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         display: "flex",
         width: "100vw",
         height: "100vh",
@@ -120,9 +65,9 @@ const ReactflowComponent = () => {
       </Wrapper>
       {/* End UI Grid */}
 
-      <div
+      <Box
         className="wrapper"
-        style={{ width: "100vw", height: "100vh" }}
+        sx={{ width: "100vw", height: "100vh" }}
         ref={reactFlowWrapper}
       >
         <ReactFlow
@@ -140,15 +85,17 @@ const ReactflowComponent = () => {
         >
           <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
         </ReactFlow>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 
 const CanvasPage = () => {
   return (
     <ReactFlowProvider>
-      <ReactflowComponent />
+      <NodeProvider>
+        <ReactflowComponent />
+      </NodeProvider>
     </ReactFlowProvider>
   );
 };
