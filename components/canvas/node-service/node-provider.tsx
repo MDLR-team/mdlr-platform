@@ -19,6 +19,8 @@ import NodeStickerType from "../node-types/node-sticker-type";
 import NodeTableType from "../node-types/node-table-type";
 import NodeApiThumbType from "../node-types/node-api-thumb-type";
 import { v4 as uuidv4 } from "uuid";
+import NodeSticker1Type from "../node-types/node-sticker1-type";
+import ChartThumbType from "../node-types/chart-type";
 
 interface ViewerContentProps {
   nodeSevice: NodeService;
@@ -35,7 +37,9 @@ export const nodeTypes = {
   thumbnail: NodeThumbType,
   apiThumbnail: NodeApiThumbType,
   sticker: NodeStickerType,
+  sticker1: NodeSticker1Type,
   table: NodeTableType,
+  chart: ChartThumbType,
 };
 
 const NodeContext = createContext<ViewerContentProps | null>(null);
@@ -98,9 +102,12 @@ export function NodeProvider({ children }: any) {
           }),
           type:
             previousNode.type === "thumbnail" ||
-            previousNode.type === "apiThumbnail" ||
-            previousNode.type === "table"
+            previousNode.type === "apiThumbnail"
               ? "sticker"
+              : previousNode.type === "table"
+              ? "sticker1"
+              : previousNode.type === "sticker1"
+              ? "chart"
               : "table",
           data: { label: `Node ${id}` },
         };

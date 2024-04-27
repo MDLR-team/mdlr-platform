@@ -4,7 +4,7 @@ import { Handle, Position } from "reactflow";
 
 const handleStyle = { left: 10 };
 
-const NodeApiThumbType = ({ data, isConnectable }: any) => {
+const ChartThumbType = ({ data, isConnectable }: any) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -26,17 +26,15 @@ const NodeApiThumbType = ({ data, isConnectable }: any) => {
 
       <Box
         sx={{
-          width: "150px",
-          height: "120px",
+          width: `${834 * 0.25}px`,
+          height: `${1980 * 0.25}px`,
           backgroundColor: isLoading ? "grey" : "white",
           border: "2px solid #000",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           borderRadius: "9px",
-          backgroundImage: isLoading
-            ? "none"
-            : "url('/thumb/3.png')",
+          backgroundImage: isLoading ? "none" : "url('/thumb/2.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -59,4 +57,4 @@ const NodeApiThumbType = ({ data, isConnectable }: any) => {
   );
 };
 
-export default NodeApiThumbType;
+export default ChartThumbType;
