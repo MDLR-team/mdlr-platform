@@ -31,6 +31,9 @@ interface ViewerContentProps {
   onConnect: (params: any) => void;
   onConnectStart: (_: any, { nodeId }: any) => void;
   onConnectEnd: (event: any) => void;
+  onDragOver: (event: any) => void;
+  onDrop: (event: any) => void;
+  setReactFlowInstance: (instance: any) => void;
 }
 
 export const nodeTypes = {
@@ -46,6 +49,9 @@ const NodeContext = createContext<ViewerContentProps | null>(null);
 
 export function NodeProvider({ children }: any) {
   const connectingNodeId = useRef(null);
+  const connectingHandleId = useRef(null);
+
+  const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
 
   const [nodeSevice] = useState<NodeService>(() => new NodeService());
 
@@ -66,17 +72,53 @@ export function NodeProvider({ children }: any) {
   const typeByStep = ["sticker", "table"];
   const step = useRef(0);
 
+  const onDragOver = useCallback((event: any) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  }, []);
+
+  const onDrop = useCallback(
+    (event: any) => {
+      event.preventDefault();
+
+      const type = event.dataTransfer.getData("application/reactflow");
+
+      // check if the dropped element is valid
+      if (typeof type === "undefined" || !type) {
+        return;
+      }
+
+      if (!reactFlowInstance) return;
+
+      const position = reactFlowInstance.screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY,
+      });
+      const newNode = {
+        id: getId(),
+        type: "sticker",
+        position,
+        data: { label: `${type} node` },
+      };
+
+      setNodes((nds) => nds.concat(newNode));
+    },
+    [reactFlowInstance]
+  );
+
   const onConnect = useCallback((params: any) => {
     // reset the start node on connections
     connectingNodeId.current = null;
+    connectingHandleId.current = null;
+
     setEdges((eds) => addEdge(params, eds));
   }, []);
 
-  const onConnectStart = useCallback((_: any, { nodeId }: any) => {
-    console.log("onConnectStart", _);
-    console.log("nodeId", nodeId);
+  const onConnectStart = useCallback((_: any, params: any) => {
+    const { nodeId, handleId } = params;
 
     connectingNodeId.current = nodeId;
+    connectingHandleId.current = handleId;
   }, []);
 
   const onConnectEnd = useCallback(
@@ -116,7 +158,13 @@ export function NodeProvider({ children }: any) {
 
         setNodes((nds) => nds.concat(newNode));
         setEdges((eds: any) =>
-          eds.concat({ id, source: connectingNodeId.current, target: id })
+          eds.concat({
+            id,
+            source: connectingNodeId.current,
+            target: id,
+            sourceHandle: connectingHandleId.current,
+            type: "smoothstep",
+          })
         );
       }
     },
@@ -134,6 +182,9 @@ export function NodeProvider({ children }: any) {
         onConnect,
         onConnectStart,
         onConnectEnd,
+        onDragOver,
+        onDrop,
+        setReactFlowInstance,
       }}
     >
       {children}

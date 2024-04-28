@@ -30,6 +30,7 @@ const NodeStickerType = ({ data, isConnectable }: any) => {
           <i>Prompt</i>
           <br />
           <br />
+          <TextField label="Name" variant="standard" size="small" />
           Generate table with params that you extract from scene
         </Wrapper>
       </Box>

@@ -6,6 +6,11 @@ import PencilIcon from "../../icons/pencil-icon";
 import AiStickerIcon from "../../icons/ai-sticker-icon";
 
 const ToolPanel = () => {
+  const onDragStart = (event: React.DragEvent, nodeType: string) => {
+    event.dataTransfer.setData("application/reactflow", nodeType);
+    event.dataTransfer.effectAllowed = "move";
+  };
+
   return (
     <Box sx={{ position: "relative" }}>
       <Paper
@@ -24,7 +29,7 @@ const ToolPanel = () => {
 
         <FileUploader />
 
-        <IconButton>
+        <IconButton onDragStart={(e) => onDragStart(e, "sticker")} draggable>
           <AiStickerIcon />
         </IconButton>
 

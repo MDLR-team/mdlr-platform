@@ -19,6 +19,7 @@ const NodeApiThumbType = ({ data, isConnectable }: any) => {
   return (
     <div className="text-updater-node">
       <Handle
+        id="top"
         type="target"
         position={Position.Top}
         isConnectable={isConnectable}
@@ -34,9 +35,7 @@ const NodeApiThumbType = ({ data, isConnectable }: any) => {
           alignItems: "center",
           justifyContent: "center",
           borderRadius: "9px",
-          backgroundImage: isLoading
-            ? "none"
-            : "url('/thumb/3.png')",
+          backgroundImage: isLoading ? "none" : "url('/thumb/3.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -45,12 +44,14 @@ const NodeApiThumbType = ({ data, isConnectable }: any) => {
       </Box>
 
       <Handle
+        id="right"
         type="source"
         position={Position.Right}
         isConnectable={isConnectable}
       />
 
       <Handle
+        id="bottom"
         type="source"
         position={Position.Bottom}
         isConnectable={isConnectable}

@@ -37,7 +37,13 @@ const ReactflowComponent = () => {
     onConnect,
     onConnectStart,
     onConnectEnd,
+    onDragOver,
+    onDrop,
+    setReactFlowInstance,
   } = useNodes();
+
+  console.log("nodes", nodes);
+  console.log("edges", edges);
 
   return (
     <Box
@@ -78,6 +84,9 @@ const ReactflowComponent = () => {
           onConnect={onConnect}
           onConnectStart={onConnectStart}
           onConnectEnd={onConnectEnd}
+          onInit={setReactFlowInstance}
+          onDragOver={onDragOver}
+          onDrop={onDrop}
           nodeTypes={nodeTypes}
           fitView
           fitViewOptions={{ padding: 2 }}
