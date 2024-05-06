@@ -1,11 +1,10 @@
 import { Box } from "@mui/material";
 import { Handle, Position } from "reactflow";
-import { TextField } from "@mui/material";
 import styled from "styled-components";
 
-const handleStyle = { left: 10 };
+const NodeMessageType = ({ data, isConnectable }: any) => {
+  const message = data?.message || "";
 
-const NodeSticker1Type = ({ data, isConnectable }: any) => {
   return (
     <div className="text-updater-node">
       <Handle
@@ -14,9 +13,10 @@ const NodeSticker1Type = ({ data, isConnectable }: any) => {
         isConnectable={isConnectable}
       />
       <Box
+        id={`box${data.id}`}
         sx={{
-          width: "100px",
-          height: "max-content",
+          width: "150px",
+          minHeight: "150px",
           background: "#f9f1c3",
           border: "1px solid #000",
           borderRadius: "9px",
@@ -26,15 +26,7 @@ const NodeSticker1Type = ({ data, isConnectable }: any) => {
           padding: "9px",
         }}
       >
-        <Wrapper>
-          <i>Prompt</i>
-          <br />
-          <br />
-          Generate visualization data that includes a linear chart showing how
-          live districts in the building respond to environmental factors and
-          generate analyses for the 'north', 'green', 'road', and 'public'
-          sections
-        </Wrapper>
+        <Wrapper>{message}</Wrapper>
       </Box>
       <Handle
         type="source"
@@ -48,11 +40,21 @@ const NodeSticker1Type = ({ data, isConnectable }: any) => {
 
 const Wrapper = styled.div`
   &&& {
-    &,
-    & * {
-      font-size: 8px;
+    display: flex;
+    flex-direction: column;
+
+    & .MuiInputBase-root {
+      padding: 0px;
+    }
+
+    &::placeholder {
+      color: rgba(0, 0, 0, 0.8);
+    }
+
+    & .MuiButton-root {
+      border: 1px solid rgba(0, 0, 0, 0.1);
     }
   }
 `;
 
-export default NodeSticker1Type;
+export default NodeMessageType;

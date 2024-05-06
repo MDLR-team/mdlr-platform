@@ -23,11 +23,10 @@ import {
   useNodes,
 } from "@/components/canvas/node-service/node-provider";
 import { Box } from "@mui/material";
+import PagesPanel from "@/components/ui/canvas-ui/pages-panel/pages-panel";
 
 const ReactflowComponent = () => {
   const reactFlowWrapper = useRef(null);
-
-  const { nodeSevice } = useNodes();
 
   const {
     nodes,
@@ -41,9 +40,6 @@ const ReactflowComponent = () => {
     onDrop,
     setReactFlowInstance,
   } = useNodes();
-
-  console.log("nodes", nodes);
-  console.log("edges", edges);
 
   return (
     <Box
@@ -65,6 +61,8 @@ const ReactflowComponent = () => {
           <ContentWrapper></ContentWrapper>
 
           <FooterWrapper>
+            <PagesPanel />
+
             <ToolPanel />
           </FooterWrapper>
         </Grid>

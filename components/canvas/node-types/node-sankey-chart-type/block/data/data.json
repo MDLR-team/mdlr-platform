@@ -1,0 +1,146 @@
+[
+  {
+    "source": "Wall",
+    "target": "Floor",
+    "value": 124.729
+  },
+  { "source": "Floor", "target": "Slab", "value": 0.597 },
+  { "source": "Floor", "target": "Steel Column", "value": 26.862 },
+  { "source": "Floor", "target": "Solid", "value": 280.322 },
+  { "source": "Floor", "target": "Plumbing Equipment", "value": 81.144 },
+  { "source": "Staircase", "target": "Slab", "value": 35 },
+  { "source": "Curtain Wall", "target": "Solid", "value": 35 },
+  { "source": "Coal imports", "target": "Coal", "value": 11.606 },
+  { "source": "Coal reserves", "target": "Coal", "value": 63.965 },
+  { "source": "Coal", "target": "Solid", "value": 75.571 },
+  { "source": "HVAC", "target": "Communication Conduit", "value": 10.639 },
+  {
+    "source": "HVAC",
+    "target": "Foundation",
+    "value": 22.505
+  },
+  {
+    "source": "HVAC",
+    "target": "Heating Duct",
+    "value": 46.184
+  },
+  {
+    "source": "Beam",
+    "target": "Sliding Window",
+    "value": 104.453
+  },
+  {
+    "source": "Beam",
+    "target": "Heating Duct",
+    "value": 113.726
+  },
+  { "source": "Beam", "target": "Revolving Door", "value": 27.14 },
+  { "source": "Beam", "target": "Communication Conduit", "value": 342.165 },
+  { "source": "Beam", "target": "Flat Roof", "value": 37.797 },
+  { "source": "Beam", "target": "Vent Pipe", "value": 4.412 },
+  {
+    "source": "Beam",
+    "target": "Foundation",
+    "value": 40.858
+  },
+  { "source": "Beam", "target": "Steel Column", "value": 56.691 },
+  { "source": "Beam", "target": "Exterior Door", "value": 7.863 },
+  {
+    "source": "Beam",
+    "target": "Pipe",
+    "value": 90.008
+  },
+  {
+    "source": "Beam",
+    "target": "Exposed Ceiling",
+    "value": 93.494
+  },
+  {
+    "source": "Plumbing Equipment imports",
+    "target": "NPlumbing Equipment",
+    "value": 40.719
+  },
+  {
+    "source": "Plumbing Equipment reserves",
+    "target": "NPlumbing Equipment",
+    "value": 82.233
+  },
+  {
+    "source": "Plumbing Equipment",
+    "target": "Foundation",
+    "value": 0.129
+  },
+  { "source": "Plumbing Equipment", "target": "Steel Column", "value": 1.401 },
+  { "source": "Plumbing Equipment", "target": "Window", "value": 151.891 },
+  { "source": "Plumbing Equipment", "target": "Vent Pipe", "value": 2.096 },
+  {
+    "source": "Plumbing Equipment",
+    "target": "Communication Conduit",
+    "value": 48.58
+  },
+  { "source": "Geothermal", "target": "Beam", "value": 7.013 },
+  { "source": "Revolving Door", "target": "Metal Roof", "value": 20.897 },
+  { "source": "Revolving Door", "target": "Steel Column", "value": 6.242 },
+  { "source": "Metal Roof", "target": "Flat Roof", "value": 20.897 },
+  { "source": "Upper Floor", "target": "Beam", "value": 6.995 },
+  { "source": "Slab", "target": "Communication Conduit", "value": 121.066 },
+  { "source": "Slab", "target": "International shipping", "value": 128.69 },
+  { "source": "Slab", "target": "Flat Roof", "value": 135.835 },
+  { "source": "Slab", "target": "Domestic aviation", "value": 14.458 },
+  { "source": "Slab", "target": "International aviation", "value": 206.267 },
+  { "source": "Slab", "target": "Vent Pipe", "value": 3.64 },
+  { "source": "Slab", "target": "National navigation", "value": 33.218 },
+  { "source": "Slab", "target": "Exterior Door", "value": 4.413 },
+  { "source": "Marine algae", "target": "Floor", "value": 4.375 },
+  {
+    "source": "NPlumbing Equipment",
+    "target": "Plumbing Equipment",
+    "value": 122.952
+  },
+  { "source": "Nuclear", "target": "Window", "value": 839.978 },
+  { "source": "Concrete Slab", "target": "Ribbed Slab", "value": 504.287 },
+  { "source": "Hollow-core Slab", "target": "Ribbed Slab", "value": 107.703 },
+  { "source": "Ribbed Slab", "target": "Slab", "value": 611.99 },
+  { "source": "Shallow Foundation", "target": "Solid", "value": 56.587 },
+  { "source": "Shallow Foundation", "target": "Floor", "value": 77.81 },
+  {
+    "source": "Deep Foundation",
+    "target": "Heating Duct",
+    "value": 193.026
+  },
+  {
+    "source": "Deep Foundation",
+    "target": "Foundation",
+    "value": 70.672
+  },
+  { "source": "Frame PV", "target": "Beam", "value": 59.901 },
+  {
+    "source": "Raft Foundation",
+    "target": "Heating Duct",
+    "value": 19.263
+  },
+  { "source": "Frame", "target": "Raft Foundation", "value": 19.263 },
+  { "source": "Frame", "target": "Frame PV", "value": 59.901 },
+  { "source": "Solid", "target": "Vent Pipe", "value": 0.882 },
+  { "source": "Solid", "target": "Window", "value": 400.12 },
+  { "source": "Solid", "target": "Communication Conduit", "value": 46.477 },
+  {
+    "source": "Window",
+    "target": "Beam",
+    "value": 525.531
+  },
+  { "source": "Window", "target": "Steel Column", "value": 787.129 },
+  {
+    "source": "Window",
+    "target": "HVAC",
+    "value": 79.329
+  },
+  { "source": "Tidal", "target": "Beam", "value": 9.452 },
+  {
+    "source": "Curtain Wall",
+    "target": "Floor",
+    "value": 182.01
+  },
+  { "source": "Wave", "target": "Beam", "value": 19.013 },
+  { "source": "Wind", "target": "Beam", "value": 289.366 }
+]

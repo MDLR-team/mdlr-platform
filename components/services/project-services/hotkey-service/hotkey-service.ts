@@ -55,8 +55,6 @@ class HotkeyService {
   private _add3DComment(event: KeyboardEvent, handler: any) {
     event.preventDefault();
 
-    console.log("sdfsdf");
-
     const markup3DService = this._projectService.markup3DService;
     markup3DService.toggleAddComment(true);
   }

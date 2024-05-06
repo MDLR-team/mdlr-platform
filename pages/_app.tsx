@@ -78,7 +78,7 @@ const GlobalStyle = createGlobalStyle`
 
     & .MuiFormControlLabel-root {
       &, & * {
-        font-size: 12px !important;
+        font-size: 12px 
       }
     }
 
@@ -87,7 +87,7 @@ const GlobalStyle = createGlobalStyle`
       
 
       &, & * {
-        font-size: 12px !important;
+        font-size: 12px 
       }
 
       // small size
@@ -232,6 +232,14 @@ const GlobalStyle = createGlobalStyle`
     right: 10px !important;
     bottom: 10px !important;
     border: 1px solid grey;
+  }
+
+  // React flow
+  & .react-flow__handle {
+    background-color: rgb(156, 163, 175) !important;
+    width: 9px !important;
+    height: 9px !important;
+    border-radius: 50% !important;
   }
 `;
 

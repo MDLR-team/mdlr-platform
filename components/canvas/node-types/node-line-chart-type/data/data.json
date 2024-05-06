@@ -1,0 +1,2342 @@
+[
+  {
+    "state": "AL",
+    "crossbar": "<10",
+    "beams": 598478
+  },
+  {
+    "state": "AK",
+    "crossbar": "<10",
+    "beams": 106741
+  },
+  {
+    "state": "AZ",
+    "crossbar": "<10",
+    "beams": 892083
+  },
+  {
+    "state": "AR",
+    "crossbar": "<10",
+    "beams": 392177
+  },
+  {
+    "state": "CA",
+    "crossbar": "<10",
+    "beams": 5038433
+  },
+  {
+    "state": "CO",
+    "crossbar": "<10",
+    "beams": 690830
+  },
+  {
+    "state": "CT",
+    "crossbar": "<10",
+    "beams": 399369
+  },
+  {
+    "state": "DE",
+    "crossbar": "<10",
+    "beams": 112177
+  },
+  {
+    "state": "DC",
+    "crossbar": "<10",
+    "beams": 74377
+  },
+  {
+    "state": "FL",
+    "crossbar": "<10",
+    "beams": 2211012
+  },
+  {
+    "state": "GA",
+    "crossbar": "<10",
+    "beams": 1363631
+  },
+  {
+    "state": "HI",
+    "crossbar": "<10",
+    "beams": 176484
+  },
+  {
+    "state": "ID",
+    "crossbar": "<10",
+    "beams": 236658
+  },
+  {
+    "state": "IL",
+    "crossbar": "<10",
+    "beams": 1619682
+  },
+  {
+    "state": "IN",
+    "crossbar": "<10",
+    "beams": 863029
+  },
+  {
+    "state": "IA",
+    "crossbar": "<10",
+    "beams": 401712
+  },
+  {
+    "state": "KS",
+    "crossbar": "<10",
+    "beams": 401751
+  },
+  {
+    "state": "KY",
+    "crossbar": "<10",
+    "beams": 555615
+  },
+  {
+    "state": "LA",
+    "crossbar": "<10",
+    "beams": 622061
+  },
+  {
+    "state": "ME",
+    "crossbar": "<10",
+    "beams": 137954
+  },
+  {
+    "state": "MD",
+    "crossbar": "<10",
+    "beams": 741952
+  },
+  {
+    "state": "MA",
+    "crossbar": "<10",
+    "beams": 737748
+  },
+  {
+    "state": "MI",
+    "crossbar": "<10",
+    "beams": 1181424
+  },
+  {
+    "state": "MN",
+    "crossbar": "<10",
+    "beams": 711604
+  },
+  {
+    "state": "MS",
+    "crossbar": "<10",
+    "beams": 400288
+  },
+  {
+    "state": "MO",
+    "crossbar": "<10",
+    "beams": 763948
+  },
+  {
+    "state": "MT",
+    "crossbar": "<10",
+    "beams": 126020
+  },
+  {
+    "state": "NE",
+    "crossbar": "<10",
+    "beams": 263518
+  },
+  {
+    "state": "NV",
+    "crossbar": "<10",
+    "beams": 369362
+  },
+  {
+    "state": "NH",
+    "crossbar": "<10",
+    "beams": 138762
+  },
+  {
+    "state": "NJ",
+    "crossbar": "<10",
+    "beams": 1079136
+  },
+  {
+    "state": "NM",
+    "crossbar": "<10",
+    "beams": 276468
+  },
+  {
+    "state": "NY",
+    "crossbar": "<10",
+    "beams": 2319945
+  },
+  {
+    "state": "NC",
+    "crossbar": "<10",
+    "beams": 1250298
+  },
+  {
+    "state": "ND",
+    "crossbar": "<10",
+    "beams": 99477
+  },
+  {
+    "state": "OH",
+    "crossbar": "<10",
+    "beams": 1422838
+  },
+  {
+    "state": "OK",
+    "crossbar": "<10",
+    "beams": 534481
+  },
+  {
+    "state": "OR",
+    "crossbar": "<10",
+    "beams": 474456
+  },
+  {
+    "state": "PA",
+    "crossbar": "<10",
+    "beams": 1458931
+  },
+  {
+    "state": "RI",
+    "crossbar": "<10",
+    "beams": 111377
+  },
+  {
+    "state": "SC",
+    "crossbar": "<10",
+    "beams": 599591
+  },
+  {
+    "state": "SD",
+    "crossbar": "<10",
+    "beams": 120366
+  },
+  {
+    "state": "TN",
+    "crossbar": "<10",
+    "beams": 818404
+  },
+  {
+    "state": "TX",
+    "crossbar": "<10",
+    "beams": 3983091
+  },
+  {
+    "state": "UT",
+    "crossbar": "<10",
+    "beams": 513515
+  },
+  {
+    "state": "VT",
+    "crossbar": "<10",
+    "beams": 63768
+  },
+  {
+    "state": "VA",
+    "crossbar": "<10",
+    "beams": 1033629
+  },
+  {
+    "state": "WA",
+    "crossbar": "<10",
+    "beams": 895790
+  },
+  {
+    "state": "WV",
+    "crossbar": "<10",
+    "beams": 207017
+  },
+  {
+    "state": "WI",
+    "crossbar": "<10",
+    "beams": 705648
+  },
+  {
+    "state": "WY",
+    "crossbar": "<10",
+    "beams": 78217
+  },
+  {
+    "state": "PR",
+    "crossbar": "<10",
+    "beams": 389428
+  },
+  {
+    "state": "AL",
+    "crossbar": "10-19",
+    "beams": 638789
+  },
+  {
+    "state": "AK",
+    "crossbar": "10-19",
+    "beams": 99926
+  },
+  {
+    "state": "AZ",
+    "crossbar": "10-19",
+    "beams": 912735
+  },
+  {
+    "state": "AR",
+    "crossbar": "10-19",
+    "beams": 397185
+  },
+  {
+    "state": "CA",
+    "crossbar": "10-19",
+    "beams": 5170341
+  },
+  {
+    "state": "CO",
+    "crossbar": "10-19",
+    "beams": 697447
+  },
+  {
+    "state": "CT",
+    "crossbar": "10-19",
+    "beams": 481065
+  },
+  {
+    "state": "DE",
+    "crossbar": "10-19",
+    "beams": 117854
+  },
+  {
+    "state": "DC",
+    "crossbar": "10-19",
+    "beams": 62783
+  },
+  {
+    "state": "FL",
+    "crossbar": "10-19",
+    "beams": 2331102
+  },
+  {
+    "state": "GA",
+    "crossbar": "10-19",
+    "beams": 1421557
+  },
+  {
+    "state": "HI",
+    "crossbar": "10-19",
+    "beams": 163559
+  },
+  {
+    "state": "ID",
+    "crossbar": "10-19",
+    "beams": 239509
+  },
+  {
+    "state": "IL",
+    "crossbar": "10-19",
+    "beams": 1715984
+  },
+  {
+    "state": "IN",
+    "crossbar": "10-19",
+    "beams": 905594
+  },
+  {
+    "state": "IA",
+    "crossbar": "10-19",
+    "beams": 418667
+  },
+  {
+    "state": "KS",
+    "crossbar": "10-19",
+    "beams": 402092
+  },
+  {
+    "state": "KY",
+    "crossbar": "10-19",
+    "beams": 575866
+  },
+  {
+    "state": "LA",
+    "crossbar": "10-19",
+    "beams": 613633
+  },
+  {
+    "state": "ME",
+    "crossbar": "10-19",
+    "beams": 155774
+  },
+  {
+    "state": "MD",
+    "crossbar": "10-19",
+    "beams": 764730
+  },
+  {
+    "state": "MA",
+    "crossbar": "10-19",
+    "beams": 862371
+  },
+  {
+    "state": "MI",
+    "crossbar": "10-19",
+    "beams": 1324071
+  },
+  {
+    "state": "MN",
+    "crossbar": "10-19",
+    "beams": 714399
+  },
+  {
+    "state": "MS",
+    "crossbar": "10-19",
+    "beams": 421329
+  },
+  {
+    "state": "MO",
+    "crossbar": "10-19",
+    "beams": 792935
+  },
+  {
+    "state": "MT",
+    "crossbar": "10-19",
+    "beams": 126294
+  },
+  {
+    "state": "NE",
+    "crossbar": "10-19",
+    "beams": 257610
+  },
+  {
+    "state": "NV",
+    "crossbar": "10-19",
+    "beams": 360263
+  },
+  {
+    "state": "NH",
+    "crossbar": "10-19",
+    "beams": 167495
+  },
+  {
+    "state": "NJ",
+    "crossbar": "10-19",
+    "beams": 1153625
+  },
+  {
+    "state": "NM",
+    "crossbar": "10-19",
+    "beams": 282662
+  },
+  {
+    "state": "NY",
+    "crossbar": "10-19",
+    "beams": 2445591
+  },
+  {
+    "state": "NC",
+    "crossbar": "10-19",
+    "beams": 1310398
+  },
+  {
+    "state": "ND",
+    "crossbar": "10-19",
+    "beams": 91069
+  },
+  {
+    "state": "OH",
+    "crossbar": "10-19",
+    "beams": 1530264
+  },
+  {
+    "state": "OK",
+    "crossbar": "10-19",
+    "beams": 522282
+  },
+  {
+    "state": "OR",
+    "crossbar": "10-19",
+    "beams": 485345
+  },
+  {
+    "state": "PA",
+    "crossbar": "10-19",
+    "beams": 1608018
+  },
+  {
+    "state": "RI",
+    "crossbar": "10-19",
+    "beams": 136885
+  },
+  {
+    "state": "SC",
+    "crossbar": "10-19",
+    "beams": 619144
+  },
+  {
+    "state": "SD",
+    "crossbar": "10-19",
+    "beams": 113383
+  },
+  {
+    "state": "TN",
+    "crossbar": "10-19",
+    "beams": 842873
+  },
+  {
+    "state": "TX",
+    "crossbar": "10-19",
+    "beams": 3910528
+  },
+  {
+    "state": "UT",
+    "crossbar": "10-19",
+    "beams": 479126
+  },
+  {
+    "state": "VT",
+    "crossbar": "10-19",
+    "beams": 79351
+  },
+  {
+    "state": "VA",
+    "crossbar": "10-19",
+    "beams": 1065461
+  },
+  {
+    "state": "WA",
+    "crossbar": "10-19",
+    "beams": 882812
+  },
+  {
+    "state": "WV",
+    "crossbar": "10-19",
+    "beams": 218547
+  },
+  {
+    "state": "WI",
+    "crossbar": "10-19",
+    "beams": 755224
+  },
+  {
+    "state": "WY",
+    "crossbar": "10-19",
+    "beams": 75535
+  },
+  {
+    "state": "PR",
+    "crossbar": "10-19",
+    "beams": 479749
+  },
+  {
+    "state": "AL",
+    "crossbar": "20-29",
+    "beams": 661666
+  },
+  {
+    "state": "AK",
+    "crossbar": "20-29",
+    "beams": 120674
+  },
+  {
+    "state": "AZ",
+    "crossbar": "20-29",
+    "beams": 939804
+  },
+  {
+    "state": "AR",
+    "crossbar": "20-29",
+    "beams": 399698
+  },
+  {
+    "state": "CA",
+    "crossbar": "20-29",
+    "beams": 5809455
+  },
+  {
+    "state": "CO",
+    "crossbar": "20-29",
+    "beams": 780508
+  },
+  {
+    "state": "CT",
+    "crossbar": "20-29",
+    "beams": 462323
+  },
+  {
+    "state": "DE",
+    "crossbar": "20-29",
+    "beams": 127554
+  },
+  {
+    "state": "DC",
+    "crossbar": "20-29",
+    "beams": 136976
+  },
+  {
+    "state": "FL",
+    "crossbar": "20-29",
+    "beams": 2597830
+  },
+  {
+    "state": "GA",
+    "crossbar": "20-29",
+    "beams": 1418696
+  },
+  {
+    "state": "HI",
+    "crossbar": "20-29",
+    "beams": 204336
+  },
+  {
+    "state": "ID",
+    "crossbar": "20-29",
+    "beams": 218684
+  },
+  {
+    "state": "IL",
+    "crossbar": "20-29",
+    "beams": 1789739
+  },
+  {
+    "state": "IN",
+    "crossbar": "20-29",
+    "beams": 905590
+  },
+  {
+    "state": "IA",
+    "crossbar": "20-29",
+    "beams": 419456
+  },
+  {
+    "state": "KS",
+    "crossbar": "20-29",
+    "beams": 406956
+  },
+  {
+    "state": "KY",
+    "crossbar": "20-29",
+    "beams": 593819
+  },
+  {
+    "state": "LA",
+    "crossbar": "20-29",
+    "beams": 683606
+  },
+  {
+    "state": "ME",
+    "crossbar": "20-29",
+    "beams": 156359
+  },
+  {
+    "state": "MD",
+    "crossbar": "20-29",
+    "beams": 815346
+  },
+  {
+    "state": "MA",
+    "crossbar": "20-29",
+    "beams": 971340
+  },
+  {
+    "state": "MI",
+    "crossbar": "20-29",
+    "beams": 1338179
+  },
+  {
+    "state": "MN",
+    "crossbar": "20-29",
+    "beams": 728222
+  },
+  {
+    "state": "MS",
+    "crossbar": "20-29",
+    "beams": 414195
+  },
+  {
+    "state": "MO",
+    "crossbar": "20-29",
+    "beams": 831725
+  },
+  {
+    "state": "MT",
+    "crossbar": "20-29",
+    "beams": 136346
+  },
+  {
+    "state": "NE",
+    "crossbar": "20-29",
+    "beams": 260646
+  },
+  {
+    "state": "NV",
+    "crossbar": "20-29",
+    "beams": 392834
+  },
+  {
+    "state": "NH",
+    "crossbar": "20-29",
+    "beams": 167554
+  },
+  {
+    "state": "NJ",
+    "crossbar": "20-29",
+    "beams": 1139927
+  },
+  {
+    "state": "NM",
+    "crossbar": "20-29",
+    "beams": 289801
+  },
+  {
+    "state": "NY",
+    "crossbar": "20-29",
+    "beams": 2894266
+  },
+  {
+    "state": "NC",
+    "crossbar": "20-29",
+    "beams": 1350242
+  },
+  {
+    "state": "ND",
+    "crossbar": "20-29",
+    "beams": 124509
+  },
+  {
+    "state": "OH",
+    "crossbar": "20-29",
+    "beams": 1535538
+  },
+  {
+    "state": "OK",
+    "crossbar": "20-29",
+    "beams": 552528
+  },
+  {
+    "state": "OR",
+    "crossbar": "20-29",
+    "beams": 538596
+  },
+  {
+    "state": "PA",
+    "crossbar": "20-29",
+    "beams": 1712448
+  },
+  {
+    "state": "RI",
+    "crossbar": "20-29",
+    "beams": 153674
+  },
+  {
+    "state": "SC",
+    "crossbar": "20-29",
+    "beams": 667523
+  },
+  {
+    "state": "SD",
+    "crossbar": "20-29",
+    "beams": 116748
+  },
+  {
+    "state": "TN",
+    "crossbar": "20-29",
+    "beams": 895337
+  },
+  {
+    "state": "TX",
+    "crossbar": "20-29",
+    "beams": 3946447
+  },
+  {
+    "state": "UT",
+    "crossbar": "20-29",
+    "beams": 465219
+  },
+  {
+    "state": "VT",
+    "crossbar": "20-29",
+    "beams": 81765
+  },
+  {
+    "state": "VA",
+    "crossbar": "20-29",
+    "beams": 1170634
+  },
+  {
+    "state": "WA",
+    "crossbar": "20-29",
+    "beams": 1004428
+  },
+  {
+    "state": "WV",
+    "crossbar": "20-29",
+    "beams": 232027
+  },
+  {
+    "state": "WI",
+    "crossbar": "20-29",
+    "beams": 760961
+  },
+  {
+    "state": "WY",
+    "crossbar": "20-29",
+    "beams": 82898
+  },
+  {
+    "state": "PR",
+    "crossbar": "20-29",
+    "beams": 480184
+  },
+  {
+    "state": "AL",
+    "crossbar": "30-39",
+    "beams": 603013
+  },
+  {
+    "state": "AK",
+    "crossbar": "30-39",
+    "beams": 102008
+  },
+  {
+    "state": "AZ",
+    "crossbar": "30-39",
+    "beams": 857054
+  },
+  {
+    "state": "AR",
+    "crossbar": "30-39",
+    "beams": 372998
+  },
+  {
+    "state": "CA",
+    "crossbar": "30-39",
+    "beams": 5354112
+  },
+  {
+    "state": "CO",
+    "crossbar": "30-39",
+    "beams": 766382
+  },
+  {
+    "state": "CT",
+    "crossbar": "30-39",
+    "beams": 424890
+  },
+  {
+    "state": "DE",
+    "crossbar": "30-39",
+    "beams": 114063
+  },
+  {
+    "state": "DC",
+    "crossbar": "30-39",
+    "beams": 121520
+  },
+  {
+    "state": "FL",
+    "crossbar": "30-39",
+    "beams": 2416176
+  },
+  {
+    "state": "GA",
+    "crossbar": "30-39",
+    "beams": 1357210
+  },
+  {
+    "state": "HI",
+    "crossbar": "30-39",
+    "beams": 187590
+  },
+  {
+    "state": "ID",
+    "crossbar": "30-39",
+    "beams": 209500
+  },
+  {
+    "state": "IL",
+    "crossbar": "30-39",
+    "beams": 1721954
+  },
+  {
+    "state": "IN",
+    "crossbar": "30-39",
+    "beams": 827086
+  },
+  {
+    "state": "IA",
+    "crossbar": "30-39",
+    "beams": 383638
+  },
+  {
+    "state": "KS",
+    "crossbar": "30-39",
+    "beams": 368732
+  },
+  {
+    "state": "KY",
+    "crossbar": "30-39",
+    "beams": 558201
+  },
+  {
+    "state": "LA",
+    "crossbar": "30-39",
+    "beams": 615411
+  },
+  {
+    "state": "ME",
+    "crossbar": "30-39",
+    "beams": 147695
+  },
+  {
+    "state": "MD",
+    "crossbar": "30-39",
+    "beams": 784097
+  },
+  {
+    "state": "MA",
+    "crossbar": "30-39",
+    "beams": 847306
+  },
+  {
+    "state": "MI",
+    "crossbar": "30-39",
+    "beams": 1162186
+  },
+  {
+    "state": "MN",
+    "crossbar": "30-39",
+    "beams": 715583
+  },
+  {
+    "state": "MS",
+    "crossbar": "30-39",
+    "beams": 374724
+  },
+  {
+    "state": "MO",
+    "crossbar": "30-39",
+    "beams": 763002
+  },
+  {
+    "state": "MT",
+    "crossbar": "30-39",
+    "beams": 125004
+  },
+  {
+    "state": "NE",
+    "crossbar": "30-39",
+    "beams": 244236
+  },
+  {
+    "state": "NV",
+    "crossbar": "30-39",
+    "beams": 390261
+  },
+  {
+    "state": "NH",
+    "crossbar": "30-39",
+    "beams": 151409
+  },
+  {
+    "state": "NJ",
+    "crossbar": "30-39",
+    "beams": 1143452
+  },
+  {
+    "state": "NM",
+    "crossbar": "30-39",
+    "beams": 260579
+  },
+  {
+    "state": "NY",
+    "crossbar": "30-39",
+    "beams": 2605355
+  },
+  {
+    "state": "NC",
+    "crossbar": "30-39",
+    "beams": 1268976
+  },
+  {
+    "state": "ND",
+    "crossbar": "30-39",
+    "beams": 94713
+  },
+  {
+    "state": "OH",
+    "crossbar": "30-39",
+    "beams": 1398724
+  },
+  {
+    "state": "OK",
+    "crossbar": "30-39",
+    "beams": 501392
+  },
+  {
+    "state": "OR",
+    "crossbar": "30-39",
+    "beams": 537767
+  },
+  {
+    "state": "PA",
+    "crossbar": "30-39",
+    "beams": 1520409
+  },
+  {
+    "state": "RI",
+    "crossbar": "30-39",
+    "beams": 126503
+  },
+  {
+    "state": "SC",
+    "crossbar": "30-39",
+    "beams": 596491
+  },
+  {
+    "state": "SD",
+    "crossbar": "30-39",
+    "beams": 105499
+  },
+  {
+    "state": "TN",
+    "crossbar": "30-39",
+    "beams": 837313
+  },
+  {
+    "state": "TX",
+    "crossbar": "30-39",
+    "beams": 3770534
+  },
+  {
+    "state": "UT",
+    "crossbar": "30-39",
+    "beams": 436010
+  },
+  {
+    "state": "VT",
+    "crossbar": "30-39",
+    "beams": 70092
+  },
+  {
+    "state": "VA",
+    "crossbar": "30-39",
+    "beams": 1112111
+  },
+  {
+    "state": "WA",
+    "crossbar": "30-39",
+    "beams": 970613
+  },
+  {
+    "state": "WV",
+    "crossbar": "30-39",
+    "beams": 220494
+  },
+  {
+    "state": "WI",
+    "crossbar": "30-39",
+    "beams": 714479
+  },
+  {
+    "state": "WY",
+    "crossbar": "30-39",
+    "beams": 76912
+  },
+  {
+    "state": "PR",
+    "crossbar": "30-39",
+    "beams": 441842
+  },
+  {
+    "state": "AL",
+    "crossbar": "40-49",
+    "beams": 625599
+  },
+  {
+    "state": "AK",
+    "crossbar": "40-49",
+    "beams": 91539
+  },
+  {
+    "state": "AZ",
+    "crossbar": "40-49",
+    "beams": 833290
+  },
+  {
+    "state": "AR",
+    "crossbar": "40-49",
+    "beams": 370157
+  },
+  {
+    "state": "CA",
+    "crossbar": "40-49",
+    "beams": 5179258
+  },
+  {
+    "state": "CO",
+    "crossbar": "40-49",
+    "beams": 705450
+  },
+  {
+    "state": "CT",
+    "crossbar": "40-49",
+    "beams": 496265
+  },
+  {
+    "state": "DE",
+    "crossbar": "40-49",
+    "beams": 117588
+  },
+  {
+    "state": "DC",
+    "crossbar": "40-49",
+    "beams": 80570
+  },
+  {
+    "state": "FL",
+    "crossbar": "40-49",
+    "beams": 2575576
+  },
+  {
+    "state": "GA",
+    "crossbar": "40-49",
+    "beams": 1404698
+  },
+  {
+    "state": "HI",
+    "crossbar": "40-49",
+    "beams": 176904
+  },
+  {
+    "state": "ID",
+    "crossbar": "40-49",
+    "beams": 194678
+  },
+  {
+    "state": "IL",
+    "crossbar": "40-49",
+    "beams": 1697069
+  },
+  {
+    "state": "IN",
+    "crossbar": "40-49",
+    "beams": 844059
+  },
+  {
+    "state": "IA",
+    "crossbar": "40-49",
+    "beams": 370719
+  },
+  {
+    "state": "KS",
+    "crossbar": "40-49",
+    "beams": 344427
+  },
+  {
+    "state": "KY",
+    "crossbar": "40-49",
+    "beams": 580553
+  },
+  {
+    "state": "LA",
+    "crossbar": "40-49",
+    "beams": 571991
+  },
+  {
+    "state": "ME",
+    "crossbar": "40-49",
+    "beams": 176908
+  },
+  {
+    "state": "MD",
+    "crossbar": "40-49",
+    "beams": 815875
+  },
+  {
+    "state": "MA",
+    "crossbar": "40-49",
+    "beams": 916106
+  },
+  {
+    "state": "MI",
+    "crossbar": "40-49",
+    "beams": 1283122
+  },
+  {
+    "state": "MN",
+    "crossbar": "40-49",
+    "beams": 692201
+  },
+  {
+    "state": "MS",
+    "crossbar": "40-49",
+    "beams": 377165
+  },
+  {
+    "state": "MO",
+    "crossbar": "40-49",
+    "beams": 750989
+  },
+  {
+    "state": "MT",
+    "crossbar": "40-49",
+    "beams": 116502
+  },
+  {
+    "state": "NE",
+    "crossbar": "40-49",
+    "beams": 222479
+  },
+  {
+    "state": "NV",
+    "crossbar": "40-49",
+    "beams": 387272
+  },
+  {
+    "state": "NH",
+    "crossbar": "40-49",
+    "beams": 182703
+  },
+  {
+    "state": "NJ",
+    "crossbar": "40-49",
+    "beams": 1254602
+  },
+  {
+    "state": "NM",
+    "crossbar": "40-49",
+    "beams": 244346
+  },
+  {
+    "state": "NY",
+    "crossbar": "40-49",
+    "beams": 2617327
+  },
+  {
+    "state": "NC",
+    "crossbar": "40-49",
+    "beams": 1357746
+  },
+  {
+    "state": "ND",
+    "crossbar": "40-49",
+    "beams": 80327
+  },
+  {
+    "state": "OH",
+    "crossbar": "40-49",
+    "beams": 1490959
+  },
+  {
+    "state": "OK",
+    "crossbar": "40-49",
+    "beams": 469410
+  },
+  {
+    "state": "OR",
+    "crossbar": "40-49",
+    "beams": 507826
+  },
+  {
+    "state": "PA",
+    "crossbar": "40-49",
+    "beams": 1645291
+  },
+  {
+    "state": "RI",
+    "crossbar": "40-49",
+    "beams": 137892
+  },
+  {
+    "state": "SC",
+    "crossbar": "40-49",
+    "beams": 619792
+  },
+  {
+    "state": "SD",
+    "crossbar": "40-49",
+    "beams": 96288
+  },
+  {
+    "state": "TN",
+    "crossbar": "40-49",
+    "beams": 866343
+  },
+  {
+    "state": "TX",
+    "crossbar": "40-49",
+    "beams": 3545746
+  },
+  {
+    "state": "UT",
+    "crossbar": "40-49",
+    "beams": 328569
+  },
+  {
+    "state": "VT",
+    "crossbar": "40-49",
+    "beams": 79982
+  },
+  {
+    "state": "VA",
+    "crossbar": "40-49",
+    "beams": 1134928
+  },
+  {
+    "state": "WA",
+    "crossbar": "40-49",
+    "beams": 921205
+  },
+  {
+    "state": "WV",
+    "crossbar": "40-49",
+    "beams": 238218
+  },
+  {
+    "state": "WI",
+    "crossbar": "40-49",
+    "beams": 732280
+  },
+  {
+    "state": "WY",
+    "crossbar": "40-49",
+    "beams": 68464
+  },
+  {
+    "state": "PR",
+    "crossbar": "40-49",
+    "beams": 456009
+  },
+  {
+    "state": "AL",
+    "crossbar": "50-59",
+    "beams": 673864
+  },
+  {
+    "state": "AK",
+    "crossbar": "50-59",
+    "beams": 104569
+  },
+  {
+    "state": "AZ",
+    "crossbar": "50-59",
+    "beams": 834858
+  },
+  {
+    "state": "AR",
+    "crossbar": "50-59",
+    "beams": 395070
+  },
+  {
+    "state": "CA",
+    "crossbar": "50-59",
+    "beams": 5042094
+  },
+  {
+    "state": "CO",
+    "crossbar": "50-59",
+    "beams": 725661
+  },
+  {
+    "state": "CT",
+    "crossbar": "50-59",
+    "beams": 546361
+  },
+  {
+    "state": "DE",
+    "crossbar": "50-59",
+    "beams": 133331
+  },
+  {
+    "state": "DC",
+    "crossbar": "50-59",
+    "beams": 74779
+  },
+  {
+    "state": "FL",
+    "crossbar": "50-59",
+    "beams": 2762983
+  },
+  {
+    "state": "GA",
+    "crossbar": "50-59",
+    "beams": 1337985
+  },
+  {
+    "state": "HI",
+    "crossbar": "50-59",
+    "beams": 188438
+  },
+  {
+    "state": "ID",
+    "crossbar": "50-59",
+    "beams": 205170
+  },
+  {
+    "state": "IL",
+    "crossbar": "50-59",
+    "beams": 1773366
+  },
+  {
+    "state": "IN",
+    "crossbar": "50-59",
+    "beams": 911778
+  },
+  {
+    "state": "IA",
+    "crossbar": "50-59",
+    "beams": 427554
+  },
+  {
+    "state": "KS",
+    "crossbar": "50-59",
+    "beams": 389834
+  },
+  {
+    "state": "KY",
+    "crossbar": "50-59",
+    "beams": 623164
+  },
+  {
+    "state": "LA",
+    "crossbar": "50-59",
+    "beams": 631936
+  },
+  {
+    "state": "ME",
+    "crossbar": "50-59",
+    "beams": 215787
+  },
+  {
+    "state": "MD",
+    "crossbar": "50-59",
+    "beams": 862778
+  },
+  {
+    "state": "MA",
+    "crossbar": "50-59",
+    "beams": 979128
+  },
+  {
+    "state": "MI",
+    "crossbar": "50-59",
+    "beams": 1454462
+  },
+  {
+    "state": "MN",
+    "crossbar": "50-59",
+    "beams": 782655
+  },
+  {
+    "state": "MS",
+    "crossbar": "50-59",
+    "beams": 400164
+  },
+  {
+    "state": "MO",
+    "crossbar": "50-59",
+    "beams": 857534
+  },
+  {
+    "state": "MT",
+    "crossbar": "50-59",
+    "beams": 149800
+  },
+  {
+    "state": "NE",
+    "crossbar": "50-59",
+    "beams": 250911
+  },
+  {
+    "state": "NV",
+    "crossbar": "50-59",
+    "beams": 373757
+  },
+  {
+    "state": "NH",
+    "crossbar": "50-59",
+    "beams": 217950
+  },
+  {
+    "state": "NJ",
+    "crossbar": "50-59",
+    "beams": 1307263
+  },
+  {
+    "state": "NM",
+    "crossbar": "50-59",
+    "beams": 280363
+  },
+  {
+    "state": "NY",
+    "crossbar": "50-59",
+    "beams": 2755620
+  },
+  {
+    "state": "NC",
+    "crossbar": "50-59",
+    "beams": 1356117
+  },
+  {
+    "state": "ND",
+    "crossbar": "50-59",
+    "beams": 98688
+  },
+  {
+    "state": "OH",
+    "crossbar": "50-59",
+    "beams": 1677794
+  },
+  {
+    "state": "OK",
+    "crossbar": "50-59",
+    "beams": 512850
+  },
+  {
+    "state": "OR",
+    "crossbar": "50-59",
+    "beams": 534421
+  },
+  {
+    "state": "PA",
+    "crossbar": "50-59",
+    "beams": 1881378
+  },
+  {
+    "state": "RI",
+    "crossbar": "50-59",
+    "beams": 156127
+  },
+  {
+    "state": "SC",
+    "crossbar": "50-59",
+    "beams": 663408
+  },
+  {
+    "state": "SD",
+    "crossbar": "50-59",
+    "beams": 117012
+  },
+  {
+    "state": "TN",
+    "crossbar": "50-59",
+    "beams": 904272
+  },
+  {
+    "state": "TX",
+    "crossbar": "50-59",
+    "beams": 3344930
+  },
+  {
+    "state": "UT",
+    "crossbar": "50-59",
+    "beams": 301596
+  },
+  {
+    "state": "VT",
+    "crossbar": "50-59",
+    "beams": 99521
+  },
+  {
+    "state": "VA",
+    "crossbar": "50-59",
+    "beams": 1162028
+  },
+  {
+    "state": "WA",
+    "crossbar": "50-59",
+    "beams": 970407
+  },
+  {
+    "state": "WV",
+    "crossbar": "50-59",
+    "beams": 269346
+  },
+  {
+    "state": "WI",
+    "crossbar": "50-59",
+    "beams": 848672
+  },
+  {
+    "state": "WY",
+    "crossbar": "50-59",
+    "beams": 81018
+  },
+  {
+    "state": "PR",
+    "crossbar": "50-59",
+    "beams": 452503
+  },
+  {
+    "state": "AL",
+    "crossbar": "60-69",
+    "beams": 548376
+  },
+  {
+    "state": "AK",
+    "crossbar": "60-69",
+    "beams": 70473
+  },
+  {
+    "state": "AZ",
+    "crossbar": "60-69",
+    "beams": 737884
+  },
+  {
+    "state": "AR",
+    "crossbar": "60-69",
+    "beams": 329734
+  },
+  {
+    "state": "CA",
+    "crossbar": "60-69",
+    "beams": 3737461
+  },
+  {
+    "state": "CO",
+    "crossbar": "60-69",
+    "beams": 563376
+  },
+  {
+    "state": "CT",
+    "crossbar": "60-69",
+    "beams": 400995
+  },
+  {
+    "state": "DE",
+    "crossbar": "60-69",
+    "beams": 110822
+  },
+  {
+    "state": "DC",
+    "crossbar": "60-69",
+    "beams": 56984
+  },
+  {
+    "state": "FL",
+    "crossbar": "60-69",
+    "beams": 2404659
+  },
+  {
+    "state": "GA",
+    "crossbar": "60-69",
+    "beams": 998253
+  },
+  {
+    "state": "HI",
+    "crossbar": "60-69",
+    "beams": 164957
+  },
+  {
+    "state": "ID",
+    "crossbar": "60-69",
+    "beams": 179429
+  },
+  {
+    "state": "IL",
+    "crossbar": "60-69",
+    "beams": 1326121
+  },
+  {
+    "state": "IN",
+    "crossbar": "60-69",
+    "beams": 704523
+  },
+  {
+    "state": "IA",
+    "crossbar": "60-69",
+    "beams": 344037
+  },
+  {
+    "state": "KS",
+    "crossbar": "60-69",
+    "beams": 300759
+  },
+  {
+    "state": "KY",
+    "crossbar": "60-69",
+    "beams": 495736
+  },
+  {
+    "state": "LA",
+    "crossbar": "60-69",
+    "beams": 488846
+  },
+  {
+    "state": "ME",
+    "crossbar": "60-69",
+    "beams": 179540
+  },
+  {
+    "state": "MD",
+    "crossbar": "60-69",
+    "beams": 636309
+  },
+  {
+    "state": "MA",
+    "crossbar": "60-69",
+    "beams": 737805
+  },
+  {
+    "state": "MI",
+    "crossbar": "60-69",
+    "beams": 1148131
+  },
+  {
+    "state": "MN",
+    "crossbar": "60-69",
+    "beams": 577313
+  },
+  {
+    "state": "MS",
+    "crossbar": "60-69",
+    "beams": 319443
+  },
+  {
+    "state": "MO",
+    "crossbar": "60-69",
+    "beams": 668878
+  },
+  {
+    "state": "MT",
+    "crossbar": "60-69",
+    "beams": 130977
+  },
+  {
+    "state": "NE",
+    "crossbar": "60-69",
+    "beams": 195705
+  },
+  {
+    "state": "NV",
+    "crossbar": "60-69",
+    "beams": 309651
+  },
+  {
+    "state": "NH",
+    "crossbar": "60-69",
+    "beams": 164287
+  },
+  {
+    "state": "NJ",
+    "crossbar": "60-69",
+    "beams": 946399
+  },
+  {
+    "state": "NM",
+    "crossbar": "60-69",
+    "beams": 239044
+  },
+  {
+    "state": "NY",
+    "crossbar": "60-69",
+    "beams": 2095207
+  },
+  {
+    "state": "NC",
+    "crossbar": "60-69",
+    "beams": 1095320
+  },
+  {
+    "state": "ND",
+    "crossbar": "60-69",
+    "beams": 73825
+  },
+  {
+    "state": "OH",
+    "crossbar": "60-69",
+    "beams": 1320776
+  },
+  {
+    "state": "OK",
+    "crossbar": "60-69",
+    "beams": 404704
+  },
+  {
+    "state": "OR",
+    "crossbar": "60-69",
+    "beams": 490894
+  },
+  {
+    "state": "PA",
+    "crossbar": "60-69",
+    "beams": 1491536
+  },
+  {
+    "state": "RI",
+    "crossbar": "60-69",
+    "beams": 117653
+  },
+  {
+    "state": "SC",
+    "crossbar": "60-69",
+    "beams": 579856
+  },
+  {
+    "state": "SD",
+    "crossbar": "60-69",
+    "beams": 92824
+  },
+  {
+    "state": "TN",
+    "crossbar": "60-69",
+    "beams": 741045
+  },
+  {
+    "state": "TX",
+    "crossbar": "60-69",
+    "beams": 2431494
+  },
+  {
+    "state": "UT",
+    "crossbar": "60-69",
+    "beams": 230007
+  },
+  {
+    "state": "VT",
+    "crossbar": "60-69",
+    "beams": 82136
+  },
+  {
+    "state": "VA",
+    "crossbar": "60-69",
+    "beams": 881763
+  },
+  {
+    "state": "WA",
+    "crossbar": "60-69",
+    "beams": 784208
+  },
+  {
+    "state": "WV",
+    "crossbar": "60-69",
+    "beams": 243108
+  },
+  {
+    "state": "WI",
+    "crossbar": "60-69",
+    "beams": 645015
+  },
+  {
+    "state": "WY",
+    "crossbar": "60-69",
+    "beams": 67484
+  },
+  {
+    "state": "PR",
+    "crossbar": "60-69",
+    "beams": 411924
+  },
+  {
+    "state": "AL",
+    "crossbar": "70-79",
+    "beams": 316598
+  },
+  {
+    "state": "AK",
+    "crossbar": "70-79",
+    "beams": 28422
+  },
+  {
+    "state": "AZ",
+    "crossbar": "70-79",
+    "beams": 466153
+  },
+  {
+    "state": "AR",
+    "crossbar": "70-79",
+    "beams": 197985
+  },
+  {
+    "state": "CA",
+    "crossbar": "70-79",
+    "beams": 2011678
+  },
+  {
+    "state": "CO",
+    "crossbar": "70-79",
+    "beams": 274466
+  },
+  {
+    "state": "CT",
+    "crossbar": "70-79",
+    "beams": 217827
+  },
+  {
+    "state": "DE",
+    "crossbar": "70-79",
+    "beams": 65369
+  },
+  {
+    "state": "DC",
+    "crossbar": "70-79",
+    "beams": 31362
+  },
+  {
+    "state": "FL",
+    "crossbar": "70-79",
+    "beams": 1615547
+  },
+  {
+    "state": "GA",
+    "crossbar": "70-79",
+    "beams": 528108
+  },
+  {
+    "state": "HI",
+    "crossbar": "70-79",
+    "beams": 85345
+  },
+  {
+    "state": "ID",
+    "crossbar": "70-79",
+    "beams": 97621
+  },
+  {
+    "state": "IL",
+    "crossbar": "70-79",
+    "beams": 728821
+  },
+  {
+    "state": "IN",
+    "crossbar": "70-79",
+    "beams": 384788
+  },
+  {
+    "state": "IA",
+    "crossbar": "70-79",
+    "beams": 197223
+  },
+  {
+    "state": "KS",
+    "crossbar": "70-79",
+    "beams": 166104
+  },
+  {
+    "state": "KY",
+    "crossbar": "70-79",
+    "beams": 273961
+  },
+  {
+    "state": "LA",
+    "crossbar": "70-79",
+    "beams": 266123
+  },
+  {
+    "state": "ME",
+    "crossbar": "70-79",
+    "beams": 97899
+  },
+  {
+    "state": "MD",
+    "crossbar": "70-79",
+    "beams": 330736
+  },
+  {
+    "state": "MA",
+    "crossbar": "70-79",
+    "beams": 401931
+  },
+  {
+    "state": "MI",
+    "crossbar": "70-79",
+    "beams": 619722
+  },
+  {
+    "state": "MN",
+    "crossbar": "70-79",
+    "beams": 312906
+  },
+  {
+    "state": "MS",
+    "crossbar": "70-79",
+    "beams": 181195
+  },
+  {
+    "state": "MO",
+    "crossbar": "70-79",
+    "beams": 388086
+  },
+  {
+    "state": "MT",
+    "crossbar": "70-79",
+    "beams": 70528
+  },
+  {
+    "state": "NE",
+    "crossbar": "70-79",
+    "beams": 107650
+  },
+  {
+    "state": "NV",
+    "crossbar": "70-79",
+    "beams": 173499
+  },
+  {
+    "state": "NH",
+    "crossbar": "70-79",
+    "beams": 84791
+  },
+  {
+    "state": "NJ",
+    "crossbar": "70-79",
+    "beams": 523620
+  },
+  {
+    "state": "NM",
+    "crossbar": "70-79",
+    "beams": 135013
+  },
+  {
+    "state": "NY",
+    "crossbar": "70-79",
+    "beams": 1160055
+  },
+  {
+    "state": "NC",
+    "crossbar": "70-79",
+    "beams": 609234
+  },
+  {
+    "state": "ND",
+    "crossbar": "70-79",
+    "beams": 41348
+  },
+  {
+    "state": "OH",
+    "crossbar": "70-79",
+    "beams": 728158
+  },
+  {
+    "state": "OK",
+    "crossbar": "70-79",
+    "beams": 239887
+  },
+  {
+    "state": "OR",
+    "crossbar": "70-79",
+    "beams": 255809
+  },
+  {
+    "state": "PA",
+    "crossbar": "70-79",
+    "beams": 850897
+  },
+  {
+    "state": "RI",
+    "crossbar": "70-79",
+    "beams": 63359
+  },
+  {
+    "state": "SC",
+    "crossbar": "70-79",
+    "beams": 322073
+  },
+  {
+    "state": "SD",
+    "crossbar": "70-79",
+    "beams": 50398
+  },
+  {
+    "state": "TN",
+    "crossbar": "70-79",
+    "beams": 414939
+  },
+  {
+    "state": "TX",
+    "crossbar": "70-79",
+    "beams": 1291486
+  },
+  {
+    "state": "UT",
+    "crossbar": "70-79",
+    "beams": 123674
+  },
+  {
+    "state": "VT",
+    "crossbar": "70-79",
+    "beams": 42978
+  },
+  {
+    "state": "VA",
+    "crossbar": "70-79",
+    "beams": 475141
+  },
+  {
+    "state": "WA",
+    "crossbar": "70-79",
+    "beams": 401094
+  },
+  {
+    "state": "WV",
+    "crossbar": "70-79",
+    "beams": 138134
+  },
+  {
+    "state": "WI",
+    "crossbar": "70-79",
+    "beams": 350772
+  },
+  {
+    "state": "WY",
+    "crossbar": "70-79",
+    "beams": 32819
+  },
+  {
+    "state": "PR",
+    "crossbar": "70-79",
+    "beams": 268783
+  },
+  {
+    "state": "AL",
+    "crossbar": "≥80",
+    "beams": 174781
+  },
+  {
+    "state": "AK",
+    "crossbar": "≥80",
+    "beams": 12503
+  },
+  {
+    "state": "AZ",
+    "crossbar": "≥80",
+    "beams": 254716
+  },
+  {
+    "state": "AR",
+    "crossbar": "≥80",
+    "beams": 113468
+  },
+  {
+    "state": "CA",
+    "crossbar": "≥80",
+    "beams": 1311374
+  },
+  {
+    "state": "CO",
+    "crossbar": "≥80",
+    "beams": 155175
+  },
+  {
+    "state": "CT",
+    "crossbar": "≥80",
+    "beams": 159475
+  },
+  {
+    "state": "DE",
+    "crossbar": "≥80",
+    "beams": 35937
+  },
+  {
+    "state": "DC",
+    "crossbar": "≥80",
+    "beams": 19658
+  },
+  {
+    "state": "FL",
+    "crossbar": "≥80",
+    "beams": 1019566
+  },
+  {
+    "state": "GA",
+    "crossbar": "≥80",
+    "beams": 269182
+  },
+  {
+    "state": "HI",
+    "crossbar": "≥80",
+    "beams": 66060
+  },
+  {
+    "state": "ID",
+    "crossbar": "≥80",
+    "beams": 54234
+  },
+  {
+    "state": "IL",
+    "crossbar": "≥80",
+    "beams": 478948
+  },
+  {
+    "state": "IN",
+    "crossbar": "≥80",
+    "beams": 243131
+  },
+  {
+    "state": "IA",
+    "crossbar": "≥80",
+    "beams": 143583
+  },
+  {
+    "state": "KS",
+    "crossbar": "≥80",
+    "beams": 117637
+  },
+  {
+    "state": "KY",
+    "crossbar": "≥80",
+    "beams": 155074
+  },
+  {
+    "state": "LA",
+    "crossbar": "≥80",
+    "beams": 152063
+  },
+  {
+    "state": "ME",
+    "crossbar": "≥80",
+    "beams": 62007
+  },
+  {
+    "state": "MD",
+    "crossbar": "≥80",
+    "beams": 208079
+  },
+  {
+    "state": "MA",
+    "crossbar": "≥80",
+    "beams": 288408
+  },
+  {
+    "state": "MI",
+    "crossbar": "≥80",
+    "beams": 398303
+  },
+  {
+    "state": "MN",
+    "crossbar": "≥80",
+    "beams": 215985
+  },
+  {
+    "state": "MS",
+    "crossbar": "≥80",
+    "beams": 100689
+  },
+  {
+    "state": "MO",
+    "crossbar": "≥80",
+    "beams": 242554
+  },
+  {
+    "state": "MT",
+    "crossbar": "≥80",
+    "beams": 41920
+  },
+  {
+    "state": "NE",
+    "crossbar": "≥80",
+    "beams": 78504
+  },
+  {
+    "state": "NV",
+    "crossbar": "≥80",
+    "beams": 82273
+  },
+  {
+    "state": "NH",
+    "crossbar": "≥80",
+    "beams": 52552
+  },
+  {
+    "state": "NJ",
+    "crossbar": "≥80",
+    "beams": 367432
+  },
+  {
+    "state": "NM",
+    "crossbar": "≥80",
+    "beams": 74393
+  },
+  {
+    "state": "NY",
+    "crossbar": "≥80",
+    "beams": 804091
+  },
+  {
+    "state": "NC",
+    "crossbar": "≥80",
+    "beams": 342497
+  },
+  {
+    "state": "ND",
+    "crossbar": "≥80",
+    "beams": 32206
+  },
+  {
+    "state": "OH",
+    "crossbar": "≥80",
+    "beams": 481890
+  },
+  {
+    "state": "OK",
+    "crossbar": "≥80",
+    "beams": 138055
+  },
+  {
+    "state": "OR",
+    "crossbar": "≥80",
+    "beams": 157153
+  },
+  {
+    "state": "PA",
+    "crossbar": "≥80",
+    "beams": 615069
+  },
+  {
+    "state": "RI",
+    "crossbar": "≥80",
+    "beams": 51021
+  },
+  {
+    "state": "SC",
+    "crossbar": "≥80",
+    "beams": 166727
+  },
+  {
+    "state": "SD",
+    "crossbar": "≥80",
+    "beams": 38540
+  },
+  {
+    "state": "TN",
+    "crossbar": "≥80",
+    "beams": 227483
+  },
+  {
+    "state": "TX",
+    "crossbar": "≥80",
+    "beams": 732179
+  },
+  {
+    "state": "UT",
+    "crossbar": "≥80",
+    "beams": 70711
+  },
+  {
+    "state": "VT",
+    "crossbar": "≥80",
+    "beams": 26656
+  },
+  {
+    "state": "VA",
+    "crossbar": "≥80",
+    "beams": 274606
+  },
+  {
+    "state": "WA",
+    "crossbar": "≥80",
+    "beams": 242589
+  },
+  {
+    "state": "WV",
+    "crossbar": "≥80",
+    "beams": 79201
+  },
+  {
+    "state": "WI",
+    "crossbar": "≥80",
+    "beams": 241747
+  },
+  {
+    "state": "WY",
+    "crossbar": "≥80",
+    "beams": 19682
+  },
+  {
+    "state": "PR",
+    "crossbar": "≥80",
+    "beams": 148963
+  }
+]

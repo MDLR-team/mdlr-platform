@@ -8,42 +8,22 @@ import {
 } from "react";
 import NodeService from "./node-service";
 import {
+  Edge,
   Node,
   addEdge,
   useEdgesState,
   useNodesState,
   useReactFlow,
 } from "reactflow";
-import NodeThumbType from "../node-types/node-thumb-type";
-import NodeStickerType from "../node-types/node-sticker-type";
+import NodeThumbType from "../node-types/node-thumb-type/node-thumb-type";
+import NodeStickerType from "../node-types/node-sticker-type/node-sticker-type";
 import NodeTableType from "../node-types/node-table-type";
-import NodeApiThumbType from "../node-types/node-api-thumb-type";
 import { v4 as uuidv4 } from "uuid";
-import NodeSticker1Type from "../node-types/node-sticker1-type";
-import ChartThumbType from "../node-types/chart-type";
-
-interface ViewerContentProps {
-  nodeSevice: NodeService;
-  nodes: any[];
-  edges: any[];
-  onNodesChange: (nodes: any[]) => void;
-  onEdgesChange: (edges: any[]) => void;
-  onConnect: (params: any) => void;
-  onConnectStart: (_: any, { nodeId }: any) => void;
-  onConnectEnd: (event: any) => void;
-  onDragOver: (event: any) => void;
-  onDrop: (event: any) => void;
-  setReactFlowInstance: (instance: any) => void;
-}
-
-export const nodeTypes = {
-  thumbnail: NodeThumbType,
-  apiThumbnail: NodeApiThumbType,
-  sticker: NodeStickerType,
-  sticker1: NodeSticker1Type,
-  table: NodeTableType,
-  chart: ChartThumbType,
-};
+import NodeMessageType from "../node-types/node-message-type/node-message-type";
+import NodeSankeyChartType from "../node-types/node-sankey-chart-type/node-sankey-chart-type";
+import NodePieChartType from "../node-types/node-pie-chart-type/node-pie-chart-type";
+import NodeLineChartType from "../node-types/node-line-chart-type/node-line-chart-type";
+import NodePresentationType from "../node-types/node-presentation-type/node-presentation-type";
 
 const NodeContext = createContext<ViewerContentProps | null>(null);
 
@@ -53,24 +33,34 @@ export function NodeProvider({ children }: any) {
 
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
 
-  const [nodeSevice] = useState<NodeService>(() => new NodeService());
+  const [nodeService] = useState<NodeService>(() => new NodeService());
 
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [presentationNodes, setPresentationNodes] = useState<any[]>([]);
 
   const { screenToFlowPosition } = useReactFlow();
 
   useEffect(() => {
-    nodeSevice.provideStates({
+    nodeService.provideStates({
+      nodes,
+      edges,
       setNodes,
       setEdges,
       onNodesChange,
       onEdgesChange,
     });
-  }, []);
+  }, [nodes, edges]);
 
-  const typeByStep = ["sticker", "table"];
-  const step = useRef(0);
+  useEffect(() => {
+    nodeService.presentationNodes$.subscribe((nodes) =>
+      setPresentationNodes(nodes)
+    );
+
+    return () => {
+      nodeService.dispose();
+    };
+  }, []);
 
   const onDragOver = useCallback((event: any) => {
     event.preventDefault();
@@ -80,34 +70,29 @@ export function NodeProvider({ children }: any) {
   const onDrop = useCallback(
     (event: any) => {
       event.preventDefault();
-
       const type = event.dataTransfer.getData("application/reactflow");
 
-      // check if the dropped element is valid
-      if (typeof type === "undefined" || !type) {
-        return;
-      }
-
+      if (typeof type === "undefined" || !type) return;
       if (!reactFlowInstance) return;
 
       const position = reactFlowInstance.screenToFlowPosition({
         x: event.clientX,
         y: event.clientY,
       });
-      const newNode = {
-        id: getId(),
-        type: "sticker",
+
+      const id = uuidv4();
+
+      const newNode: Partial<Node> = {
+        type,
         position,
-        data: { label: `${type} node` },
       };
 
-      setNodes((nds) => nds.concat(newNode));
+      nodeService.addNode(newNode);
     },
     [reactFlowInstance]
   );
 
   const onConnect = useCallback((params: any) => {
-    // reset the start node on connections
     connectingNodeId.current = null;
     connectingHandleId.current = null;
 
@@ -135,37 +120,19 @@ export function NodeProvider({ children }: any) {
         if (!previousNode) return;
 
         // we need to remove the wrapper bounds, in order to get the correct position
-        const id = uuidv4();
-        const newNode: Node = {
-          id,
+        const node = nodeService.addNode({
           position: screenToFlowPosition({
             x: event.clientX,
             y: event.clientY,
           }),
-          type:
-            previousNode.type === "thumbnail" ||
-            previousNode.type === "apiThumbnail"
-              ? "sticker"
-              : previousNode.type === "table"
-              ? "sticker1"
-              : previousNode.type === "sticker1"
-              ? "chart"
-              : "table",
-          data: { label: `Node ${id}` },
-        };
+          type: "sticker",
+        });
 
-        step.current = (step.current + 1) % typeByStep.length;
-
-        setNodes((nds) => nds.concat(newNode));
-        setEdges((eds: any) =>
-          eds.concat({
-            id,
-            source: connectingNodeId.current,
-            target: id,
-            sourceHandle: connectingHandleId.current,
-            type: "smoothstep",
-          })
-        );
+        const edge = nodeService.addEdge({
+          source: connectingNodeId.current,
+          target: node.id,
+          sourceHandle: connectingHandleId.current,
+        });
       }
     },
     [screenToFlowPosition, nodes]
@@ -174,8 +141,9 @@ export function NodeProvider({ children }: any) {
   return (
     <NodeContext.Provider
       value={{
-        nodeSevice: nodeSevice,
+        nodeService,
         nodes,
+        presentationNodes,
         edges,
         onNodesChange,
         onEdgesChange,
@@ -192,8 +160,31 @@ export function NodeProvider({ children }: any) {
   );
 }
 
-let id = 1;
-const getId = () => `${id++}`;
+interface ViewerContentProps {
+  nodeService: NodeService;
+  nodes: Node[];
+  presentationNodes: Node[];
+  edges: Edge[];
+  onNodesChange: (nodes: any[]) => void;
+  onEdgesChange: (edges: any[]) => void;
+  onConnect: (params: any) => void;
+  onConnectStart: (_: any, { nodeId }: any) => void;
+  onConnectEnd: (event: any) => void;
+  onDragOver: (event: any) => void;
+  onDrop: (event: any) => void;
+  setReactFlowInstance: (instance: any) => void;
+}
+
+export const nodeTypes = {
+  thumbnail: NodeThumbType,
+  sticker: NodeStickerType,
+  table: NodeTableType,
+  pieChart: NodePieChartType,
+  lineChart: NodeLineChartType,
+  sankeyChart: NodeSankeyChartType,
+  message: NodeMessageType,
+  presentation: NodePresentationType,
+};
 
 export function useNodes() {
   const context = useContext(NodeContext);

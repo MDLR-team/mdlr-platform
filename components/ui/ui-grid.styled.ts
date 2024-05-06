@@ -68,5 +68,5 @@ export const ContentWrapper = styled.div`
 
 export const FooterWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
 `;

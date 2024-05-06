@@ -1,21 +1,29 @@
 import { Edge, Node, Position } from "reactflow";
+import { BehaviorSubject } from "rxjs";
 import { v4 as uuidv4 } from "uuid";
 
 class NodeService {
-  private nodes: Node[] = [];
-  private edges: Edge[] = [];
+  private _nodes: Node[] = [];
+  private _edges: Edge[] = [];
+
+  private _nodesMap: Map<string, Node> = new Map();
 
   private $setNodes: any;
   private $setEdges: any;
+
+  private _presentationNodes$ = new BehaviorSubject<Node[]>([]);
+
   constructor() {
-    this.nodes = [];
-    this.edges = [];
+    this._nodes = [];
+    this._edges = [];
 
     this.$setNodes = () => [];
     this.$setEdges = () => [];
   }
 
   public provideStates({
+    nodes,
+    edges,
     setNodes,
     setEdges,
     onNodesChange,
@@ -23,91 +31,92 @@ class NodeService {
   }: any) {
     this.$setNodes = setNodes;
     this.$setEdges = setEdges;
+
+    this._nodes = nodes;
+    this._edges = edges;
+
+    this._nodesMap = new Map(nodes.map((node: Node) => [node.id, node]));
+
+    const presentationNodes = nodes.filter(
+      (node: Node) => node.type === "presentation"
+    );
+    this._presentationNodes$.next(presentationNodes);
   }
 
-  public addModel() {
-    this.$setNodes((prevNodes: Node[]) => {
-      let offsetX = 0;
-      prevNodes.forEach((node: Node) => {
-        if (node.position.x > offsetX) {
-          offsetX = node.position.x;
-        }
-      });
+  public addNode(node: Partial<Node>): Node {
+    const _node = { ...node };
+    _node.data = node.data || {};
 
-      const node: Node = {
-        id: uuidv4(),
-        type: "thumbnail",
-        data: { label: "Node" },
-        position: { x: offsetX + 200, y: 50 },
-      };
+    const id = uuidv4();
 
-      return [...prevNodes, node];
-    });
+    const newNode: Node = {
+      ..._node,
+      id,
+      position: _node.position || { x: 0, y: 0 },
+      data: {
+        ..._node.data,
+        id,
+      },
+    };
+
+    this.$setNodes((nds: Node[]) => nds.concat(newNode));
+
+    return newNode;
   }
 
-  public addApiModel() {
-    let edge: Edge | null = null;
+  public getNode(id: string): Node | undefined {
+    return this._nodesMap.get(id);
+  }
 
-    this.$setNodes((prevNodes: Node[]) => {
-      let id = 0;
-      let previousOne = false;
+  public addEdge(edge: Partial<Edge>): Edge {
+    const _edge: Edge = {
+      ...edge,
+      id: uuidv4(),
+      source: edge.source || "",
+      target: edge.target || "",
+      sourceHandle: edge.sourceHandle || null,
+      targetHandle: edge.targetHandle || null,
+    };
 
-      let offsetX = 0;
-      prevNodes.forEach((node: Node) => {
-        if (node.position.x > offsetX) {
-          offsetX = node.position.x;
-        }
+    this.$setEdges((eds: Edge[]) => eds.concat(_edge));
 
-        if (node.type === "apiThumbnail") {
-          const nodeId = parseInt(node.id);
-          if (nodeId > id) {
-            id = nodeId;
-          }
+    return _edge;
+  }
 
-          previousOne = true;
-        }
-      });
+  public get nodes(): Node[] {
+    return this._nodes;
+  }
 
-      const node: Node = {
-        id: (id + 1).toString(),
-        type: "apiThumbnail",
-        data: { label: "Node" },
-        position: { x: offsetX + 200, y: 50 },
-      };
+  public getChartNodes() {
+    const thumbnailNode = this._nodes.find((node) => node.type === "thumbnail");
+    const chartNodes = this._nodes.filter((node) => {
+      const isChart = [
+        "table",
+        "pieChart",
+        "sankeyChart",
+        "lineChart",
+      ].includes(node.type!);
 
-      if (previousOne) {
-        const _edge: Edge = {
-          id: uuidv4(),
-          source: id.toString(),
-          target: (id + 1).toString(),
-        };
-
-        edge = _edge;
-      }
-
-      /* this.$setEdges((prevEdges: Edge[]) => {
-        if (prevEdges.length > 0) {
-          return [
-            ...prevEdges,
-            {
-              id: uuidv4(),
-              source: id.toString(),
-              target: (id + 1).toString(),
-            },
-          ];
-        }
-
-        return prevEdges;
-      }); */
-
-      return [...prevNodes, node];
+      return isChart;
     });
 
-    if (edge) {
-      this.$setEdges((prevEdges: Edge[]) => {
-        return [...prevEdges, edge];
-      });
+    if (thumbnailNode) {
+      return [thumbnailNode, ...chartNodes];
     }
+
+    return chartNodes;
+  }
+
+  public get presentationNodes$() {
+    return this._presentationNodes$.asObservable();
+  }
+
+  public dispose() {
+    this._nodes = [];
+    this._edges = [];
+    this._nodesMap = new Map();
+
+    this._presentationNodes$.complete();
   }
 }
 

@@ -63,6 +63,7 @@ const AvatarWrapper = styled.div<{
   font-size: 12px;
 
   border: 1px solid #333333;
+  color: white;
 
   cursor: pointer;
 

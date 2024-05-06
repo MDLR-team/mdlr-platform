@@ -1,4 +1,4 @@
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Tab } from "@mui/material";
 import { Handle, Position } from "reactflow";
 import {
   Table,
@@ -9,10 +9,8 @@ import {
   TableRow,
 } from "@mui/material";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-
-const handleStyle = { left: 10 };
 
 const NodeTableType = ({ data, isConnectable }: any) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,11 +24,24 @@ const NodeTableType = ({ data, isConnectable }: any) => {
     return () => clearTimeout(timer); // Clean up the timer
   }, []);
 
-  const rows = Array.from({ length: 15 }).map((_, index) => ({
-    id: index + 1,
-    name: `Element ${index + 1}`,
-    value: `${uuidv4()}`,
-  }));
+  const rows = useMemo(
+    () =>
+      Array.from({ length: 40 }).map((_, index) => {
+        const randomInt = Math.floor(Math.random() * 1000);
+
+        // generate value 'Mark_123' or 'John_456' or 'Element_789'
+        const values = ["Window", "Beam", "Wall", "Partition"];
+        const randomValue = values[Math.floor(Math.random() * values.length)];
+
+        return {
+          id: index + 1,
+          name: `Element_${randomInt}`,
+          value: `${uuidv4()}`,
+          type: randomValue,
+        };
+      }),
+    []
+  );
 
   return (
     <div className="text-updater-node">
@@ -40,13 +51,15 @@ const NodeTableType = ({ data, isConnectable }: any) => {
         isConnectable={isConnectable}
       />
       <Box
+        id={`box${data.id}`}
         sx={{
-          width: "140px",
-          height: "200px",
+          width: "240px",
+          height: "max-content", // 'max-content' is the same as 'auto'
+          maxHeight: "400px",
           background: "white",
           border: "1px solid grey",
           borderRadius: "9px",
-          overflow: "auto",
+          overflow: "scroll",
           position: "relative",
         }}
       >
@@ -75,6 +88,7 @@ const NodeTableType = ({ data, isConnectable }: any) => {
                   <TableCell>ID</TableCell>
                   <TableCell>Name</TableCell>
                   <TableCell>Value</TableCell>
+                  <TableCell>Type</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -83,6 +97,7 @@ const NodeTableType = ({ data, isConnectable }: any) => {
                     <TableCell>{row.id}</TableCell>
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.value}</TableCell>
+                    <TableCell>{row.type}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -102,9 +117,15 @@ const NodeTableType = ({ data, isConnectable }: any) => {
 
 const Wrapper = styled.div`
   && {
+    height: max-content;
+
     &,
     & * {
       font-size: 6px;
+    }
+
+    & .MuiTableCell-root {
+      padding: 4px 8px !important;
     }
   }
 `;
