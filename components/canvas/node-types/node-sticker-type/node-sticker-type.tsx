@@ -52,17 +52,31 @@ const NodeStickerType = ({ data, isConnectable }: any) => {
       >
         <Wrapper>
           {expanded && (
-            <Box
-              sx={{
-                width: "100%",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                fontSize: "10px",
-              }}
-            >
-              {inputValue}
-            </Box>
+            <>
+              <Box
+                sx={{
+                  display: "flex",
+                  marginBottom: "10px",
+                  justifyContent: "space-between",
+                }}
+              >
+                <i>Prompt</i>
+              </Box>
+              <Box
+                sx={{
+                  width: "100%",
+                  overflow: "hidden",
+                  fontSize: "12px",
+                  display: "-webkit-box",
+                  WebkitBoxOrient: "vertical",
+                  WebkitLineClamp: 2,
+                  lineClamp: 2,
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {inputValue}
+              </Box>
+            </>
           )}
 
           {!expanded && (

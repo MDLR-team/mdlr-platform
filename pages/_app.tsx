@@ -241,6 +241,12 @@ const GlobalStyle = createGlobalStyle`
     height: 9px !important;
     border-radius: 50% !important;
   }
+
+  & .MuiSlider-thumb {
+    width: 8px !important;
+    height: 16px !important;
+    border-radius: 2px !important;
+  }
 `;
 
 export default App;

@@ -16,7 +16,21 @@ class StickerService {
   }
 
   private async _generateAI(message: string) {
-    const extendedMessage = `"${message}" Based on the user prompt given above, which type of output is more appropriate to return: <message | table | pieChart | lineChart | sankeyChart | presentation>? Return just one option as answer`;
+    const extendedMessage = `
+    Given the user prompt: "${message}", determine the most appropriate output type based on the content and intent. 
+    Choose one of the following options and return only that option: 
+    <message | table | pieChart | lineChart | sankeyChart | presentation | inputParams | eaChart>.
+    
+    - "message": For straightforward textual responses or explanations.
+    - "table": When data comparison or structured information is needed.
+    - "pieChart": For showing proportions or percentages within a whole.
+    - "lineChart": For displaying trends or changes over time.
+    - "sankeyChart": For visualizing flow or distribution paths.
+    - "presentation": When a detailed, multi-slide explanation or summary is required.
+    - "inputParams": When user asks to retrieve input parameters from any external source.
+    - "eaChart": For showing Evolution Algorithm or analisys chart.
+
+    Please return only one option as your answer.`;
 
     try {
       const response = await fetch("/api/gpt/create-message", {
@@ -68,6 +82,10 @@ class StickerService {
       ? "lineChart"
       : message.includes("presentation")
       ? "presentation"
+      : message.includes("inputParams")
+      ? "inputParams"
+      : message.includes("eaChart")
+      ? "eaChart"
       : "message";
   }
 

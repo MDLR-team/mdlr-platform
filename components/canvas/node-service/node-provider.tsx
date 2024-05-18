@@ -24,6 +24,8 @@ import NodeSankeyChartType from "../node-types/node-sankey-chart-type/node-sanke
 import NodePieChartType from "../node-types/node-pie-chart-type/node-pie-chart-type";
 import NodeLineChartType from "../node-types/node-line-chart-type/node-line-chart-type";
 import NodePresentationType from "../node-types/node-presentation-type/node-presentation-type";
+import NodeInputParamsType from "../node-types/node-input-params-type/node-input-params-type";
+import NodeEaChartType from "../node-types/node-ea-chart-type/node-ea-chart-type";
 
 const NodeContext = createContext<ViewerContentProps | null>(null);
 
@@ -178,12 +180,14 @@ interface ViewerContentProps {
 export const nodeTypes = {
   thumbnail: NodeThumbType,
   sticker: NodeStickerType,
+  inputParams: NodeInputParamsType,
   table: NodeTableType,
   pieChart: NodePieChartType,
   lineChart: NodeLineChartType,
   sankeyChart: NodeSankeyChartType,
   message: NodeMessageType,
   presentation: NodePresentationType,
+  eaChart: NodeEaChartType,
 };
 
 export function useNodes() {
