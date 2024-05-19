@@ -39,7 +39,7 @@ const NodeInputParamsType = ({ data, isConnectable }: any) => {
         sx={{
           width: "max-content",
           minHeight: "150px",
-          background: "#f9f1c3",
+          background: "#2C2E33",
           border: "1px solid #000",
           borderRadius: "9px",
           display: "flex",
@@ -209,12 +209,47 @@ const FormItem = styled.div`
   display: flex;
   gap: 9px;
 
+  & .MuiSlider-root,
+  & .MuiSwitch-switchBase {
+    &,
+    & * {
+      color: #f9e05e;
+    }
+  }
+
+  & .MuiSlider-rail {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  & .MuiSlider-thumb, & .MuiSwitch-thumb {
+    outline: 2px solid #2C2E33 !important;
+  }
+
+  & .MuiSwitch-track {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+
+  & .MuiInputBase-root {
+    &,
+    & * {
+      color: white;
+    }
+
+    background: #4D4F55;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
   & > div:first-child {
     font-size: 10px;
     width: 100%;
     max-width: 80px;
     overflow: hidden;
     align-self: center;
+
+    &,
+    & * {
+      color: white;
+    }
   }
 
   & > div:last-child {

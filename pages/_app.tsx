@@ -242,7 +242,7 @@ const GlobalStyle = createGlobalStyle`
     border-radius: 50% !important;
   }
 
-  & .MuiSlider-thumb {
+  & .MuiSlider-thumb, & .MuiSwitch-thumb {
     width: 8px !important;
     height: 16px !important;
     border-radius: 2px !important;

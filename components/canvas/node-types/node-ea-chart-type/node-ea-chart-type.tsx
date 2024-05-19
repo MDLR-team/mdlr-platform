@@ -1,12 +1,27 @@
-import { Handle, Position } from "reactflow";
+import { Handle, Position, useEdges } from "reactflow";
 import { useNodes } from "../../node-service/node-provider";
 import { Box } from "@mui/material";
 import styled from "styled-components";
 import SchemaA1 from "./schemas/a1";
 import SchemaB1 from "./schemas/b1";
+import { useEffect, useState } from "react";
+import SchemaA2 from "./schemas/a2";
+import SchemaA3 from "./schemas/a3";
+import SchemaB2 from "./schemas/b2";
+import SchemaB3 from "./schemas/b3";
 
 const NodeEaChartType = ({ data, isConnectable }: any) => {
   const { nodes, nodeService } = useNodes();
+
+  console.log("nodes", nodes);
+
+  const [index, setIndex] = useState(1);
+  useEffect(() => {
+    const nodes = nodeService.nodes;
+    const eaChartNodes = nodes.filter((node) => node.type === "eaChart");
+
+    setIndex(eaChartNodes.length);
+  }, []);
 
   return (
     <div className="text-updater-node">
@@ -87,7 +102,13 @@ const NodeEaChartType = ({ data, isConnectable }: any) => {
             <Box>Floor_count_av - 17</Box>
           </Box>
 
-          <SchemaA1 />
+          {index === 1 ? (
+            <SchemaA1 />
+          ) : index === 2 ? (
+            <SchemaA2 />
+          ) : (
+            <SchemaA3 />
+          )}
         </SchemaWrapper>
 
         <SchemaWrapper data-type="b1">
@@ -141,7 +162,13 @@ const NodeEaChartType = ({ data, isConnectable }: any) => {
             </Box>
           </Box>
 
-          <SchemaB1 />
+          {index === 1 ? (
+            <SchemaB1 />
+          ) : index === 2 ? (
+            <SchemaB2 />
+          ) : (
+            <SchemaB3 />
+          )}
         </SchemaWrapper>
       </Box>
       <Handle

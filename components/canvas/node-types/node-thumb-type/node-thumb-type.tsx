@@ -6,13 +6,18 @@ import UploadFile from "./blocks/upload-file/upload-file";
 import UploadApi from "./blocks/upload-api/upload-api";
 import ModelService from "./service/model-service";
 import { NodeModelMetadata } from "./service/model-service.types";
+import { useNodes } from "../../node-service/node-provider";
 
 const NodeThumbType = ({ data, isConnectable }: any) => {
+  const { nodes, nodeService } = useNodes();
+
   const [loading, setLoading] = useState(true);
   const [loaded, setLoaded] = useState(false);
   const [metadata, setMetadata] = useState<NodeModelMetadata | null>(null);
 
-  const [modelService] = useState<ModelService>(() => new ModelService());
+  const [modelService] = useState<ModelService>(
+    () => new ModelService(nodeService)
+  );
 
   const [tabIndex, setTabIndex] = useState(0);
 

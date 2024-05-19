@@ -1,6 +1,7 @@
 import { BehaviorSubject } from "rxjs";
 import { NodeModelMetadata } from "./model-service.types";
 import { v4 as uuidv4 } from "uuid";
+import NodeService from "@/components/canvas/node-service/node-service";
 
 class ModelService {
   private _metadata$ = new BehaviorSubject<NodeModelMetadata | null>(null);
@@ -9,7 +10,14 @@ class ModelService {
   private _loading$ = new BehaviorSubject<boolean>(false);
   private _loaded$ = new BehaviorSubject<boolean>(false);
 
-  constructor() {}
+  private _thumbIndex = 1;
+
+  constructor(private _nodeService: NodeService) {
+    const nodes = this._nodeService.nodes;
+    const thumbNodes = nodes.filter((node) => node.type === "thumbnail");
+
+    this._thumbIndex = thumbNodes.length;
+  }
 
   private _handleDummyLoading() {
     this._loading$.next(true);
@@ -44,7 +52,7 @@ class ModelService {
       id: uuidv4(),
       name: "My Model",
       endpoint: _metadata.endpoint || "",
-      thumbnail: "/thumb/3.png",
+      thumbnail: `/thumb/3_${this._thumbIndex}.jpg`,
     };
 
     this._metadata$.next(metadata);

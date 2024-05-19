@@ -58,6 +58,7 @@ const NodeStickerType = ({ data, isConnectable }: any) => {
                   display: "flex",
                   marginBottom: "10px",
                   justifyContent: "space-between",
+                  fontWeight: "bold",
                 }}
               >
                 <i>Prompt</i>
@@ -81,7 +82,13 @@ const NodeStickerType = ({ data, isConnectable }: any) => {
 
           {!expanded && (
             <>
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  fontWeight: "bold",
+                }}
+              >
                 <i>Prompt</i>
               </Box>
               <br />

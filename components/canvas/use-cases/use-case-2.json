@@ -1,0 +1,293 @@
+[
+    {
+        "type": "thumbnail",
+        "position": {
+            "x": -126.88019002162359,
+            "y": 112.61118362891176
+        },
+        "data": {
+            "id": "74c9ecd8-72d9-438c-9d68-664bd245d1cc"
+        },
+        "id": "74c9ecd8-72d9-438c-9d68-664bd245d1cc",
+        "width": 230,
+        "height": 210,
+        "selected": false,
+        "dragging": false,
+        "positionAbsolute": {
+            "x": -126.88019002162359,
+            "y": 112.61118362891176
+        }
+    },
+    {
+        "type": "sticker",
+        "position": {
+            "x": -578.1320225393853,
+            "y": 125.63824501320681
+        },
+        "data": {
+            "id": "e66166bf-96fc-4037-9612-56e0f3fff2ea"
+        },
+        "id": "e66166bf-96fc-4037-9612-56e0f3fff2ea",
+        "width": 180,
+        "height": 93,
+        "selected": false,
+        "positionAbsolute": {
+            "x": -578.1320225393853,
+            "y": 125.63824501320681
+        },
+        "dragging": false
+    },
+    {
+        "type": "inputParams",
+        "data": {
+            "message": "inputParams",
+            "id": "32a6094b-f8da-49f2-899e-d2d8674f29a1"
+        },
+        "position": {
+            "x": -350.27013476259566,
+            "y": 57.41876231517788
+        },
+        "id": "32a6094b-f8da-49f2-899e-d2d8674f29a1",
+        "width": 201,
+        "height": 205,
+        "selected": false,
+        "positionAbsolute": {
+            "x": -350.27013476259566,
+            "y": 57.41876231517788
+        },
+        "dragging": false
+    },
+    {
+        "type": "sticker",
+        "position": {
+            "x": -574.8103971746596,
+            "y": 479.0416925139983
+        },
+        "data": {
+            "id": "b36ea945-97bb-4571-b098-605d8fee7e2d"
+        },
+        "id": "b36ea945-97bb-4571-b098-605d8fee7e2d",
+        "width": 180,
+        "height": 93,
+        "selected": false,
+        "positionAbsolute": {
+            "x": -574.8103971746596,
+            "y": 479.0416925139983
+        },
+        "dragging": false
+    },
+    {
+        "type": "thumbnail",
+        "position": {
+            "x": -128.91463892903653,
+            "y": 332.9345513159583
+        },
+        "data": {
+            "id": "15f43b64-c451-4de4-8945-9177b0196905"
+        },
+        "id": "15f43b64-c451-4de4-8945-9177b0196905",
+        "width": 230,
+        "height": 210,
+        "selected": false,
+        "dragging": false,
+        "positionAbsolute": {
+            "x": -128.91463892903653,
+            "y": 332.9345513159583
+        }
+    },
+    {
+        "type": "inputParams",
+        "data": {
+            "message": "inputParams",
+            "id": "e1239e62-507e-4484-95ba-8b6a35b75054"
+        },
+        "position": {
+            "x": -355.6272448250637,
+            "y": 433.3635007913433
+        },
+        "id": "e1239e62-507e-4484-95ba-8b6a35b75054",
+        "width": 201,
+        "height": 205,
+        "selected": true,
+        "positionAbsolute": {
+            "x": -355.6272448250637,
+            "y": 433.3635007913433
+        },
+        "dragging": false
+    },
+    {
+        "type": "sticker",
+        "position": {
+            "x": 185.44773833830206,
+            "y": 198.46030922896458
+        },
+        "data": {
+            "id": "8cbd3f89-41a3-4fad-8702-02c3f28bcaa5"
+        },
+        "id": "8cbd3f89-41a3-4fad-8702-02c3f28bcaa5",
+        "width": 180,
+        "height": 110,
+        "selected": false,
+        "dragging": false,
+        "positionAbsolute": {
+            "x": 185.44773833830206,
+            "y": 198.46030922896458
+        }
+    },
+    {
+        "type": "eaChart",
+        "data": {
+            "message": "eaChart",
+            "id": "d40d47c0-6572-4bf0-b1c9-e4c50a0a1fe4"
+        },
+        "position": {
+            "x": 244.1073654498606,
+            "y": -69.22454844185896
+        },
+        "id": "d40d47c0-6572-4bf0-b1c9-e4c50a0a1fe4",
+        "width": 179,
+        "height": 255,
+        "selected": false,
+        "positionAbsolute": {
+            "x": 244.1073654498606,
+            "y": -69.22454844185896
+        },
+        "dragging": false
+    },
+    {
+        "type": "sticker",
+        "position": {
+            "x": 175.1034530817606,
+            "y": 633.5044926752939
+        },
+        "data": {
+            "id": "62cfa66e-64f0-4f4a-9e83-37533b55c91c"
+        },
+        "id": "62cfa66e-64f0-4f4a-9e83-37533b55c91c",
+        "width": 180,
+        "height": 110,
+        "selected": false,
+        "dragging": false,
+        "positionAbsolute": {
+            "x": 175.1034530817606,
+            "y": 633.5044926752939
+        }
+    },
+    {
+        "type": "eaChart",
+        "data": {
+            "message": "\"eaChart\"",
+            "id": "a439caa4-3260-4c0d-80de-84494110984d"
+        },
+        "position": {
+            "x": 246.52337740383624,
+            "y": 360.28401867044914
+        },
+        "id": "a439caa4-3260-4c0d-80de-84494110984d",
+        "width": 179,
+        "height": 255,
+        "selected": false,
+        "positionAbsolute": {
+            "x": 246.52337740383624,
+            "y": 360.28401867044914
+        },
+        "dragging": false
+    },
+    {
+        "type": "thumbnail",
+        "position": {
+            "x": 1297.2152992028282,
+            "y": 6.278395511635729
+        },
+        "data": {
+            "id": "a4daa009-f69b-4fac-8bfa-328d20b3b87f"
+        },
+        "id": "a4daa009-f69b-4fac-8bfa-328d20b3b87f",
+        "width": 230,
+        "height": 210,
+        "selected": false,
+        "dragging": false,
+        "positionAbsolute": {
+            "x": 1297.2152992028282,
+            "y": 6.278395511635729
+        }
+    },
+    {
+        "type": "sticker",
+        "position": {
+            "x": 487.0204258529386,
+            "y": 302.9266621155739
+        },
+        "data": {
+            "id": "043274af-2ac5-42f3-9730-d39963347109"
+        },
+        "id": "043274af-2ac5-42f3-9730-d39963347109",
+        "width": 180,
+        "height": 77,
+        "selected": false,
+        "dragging": false,
+        "positionAbsolute": {
+            "x": 487.0204258529386,
+            "y": 302.9266621155739
+        }
+    },
+    {
+        "type": "eaChart",
+        "data": {
+            "message": "\"eaChart\"",
+            "id": "37082a89-8efb-4f52-aa90-6e4da9099680"
+        },
+        "position": {
+            "x": 676.548001457092,
+            "y": 213.4770695936471
+        },
+        "id": "37082a89-8efb-4f52-aa90-6e4da9099680",
+        "width": 179,
+        "height": 255,
+        "selected": false,
+        "positionAbsolute": {
+            "x": 676.548001457092,
+            "y": 213.4770695936471
+        },
+        "dragging": false
+    },
+    {
+        "type": "sticker",
+        "position": {
+            "x": 1049.2199612066638,
+            "y": 306.9801302308201
+        },
+        "data": {
+            "id": "3a9c3ae2-d69f-402d-9cc7-7fea6d218888"
+        },
+        "id": "3a9c3ae2-d69f-402d-9cc7-7fea6d218888",
+        "width": 180,
+        "height": 77,
+        "selected": false,
+        "dragging": false,
+        "positionAbsolute": {
+            "x": 1049.2199612066638,
+            "y": 306.9801302308201
+        }
+    },
+    {
+        "type": "inputParams",
+        "data": {
+            "message": "inputParams",
+            "id": "ce05e28f-4685-4fa5-91d1-22629cbe685a"
+        },
+        "position": {
+            "x": 1067.7785511057527,
+            "y": 91.39936443660984
+        },
+        "id": "ce05e28f-4685-4fa5-91d1-22629cbe685a",
+        "width": 201,
+        "height": 205,
+        "selected": false,
+        "positionAbsolute": {
+            "x": 1067.7785511057527,
+            "y": 91.39936443660984
+        },
+        "dragging": false
+    }
+]
