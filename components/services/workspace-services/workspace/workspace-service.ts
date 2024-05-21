@@ -1,7 +1,6 @@
 import { Project } from "@/components/types/supabase-data.types";
 import { SupabaseClient } from "@supabase/supabase-js";
-
-export const CLIENT_ID = "CDZCpxk2OBTmXKuhyXnUFvRyywe2C5GFrXqmG5aEts1anjkl";
+import { CLIENT_ID } from "@/pages/api/token";
 
 class WorkspaceService {
   private _projects: any[] = [];
