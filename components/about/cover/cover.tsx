@@ -5,7 +5,7 @@ const Cover = () => {
   return (
     <Wrapper>
       <Box data-type="cover">
-        We're an <b>AI-driven&nbsp;mind&nbsp;map</b>
+        We&apos;re an <b>AI-driven&nbsp;mind&nbsp;map</b>
         <br /> for&nbsp;<b>visualizing</b> and&nbsp;
         <b>optimizing</b>
         <br /> project planning.

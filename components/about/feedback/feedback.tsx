@@ -4,13 +4,13 @@ const Feedback = () => {
   return (
     <Wrapper>
       <Form>
-        <h1>We're Almost There!</h1>
+        <h1>We&apos;re Almost There!</h1>
         <p>
-          We're currently working hard to bring you the best experience with
+          We&apos;re currently working hard to bring you the best experience with
           MdIr. Interested in testing our features early?
           <br />
           <br />
-          Don't hesitate to <u>contact us!</u>
+          Don&apos;t hesitate to <u>contact us!</u>
         </p>
       </Form>
     </Wrapper>
