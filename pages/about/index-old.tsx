@@ -4,7 +4,7 @@ import Cover from "@/components/about/cover/cover";
 import Features from "@/components/about/features/features";
 import Feedback from "@/components/about/feedback/feedback";
 import UseCase from "@/components/about/use-case/use-case";
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 
 const AboutPage = () => {
   return (
@@ -15,30 +15,27 @@ const AboutPage = () => {
         <CoverVer1 />
 
         <UseCase
-          title={"For Real Estate Development Companies"}
+          title={"Visualise"}
           description={[
-            "Gather feedback from citizens about the project using a collaborative dashboard where users can pin their ideas for improvement. Analyse the data using AI, and communicate it to all stakeholders in a user-friendly way.",
-            "Make sensible decisions about the project for social impact and better urban environment",
+            "Drop any 3D model or endpoint, and MdIr will extract, visualize, and present the data, regardless of its initial organization.",
+            "Collect and turn visualizations into a final, clean presentation",
           ]}
-          v2={true}
           index={0}
         />
         <UseCase
-          title={"For Deep Tech Companies using Generative Algorithms"}
+          title={"Evaluate and Enhance"}
           description={[
-            "Integrate an API to extract data, study it using AI and improve the algorithms on every stage of its lifecycle.",
-            "Enhance the quality and economics of the project",
+            "Integrate and manage parts of generative algorithms for the AEC sector. Use the whiteboard to organize them.",
+            "Apply a consistent method to utilize these parts. Combine results to generate new parameters and improve the algorithm.",
           ]}
-          v2={true}
           index={1}
         />
         <UseCase
-          title={"For Application Developers"}
+          title={"Integrate"}
           description={[
             "Seamlessly integrate MdIr as a library into applications to enhance functionality with AI-driven data visualization.",
             "Augment 3D viewers, GIS software, or any application with advanced analysis, providing better data insights and visualization tools.",
           ]}
-          v2={true}
           index={2}
         />
 
@@ -46,17 +43,9 @@ const AboutPage = () => {
 
         <Feedback />
       </Wrapper>
-
-      <GlobalStyle />
     </>
   );
 };
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    overflow-x: hidden;
-  }
-`;
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -69,7 +58,7 @@ const Wrapper = styled.div`
     src: url("/fonts/born.otf");
   }
 
-  background-color: rgb(249, 249, 249);
+  background-color: white;
 
   && {
     &,

@@ -30,7 +30,7 @@ const Form = styled.div`
   flex-direction: column;
   gap: 20px;
   width: 80%;
-  background-color: rgb(244, 244, 248);
+  background-color: white;///rgb(244, 244, 248);
   padding: 60px 100px;
   justify-content: center;
 

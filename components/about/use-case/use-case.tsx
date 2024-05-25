@@ -2,24 +2,36 @@ import { Box } from "@mui/material";
 import styled from "styled-components";
 
 const UseCase: React.FC<{
-  title: string;
+  title: string | React.ReactNode;
   description: string[];
   index: number;
-}> = ({ title, description, index }) => {
+  v2?: boolean;
+}> = ({ title, description, index, v2 }) => {
   return (
     <Wrapper>
-      <Left>
-        <Title>{title}</Title>
+      <Box sx={{ display: "grid", gridTemplateColumns: "400px 1fr" }}>
+        <Box sx={{ fontSize: "14px", paddingTop: "10px" }}>
+          USE CASE {index + 1}
+        </Box>
 
-        <Description data-type="description">
-          {description.map((desc, index) => (
-            <Box key={index}>
-              <Box>0{index + 1}</Box>
-              <Box>{desc}</Box>
-            </Box>
-          ))}
-        </Description>
-      </Left>
+        <Left>
+          <Title>{title}</Title>
+
+          <Description data-type="description">
+            {description.map((desc, index) => (
+              <Box key={index}>
+                {!v2 && <Box>0{index + 1}</Box>}
+                {v2 && (
+                  <Box>
+                    <i>{index === 0 ? "How:" : "What for:"}</i>
+                  </Box>
+                )}
+                <Box>{desc}</Box>
+              </Box>
+            ))}
+          </Description>
+        </Left>
+      </Box>
 
       <Thumbnail
         color={thumbs[index].color}
@@ -51,20 +63,21 @@ const thumbs = [
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
 
-  gap: 120px;
+  gap: 80px;
   align-items: flex-start;
 
-  padding: 80px 80px;
+  padding: 80px 180px;
 
   & *[data-type="description"] {
     display: flex;
-    flex-direction: column;
-    gap: 30px;
-    width: 300px;
+    gap: 60px;
+    width: 800px;
 
     & > div {
       display: flex;
+      max-width: 350px;
       flex-direction: column;
       gap: 5px;
 
@@ -75,7 +88,7 @@ const Wrapper = styled.div`
 
     &,
     & * {
-      font-size: 14px;
+      font-size: 18px;
       line-height: 1.4;
     }
   }
@@ -87,10 +100,13 @@ const Left = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 36px;
+  font-size: 48px;
   font-weight: 700;
   color: #333;
   margin-bottom: 40px;
+  max-width: 800px;
+
+  margin-top: 0px;
 `;
 
 const Description = styled.div``;
@@ -107,8 +123,10 @@ const Thumbnail = styled.div<{
   padding: 10px;
   //border-radius: 20px;
   //border: 1px solid lightgray;
-  background: rgb(244, 244, 248);
+  background: white; // rgb(244, 244, 248);
   //mix-blend-mode: multiply;
+
+  border: 1px solid orange;
 
   &::before {
     content: "";

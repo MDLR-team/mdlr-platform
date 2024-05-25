@@ -18,6 +18,7 @@ interface AuthProviderState {
   userMetadata: UserMetadata | null;
   needsAuth: boolean;
   isAuthPage: boolean;
+  isLandingPage: boolean;
   message: Message | null;
 }
 
@@ -39,6 +40,7 @@ class AuthProvider extends Component<AuthProviderProps, AuthProviderState> {
       userMetadata: null,
       needsAuth: false,
       isAuthPage: false,
+      isLandingPage: false,
       message: null,
     };
 
@@ -68,12 +70,18 @@ class AuthProvider extends Component<AuthProviderProps, AuthProviderState> {
   componentDidUpdate(prevProps: AuthProviderProps) {
     if (prevProps.router.pathname !== this.props.router.pathname) {
       this.checkAuthPage();
+      this.checkLandingPage();
     }
   }
 
   checkAuthPage = () => {
     const isLoginPage = this.props.router.pathname === "/login";
     this.setState({ isAuthPage: isLoginPage });
+  };
+
+  checkLandingPage = () => {
+    const isLandingPage = this.props.router.pathname === "/";
+    this.setState({ isLandingPage });
   };
 
   setIsAuthorized = (isAuthorized: boolean) => this.setState({ isAuthorized });
@@ -91,7 +99,7 @@ class AuthProvider extends Component<AuthProviderProps, AuthProviderState> {
 
   render() {
     const { children } = this.props;
-    const { isAuthorized, isAuthPage, message } = this.state;
+    const { isAuthorized, isAuthPage, isLandingPage, message } = this.state;
 
     return (
       <AuthContext.Provider
@@ -114,7 +122,7 @@ class AuthProvider extends Component<AuthProviderProps, AuthProviderState> {
           </Alert>
         </Snackbar>
 
-        {(isAuthorized || isAuthPage) && children}
+        {(isAuthorized || isAuthPage || isLandingPage) && children}
       </AuthContext.Provider>
     );
   }
