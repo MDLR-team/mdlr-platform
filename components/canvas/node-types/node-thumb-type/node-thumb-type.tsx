@@ -77,8 +77,8 @@ const NodeThumbType = ({ data, isConnectable }: any) => {
                   aria-label="file upload options"
                   sx={{ fontSize: "8px", maxWidth: "max-content" }}
                 >
-                  <Tab label="Upload File" />
-                  <Tab label="API" />
+                  <Tab data-role="uploadFileTab" label="Upload File" />
+                  <Tab data-role="apiTab" label="API" />
                 </Tabs>
               </Box>
 

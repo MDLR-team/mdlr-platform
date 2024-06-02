@@ -8,12 +8,14 @@ import {
   Input,
 } from "@mui/material";
 import { useNodeModel } from "../../node-thumb-type";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const UploadApi = () => {
   const { modelService } = useNodeModel();
 
   const [value, setValue] = useState("");
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <Box
@@ -42,7 +44,9 @@ const UploadApi = () => {
               maxRows={1}
               value={value}
               onChange={(e) => setValue(e.target.value)}
+              ref={inputRef}
               size="small"
+              data-role="inputEndpoint"
               sx={{
                 border: "1px solid grey",
                 borderRadius: "9px",
@@ -57,9 +61,14 @@ const UploadApi = () => {
               type="submit"
               data-type="exception"
               data-add="comment"
+              data-role="addApiEndpointButton"
               onClick={() => {
+                const domElement = inputRef.current;
+                const input = domElement?.querySelector("input[type='text']");
+                const inputValue = (input as any).value;
+
                 modelService.uploadApi({
-                  endpoint: value,
+                  endpoint: value?.length > 0 ? value : inputValue,
                 });
 
                 setValue("");

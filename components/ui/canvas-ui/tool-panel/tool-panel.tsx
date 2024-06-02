@@ -14,6 +14,7 @@ const ToolPanel = () => {
   return (
     <Box
       sx={{ position: "absolute", left: "50%", transform: "translateX(-50%)" }}
+      data-type="tool-panel"
     >
       <Paper
         sx={{

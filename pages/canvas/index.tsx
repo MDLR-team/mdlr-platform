@@ -24,6 +24,8 @@ import {
 } from "@/components/canvas/node-service/node-provider";
 import { Box } from "@mui/material";
 import PagesPanel from "@/components/ui/canvas-ui/pages-panel/pages-panel";
+import { createGlobalStyle } from "styled-components";
+import { useScenario } from "@/components/canvas/scenario-service/scenario-provider";
 
 const ReactflowComponent = () => {
   const reactFlowWrapper = useRef(null);
@@ -40,6 +42,8 @@ const ReactflowComponent = () => {
     onDrop,
     setReactFlowInstance,
   } = useNodes();
+
+  useScenario();
 
   return (
     <Box
@@ -71,7 +75,7 @@ const ReactflowComponent = () => {
 
       <Box
         className="wrapper"
-        sx={{ width: "100vw", height: "100vh" }}
+        sx={{ width: "100%", height: "100%" }}
         ref={reactFlowWrapper}
       >
         <ReactFlow
@@ -106,5 +110,11 @@ const CanvasPage = () => {
     </ReactFlowProvider>
   );
 };
+
+const GlobalStyle = createGlobalStyle`
+  & body {
+    background-color: black;
+  }
+`;
 
 export default CanvasPage;
