@@ -24,6 +24,15 @@ const AboutPage = () => {
           index={0}
         />
         <UseCase
+          title={"For Construction and Design Teams"}
+          description={[
+            "Use our 3D model viewer to leave comments, address issues, and manage feedback directly within the 3D environment. Roles like contractors, architects, engineers, and clients can interact seamlessly.",
+            "Enhance collaboration by providing role-specific summaries, charts, and filtered lists of comments. Enable users to focus on relevant content and make informed decisions based on comprehensive feedback",
+          ]}
+          v2={true}
+          index={3}
+        />
+        <UseCase
           title={"For Deep Tech Companies using Generative Algorithms"}
           description={[
             "Integrate an API to extract data, study it using AI and improve the algorithms on every stage of its lifecycle.",

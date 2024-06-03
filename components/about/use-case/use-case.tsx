@@ -11,7 +11,7 @@ const UseCase: React.FC<{
     <Wrapper>
       <Box sx={{ display: "grid", gridTemplateColumns: "400px 1fr" }}>
         <Box sx={{ fontSize: "14px", paddingTop: "10px" }}>
-          USE CASE {index + 1}
+          {v2 && thumbs[index]?.label}
         </Box>
 
         <Left>
@@ -34,8 +34,8 @@ const UseCase: React.FC<{
       </Box>
 
       <Thumbnail
-        color={thumbs[index].color}
-        src={thumbs[index].url}
+        color={thumbs[index]?.color}
+        src={thumbs[index]?.url}
         padding={`${(thumbs[index].size[1] / thumbs[index].size[0]) * 100}%`}
       ></Thumbnail>
     </Wrapper>
@@ -46,17 +46,26 @@ const thumbs = [
   {
     url: "/thumbs/usecase1.png",
     size: [3333, 1290],
+    label: "USE CASE 1",
     color: "#1e305b",
   },
   {
     url: "/thumbs/usecase2.png",
     size: [3380, 1363],
+    label: "USE CASE 3",
     color: "#efaaaa",
   },
   {
     url: "/thumbs/usecase3.png",
     size: [2751, 1204],
-    color: "#beaaef;",
+    label: "USE CASE 4",
+    color: "#efaaaa",
+  },
+  {
+    url: "/thumbs/usecase4.png",
+    size: [3327, 1321],
+    label: "USE CASE 2",
+    color: "#efaaaa",
   },
 ];
 
