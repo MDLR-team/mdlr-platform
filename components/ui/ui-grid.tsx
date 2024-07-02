@@ -36,7 +36,7 @@ const UIGrid = () => {
             <CommentsBlock />
           </ContentWrapper>
 
-          <FooterWrapper>
+          <FooterWrapper style={{ justifyContent: "center" }}>
             <ToolPanel />
           </FooterWrapper>
         </Grid>

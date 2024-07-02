@@ -4,6 +4,7 @@ import { NextRouter } from "next/router";
 class AuthService {
   private _userMetadata: UserMetadata | undefined;
 
+  private $setAuthStatus: any;
   private $setIsAuthorized: any;
   private $setNeedsAuth: any;
   private $setMessage: any;
@@ -101,11 +102,13 @@ class AuthService {
     const userMetadata = await this.getUser();
 
     if (userMetadata) {
+      this.$setAuthStatus("done");
       this.$setIsAuthorized(true);
 
       this._userMetadata = userMetadata;
       this.$setUserMetadata(this._userMetadata);
     } else {
+      this.$setAuthStatus("done");
       this.$setNeedsAuth(true);
     }
   }
@@ -115,6 +118,7 @@ class AuthService {
   }
 
   public provideStates(states: States) {
+    this.$setAuthStatus = states.setAuthStatus;
     this.$setIsAuthorized = states.setIsAuthorized;
     this.$setNeedsAuth = states.setNeedsAuth;
     this.$setMessage = states.setMessage;
@@ -125,6 +129,7 @@ class AuthService {
 }
 
 interface States {
+  setAuthStatus: (value: "pending" | "done") => void;
   setIsAuthorized: (value: boolean) => void;
   setNeedsAuth: (value: boolean) => void;
   setMessage: (value: Message | null) => void;

@@ -1,17 +1,40 @@
-import APS from "forge-apis";
 import { NextApiRequest, NextApiResponse } from "next";
+import querystring from "querystring";
 
-export const CLIENT_ID = "iEGXFE8yl3oxY360cnhEwrR8HdfO6GznXkuJr9yjXMzlxxh9";
+export const BIM_ACCOUNT_ID = "b.54f7121e-7acd-4ff7-8232-368e9769e1f1";
+
+export const CLIENT_ID = "0wvaP6ZNVOjIdysgA9Ch8A0klnAnyPYlDNsYGCGee12ydMOG";
 export const CLIENT_SECRET =
-  "WSGxOGbbFJVWn9HHXBMcNKkueZfaiOXYO5nrtvMbrvADYnPCr8GM07SFmlftEn4b";
-export const BIM_ACCOUNT_ID = "b.61c36ada-bf54-4d40-9824-483ef73a845c";
+  "jq81BMSxEClsEDrdJezNO82lry3DqvRzIiSoHS6SqwbUrbQCBOLH2ob71R5U5aQo";
+export const AUTH_URL =
+  "https://developer.api.autodesk.com/authentication/v2/token";
 
-const publicAuthClient = new APS.AuthClientTwoLegged(
-  CLIENT_ID,
-  CLIENT_SECRET,
-  ["viewables:read"],
-  true
-);
+const base64Encode = (clientId: string, clientSecret: string) => {
+  return Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
+};
+
+const getAccessToken = async () => {
+  const response = await fetch(AUTH_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: `Basic ${base64Encode(CLIENT_ID, CLIENT_SECRET)}`,
+    },
+    body: new URLSearchParams({
+      grant_type: "client_credentials",
+      scope: "data:read bucket:read bucket:create data:write data:create",
+    }).toString(),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    console.error("Failed to fetch access token", errorData);
+    throw new Error("Failed to fetch access token");
+  }
+
+  const data: any = await response.json();
+  return data.access_token;
+};
 
 export default async function handler(
   req: NextApiRequest,
@@ -19,11 +42,8 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     try {
-      if (!publicAuthClient.isAuthorized()) {
-        await publicAuthClient.authenticate();
-      }
-
-      res.status(200).json(publicAuthClient.getCredentials());
+      const token = await getAccessToken();
+      res.status(200).json({ access_token: token });
     } catch (error) {
       console.error("Error fetching token:", error);
       res.status(500).json({ error: "Internal Server Error" });

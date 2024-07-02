@@ -1,58 +1,62 @@
+import axios from "axios";
 import { CLIENT_ID, CLIENT_SECRET, BIM_ACCOUNT_ID } from "@/pages/api/token";
-import ForgeSDK from "forge-apis";
 
-let internalAuthClient = new ForgeSDK.AuthClientTwoLegged(
-  CLIENT_ID,
-  CLIENT_SECRET,
-  ["data:read", "bucket:read", "bucket:create", "data:write", "data:create"],
-  true
-);
+const BASE_URL = "https://developer.api.autodesk.com";
+const AUTH_URL = `${BASE_URL}/authentication/v1/authenticate`;
 
 class Bim360Service {
+  static token: any = null;
+
   // Get internal token
   static readonly getInternalToken = async () => {
-    if (!internalAuthClient.isAuthorized()) {
-      await internalAuthClient.authenticate();
+    if (!this.token || this.token.expires_at < Date.now()) {
+      const response = await axios.post(
+        AUTH_URL,
+        new URLSearchParams({
+          client_id: CLIENT_ID,
+          client_secret: CLIENT_SECRET,
+          grant_type: "client_credentials",
+          scope: "data:read bucket:read bucket:create data:write data:create",
+        }),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+
+      this.token = response.data;
+      this.token.expires_at = Date.now() + this.token.expires_in * 1000;
     }
-    return internalAuthClient.getCredentials();
+    return this.token;
   };
 
   // List BIM 360 Hub projects
   static readonly getHubProjects = async (accountId: string) => {
-    const projectsApi = new ForgeSDK.ProjectsApi();
     const credentials = await this.getInternalToken();
-
-    try {
-      const projects = await projectsApi.getHubProjects(
-        accountId,
-        {},
-        internalAuthClient,
-        credentials
-      );
-      return projects.body.data;
-    } catch (error) {
-      console.error("Error listing BIM 360 projects", error);
-      throw error;
-    }
+    const response = await axios.get(
+      `${BASE_URL}/project/v1/hubs/${accountId}/projects`,
+      {
+        headers: {
+          Authorization: `Bearer ${credentials.access_token}`,
+        },
+      }
+    );
+    return response.data.data;
   };
 
   // List BIM 360 top folders
   static readonly getTopFolders = async (project_id: string) => {
-    const projectsApi = new ForgeSDK.ProjectsApi();
     const credentials = await this.getInternalToken();
-
-    try {
-      const topFolders = await projectsApi.getProjectTopFolders(
-        BIM_ACCOUNT_ID,
-        project_id,
-        internalAuthClient,
-        credentials
-      );
-      return topFolders.body.data;
-    } catch (error) {
-      console.error("Error listing BIM 360 top folders", error);
-      throw error;
-    }
+    const response = await axios.get(
+      `${BASE_URL}/project/v1/hubs/${BIM_ACCOUNT_ID}/projects/${project_id}/topFolders`,
+      {
+        headers: {
+          Authorization: `Bearer ${credentials.access_token}`,
+        },
+      }
+    );
+    return response.data.data;
   };
 
   // List BIM 360 folders
@@ -60,67 +64,48 @@ class Bim360Service {
     project_id: string,
     folder_id: string
   ) => {
-    const fodlersApi = new ForgeSDK.FoldersApi();
     const credentials = await this.getInternalToken();
-
-    const items = [];
-
-    const folderContents = await fodlersApi.getFolderContents(
-      project_id,
-      folder_id,
-      {},
-      internalAuthClient,
-      credentials
+    const response = await axios.get(
+      `${BASE_URL}/data/v1/projects/${project_id}/folders/${folder_id}/contents`,
+      {
+        headers: {
+          Authorization: `Bearer ${credentials.access_token}`,
+        },
+      }
     );
-
-    for (const item of folderContents.body.data) {
-      items.push(item);
-    }
-
-    return items;
+    return response.data.data;
   };
 
+  // Get thumbnail
   static readonly getThumbnail = async (urn: string) => {
     const credentials = await this.getInternalToken();
-    const derivativesApi = new ForgeSDK.DerivativesApi();
-
-    try {
-      const thumbnail = await derivativesApi.getThumbnail(
-        urn,
-        {
-          width: 100, // Specify desired width
-          height: 100, // Specify desired height
+    const response = await axios.get(
+      `${BASE_URL}/modelderivative/v2/designdata/${urn}/thumbnail`,
+      {
+        headers: {
+          Authorization: `Bearer ${credentials.access_token}`,
         },
-        internalAuthClient,
-        credentials
-      );
+        params: {
+          width: 100,
+          height: 100,
+        },
+        responseType: "arraybuffer",
+      }
+    );
 
-      // If successful, 'thumbnail' contains the image data
-      return thumbnail.body;
-    } catch (error) {
-      console.error("Error fetching thumbnail", error);
-      throw error;
-    }
+    return response.data;
   };
 
   // List BIM 360 Model versions
   static readonly getModelVersions = async (href: string) => {
     const credentials = await this.getInternalToken();
-
-    const response = await fetch(href, {
-      method: "GET",
+    const response = await axios.get(href, {
       headers: {
-        Authorization: "Bearer " + credentials.access_token,
+        Authorization: `Bearer ${credentials.access_token}`,
       },
     });
 
-    if (!response.ok) {
-      throw new Error(`Error fetching item versions: ${response.statusText}`);
-    }
-
-    const data = await response.json();
-
-    return data;
+    return response.data;
   };
 }
 

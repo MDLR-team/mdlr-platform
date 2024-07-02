@@ -14,6 +14,7 @@ interface AuthContentProps {
 }
 
 interface AuthProviderState {
+  authStatus: "pending" | "done";
   isAuthorized: boolean;
   userMetadata: UserMetadata | null;
   needsAuth: boolean;
@@ -35,6 +36,7 @@ class AuthProvider extends Component<AuthProviderProps, AuthProviderState> {
     const supabase = createClient();
 
     this.state = {
+      authStatus: "pending",
       isAuthorized: false,
       userMetadata: null,
       needsAuth: false,
@@ -47,6 +49,7 @@ class AuthProvider extends Component<AuthProviderProps, AuthProviderState> {
 
   componentDidMount() {
     this.authService.provideStates({
+      setAuthStatus: this.setAuthStatus,
       setIsAuthorized: this.setIsAuthorized,
       setNeedsAuth: this.setNeedsAuth,
       setMessage: this.setMessage,
@@ -65,17 +68,43 @@ class AuthProvider extends Component<AuthProviderProps, AuthProviderState> {
     }
   }
 
-  componentDidUpdate(prevProps: AuthProviderProps) {
+  componentDidUpdate(
+    prevProps: AuthProviderProps,
+    prevState: AuthProviderState
+  ) {
     if (prevProps.router.pathname !== this.props.router.pathname) {
       this.checkAuthPage();
+    }
+
+    if (
+      prevState.isAuthorized !== this.state.isAuthorized ||
+      prevState.isAuthPage !== this.state.isAuthPage
+    ) {
+      this.handleRedirect();
     }
   }
 
   checkAuthPage = () => {
     const isLoginPage = this.props.router.pathname === "/login";
-    this.setState({ isAuthPage: isLoginPage });
+
+    // Ensure state is updated correctly
+    this.setState({ isAuthPage: isLoginPage }, () => {
+      this.handleRedirect();
+    });
   };
 
+  handleRedirect = () => {
+    const { isAuthorized, isAuthPage, authStatus } = this.state;
+
+    if (authStatus === "pending") return;
+
+    if (typeof window !== "undefined" && !isAuthorized && !isAuthPage) {
+      window.location.href = "/login";
+    }
+  };
+
+  setAuthStatus = (authStatus: "pending" | "done") =>
+    this.setState({ authStatus });
   setIsAuthorized = (isAuthorized: boolean) => this.setState({ isAuthorized });
   setUserMetadata = (userMetadata: UserMetadata | null) =>
     this.setState({ userMetadata });

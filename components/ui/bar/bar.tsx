@@ -25,6 +25,7 @@ const Bar = () => {
               alignItems: "center",
               position: "relative",
               width: "100%",
+              overflow: "hidden",
             }}
           >
             <Logo

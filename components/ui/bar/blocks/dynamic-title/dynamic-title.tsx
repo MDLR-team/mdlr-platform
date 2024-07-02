@@ -10,7 +10,7 @@ const Title = styled.div`
   width: 100%;
 
   font-weight: 500;
-  font-size: 15px;
+  font-size: 14px;
 
   &:hover {
     border-color: #333333;

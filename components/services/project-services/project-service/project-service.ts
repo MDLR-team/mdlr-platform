@@ -13,6 +13,7 @@ import AuthService from "../../app-services/auth/auth-service";
 import Markup2DService from "../markup-2d-service/markup-2d-service";
 import HotkeyService from "../hotkey-service/hotkey-service";
 import { v4 as uuidv4 } from "uuid";
+import { CLIENT_ID } from "@/pages/api/token";
 
 class ProjectService {
   private _router: any;
@@ -74,6 +75,8 @@ class ProjectService {
     const bimId = this._getBim360ProjectId(urn as string);
     const supabase = this._supabase;
 
+    console.log("bimId", bimId);
+
     let { data: projects, error: findError } = await supabase
       .from("projects")
       .select(
@@ -109,10 +112,32 @@ class ProjectService {
         {
           title: "No name",
           bim_id: bimId,
+          bim_urn: urn,
+          bim_client_id: CLIENT_ID,
         },
       ])
       .select("*")
       .single();
+
+    const userMetadata = this._authService.userMetadata;
+    if (userMetadata) {
+      const { id: userId } = userMetadata;
+
+      // Create the userprojects link
+      const { error: userProjectError } = await supabase
+        .from("userprojects")
+        .insert([
+          {
+            project_id: newProject.id,
+            user_id: userId,
+          },
+        ]);
+
+      if (userProjectError) {
+        console.error("Error creating userprojects link:", userProjectError);
+        return { project: null, error: userProjectError };
+      }
+    }
 
     if (createError) {
       console.error("Error creating new project:", createError);

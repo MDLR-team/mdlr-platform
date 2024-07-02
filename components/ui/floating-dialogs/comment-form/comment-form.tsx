@@ -77,7 +77,11 @@ const CommentMessage: React.FC<{
 
   useEffect(() => {
     if (commentAdding && commentPointSelected) {
-      inputRef.current?.focus();
+      const timeoutId = setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100); // Adjust the delay as necessary
+
+      return () => clearTimeout(timeoutId);
     }
   }, [commentAdding, commentPointSelected]);
 
