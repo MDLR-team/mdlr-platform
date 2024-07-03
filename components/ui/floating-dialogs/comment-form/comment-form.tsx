@@ -11,6 +11,8 @@ import Markup2DService from "@/components/services/project-services/markup-2d-se
 import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
 import PencilIcon from "../../icons/pencil-icon";
 import PlusIcon from "../../icons/plus-icon";
+import ThreadIcon from "../../icons/thread-icon";
+import ImageIcon from "../../icons/image-icon";
 
 export const FloatingComment = () => {
   const { markupPosition: markupPosition3D, markup3DService } = useMarkup3D();
@@ -102,7 +104,7 @@ const CommentMessage: React.FC<{
           margin: `0px !important`,
           flexShrink: 0,
           display: "flex",
-          alignItems: "flex-start",
+          alignItems: "flex-end",
           width: "100%",
         }}
         noValidate
@@ -116,7 +118,7 @@ const CommentMessage: React.FC<{
             fullWidth
             autoFocus
             minRows={1}
-            maxRows={4}
+            maxRows={12}
             size="small"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
@@ -126,14 +128,31 @@ const CommentMessage: React.FC<{
             inputRef={inputRef}
           />
 
-          {activeComment?.view_state && isPaperMode && (
+          {/* activeComment?.view_state && isPaperMode && */}
+
+          <Box
+            sx={{
+              display: "flex",
+              gap: "3px",
+              marginTop: "4px",
+            }}
+            data-type="comment-actions"
+          >
             <IconButton
               data-active={isPenMode ? "true" : "false"}
               onClick={() => activeCommentService.togglePenMode(true)}
             >
               <PencilIcon />
             </IconButton>
-          )}
+
+            <IconButton data-active={isPenMode ? "true" : "false"}>
+              <ThreadIcon />
+            </IconButton>
+
+            <IconButton data-active={isPenMode ? "true" : "false"}>
+              <ImageIcon />
+            </IconButton>
+          </Box>
         </Box>
 
         <IconButton

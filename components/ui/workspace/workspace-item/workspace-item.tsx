@@ -34,8 +34,25 @@ const CatalogItem: React.FC<WorkspaceItemProps> = ({ data }) => {
           padding: "0px 18px 4px 18px",
         }}
       >
-        <Box sx={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-          <Box>{data.title}</Box>
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            flexDirection: "column",
+            gap: "2px",
+            overflow: "hidden",
+          }}
+        >
+          <Box
+            sx={{
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+              width: "100%",
+            }}
+          >
+            {data.title}
+          </Box>
           <Box>Modified 12 hours ago</Box>
         </Box>
 
