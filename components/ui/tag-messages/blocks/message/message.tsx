@@ -8,7 +8,7 @@ const Message: React.FC<{
 }> = ({ data }) => {
   return (
     <Wrapper>
-      <Box>"{data.content}"</Box>
+      <Box>&quot;{data.content}&quot;</Box>
 
       <Box
         sx={{
