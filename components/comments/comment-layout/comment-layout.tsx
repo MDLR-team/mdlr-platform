@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import { useComment } from "../../services/project-services/comment-service/comment-provider";
 import { Box, IconButton, Paper } from "@mui/material";
@@ -9,12 +9,27 @@ import { useGlobalStates } from "@/components/services/project-services/global-s
 import { CommentList, Header, List } from "./comment-layout.styled";
 import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
 import { useMarkup3D } from "@/components/services/project-services/markup-3d-service/markup-3d-provider";
+import SearchBar from "./blocks/search-bar/search-bar";
 
 const CommentsBlock: React.FC = () => {
   const { comments } = useComment();
   const { activeCommentService } = useActiveComment();
-  const { markup3DService } = useMarkup3D();
+  const { markup3DService, search } = useMarkup3D();
   const { isCommentsPanelOpen } = useGlobalStates();
+
+  const filteredComments = useMemo(() => {
+    return comments
+      .filter((comment) => !comment.parent_id)
+      .filter((comment) => {
+        if (!search) return true;
+
+        // search by content or author name
+        return (
+          comment.content.toLowerCase().includes(search.toLowerCase()) ||
+          comment.author_username.toLowerCase().includes(search.toLowerCase())
+        );
+      });
+  }, [comments, search]);
 
   if (!isCommentsPanelOpen) return null;
 
@@ -29,31 +44,23 @@ const CommentsBlock: React.FC = () => {
 
           <div>Comments</div>
         </Box>
+      </Header>
 
-        <Box>
-          <IconButton
-            data-type="exception"
-            data-add="comment"
-            onClick={() => markup3DService.toggleAddComment()}
-          >
-            <PlusIcon />
-          </IconButton>
-        </Box>
+      <Header>
+        <SearchBar />
       </Header>
 
       <CommentList>
         <List>
-          {comments
-            .filter((comment) => !comment.parent_id)
-            .map((comment, i) => (
-              <MessageItem
-                {...comment}
-                selectComment={() =>
-                  activeCommentService.selectComment(comment.id)
-                }
-                key={comment.id}
-              />
-            ))}
+          {filteredComments.map((comment, i) => (
+            <MessageItem
+              {...comment}
+              selectComment={() =>
+                activeCommentService.selectComment(comment.id)
+              }
+              key={comment.id}
+            />
+          ))}
         </List>
       </CommentList>
     </Paper>

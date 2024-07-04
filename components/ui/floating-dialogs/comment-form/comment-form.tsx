@@ -13,6 +13,8 @@ import PencilIcon from "../../icons/pencil-icon";
 import PlusIcon from "../../icons/plus-icon";
 import ThreadIcon from "../../icons/thread-icon";
 import ImageIcon from "../../icons/image-icon";
+import { supabase } from "@/components/supabase-client";
+import { useViewer } from "@/components/forge/viewer-provider";
 
 export const FloatingComment = () => {
   const { markupPosition: markupPosition3D, markup3DService } = useMarkup3D();
@@ -72,10 +74,14 @@ const CommentMessage: React.FC<{
   const [comment, setComment] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const { viewer } = useViewer();
+
   const { commentAdding, commentPointSelected } = useGlobalStates();
 
   const { activeComment, isPaperMode, isPenMode, activeCommentService } =
     useActiveComment();
+
+  const { markup3DService } = useMarkup3D();
 
   useEffect(() => {
     if (commentAdding && commentPointSelected) {
@@ -87,11 +93,39 @@ const CommentMessage: React.FC<{
     }
   }, [commentAdding, commentPointSelected]);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async (event?: React.FormEvent<HTMLFormElement>) => {
+    if (event) event.preventDefault();
 
     markupService.pendingMarkupService?.saveComment(comment);
     setComment("");
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      handleSubmit();
+    } else if (event.key === "Escape") {
+      markup3DService.toggleAddComment(false);
+     
+      activeCommentService.togglePaperMode(false);
+    }
+  };
+
+  const saveView = async () => {
+    if (!activeComment) return;
+
+    const viewState = viewer.getState({ viewport: true });
+
+    try {
+      await supabase
+        .from("comments")
+        .update({ view_state: viewState })
+        .eq("id", activeComment.id);
+    } catch (error) {
+      console.error("Error updating comment:", error);
+    }
+
+    activeCommentService.togglePaperMode(false);
   };
 
   if (!(commentAdding && commentPointSelected)) return <></>;
@@ -122,6 +156,7 @@ const CommentMessage: React.FC<{
             size="small"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
+            onKeyDown={handleKeyDown}
             variant="standard"
             required
             margin="normal"
@@ -130,29 +165,36 @@ const CommentMessage: React.FC<{
 
           {/* activeComment?.view_state && isPaperMode && */}
 
-          <Box
-            sx={{
-              display: "flex",
-              gap: "3px",
-              marginTop: "4px",
-            }}
-            data-type="comment-actions"
-          >
-            <IconButton
-              data-active={isPenMode ? "true" : "false"}
-              onClick={() => activeCommentService.togglePenMode(true)}
+          {comment && (
+            <Box
+              sx={{
+                display: "flex",
+                gap: "3px",
+                marginTop: "4px",
+              }}
+              data-type="comment-actions"
             >
-              <PencilIcon />
-            </IconButton>
+              <IconButton
+                data-active={isPenMode ? "true" : "false"}
+                onClick={async () => {
+                  activeCommentService.togglePaperMode(true);
+                  await saveView();
 
-            <IconButton data-active={isPenMode ? "true" : "false"}>
-              <ThreadIcon />
-            </IconButton>
+                  activeCommentService.togglePenMode(true);
+                }}
+              >
+                <PencilIcon />
+              </IconButton>
 
-            <IconButton data-active={isPenMode ? "true" : "false"}>
-              <ImageIcon />
-            </IconButton>
-          </Box>
+              <IconButton data-active={"false"}>
+                <ThreadIcon />
+              </IconButton>
+
+              <IconButton data-active={"false"}>
+                <ImageIcon />
+              </IconButton>
+            </Box>
+          )}
         </Box>
 
         <IconButton

@@ -9,6 +9,8 @@ interface Markup3DContentProps {
   markup3DService: Markup3DService;
   markupPosition: PointXY | null;
   measureEnabled: boolean;
+  search: string;
+  setSearch: (search: string) => void;
 }
 
 const Markup3DContext = createContext<Markup3DContentProps | undefined>(
@@ -24,6 +26,8 @@ export function Markup3DProvider({ children }: any) {
   const [markupPosition, setMarkupPosition] = useState<null | PointXY>(null);
   const [measureEnabled, setMeasureEnabled] = useState(false);
 
+  const [search, setSearch] = useState<string>("");
+
   useEffect(() => {
     markup3DService.provideStates({
       setMarkupPosition,
@@ -38,6 +42,7 @@ export function Markup3DProvider({ children }: any) {
       switch (handler.key) {
         case "esc":
           markup3DService.toggleAddComment(false);
+          markup3DService.toggleMeasure(false);
           activeCommentService.togglePaperMode(false);
           break;
         default:
@@ -55,6 +60,8 @@ export function Markup3DProvider({ children }: any) {
         markup3DService,
         markupPosition,
         measureEnabled,
+        search,
+        setSearch,
       }}
     >
       {children}

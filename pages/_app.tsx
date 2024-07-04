@@ -1,7 +1,7 @@
 import AuthProvider from "@/components/services/app-services/auth/auth-provider";
 import Wrapper from "@/components/layout/wrapper/wrapper";
 import type { AppProps } from "next/app";
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, css } from "styled-components";
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
@@ -16,6 +16,19 @@ const App = ({ Component, pageProps }: AppProps) => {
     </>
   );
 };
+const TextFieldStyles = css`
+  // TEXT INPUTS
+  & .MuiInputBase-root {
+    border-radius: 9px;
+
+    & input {
+      height: 33px;
+      box-sizing: border-box;
+      font-size: 12px;
+      padding: 0 9px;
+    }
+  }
+`;
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -247,6 +260,9 @@ const GlobalStyle = createGlobalStyle`
     height: 16px !important;
     border-radius: 2px !important;
   }
+
+  // TextFields
+  ${TextFieldStyles}
 `;
 
 export default App;
