@@ -11,7 +11,6 @@ export function useScenario() {
 
   useLayoutEffect(() => {
     const toolPanel = document.querySelector("[data-type=tool-panel]");
-    console.log(toolPanel);
 
     const panel = document.createElement("div");
     panel.style.position = "absolute";
