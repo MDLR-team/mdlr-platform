@@ -14,6 +14,8 @@ class CommentService {
 
   private _supabase: SupabaseClient;
 
+  private _pending: boolean = false;
+
   constructor(private _projectService: ProjectService) {
     this._supabase = _projectService.supabase;
     this._comments = new Map();
@@ -111,12 +113,21 @@ class CommentService {
     this._changes = changes;
   }
 
-  private _upateComments() {
+  private async _upateComments() {
+    console.log("%c_comments", "color: green", this._comments);
+    const topics = this._projectService.topics;
+    console.log("%ctopics", "color: green", topics);
+
     const sortedComments = Array.from(this._comments.values()).sort((a, b) => {
       return (
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       );
     });
+
+    // Check if there is a pending update to avoid redundant calls
+    if (!this._pending) {
+      await this._checkAndUpdateMissingTags();
+    }
 
     this._emit("COMMENTS_UPDATED", this._comments);
     this._projectService.markup3DService.updateMarkups();
@@ -129,6 +140,89 @@ class CommentService {
   public async init() {
     await this._fetchInitialComments();
     await this._handleRealtimeChanges();
+  }
+
+  private async _checkAndUpdateMissingTags() {
+    // Set the pending flag to true to indicate the process is running
+    this._pending = true;
+
+    const topics = this._projectService.topics;
+
+    const commentsEntries = Array.from(this._comments.entries());
+
+    for (let [commentId, comment] of commentsEntries) {
+      // Initialize topicTags if it's null or undefined
+      if (!comment.topic_tags) {
+        comment.topic_tags = {};
+      }
+
+      const topicEntries = Array.from(topics.entries());
+
+      for (let [topicId, prompt] of topicEntries) {
+        // Check if the comment already has tags for this topic
+        if (comment.topic_tags[topicId]) {
+          continue; // Skip if tags for this topic already exist
+        }
+
+        // Construct the prompt for GPT
+        const corePrompt =
+          'The project is relevant to the AEC (Architecture, Engineering, and Construction) sector and involves the design and construction of buildings. Each message contains issues, comments, and other details regarding the building model and related processes. Your task is to analyze the given message and retrieve a list of tags with their percentage relevance. Return only a JSON array of strings and relevance (0-100) like [["tag1", 20], ["tag2", 40], ....]. Specific tags must be created according to the following instructions. You cannot add you own tags except given.:';
+
+        const coreEndPrompt =
+          "If you determine that no tags are relevant to the message, return an empty array.";
+
+        const fullPrompt = `${corePrompt} ${prompt} ${coreEndPrompt}`;
+
+        try {
+          const response = await fetch("/api/gpt/create-message-v2", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              messages: [
+                {
+                  role: "system",
+                  content: fullPrompt,
+                },
+                {
+                  role: "user",
+                  content: comment.content,
+                },
+              ],
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+          const tags = JSON.parse(data.data.choices[0].message.content);
+
+          // Add the fetched tags to the comment's topic_tags
+          comment.topic_tags[topicId] = tags;
+
+          // Update the comment in Supabase
+          const { error } = await this._supabase
+            .from("comments")
+            .update({ topic_tags: comment.topic_tags })
+            .eq("id", commentId);
+
+          if (error) {
+            console.error("Error updating comment topic_tags:", error);
+          } else {
+            // Update the local comments map
+            this._comments.set(commentId, comment);
+          }
+        } catch (error) {
+          console.error("Error fetching tags from GPT API:", error);
+        }
+      }
+    }
+
+    // Reset the pending flag after processing
+    this._pending = false;
   }
 
   public provideStates(states: {
@@ -191,6 +285,7 @@ export interface Comment {
   annotation: any[] | null;
   author_id: string;
   author_username: string;
+  topic_tags: Record<string, string[]>;
 }
 
 export default CommentService;

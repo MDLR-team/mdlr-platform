@@ -32,6 +32,7 @@ const Thumbnail = () => {
             height: "100%",
             backgroundImage: `url(${thumbnail})`,
             backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         ></Box>
       )}

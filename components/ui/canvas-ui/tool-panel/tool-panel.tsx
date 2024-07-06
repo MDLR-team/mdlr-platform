@@ -34,6 +34,10 @@ const ToolPanel = () => {
           <AiUploadIcon />
         </IconButton>
 
+        <IconButton onDragStart={(e) => onDragStart(e, "viewer")} draggable>
+          <AiUploadIcon />
+        </IconButton>
+
         <IconButton onDragStart={(e) => onDragStart(e, "sticker")} draggable>
           <AiStickerIcon />
         </IconButton>

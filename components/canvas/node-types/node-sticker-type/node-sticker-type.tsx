@@ -9,6 +9,9 @@ import { useNodes } from "../../node-service/node-provider";
 const NodeStickerType = ({ data, isConnectable }: any) => {
   const { nodes, nodeService } = useNodes();
 
+  console.log("data", data);
+  console.log("nodeService", nodeService);
+
   const [expanded, setExpanded] = useState(false);
 
   const [stickerService] = useState(

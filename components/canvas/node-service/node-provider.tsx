@@ -26,6 +26,7 @@ import NodeLineChartType from "../node-types/node-line-chart-type/node-line-char
 import NodePresentationType from "../node-types/node-presentation-type/node-presentation-type";
 import NodeInputParamsType from "../node-types/node-input-params-type/node-input-params-type";
 import NodeEaChartType from "../node-types/node-ea-chart-type/node-ea-chart-type";
+import NodeViewerType from "../node-types/node-viewer-type/node-viewer-type";
 
 const NodeContext = createContext<ViewerContentProps | null>(null);
 
@@ -188,6 +189,7 @@ export const nodeTypes = {
   message: NodeMessageType,
   presentation: NodePresentationType,
   eaChart: NodeEaChartType,
+  viewer: NodeViewerType,
 };
 
 export function useNodes() {

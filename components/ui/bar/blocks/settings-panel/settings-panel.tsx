@@ -1,6 +1,7 @@
 import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
-import { Box, Button, Paper } from "@mui/material";
+import { Box, Button, Divider, Paper } from "@mui/material";
 import Thumbnail from "../thumbnail/thumbnail";
+import Topics from "../topics/topics";
 
 const SettingsPanel = () => {
   const { globalStatesService, isSettingsPanelOpen } = useGlobalStates();
@@ -15,12 +16,17 @@ const SettingsPanel = () => {
         transform: "translateX(100%)",
         display: "flex",
         flexDirection: "column",
-        minWidth: "200px",
+        minWidth: "400px",
+        maxWidth: "400px",
       }}
     >
-      <Thumbnail />
+      <Topics />
 
-      <Box
+      <Divider />
+
+      {/* <Thumbnail /> */}
+
+      {/*  <Box
         sx={{
           display: "flex",
           gap: "27px",
@@ -44,7 +50,7 @@ const SettingsPanel = () => {
         >
           Save
         </Button>
-      </Box>
+      </Box> */}
     </Paper>
   );
 };

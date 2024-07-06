@@ -248,7 +248,7 @@ class Viewer extends React.Component {
   }
 }
 
-interface ForgeTokenResponse {
+export interface ForgeTokenResponse {
   access_token: string;
   expires_in: number;
 }

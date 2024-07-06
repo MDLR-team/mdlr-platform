@@ -111,6 +111,37 @@ class NodeService {
     return this._presentationNodes$.asObservable();
   }
 
+  public addUserdataToNode(id: string, data: any) {
+    const node = this.getNode(id);
+
+    if (node) {
+      node.data = {
+        ...node.data,
+        userData: data,
+      };
+
+      this.$setNodes((nds: Node[]) =>
+        nds.map((n: Node) => (n.id === id ? node : n))
+      );
+    }
+  }
+
+  /**
+   * Get the previous node in the flow
+   *
+   * @param id
+   * @returns
+   */
+  public getPreviousNode(id: string): Node | undefined {
+    const edge = this._edges.find((edge) => edge.target === id);
+
+    if (edge) {
+      return this.getNode(edge.source);
+    }
+
+    return undefined;
+  }
+
   public dispose() {
     this._nodes = [];
     this._edges = [];

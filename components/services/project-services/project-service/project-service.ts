@@ -14,6 +14,7 @@ import Markup2DService from "../markup-2d-service/markup-2d-service";
 import HotkeyService from "../hotkey-service/hotkey-service";
 import { v4 as uuidv4 } from "uuid";
 import { CLIENT_ID } from "@/pages/api/token";
+import { BehaviorSubject } from "rxjs";
 
 class ProjectService {
   private _router: any;
@@ -27,6 +28,9 @@ class ProjectService {
   public bimId: string | null = null;
   public createdAt: string | null = null;
   public thumbnail: string | null = null;
+
+  public topics: Map<string, string> = new Map();
+  private _topics$ = new BehaviorSubject<Map<string, string>>(new Map());
 
   public projectUsers: Map<string, ProjectUser>;
 
@@ -102,6 +106,8 @@ class ProjectService {
     // If the project is found, return it
 
     if (projects) {
+      await this.checkAndInsertProjectTopics(projects.id); // Check and insert project topics
+
       return { project: projects, profiles: profileData, error: null };
     }
 
@@ -143,6 +149,8 @@ class ProjectService {
       console.error("Error creating new project:", createError);
       return { project: null, error: createError };
     }
+
+    await this.checkAndInsertProjectTopics(newProject.id); // Check and insert project topics
 
     // Return the newly created project
     return { project: newProject, error: null };
@@ -220,6 +228,50 @@ class ProjectService {
     }
 
     return null;
+  }
+
+  private async checkAndInsertProjectTopics(projectId: string) {
+    const { data: topics, error } = await this._supabase
+      .from("project_topics")
+      .select("id, prompt")
+      .eq("project_id", projectId);
+
+    console.log("%ctopics", "color: red", topics);
+
+    if (error && error.code !== "PGRST116") {
+      console.error("Error checking project topics:", error);
+      return;
+    }
+
+    if (topics && topics.length > 0) {
+      topics.forEach((topic: { id: string; prompt: string }) => {
+        this.topics.set(topic.id, topic.prompt);
+      });
+    } else {
+      const sentences = [
+        "The project is relevant to the AEC (Architecture, Engineering, and Construction) sector and involves the design and construction of buildings.",
+        "Each message contains issues, comments, and other details regarding the building model and related processes.",
+        "Your task is to analyze the given message and retrieve a list of five tags with their percentage relevance.",
+        'Return only json array of strings like ["tag1", "tag2", ....].',
+      ];
+
+      const prompt = sentences.join(" ");
+
+      const { data: newTopic, error: insertError } = await this._supabase
+        .from("project_topics")
+        .insert([{ project_id: projectId, prompt }])
+        .select("*")
+        .single();
+
+      if (insertError) {
+        console.error("Error inserting project topic:", insertError);
+      } else {
+        console.log("Project topic inserted:", newTopic);
+        this.topics.set(newTopic.id, newTopic.prompt);
+      }
+    }
+
+    this._topics$.next(this.topics);
   }
 
   public async provideStates(states: States) {
@@ -310,6 +362,10 @@ class ProjectService {
 
   public get authService() {
     return this._authService;
+  }
+
+  public get topics$() {
+    return this._topics$.asObservable();
   }
 
   public dispose() {
