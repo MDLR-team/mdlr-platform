@@ -100,14 +100,16 @@ class ViewerService {
 
     this._project$.next(project);
 
-    const entities = [
+    const entities: EntityItem[] = [
       {
         label: "comments",
         value: "comments",
+        data: comments,
       },
       {
         label: "model elements",
         value: "modelElements",
+        data: modelElements,
       },
     ];
 
@@ -133,6 +135,12 @@ interface ElementItem {
   name: string;
   objectid: number;
   properties: Record<string, any>;
+}
+
+export interface EntityItem {
+  label: string;
+  value: string;
+  data: any;
 }
 
 export default ViewerService;

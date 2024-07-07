@@ -1,17 +1,84 @@
 import NodeService from "@/components/canvas/node-service/node-service";
 import { GptResponseData } from "./sticker-service.types";
 import { Node } from "reactflow";
+import { BehaviorSubject } from "rxjs";
 
 class StickerService {
-  constructor(private _nodeService: NodeService, private _stickerId: string) {}
+  public entities$ = new BehaviorSubject<
+    { label: string; value: string; data: any }[]
+  >([]);
+
+  constructor(private _nodeService: NodeService, private _stickerId: string) {
+    const previousNode = this._nodeService.getPreviousNode(this._stickerId);
+
+    const userData = previousNode?.data?.userData || {};
+    const entities = userData.entities || [];
+
+    this.entities$.next(entities);
+  }
 
   public async generate(message: string, useAI: boolean) {
     useAI = true;
 
     if (useAI) {
+      if (this.entities$.value.length > 0) {
+        return await this.getOutputBasedOnEntities(message);
+      }
+
       await this._generateAI(message);
     } else {
       await this._generateDataNode(message);
+    }
+  }
+
+  private async getOutputBasedOnEntities(message: string): Promise<void> {
+    const systemMessage = `
+      Given the user prompt you need to figure out to which of given entities the user is referring to.
+      Existent entities are: ${this.entities$.value
+        .map((entity) => entity.label)
+        .join(", ")}.
+        Please return the entity name or "none" if the user is not referring to any of the entities.
+    `;
+
+    try {
+      const response = await fetch("/api/gpt/create-message-v2", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          messages: [
+            {
+              role: "system",
+              content: systemMessage,
+            },
+            {
+              role: "user",
+              content: message,
+            },
+          ], // Sending the input value as a message
+        }),
+      });
+
+      const data = (await response.json()) as GptResponseData;
+
+      const generatedMessage = data.data.choices[0].message.content;
+
+      const entity = generatedMessage === "none" ? undefined : generatedMessage;
+
+      console.log("entity", entity);
+
+      this._addGeneratedNode({
+        type: "table",
+        data: {
+          message: entity || "none",
+          userData: {
+            entity: this.entities$.value.find((e) => e.label === entity),
+          },
+        },
+      });
+    } catch (error) {
+      console.error("Error:", error);
     }
   }
 

@@ -17,7 +17,7 @@ import {
 } from "reactflow";
 import NodeThumbType from "../node-types/node-thumb-type/node-thumb-type";
 import NodeStickerType from "../node-types/node-sticker-type/node-sticker-type";
-import NodeTableType from "../node-types/node-table-type";
+import NodeTableType from "../node-types/node-table-type/node-table-type";
 import { v4 as uuidv4 } from "uuid";
 import NodeMessageType from "../node-types/node-message-type/node-message-type";
 import NodeSankeyChartType from "../node-types/node-sankey-chart-type/node-sankey-chart-type";

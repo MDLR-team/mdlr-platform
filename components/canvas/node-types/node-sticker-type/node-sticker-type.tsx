@@ -14,18 +14,34 @@ const NodeStickerType = ({ data, isConnectable }: any) => {
 
   const [expanded, setExpanded] = useState(false);
 
+  const [entities, setEntities] = useState<
+    {
+      label: string;
+      value: string;
+      data: any;
+    }[]
+  >([]);
+
   const [stickerService] = useState(
     () => new StickerService(nodeService, data.id)
   );
 
   useEffect(() => {
+    const ep = stickerService.entities$.subscribe((entities) =>
+      setEntities(entities)
+    );
+
     return () => {
+      ep.unsubscribe();
+
       stickerService.dispose();
     };
   }, []);
 
+  console.log("entities", entities);
+
   const [inputValue, setInputValue] = useState("");
-  const [useAI, setUseAI] = useState(false);
+  const [useAI] = useState(true);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -41,7 +57,7 @@ const NodeStickerType = ({ data, isConnectable }: any) => {
       <Box
         id={`box${data.id}`}
         sx={{
-          width: !expanded ? "150px" : "180px",
+          width: !expanded ? "190px" : "220px",
           minHeight: !expanded ? "150px" : "30px",
           background: "#f9f1c3",
           border: "1px solid #000",
@@ -54,6 +70,39 @@ const NodeStickerType = ({ data, isConnectable }: any) => {
         }}
       >
         <Wrapper>
+          {entities.length > 0 && (
+            <Box
+              sx={{
+                display: "flex",
+                marginBottom: "10px",
+                flexDirection: "column",
+              }}
+            >
+              <i>You can work with: </i>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                }}
+              >
+                {entities.map((entity, index) => (
+                  <Box
+                    sx={{
+                      border: "1px solid #000",
+                      padding: "2px",
+                      borderRadius: "5px",
+                      margin: "2px",
+                    }}
+                    key={index}
+                  >
+                    {entity.label}
+                  </Box>
+                ))}
+              </Box>
+            </Box>
+          )}
+
           {expanded && (
             <>
               <Box
@@ -96,7 +145,7 @@ const NodeStickerType = ({ data, isConnectable }: any) => {
               </Box>
               <br />
               <TextField
-                placeholder="Type 'Generate...' or your desired prompt"
+                placeholder="Type 'Give me...' or your desired prompt"
                 label={null}
                 variant="standard"
                 size="small"
@@ -117,7 +166,7 @@ const NodeStickerType = ({ data, isConnectable }: any) => {
                 }}
                 sx={{ marginTop: "9px" }}
               >
-                Generate
+                Send
               </Button>
             </>
           )}
