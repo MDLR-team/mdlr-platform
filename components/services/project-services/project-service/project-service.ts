@@ -15,6 +15,7 @@ import HotkeyService from "../hotkey-service/hotkey-service";
 import { v4 as uuidv4 } from "uuid";
 import { CLIENT_ID } from "@/pages/api/token";
 import { BehaviorSubject } from "rxjs";
+import MarkupService from "../../markup-service/markup-service";
 
 class ProjectService {
   private _router: any;
@@ -46,6 +47,7 @@ class ProjectService {
 
   private _markup3DService: Markup3DService;
   private _markup2DService: Markup2DService;
+  private _markupService: MarkupService;
 
   private _hotkeyService: HotkeyService;
 
@@ -62,6 +64,7 @@ class ProjectService {
 
     this._markup3DService = new Markup3DService(this);
     this._markup2DService = new Markup2DService(this);
+    this._markupService = new MarkupService(this);
 
     this._hotkeyService = new HotkeyService(this);
 
@@ -356,6 +359,10 @@ class ProjectService {
     return this._markup2DService;
   }
 
+  public get markupService() {
+    return this._markupService;
+  }
+
   public get supabase() {
     return this._supabase;
   }
@@ -378,6 +385,7 @@ class ProjectService {
 
     this._markup3DService.dispose();
     this._markup2DService.dispose();
+    this._markupService.dispose();
 
     console.log("project Service disposed", this._uuid);
 

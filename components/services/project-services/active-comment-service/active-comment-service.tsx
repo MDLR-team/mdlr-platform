@@ -5,7 +5,7 @@ import ProjectService from "../project-service/project-service";
 import { transformPointToNormalizedCoords } from "./utils/point-2-normalized-coord";
 import { toScreenXY } from "../markup-3d-service/utils/to-screen-xy";
 
-class ActiveCommentService {
+class   ActiveCommentService {
   private _activeComment: Comment | null = null;
   private _isPaperMode: boolean = false;
   private _isPaperEditing: boolean = false;
