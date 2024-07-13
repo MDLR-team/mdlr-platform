@@ -12,13 +12,8 @@ import { useRouter } from "next/router";
 import React from "react";
 
 const ViewerPage = () => {
-  const { authService } = useAuth();
-  const router = useRouter();
-
-  const init = React.useRef<boolean>(false);
-
   return (
-    <ProjectProvider nextRouter={router} init={init} authService={authService}>
+    <ProjectProvider>
       <GlobalStatesProvider>
         <ViewerProvider>
           <CommentProvider>

@@ -16,16 +16,16 @@ import { v4 as uuidv4 } from "uuid";
 import { CLIENT_ID } from "@/pages/api/token";
 import { BehaviorSubject } from "rxjs";
 import MarkupService from "../../markup-service/markup-service";
+import TopicsService from "../topics-service/topics-service";
 
 class ProjectService {
-  private _router: any;
-
   private _wasInitialized: boolean = false;
 
-  private _uuid: string;
+  // Project metadata
+  public metadata: any;
 
   public id: string | null = null;
-  public title: string | null = null;
+  public title: string = "";
   public bimId: string | null = null;
   public createdAt: string | null = null;
   public thumbnail: string | null = null;
@@ -40,10 +40,10 @@ class ProjectService {
 
   public projectUsers: Map<string, ProjectUser>;
 
-  private $setIsReady: any;
-  private $setTitle: any;
-  private $setThumbnail: any;
-  private $setProjectUsers: any;
+  public isReady$ = new BehaviorSubject<boolean>(false);
+  public title$ = new BehaviorSubject<string>("");
+  public thumbnail$ = new BehaviorSubject<string | null>(null);
+  public projectUsers$ = new BehaviorSubject<ProjectUser[]>([]);
 
   private _globalStatesService: GlobalStatesService;
   private _commentService: CommentService;
@@ -56,11 +56,15 @@ class ProjectService {
 
   private _hotkeyService: HotkeyService;
 
+  private _topicsService: TopicsService;
+
   constructor(
     private _supabase: SupabaseClient,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _urn: string
   ) {
     this._globalStatesService = new GlobalStatesService(this);
+    this._topicsService = new TopicsService(this);
     this._commentService = new CommentService(this);
     this._activeCommentService = new ActiveCommentService(this);
     this._viewerServiceAggr = new ViewerServiceAggr(this);
@@ -73,21 +77,15 @@ class ProjectService {
 
     this._hotkeyService = new HotkeyService(this);
 
-    this._uuid = uuidv4();
-
-    console.log("project Service created", this._uuid);
+    this.provideStates();
   }
 
   private async init() {
-    const { query } = this._router;
-    const { urn } = query;
-
+    const urn = this._urn;
     if (!urn) return;
 
     const bimId = this._getBim360ProjectId(urn as string);
     const supabase = this._supabase;
-
-    console.log("bimId", bimId);
 
     let { data: projects, error: findError } = await supabase
       .from("projects")
@@ -106,15 +104,10 @@ class ProjectService {
       .from("profiles")
       .select("*");
 
-    /* if (findError) {
-      console.error("Error finding project:", findError);
-      return { project: null, error: findError };
-    } */
-
     // If the project is found, return it
 
     if (projects) {
-      await this.checkAndInsertProjectTopics(projects.id); // Check and insert project topics
+      await this.checkAndInsertProjectTopics(projects.id); // Check project topics
 
       return { project: projects, profiles: profileData, error: null };
     }
@@ -192,12 +185,12 @@ class ProjectService {
 
     if (metadata.title) {
       this.title = metadata.title;
-      this.$setTitle(this.title);
+      this.title$.next(this.title);
     }
 
     if (metadata.thumbnail) {
       this.thumbnail = metadata.thumbnail;
-      this.$setThumbnail(this.thumbnail);
+      this.thumbnail$.next(this.thumbnail);
     }
 
     return { data, error };
@@ -256,45 +249,16 @@ class ProjectService {
         this.topics.set(topic.id, topic.prompt);
         this._topicsItems.set(topic.id, topic as ProjectTopic);
       });
-    } else {
-      const sentences = [
-        "The project is relevant to the AEC (Architecture, Engineering, and Construction) sector and involves the design and construction of buildings.",
-        "Each message contains issues, comments, and other details regarding the building model and related processes.",
-        "Your task is to analyze the given message and retrieve a list of five tags with their percentage relevance.",
-        'Return only json array of strings like ["tag1", "tag2", ....].',
-      ];
-
-      const prompt = sentences.join(" ");
-
-      const { data: newTopic, error: insertError } = await this._supabase
-        .from("project_topics")
-        .insert([{ project_id: projectId, prompt }])
-        .select("*")
-        .single();
-
-      if (insertError) {
-        console.error("Error inserting project topic:", insertError);
-      } else {
-        console.log("Project topic inserted:", newTopic);
-        this.topics.set(newTopic.id, newTopic.prompt);
-        this._topicsItems.set(newTopic.id, newTopic as ProjectTopic);
-      }
     }
 
     this._topics$.next(this.topics);
     this._topicsItems$.next(this._topicsItems);
   }
 
-  public async provideStates(states: States) {
+  public async provideStates() {
     if (this._wasInitialized) return;
 
     this._wasInitialized = true;
-
-    this._router = states.router;
-    this.$setIsReady = states.setIsReady;
-    this.$setTitle = states.setTitle;
-    this.$setThumbnail = states.setThumbnail;
-    this.$setProjectUsers = states.setProjectUsers;
 
     const data = await this.init();
 
@@ -328,11 +292,10 @@ class ProjectService {
           }
         });
 
-        this.$setProjectUsers(Array.from(this.projectUsers.values()));
-
-        this.$setTitle(this.title);
-        this.$setThumbnail(project.thumbnail);
-        this.$setIsReady(true);
+        this.projectUsers$.next(Array.from(this.projectUsers.values()));
+        this.title$.next(this.title);
+        this.thumbnail$.next(this.thumbnail);
+        this.isReady$.next(true);
 
         this._commentService.init();
       }
@@ -399,9 +362,9 @@ class ProjectService {
     this._markup2DService.dispose();
     this._markupService.dispose();
 
-    console.log("project Service disposed", this._uuid);
-
     this._hotkeyService.dispose();
+
+    this._topicsService.dispose();
   }
 }
 
@@ -427,14 +390,6 @@ export interface ProjectTopic {
   prompt: string;
   tags: string[];
   name: string;
-}
-
-interface States {
-  router: NextRouter;
-  setIsReady: (value: boolean) => void;
-  setTitle: (value: string) => void;
-  setThumbnail: (value: string | null) => void;
-  setProjectUsers: (value: ProjectUser[]) => void;
 }
 
 export default ProjectService;

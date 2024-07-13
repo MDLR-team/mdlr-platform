@@ -106,7 +106,7 @@ const CommentMessage: React.FC<{
       handleSubmit();
     } else if (event.key === "Escape") {
       markup3DService.toggleAddComment(false);
-     
+
       activeCommentService.togglePaperMode(false);
     }
   };
@@ -127,6 +127,9 @@ const CommentMessage: React.FC<{
 
     activeCommentService.togglePaperMode(false);
   };
+
+  console.log("activeComment?.view_state", activeComment?.view_state);
+  console.log("isPaperMode", isPaperMode);
 
   if (!(commentAdding && commentPointSelected)) return <></>;
 
@@ -163,8 +166,6 @@ const CommentMessage: React.FC<{
             inputRef={inputRef}
           />
 
-          {/* activeComment?.view_state && isPaperMode && */}
-
           {comment && (
             <Box
               sx={{
@@ -177,10 +178,13 @@ const CommentMessage: React.FC<{
               <IconButton
                 data-active={isPenMode ? "true" : "false"}
                 onClick={async () => {
-                  activeCommentService.togglePaperMode(true);
-                  await saveView();
-
-                  activeCommentService.togglePenMode(true);
+                  if (activeComment?.view_state && isPaperMode) {
+                    activeCommentService.togglePenMode(true);
+                  } else {
+                  }
+                  /* activeCommentService.togglePaperMode(true);
+                  await saveView(); */
+                  //activeCommentService.togglePenMode(true);
                 }}
               >
                 <PencilIcon />

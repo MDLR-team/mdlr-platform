@@ -16,6 +16,8 @@ class StickerService {
     const previousNode = this._nodeService.getPreviousNode(this._stickerId);
     this._previousUserData = previousNode?.data?.userData || {};
 
+    console.log("previousNode", previousNode);
+
     const userData = previousNode?.data?.userData || {};
     const entities = userData.entities || [];
     const topics = userData.topics || [];
