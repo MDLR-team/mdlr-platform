@@ -2,19 +2,26 @@ import NodeService from "@/components/canvas/node-service/node-service";
 import { GptResponseData } from "./sticker-service.types";
 import { Node } from "reactflow";
 import { BehaviorSubject } from "rxjs";
+import { ProjectTopic } from "@/components/services/project-services/project-service/project-service";
 
 class StickerService {
   public entities$ = new BehaviorSubject<
     { label: string; value: string; data: any }[]
   >([]);
+  public topics$ = new BehaviorSubject<ProjectTopic[]>([]);
+
+  private _previousUserData: any;
 
   constructor(private _nodeService: NodeService, private _stickerId: string) {
     const previousNode = this._nodeService.getPreviousNode(this._stickerId);
+    this._previousUserData = previousNode?.data?.userData || {};
 
     const userData = previousNode?.data?.userData || {};
     const entities = userData.entities || [];
+    const topics = userData.topics || [];
 
     this.entities$.next(entities);
+    this.topics$.next(topics);
   }
 
   public async generate(message: string, useAI: boolean) {
@@ -23,6 +30,16 @@ class StickerService {
     if (useAI) {
       if (this.entities$.value.length > 0) {
         return await this.getOutputBasedOnEntities(message);
+      }
+
+      this._nodeService.addUserdataToNode(
+        this._stickerId,
+        this._previousUserData
+      );
+
+      const chart = await this._generateTaskForChart(message);
+      if (chart === "chart") {
+        return;
       }
 
       await this._generateAI(message);
@@ -74,12 +91,93 @@ class StickerService {
           message: entity || "none",
           userData: {
             entity: this.entities$.value.find((e) => e.label === entity),
+            topics: this.topics$.value,
           },
         },
       });
     } catch (error) {
       console.error("Error:", error);
     }
+  }
+
+  private async _generateTaskForChart(
+    message: string
+  ): Promise<null | "chart"> {
+    const chartData = this._previousUserData.chartData as
+      | Map<string, any>
+      | undefined;
+    if (!chartData) return null;
+
+    const columns = Array.from(chartData.keys());
+    const chartTypes = ["pieChart", "lineChart"];
+
+    const extendedMessage = `
+     Determine if the user is requesting a chart. Available chart types:
+      - "pieChart": Proportions or percentages within a whole.
+      - "lineChart": Trends or changes over time.
+
+      Columns: ${columns.join(", ")}.
+
+      Note: The user prompt must include both a chart type and a column name. 
+      If both are included, return:
+      [chartType, columnName]
+      If either is missing, return "none".
+    `;
+
+    try {
+      const response = await fetch("/api/gpt/create-message-v2", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          messages: [
+            {
+              role: "system",
+              content: extendedMessage,
+            },
+            {
+              role: "user",
+              content: message,
+            },
+          ], // Sending the input value as a message
+        }),
+      });
+
+      const data = (await response.json()) as GptResponseData;
+
+      const generatedMessage = data.data.choices[0].message.content;
+      // we need to check whether parsed string is either "none" or array of two elements
+      const [chartType, columnName] =
+        generatedMessage === "none" ? [] : JSON.parse(generatedMessage);
+
+      if (chartTypes.includes(chartType) && columns.includes(columnName)) {
+        const chartItems = chartData.get(columnName);
+
+        console.log("%c chart task", "color: red", chartType, columnName);
+
+        this._addGeneratedNode({
+          type: chartType,
+          data: {
+            message: generatedMessage,
+            chartItems: chartItems,
+          },
+        });
+
+        this._nodeService.addUserdataToNode(this._stickerId, {
+          ...this._previousUserData,
+          chartItems,
+        });
+
+        return "chart";
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
+    return null;
   }
 
   private async _generateAI(message: string) {

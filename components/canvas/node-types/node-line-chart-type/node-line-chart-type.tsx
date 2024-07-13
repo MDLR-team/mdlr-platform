@@ -23,7 +23,7 @@ const NodeLineChartType = ({ data, isConnectable }: any) => {
         }}
         id={`box${data.id}`}
       >
-        <Chart />
+        <Chart data={data} />
       </Box>
       <Handle
         type="source"

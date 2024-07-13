@@ -163,7 +163,6 @@ class Viewer extends React.Component {
     try {
       const response = await axios.get<ForgeTokenResponse>("/api/token");
 
-      console.log("response.data", response.data);
       return response.data;
     } catch (error) {
       console.error("Error fetching Forge token:", error);

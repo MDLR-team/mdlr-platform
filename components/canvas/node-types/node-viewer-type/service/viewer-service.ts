@@ -1,5 +1,6 @@
 import NodeService from "@/components/canvas/node-service/node-service";
 import { ForgeTokenResponse } from "@/components/forge/viewer-aggr";
+import { ProjectTopic } from "@/components/services/project-services/project-service/project-service";
 import { supabase } from "@/components/supabase-client";
 import axios from "axios";
 import { BehaviorSubject } from "rxjs";
@@ -77,6 +78,19 @@ class ViewerService {
     return data;
   }
 
+  public async fetchTopics(projectId: string): Promise<ProjectTopic[] | null> {
+    const { data, error } = await supabase
+      .from("project_topics")
+      .select("*")
+      .eq("project_id", projectId);
+
+    if (error) {
+      console.error("Error fetching topics:", error);
+    }
+
+    return data;
+  }
+
   public async fetchProject(urn: string) {
     this._urn = urn;
 
@@ -97,6 +111,7 @@ class ViewerService {
 
     const modelElements = await this.getModelData();
     const comments = await this._fetchInitialComments(projectId);
+    const topics = await this.fetchTopics(projectId);
 
     this._project$.next(project);
 
@@ -117,6 +132,7 @@ class ViewerService {
       modelElements,
       comments,
       project,
+      topics,
       entities,
     });
   }

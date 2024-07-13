@@ -1,5 +1,6 @@
 import NodeService from "@/components/canvas/node-service/node-service";
 import { Comment } from "@/components/services/project-services/comment-service/comment-service";
+import { ProjectTopic } from "@/components/services/project-services/project-service/project-service";
 import { BehaviorSubject } from "rxjs";
 
 class TableService {
@@ -7,12 +8,15 @@ class TableService {
 
   constructor(private _nodeService: NodeService, data: any) {
     const entity = data?.userData?.entity || {};
+    const topics = data?.userData?.topics || [];
 
-    this.fetchTableData(entity);
+    this._prepareDataForChart(entity, topics, data.userData, data.id);
+
+    this.fetchTableData(entity, topics);
   }
 
-  public async fetchTableData(entity: UserData) {
-    const data = this._formatDataBasedOnEntity(entity);
+  public async fetchTableData(entity: UserData, topics: ProjectTopic[] = []) {
+    const data = this._formatDataBasedOnEntity(entity, topics);
 
     const columns: string[] = [];
 
@@ -33,7 +37,106 @@ class TableService {
     this._tableDate$.next({ columns, rows });
   }
 
-  private _formatDataBasedOnEntity(entity: any) {
+  private _prepareDataForChart(
+    entity: any,
+    projectTopics: ProjectTopic[],
+    userData: UserData,
+    nodeId: string
+  ): void {
+    const value = entity.value;
+
+    let chartData = new Map<string, { name: string; value: number }[]>();
+
+    if (value === "comments") {
+      const data = entity.data;
+
+      const topicId2Name = new Map<string, string>();
+      projectTopics.forEach((topic) => {
+        topicId2Name.set(`${topic.id}`, topic.name);
+      });
+
+      const topics = new Map<string, { name: string; value: number }[]>();
+      data.forEach((comment: Comment) => {
+        const commentTopics = comment.topic_tags || {};
+        Object.entries(commentTopics).forEach(([_topic, value]) => {
+          const topic = topicId2Name.get(_topic) || _topic;
+
+          if (!topics.has(topic)) {
+            topics.set(topic, []);
+          }
+
+          const __topic = topics.get(topic) as {
+            name: string;
+            value: number;
+          }[];
+
+          const topicValues = value as any as [string, number][];
+          topicValues.forEach(([name, value]) => {
+            const foundValue = __topic.find((item) => item.name === name);
+            if (foundValue) {
+              foundValue.value += value;
+            } else {
+              __topic.push({ name, value });
+            }
+          });
+        });
+      });
+
+      chartData = topics;
+    } else {
+      const data = entity.data;
+
+      data.forEach((item: any) => {
+        const properties = item?.properties || {};
+
+        Object.entries(properties).forEach(([key, value]: any) => {
+          if (!(typeof value === "string")) return;
+
+          if (!chartData.has(key)) {
+            chartData.set(key, []);
+          }
+
+          const _properties = chartData.get(key) as {
+            name: string;
+            value: number;
+          }[];
+
+          const foundValue = _properties.find((item) => item.name === value);
+          if (foundValue) {
+            foundValue.value += 1;
+          } else {
+            _properties.push({ name: value, value: 1 });
+          }
+        });
+
+        const name = item?.name;
+        if (name) {
+          if (!chartData.has("name")) {
+            chartData.set("name", []);
+          }
+
+          const _properties = chartData.get("name") as {
+            name: string;
+            value: number;
+          }[];
+
+          const foundValue = _properties.find((item) => item.name === name);
+          if (foundValue) {
+            foundValue.value += 1;
+          } else {
+            _properties.push({ name, value: 1 });
+          }
+        }
+      });
+    }
+
+    this._nodeService.addUserdataToNode(nodeId, {
+      ...userData,
+      chartData,
+    });
+  }
+
+  private _formatDataBasedOnEntity(entity: any, projectTopics: ProjectTopic[]) {
     const value = entity.value;
 
     const chartData = new Map<string, Record<string, number>[]>();
@@ -69,11 +172,18 @@ class TableService {
           });
         });
 
-        console.log("chartData", chartData);
+        // replace topic id with topic name
+        const _topicsName: any = {};
+        Object.keys(_topics).forEach((topic) => {
+          const topicName = projectTopics.find(
+            (t) => `${t.id}` === topic
+          )?.name;
+          _topicsName[topicName || topic] = _topics[topic];
+        });
 
         return {
           message: comment.content,
-          ..._topics,
+          ..._topicsName,
         };
       });
     } else {

@@ -33,6 +33,11 @@ class ProjectService {
   public topics: Map<string, string> = new Map();
   private _topics$ = new BehaviorSubject<Map<string, string>>(new Map());
 
+  private _topicsItems: Map<string, ProjectTopic> = new Map();
+  private _topicsItems$ = new BehaviorSubject<Map<string, ProjectTopic>>(
+    new Map()
+  );
+
   public projectUsers: Map<string, ProjectUser>;
 
   private $setIsReady: any;
@@ -236,7 +241,7 @@ class ProjectService {
   private async checkAndInsertProjectTopics(projectId: string) {
     const { data: topics, error } = await this._supabase
       .from("project_topics")
-      .select("id, prompt")
+      .select("id, prompt, tags, name")
       .eq("project_id", projectId);
 
     console.log("%ctopics", "color: red", topics);
@@ -247,8 +252,9 @@ class ProjectService {
     }
 
     if (topics && topics.length > 0) {
-      topics.forEach((topic: { id: string; prompt: string }) => {
+      topics.forEach((topic: ProjectTopic) => {
         this.topics.set(topic.id, topic.prompt);
+        this._topicsItems.set(topic.id, topic as ProjectTopic);
       });
     } else {
       const sentences = [
@@ -271,10 +277,12 @@ class ProjectService {
       } else {
         console.log("Project topic inserted:", newTopic);
         this.topics.set(newTopic.id, newTopic.prompt);
+        this._topicsItems.set(newTopic.id, newTopic as ProjectTopic);
       }
     }
 
     this._topics$.next(this.topics);
+    this._topicsItems$.next(this._topicsItems);
   }
 
   public async provideStates(states: States) {
@@ -375,6 +383,10 @@ class ProjectService {
     return this._topics$.asObservable();
   }
 
+  public get topicsItems$() {
+    return this._topicsItems$.asObservable();
+  }
+
   public dispose() {
     this.projectUsers.clear();
 
@@ -408,6 +420,13 @@ function dataURLToBlob(dataURL: string) {
 export interface ProjectUser {
   id: string;
   username: string;
+}
+
+export interface ProjectTopic {
+  id: string;
+  prompt: string;
+  tags: string[];
+  name: string;
 }
 
 interface States {

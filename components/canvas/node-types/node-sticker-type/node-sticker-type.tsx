@@ -9,9 +9,6 @@ import { useNodes } from "../../node-service/node-provider";
 const NodeStickerType = ({ data, isConnectable }: any) => {
   const { nodes, nodeService } = useNodes();
 
-  console.log("data", data);
-  console.log("nodeService", nodeService);
-
   const [expanded, setExpanded] = useState(false);
 
   const [entities, setEntities] = useState<
@@ -37,8 +34,6 @@ const NodeStickerType = ({ data, isConnectable }: any) => {
       stickerService.dispose();
     };
   }, []);
-
-  console.log("entities", entities);
 
   const [inputValue, setInputValue] = useState("");
   const [useAI] = useState(true);

@@ -35,8 +35,6 @@ class ScenarioService {
     (inputEndpoint as any).focus();
     (inputEndpoint as any).click();
 
-    console.log("inputEndpoint", inputEndpoint);
-
     await this._simulateTyping(
       inputEndpoint as HTMLInputElement,
       "http://localhost:3000/api",

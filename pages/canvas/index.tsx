@@ -43,7 +43,8 @@ const ReactflowComponent = () => {
     setReactFlowInstance,
   } = useNodes();
 
-  useScenario();
+  // TODO: Implement this
+  //useScenario();
 
   return (
     <Box

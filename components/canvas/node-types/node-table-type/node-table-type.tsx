@@ -13,6 +13,7 @@ import { useEffect, useMemo, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useNodes } from "../../node-service/node-provider";
 import TableService, { TableData } from "./service/table-service";
+import stc from "string-to-color";
 
 const NodeTableType = ({ data, isConnectable }: any) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -131,6 +132,7 @@ const NodeTableType = ({ data, isConnectable }: any) => {
                               >
                                 {row[column].map((v: any, index: number) => {
                                   let _value = v;
+                                  const name = v[0] || "";
 
                                   if (Array.isArray(v)) {
                                     _value = v.join(" - ");
@@ -142,7 +144,8 @@ const NodeTableType = ({ data, isConnectable }: any) => {
                                       sx={{
                                         display: "flex",
                                         padding: "1px 3px",
-                                        border: "1px solid grey",
+                                        border: `1.5px solid ${stc(name)}`,
+                                        minWidth: "max-content",
                                         borderRadius: "5px",
                                       }}
                                     >

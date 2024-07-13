@@ -1,45 +1,73 @@
 import { Chart } from "@antv/g2";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import dataJSON from "../../data/data.json";
+import ChartService from "../../../node-pie-chart-type/service/chart-service";
+import { useNodes } from "@/components/canvas/node-service/node-provider";
+import stc from "string-to-color";
+import chroma from "chroma-js";
 
 const SankryChart = ({ data, isConnectable }: any) => {
-  const chartRef = useRef<any>(null);
+  const chartContainerRef = useRef<any>(null);
+
+  const { nodeService } = useNodes();
+
+  const [chartService] = useState(() => new ChartService(nodeService, data.id));
+  const [items, setItems] = useState<
+    {
+      name: string;
+      value: number;
+    }[]
+  >([]);
 
   useEffect(() => {
+    const sub = chartService.chartItems$.subscribe((items) => {
+      setItems(items);
+    });
+
+    return () => {
+      sub.unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!data) return;
+    if (!chartContainerRef.current) return;
+
     const chart = new Chart({
-      container: chartRef.current,
+      container: chartContainerRef.current,
       autoFit: true,
     });
 
-    chart
-      .interval()
-      .data({
-        value: dataJSON,
-        transform: [
-          {
-            type: "custom",
-            callback: (data: any) => {
-              return data;
-            },
-          },
-        ],
-      })
-      .transform({ type: "sortX", by: "y", reverse: true, slice: 6 })
-      .transform({ type: "dodgeX" })
-      .encode("x", "state")
-      .encode("y", "beams")
-      .encode("color", "crossbar")
-      .scale("y", { nice: true })
-      .axis("y", { labelFormatter: "~s" });
+    // Generate color palette
+    const colorPalette = items.map((item) => {
+      const color = stc(item.name); // Generate color based on name
+      return chroma(color).hex(); // Convert to hex format
+    });
 
-    chart
-      .interaction("tooltip", { shared: true })
-      .interaction("elementHighlightByColor", { background: true });
+    chart.options({
+      type: "interval",
+      autoFit: true,
+      data: items,
+      encode: { x: "name", y: "value", color: "name" },
+      scale: {
+        color: {
+          palette: colorPalette as any,
+        },
+      },
+    });
 
     chart.render();
-  }, []);
 
-  return <div style={{ width: "500px", height: "340px" }} ref={chartRef} />;
+    return () => {
+      if (chartContainerRef.current) {
+        chartContainerRef.current.innerHTML = "";
+      }
+    };
+  }, [items]);
+
+  return (
+    <div style={{ width: "500px", height: "340px" }} ref={chartContainerRef} />
+  );
 };
 
 export default SankryChart;

@@ -1,98 +1,63 @@
 import { Chart } from "@antv/g2";
 import { useEffect, useRef } from "react";
+import stc from "string-to-color";
+import chroma from "chroma-js";
 
-const SankryChart = ({ data, isConnectable }: any) => {
+const SankryChart: React.FC<{
+  items: { name: string; value: number }[];
+}> = ({ items }) => {
   const chartRef = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const data = [
-      {
-        State: "WY",
-        "Exterior Wall": 25635,
-        "Partition Wall": 1890,
-        "Retaining Wall": 9314,
-      },
-      {
-        State: "DC",
-        "Exterior Wall": 30352,
-        "Partition Wall": 20439,
-        "Retaining Wall": 10225,
-      },
-      {
-        State: "VT",
-        "Exterior Wall": 38253,
-        "Partition Wall": 42538,
-        "Retaining Wall": 15757,
-      },
-      {
-        State: "ND",
-        "Exterior Wall": 51896,
-        "Partition Wall": 67358,
-        "Retaining Wall": 18794,
-      },
-      {
-        State: "AK",
-        "Exterior Wall": 72083,
-        "Partition Wall": 85640,
-        "Retaining Wall": 22153,
-      },
-    ];
+    if (chartRef.current) {
+      chartRef.current.destroy(); // Destroy the previous chart instance
+    }
 
     const chart = new Chart({
-      container: chartRef.current,
+      container: containerRef.current!,
       autoFit: true,
     });
 
-    chart.coordinate({ type: "radial" });
+    // Generate color palette
+    const colorPalette = items.map((item) => {
+      const color = stc(item.name); // Generate color based on name
+      return chroma(color).hex(); // Convert to hex format
+    });
 
-    chart
-      .interval()
-      .data({
-        value: data,
-        transform: [
-          {
-            type: "fold",
-            fields: ["Exterior Wall", "Partition Wall", "Retaining Wall"],
-            key: "Interior Wall",
-            value: "Wall",
-            retains: ["State"],
+    chart.options({
+      type: "view",
+      padding: 0,
+      inset: 0,
+      coordinate: {
+        type: "theta",
+        innerRadius: 0.9,
+      },
+      children: [
+        {
+          type: "interval",
+          data: items,
+          encode: { y: "value", color: "name" },
+          transform: [{ type: "stackY" }],
+          scale: {
+            color: {
+              palette: colorPalette as any,
+            },
           },
-        ],
-      })
-      .encode("x", "State")
-      .encode("y", "Wall")
-      .encode("color", "Interior Wall")
-      .scale("y", { domainMax: 200000 })
-      .scale("color", { range: ["#6395FA", "#62DAAB", "#657798"] })
-      .transform({ type: "stackY" })
-      .axis({
-        x: {
-          title: false,
-          line: true,
+          legend: false,
         },
-        y: {
-          line: true,
-          grid: true,
-          gridLineDash: [4, 4],
-          tickCount: 10,
-          tickFilter: (datum: any) => datum != 200000,
-        },
-      })
-      .legend({
-        color: {
-          position: "bottom",
-          layout: { justifyContent: "center" },
-        },
-      })
-      .interaction("elementHighlightByX")
-      .interaction("tooltip", {
-        shared: true,
-      });
+      ],
+    });
 
     chart.render();
-  }, []);
+    chartRef.current = chart; // Keep a reference to the current chart instance
 
-  return <div style={{ width: "400px", height: "280px" }} ref={chartRef} />;
+    return () => {
+      chart.destroy(); // Cleanup the chart instance when the component unmounts or items change
+    };
+  }, [items]);
+
+  return <div style={{ width: "400px", height: "280px" }} ref={containerRef} />;
 };
 
 export default SankryChart;

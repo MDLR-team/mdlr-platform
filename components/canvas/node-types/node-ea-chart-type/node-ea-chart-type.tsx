@@ -13,8 +13,6 @@ import SchemaB3 from "./schemas/b3";
 const NodeEaChartType = ({ data, isConnectable }: any) => {
   const { nodes, nodeService } = useNodes();
 
-  console.log("nodes", nodes);
-
   const [index, setIndex] = useState(1);
   useEffect(() => {
     const nodes = nodeService.nodes;
