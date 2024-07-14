@@ -2,6 +2,8 @@ import NodeService from "@/components/canvas/node-service/node-service";
 import { ForgeTokenResponse } from "@/components/forge/viewer-aggr";
 import { ProjectTopic } from "@/components/services/project-services/project-service/project-service";
 import { supabase } from "@/components/supabase-client";
+import { Project } from "@/components/types/supabase-data.types";
+import { CLIENT_ID } from "@/pages/api/token";
 import axios from "axios";
 import { BehaviorSubject } from "rxjs";
 
@@ -9,16 +11,29 @@ class ViewerService {
   private _urn: string | null = null;
   private _project$ = new BehaviorSubject<any | null>(null);
 
+  public projects$ = new BehaviorSubject<Project[]>([]);
+
   constructor(private _nodeService: NodeService, private _nodeId: string) {
-    this.fetchProject(
-      "dXJuOmFkc2sud2lwcHJvZDpmcy5maWxlOnZmLkFvUzVxamhPUmJPSUtZOUxxY2RDMlE_dmVyc2lvbj0x"
-    );
+    this.fetchProjects();
   }
 
-  public async getModelData() {
-    const urn =
-      "dXJuOmFkc2sud2lwcHJvZDpmcy5maWxlOnZmLkFvUzVxamhPUmJPSUtZOUxxY2RDMlE_dmVyc2lvbj0x";
+  public async fetchProjects() {
+    const { data, error } = await supabase
+      .from("projects")
+      .select("*")
+      .not("bim_id", "is", null)
+      .eq("bim_client_id", CLIENT_ID)
+      .not("bim_urn", "is", null)
+      .order("created_at", { ascending: false });
 
+    if (error) {
+      console.error("Error fetching projects:", error);
+    }
+
+    this.projects$.next(data as Project[]);
+  }
+
+  public async getModelData(urn: string) {
     const response = await axios.get<ForgeTokenResponse>("/api/token");
     const token = response.data.access_token;
 
@@ -50,17 +65,23 @@ class ViewerService {
     const guid = viewable.guid;
     console.log("guid", guid);
 
-    const response = await axios.get(
-      `https://developer.api.autodesk.com/modelderivative/v2/designdata/${urn}/metadata/${guid}/properties`,
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      }
-    );
+    try {
+      const response = await axios.get(
+        `https://developer.api.autodesk.com/modelderivative/v2/designdata/${urn}/metadata/${guid}/properties`,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
 
-    const data = response.data.data;
-    const { collection } = data;
+      const data = response.data.data;
 
-    return collection as ElementItem[];
+      const { collection } = data;
+
+      return collection as ElementItem[];
+    } catch (error) {
+      console.error("Error fetching model properties:", error);
+      return [];
+    }
   }
 
   public async _fetchInitialComments(projectId: string) {
@@ -109,7 +130,7 @@ class ViewerService {
 
     const projectId = project?.id;
 
-    const modelElements = await this.getModelData();
+    const modelElements = await this.getModelData(urn);
     const comments = await this._fetchInitialComments(projectId);
     const topics = await this.fetchTopics(projectId);
 
@@ -127,6 +148,10 @@ class ViewerService {
         data: modelElements,
       },
     ];
+
+    console.log("entities", entities);
+    console.log("comments", comments);
+    console.log("modelElements", modelElements);
 
     this._nodeService.addUserdataToNode(this._nodeId, {
       modelElements,

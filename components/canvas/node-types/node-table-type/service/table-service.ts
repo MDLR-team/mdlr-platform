@@ -83,7 +83,7 @@ class TableService {
       });
 
       chartData = topics;
-    } else {
+    } else if (value === "modelElements") {
       const data = entity.data;
 
       data.forEach((item: any) => {
@@ -128,6 +128,38 @@ class TableService {
           }
         }
       });
+    } else {
+      // TODO: usually we use this approach only for entries
+
+      const data = entity.data;
+      if (data.length > 0) {
+        const firstRow = data[0];
+        const headers = Object.keys(firstRow);
+
+        headers.forEach((header) => {
+          const values = data.map((row: any) => row[header]);
+
+          if (!chartData.has(header)) {
+            chartData.set(header, []);
+          }
+
+          const _properties = chartData.get(header) as {
+            name: string;
+            value: number;
+          }[];
+
+          values.forEach((value: any) => {
+            const foundValue = _properties.find((item) => item.name === value);
+            if (foundValue) {
+              foundValue.value += 1;
+            } else {
+              _properties.push({ name: value, value: 1 });
+            }
+          });
+        });
+      }
+
+      console.log("%cdata", "color: purple", data);
     }
 
     this._nodeService.addUserdataToNode(nodeId, {

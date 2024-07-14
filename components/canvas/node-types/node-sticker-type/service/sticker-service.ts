@@ -9,6 +9,7 @@ class StickerService {
     { label: string; value: string; data: any }[]
   >([]);
   public topics$ = new BehaviorSubject<ProjectTopic[]>([]);
+  public chartData$ = new BehaviorSubject<Set<string>>(new Set());
 
   private _previousUserData: any;
 
@@ -21,9 +22,11 @@ class StickerService {
     const userData = previousNode?.data?.userData || {};
     const entities = userData.entities || [];
     const topics = userData.topics || [];
+    const chartData = userData.chartData || new Set();
 
     this.entities$.next(entities);
     this.topics$.next(topics);
+    this.chartData$.next(chartData);
   }
 
   public async generate(message: string, useAI: boolean) {
@@ -57,6 +60,7 @@ class StickerService {
         .map((entity) => entity.label)
         .join(", ")}.
         Please return the entity name or "none" if the user is not referring to any of the entities.
+        Be aware that user can make mistakes or refer to entities in a different way. But if you think that user is referring to one of the entities, please return it in the exact form as it is in the list.
     `;
 
     try {
@@ -113,18 +117,23 @@ class StickerService {
     const columns = Array.from(chartData.keys());
     const chartTypes = ["pieChart", "lineChart"];
 
+    console.log("%ccolumns", "color: green", columns);
+
     const extendedMessage = `
      Determine if the user is requesting a chart. Available chart types:
       - "pieChart": Proportions or percentages within a whole.
       - "lineChart": Trends or changes over time.
 
-      Columns: ${columns.join(", ")}.
+      Columns: [${columns.join(", ")}].
 
       Note: The user prompt must include both a chart type and a column name. 
       If both are included, return:
       [chartType, columnName]
       If either is missing, return "none".
+      Be aware that user can make mistakes or refer to columns in a different way. But if you think that user is referring to one of the columns, please return it in the exact form as it is in the list.
     `;
+
+    console.log("extendedMessage", extendedMessage);
 
     try {
       const response = await fetch("/api/gpt/create-message-v2", {
@@ -149,9 +158,31 @@ class StickerService {
       const data = (await response.json()) as GptResponseData;
 
       const generatedMessage = data.data.choices[0].message.content;
+      console.log("generatedMessage", generatedMessage);
+
       // we need to check whether parsed string is either "none" or array of two elements
-      const [chartType, columnName] =
-        generatedMessage === "none" ? [] : JSON.parse(generatedMessage);
+      // Normalize the generated message to ensure it's in the expected format
+      const normalizedMessage = generatedMessage.trim();
+      let chartType: string;
+      let columnName: string;
+
+      if (normalizedMessage === "none") {
+        chartType = columnName = null as any;
+      } else {
+        // Try parsing the message
+        try {
+          [chartType, columnName] = JSON.parse(normalizedMessage);
+        } catch (error) {
+          // If parsing fails, manually extract the chartType and columnName
+          const match = normalizedMessage.match(/(\w+),\s*(\w+)/);
+          if (match) {
+            chartType = match[1];
+            columnName = match[2];
+          } else {
+            chartType = columnName = null as any;
+          }
+        }
+      }
 
       if (chartTypes.includes(chartType) && columns.includes(columnName)) {
         const chartItems = chartData.get(columnName);

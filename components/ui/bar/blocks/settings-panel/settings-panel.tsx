@@ -24,8 +24,6 @@ const SettingsPanel = () => {
 
       <Divider />
 
-      {/* <Thumbnail /> */}
-
       {/*  <Box
         sx={{
           display: "flex",

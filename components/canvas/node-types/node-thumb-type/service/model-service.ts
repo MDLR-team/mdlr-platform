@@ -2,6 +2,8 @@ import { BehaviorSubject } from "rxjs";
 import { NodeModelMetadata } from "./model-service.types";
 import { v4 as uuidv4 } from "uuid";
 import NodeService from "@/components/canvas/node-service/node-service";
+import Papa from "papaparse";
+import { EntityItem } from "../../node-viewer-type/service/viewer-service";
 
 class ModelService {
   private _metadata$ = new BehaviorSubject<NodeModelMetadata | null>(null);
@@ -12,7 +14,7 @@ class ModelService {
 
   private _thumbIndex = 1;
 
-  constructor(private _nodeService: NodeService) {
+  constructor(private _nodeService: NodeService, private _nodeId: string) {
     const nodes = this._nodeService.nodes;
     const thumbNodes = nodes.filter((node) => node.type === "thumbnail");
 
@@ -31,18 +33,75 @@ class ModelService {
     });
   }
 
-  public async uploadFile() {
-    await this._handleDummyLoading();
+  public async uploadFile(file: File) {
+    const fileExtension = file.name.split(".").pop()?.toLowerCase();
+    const fileName = file.name;
 
-    const metadata: NodeModelMetadata = {
-      id: uuidv4(),
-      name: "My Model",
-      endpoint: "ModelFile.rvt",
-      thumbnail:
-        "https://ixuszjrnviwgquuqfbmk.supabase.co/storage/v1/object/public/thumbs/ee392d83-0e09-4e70-a36f-37fb2d4601e9-1713060468673.png",
-    };
+    if (fileExtension === "csv") {
+      this._loading$.next(true);
 
-    this._metadata$.next(metadata);
+      try {
+        Papa.parse(file, {
+          complete: (results) => {
+            const data: any[] = results.data;
+
+            if (data.length === 0) {
+              console.error("No data found in CSV file");
+              return;
+            } else {
+              const firstRow = data[0];
+              const headers = Object.keys(firstRow);
+
+              const entitiesObj: Record<string, any[]> = {};
+
+              /* const entities: EntityItem[] = headers.map((header) => {
+                const values = data.map((row) => row[header]);
+
+                entitiesObj[header] = values;
+
+                return {
+                  label: header,
+                  value: header || "",
+                  data: values,
+                };
+              }); */
+              const entities: EntityItem[] = [
+                {
+                  label: "entries",
+                  value: "entries",
+                  data: data,
+                },
+              ];
+
+              this._nodeService.addUserdataToNode(this._nodeId, {
+                entities,
+                entries: data,
+              });
+
+              this._loading$.next(false);
+              this._loaded$.next(true);
+
+              const metadata: NodeModelMetadata = {
+                id: uuidv4(),
+                name: fileName,
+                endpoint: fileName,
+                thumbnail: "",
+              };
+
+              this._metadata$.next(metadata);
+            }
+            // You can now process the results.data as needed
+          },
+          header: true, // If your CSV file has headers
+        });
+      } catch (error) {
+        console.error("Error parsing CSV file", error);
+      }
+
+      return;
+    } else {
+      return;
+    }
   }
 
   public async uploadApi(_metadata: Partial<NodeModelMetadata>) {

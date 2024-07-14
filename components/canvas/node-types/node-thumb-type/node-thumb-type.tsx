@@ -16,7 +16,7 @@ const NodeThumbType = ({ data, isConnectable }: any) => {
   const [metadata, setMetadata] = useState<NodeModelMetadata | null>(null);
 
   const [modelService] = useState<ModelService>(
-    () => new ModelService(nodeService)
+    () => new ModelService(nodeService, data.id)
   );
 
   const [tabIndex, setTabIndex] = useState(0);
@@ -184,7 +184,12 @@ const NodeThumbType = ({ data, isConnectable }: any) => {
   );
 };
 
-export const NodeModelContext = createContext<any>(null);
+export const NodeModelContext = createContext<{
+  modelService: ModelService;
+  loading: boolean;
+  loaded: boolean;
+  metadata: NodeModelMetadata | null;
+} | null>(null);
 
 export function useNodeModel() {
   const service = useContext(NodeModelContext);

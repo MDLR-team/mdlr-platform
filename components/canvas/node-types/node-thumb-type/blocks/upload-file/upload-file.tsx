@@ -8,6 +8,14 @@ const UploadFile = () => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      modelService.uploadFile(file);
+    }
+    event.target.value = ""; // Clear the input value
+  };
+
   return (
     <Box
       sx={{ height: "100%" }}
@@ -16,11 +24,7 @@ const UploadFile = () => {
       <input
         ref={fileInputRef}
         type="file"
-        accept=".rvt"
-        onChange={(event: any) => {
-          event.target.value = "";
-          modelService.uploadFile();
-        }}
+        onChange={handleFileChange}
         style={{ display: "none" }}
       />
 

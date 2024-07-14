@@ -5,12 +5,15 @@ import styled from "styled-components";
 import { useNodes } from "../../node-service/node-provider";
 import ViewerService from "./service/viewer-service";
 import InputData from "./blocks/input-data/input-data";
+import { Project } from "@/components/types/supabase-data.types";
 
 const NodeViewerType = ({ data, isConnectable }: any) => {
   const { nodes, nodeService } = useNodes();
 
   const [loading, setLoading] = useState(true);
   const [loaded, setLoaded] = useState(false);
+
+  const [projects, setProjects] = useState<Project[]>([]);
 
   const [viewerService] = useState(
     () => new ViewerService(nodeService, data.id)
@@ -19,17 +22,26 @@ const NodeViewerType = ({ data, isConnectable }: any) => {
   const [projectMetadata, setProjectMetadata] = useState<any | null>(null);
 
   useEffect(() => {
-    viewerService.project$.subscribe((project) => {
+    const p1 = viewerService.project$.subscribe((project) => {
       setLoading(false);
       setLoaded(true);
 
       setProjectMetadata(project);
     });
 
+    const p2 = viewerService.projects$.subscribe((projects) => {
+      setProjects(projects);
+    });
+
     return () => {
+      p1.unsubscribe();
+      p2.unsubscribe();
+
       viewerService.dispose();
     };
   }, []);
+
+  console.log("projects", projects);
 
   return (
     <NodeViewerContext.Provider
@@ -47,7 +59,31 @@ const NodeViewerType = ({ data, isConnectable }: any) => {
         />
 
         <Wrapper id={`box${data.id}`}>
-          {!projectMetadata && <InputData />}
+          {!projectMetadata && (
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "4px",
+                position: "relative",
+              }}
+            >
+              {projects.map((project) => (
+                <Box
+                  sx={{
+                    paddingBottom: "80%",
+                    backgroundColor: "lightgrey",
+                    backgroundImage: `url(${project.thumbnail})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: "9px",
+                  }}
+                  key={project.id}
+                  onClick={() => viewerService.fetchProject(project.bim_urn)}
+                ></Box>
+              ))}
+            </Box>
+          )}
 
           {projectMetadata && (
             <Box

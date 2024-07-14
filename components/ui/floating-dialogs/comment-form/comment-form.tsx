@@ -128,9 +128,6 @@ const CommentMessage: React.FC<{
     activeCommentService.togglePaperMode(false);
   };
 
-  console.log("activeComment?.view_state", activeComment?.view_state);
-  console.log("isPaperMode", isPaperMode);
-
   if (!(commentAdding && commentPointSelected)) return <></>;
 
   return (

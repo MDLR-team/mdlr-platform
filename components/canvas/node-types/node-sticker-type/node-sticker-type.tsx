@@ -18,6 +18,7 @@ const NodeStickerType = ({ data, isConnectable }: any) => {
       data: any;
     }[]
   >([]);
+  const [chartData, setChartData] = useState<Set<string>>(new Set());
 
   const [stickerService] = useState(
     () => new StickerService(nodeService, data.id)
@@ -27,9 +28,13 @@ const NodeStickerType = ({ data, isConnectable }: any) => {
     const ep = stickerService.entities$.subscribe((entities) =>
       setEntities(entities)
     );
+    const cp = stickerService.chartData$.subscribe((chartData) =>
+      setChartData(chartData)
+    );
 
     return () => {
       ep.unsubscribe();
+      cp.unsubscribe();
 
       stickerService.dispose();
     };
@@ -92,6 +97,39 @@ const NodeStickerType = ({ data, isConnectable }: any) => {
                     key={index}
                   >
                     {entity.label}
+                  </Box>
+                ))}
+              </Box>
+            </Box>
+          )}
+
+          {chartData.size > 0 && (
+            <Box
+              sx={{
+                display: "flex",
+                marginBottom: "10px",
+                flexDirection: "column",
+              }}
+            >
+              <i>Chart data: </i>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                }}
+              >
+                {Array.from(chartData.keys()).map((chart, index) => (
+                  <Box
+                    sx={{
+                      border: "1px solid #000",
+                      padding: "2px",
+                      borderRadius: "5px",
+                      margin: "2px",
+                    }}
+                    key={index}
+                  >
+                    {chart}
                   </Box>
                 ))}
               </Box>
