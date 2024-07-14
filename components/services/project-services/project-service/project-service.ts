@@ -47,14 +47,14 @@ class ProjectService {
 
   private _globalStatesService: GlobalStatesService;
   private _commentService: CommentService;
-  private _activeCommentService: ActiveCommentService;
+  //private _activeCommentService: ActiveCommentService;
   private _viewerServiceAggr: ViewerServiceAggr;
 
-  private _markup3DService: Markup3DService;
-  private _markup2DService: Markup2DService;
+  /* private _markup3DService: Markup3DService;
+  private _markup2DService: Markup2DService; */
   private _markupService: MarkupService;
 
-  private _hotkeyService: HotkeyService;
+  //private _hotkeyService: HotkeyService;
 
   private _topicsService: TopicsService;
 
@@ -66,16 +66,16 @@ class ProjectService {
     this._globalStatesService = new GlobalStatesService(this);
     this._topicsService = new TopicsService(this);
     this._commentService = new CommentService(this);
-    this._activeCommentService = new ActiveCommentService(this);
+    //this._activeCommentService = new ActiveCommentService(this);
     this._viewerServiceAggr = new ViewerServiceAggr(this);
 
     this.projectUsers = new Map();
 
-    this._markup3DService = new Markup3DService(this);
-    this._markup2DService = new Markup2DService(this);
+    /* this._markup3DService = new Markup3DService(this);
+    this._markup2DService = new Markup2DService(this); */
     this._markupService = new MarkupService(this);
 
-    this._hotkeyService = new HotkeyService(this);
+    //this._hotkeyService = new HotkeyService(this);
 
     this.provideStates();
   }
@@ -310,25 +310,25 @@ class ProjectService {
     return this._commentService;
   }
 
-  public get activeCommentService() {
+  /* public get activeCommentService() {
     return this._activeCommentService;
-  }
+  } */
 
-  public get hotkeyService() {
+  /*  public get hotkeyService() {
     return this._hotkeyService;
-  }
+  } */
 
   public get viewerServiceAggr() {
     return this._viewerServiceAggr;
   }
 
-  public get markup3DService() {
+  /* public get markup3DService() {
     return this._markup3DService;
   }
 
   public get markup2DService() {
     return this._markup2DService;
-  }
+  } */
 
   public get markupService() {
     return this._markupService;
@@ -355,14 +355,14 @@ class ProjectService {
 
     this._globalStatesService.dispose();
     this._commentService.dispose();
-    this._activeCommentService.dispose();
+    //this._activeCommentService.dispose();
     this._viewerServiceAggr.dispose();
 
-    this._markup3DService.dispose();
-    this._markup2DService.dispose();
+    /* this._markup3DService.dispose();
+    this._markup2DService.dispose(); */
     this._markupService.dispose();
 
-    this._hotkeyService.dispose();
+    //this._hotkeyService.dispose();
 
     this._topicsService.dispose();
   }

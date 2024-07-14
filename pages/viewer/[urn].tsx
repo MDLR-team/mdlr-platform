@@ -17,24 +17,24 @@ const ViewerPage = () => {
       <GlobalStatesProvider>
         <ViewerProvider>
           <CommentProvider>
-            <ActiveCommentProvider>
+            {/* <ActiveCommentProvider>
               <Markup3DProvider>
-                <Markup2DProvider>
-                  <div
-                    style={{
-                      display: "flex",
-                      width: "100vw",
-                      height: "100vh",
-                      position: "relative",
-                    }}
-                  >
-                    <UIGrid />
+                <Markup2DProvider> */}
+            <div
+              style={{
+                display: "flex",
+                width: "100vw",
+                height: "100vh",
+                position: "relative",
+              }}
+            >
+              {/* <UIGrid /> */}
 
-                    <ViewerW />
-                  </div>
-                </Markup2DProvider>
+              <ViewerW />
+            </div>
+            {/* </Markup2DProvider>
               </Markup3DProvider>
-            </ActiveCommentProvider>
+            </ActiveCommentProvider> */}
           </CommentProvider>
         </ViewerProvider>
       </GlobalStatesProvider>

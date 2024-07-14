@@ -1,9 +1,12 @@
 import ProjectService from "@/components/services/project-services/project-service/project-service";
+import { Comment } from "@mui/icons-material";
 import { SupabaseClient } from "@supabase/supabase-js";
+import { BehaviorSubject } from "rxjs";
 import { v4 as uuidv4 } from "uuid";
 
 class CommentService {
   private _comments: Map<string | number, Comment>;
+  public comments$ = new BehaviorSubject<Comment[]>([]);
 
   private _changes: any;
 
@@ -130,9 +133,10 @@ class CommentService {
     }
 
     this._emit("COMMENTS_UPDATED", this._comments);
-    this._projectService.markup3DService.updateMarkups();
-    this._projectService.markup2DService.updateMarkups();
+    /* this._projectService.markup3DService.updateMarkups();
+    this._projectService.markup2DService.updateMarkups(); */
 
+    this.comments$.next(sortedComments);
     this.$setComments(sortedComments);
     this.$setCommentLogId(uuidv4());
   }

@@ -12,7 +12,7 @@ class HotkeyService {
     this._add3DComment = this._add3DComment.bind(this);
     this._add2DComment = this._add2DComment.bind(this);
 
-    this.updateCommentBindings();
+    //this.updateCommentBindings();
   }
 
   public updateCommentBindings() {

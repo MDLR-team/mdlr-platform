@@ -1,9 +1,13 @@
+import { BehaviorSubject } from "rxjs";
 import ProjectService from "../services/project-services/project-service/project-service";
 import Viewer from "./viewer-aggr";
 
 class ViewerServiceAggr {
-  private _viewer: any;
+  private _viewer: any; // the main viewer object
   private _view: any;
+
+  public viewer$ = new BehaviorSubject<any>(null); // the main viewer object
+  public view$ = new BehaviorSubject<any>(null);
 
   constructor(private _projectService: ProjectService) {
     this._viewer = null;
@@ -106,7 +110,10 @@ class ViewerServiceAggr {
     this._viewer = viewer;
     this._view = view;
 
-    this._projectService.markup3DService.provideViewer(viewer);
+    this.viewer$.next(viewer);
+    this.view$.next(view);
+
+    //this._projectService.markup3DService.provideViewer(viewer);
   }
 
   public dispose() {
