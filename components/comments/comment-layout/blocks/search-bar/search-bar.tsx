@@ -5,9 +5,11 @@ import { useState } from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
 import SearchIcon from "@mui/icons-material/Search";
 import styled from "styled-components";
+import { useComment } from "@/components/services/project-services/comment-service/comment-provider";
 
 const SearchBar = () => {
-  const { markup3DService, search, setSearch } = useMarkup3D();
+  const { search, setSearch } = useComment();
+  ///const { markup3DService, search, setSearch } = useMarkup3D();
 
   const clearQuery = () => {
     setSearch("");
@@ -68,7 +70,7 @@ const SearchBar = () => {
       <IconButton
         data-type="exception"
         data-add="comment"
-        onClick={() => markup3DService.toggleAddComment()}
+        //onClick={() => markup3DService.toggleAddComment()}
       >
         <PlusIcon />
       </IconButton>

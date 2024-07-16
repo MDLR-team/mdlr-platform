@@ -10,6 +10,7 @@ import { Markup2DProvider } from "@/components/services/project-services/markup-
 import { useAuth } from "@/components/services/app-services/auth/auth-provider";
 import { useRouter } from "next/router";
 import React from "react";
+import { MarkupProvider } from "@/components/services/markup-service/markup-provider";
 
 const ViewerPage = () => {
   return (
@@ -17,24 +18,26 @@ const ViewerPage = () => {
       <GlobalStatesProvider>
         <ViewerProvider>
           <CommentProvider>
-            {/* <ActiveCommentProvider>
+            <MarkupProvider>
+              {/* <ActiveCommentProvider>
               <Markup3DProvider>
                 <Markup2DProvider> */}
-            <div
-              style={{
-                display: "flex",
-                width: "100vw",
-                height: "100vh",
-                position: "relative",
-              }}
-            >
-              {/* <UIGrid /> */}
+              <div
+                style={{
+                  display: "flex",
+                  width: "100vw",
+                  height: "100vh",
+                  position: "relative",
+                }}
+              >
+                <UIGrid />
 
-              <ViewerW />
-            </div>
-            {/* </Markup2DProvider>
+                <ViewerW />
+              </div>
+              {/* </Markup2DProvider>
               </Markup3DProvider>
             </ActiveCommentProvider> */}
+            </MarkupProvider>
           </CommentProvider>
         </ViewerProvider>
       </GlobalStatesProvider>

@@ -21,6 +21,38 @@ const UIGrid = () => {
       <ViewStateMode />
 
       <FloatingWrapper>
+        {/* <CommentForm /> */}
+        <ActiveCommentDialog />
+      </FloatingWrapper>
+
+      <Wrapper>
+        <Grid>
+          <BarWrapper>
+            <Bar />
+            <Share />
+          </BarWrapper>
+
+          <ContentWrapper>
+            <CommentsBlock />
+          </ContentWrapper>
+
+          {/* <ContentWrapper>
+            <CommentsBlock />
+          </ContentWrapper> */}
+
+          <FooterWrapper style={{ justifyContent: "center" }}>
+            <ToolPanel />
+          </FooterWrapper>
+        </Grid>
+      </Wrapper>
+    </>
+  );
+
+  /*  return (
+    <>
+      <ViewStateMode />
+
+      <FloatingWrapper>
         <CommentForm />
         <ActiveCommentDialog />
       </FloatingWrapper>
@@ -42,7 +74,7 @@ const UIGrid = () => {
         </Grid>
       </Wrapper>
     </>
-  );
+  ); */
 };
 
 export default UIGrid;

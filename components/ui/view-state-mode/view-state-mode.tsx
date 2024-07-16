@@ -1,18 +1,30 @@
 import PaperCanvas from "@/components/paper/paper";
+import { useMarkup } from "@/components/services/markup-service/markup-provider";
 import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
 import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
 import { Box } from "@mui/material";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const ViewStateMode = () => {
-  const { isPaperMode, isPaperEditing } = useActiveComment();
+  const { markupService } = useMarkup();
 
-  if (!isPaperMode) return null;
+  const [enabled2D, setEnabled2D] = useState(false);
+
+  useEffect(() => {
+    const sub = markupService.enabled2D$.subscribe((enabled2D) =>
+      setEnabled2D(enabled2D)
+    );
+
+    return () => sub.unsubscribe();
+  }, [markupService]);
+
+  if (!enabled2D) return null;
 
   return (
     <>
       <FloatingWrapper
-        data-mode={isPaperMode && isPaperEditing ? "edit" : "workspace"}
+        data-mode={/* isPaperMode && isPaperEditing ? "edit" : */ "workspace"}
       >
         <Darkarea />
         <Darkarea />
@@ -25,11 +37,11 @@ const ViewStateMode = () => {
         <Darkarea />
       </FloatingWrapper>
 
-      {isPaperMode && !isPaperEditing && (
+      {/* isPaperMode && !isPaperEditing && (
         <FloatingWrapper data-type="draw">
           <PaperCanvas />
         </FloatingWrapper>
-      )}
+      ) */}
     </>
   );
 };

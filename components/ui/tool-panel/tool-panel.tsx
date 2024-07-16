@@ -11,21 +11,34 @@ import AutoAwesomeMotionOutlinedIcon from "@mui/icons-material/AutoAwesomeMotion
 import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
 import { useMarkup3D } from "@/components/services/project-services/markup-3d-service/markup-3d-provider";
 import { useMarkup2D } from "@/components/services/project-services/markup-2d-service/markup-2d-provider";
+import { useMarkup } from "@/components/services/markup-service/markup-provider";
+import { useEffect, useState } from "react";
 
 const ToolPanel = () => {
-  const { commentAdding, globalStatesService } = useGlobalStates();
+  /* const { commentAdding, globalStatesService } = useGlobalStates();
   const { markup3DService, measureEnabled } = useMarkup3D();
   const { markup2DService } = useMarkup2D();
 
   const { isPaperMode, isPaperEditing, viewType, activeCommentService } =
-    useActiveComment();
+    useActiveComment(); */
+  const { markupService } = useMarkup();
+
+  const [commentAdding, setCommentAdding] = useState(false);
+
+  useEffect(() => {
+    const sub = markupService.enabledAdding$.subscribe((enabledAdding) =>
+      setCommentAdding(enabledAdding)
+    );
+
+    return () => sub.unsubscribe();
+  }, [markupService]);
 
   return (
     <Box sx={{ position: "relative" }}>
-      <SecondaryToolPanel />
+      {/* <SecondaryToolPanel /> */}
 
       <Paper sx={{ display: "flex", gap: "6px", minWidth: "max-content" }}>
-        {!isPaperMode && (
+        {
           <>
             <IconButton data-active="true">
               <CursorIcon />
@@ -34,42 +47,29 @@ const ToolPanel = () => {
             <IconButton
               data-active={commentAdding ? "true" : "false"}
               onClick={() => {
-                markup3DService.toggleAddComment();
+                markupService.activateTool("ADD_COMMENT");
+                //markupService.toggleAddComment();
               }}
             >
               <CommentIcon />
             </IconButton>
 
             <IconButton
-              data-active={measureEnabled ? "true" : "false"}
+              data-active={/* measureEnabled ? "true" : */ "false"}
               onClick={() => {
-                markup3DService.toggleMeasure(true);
+                //markup3DService.toggleMeasure(true);
               }}
             >
               <MeasureIcon />
             </IconButton>
           </>
-        )}
+        }
 
-        {isPaperMode && !isPaperEditing && (
+        {/* isPaperMode && !isPaperEditing && (
           <>
             <IconButton data-active="true">
               <CursorIcon />
             </IconButton>
-
-            {/* <IconButton
-              data-active={viewType === "assembled" ? "true" : "false"}
-              onClick={() => activeCommentService.toggleViewType("assembled")}
-            >
-              <FormatListBulletedIcon sx={{ fontSize: 16 }} />
-            </IconButton>
-
-            <IconButton
-              data-active={viewType === "exploded" ? "true" : "false"}
-              onClick={() => activeCommentService.toggleViewType("exploded")}
-            >
-              <AutoAwesomeMotionOutlinedIcon sx={{ fontSize: 16 }} />
-        </IconButton> */}
 
             <IconButton
               data-active={commentAdding ? "true" : "false"}
@@ -80,7 +80,7 @@ const ToolPanel = () => {
               <CommentIcon />
             </IconButton>
           </>
-        )}
+        ) */}
       </Paper>
     </Box>
   );

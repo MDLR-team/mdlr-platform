@@ -14,7 +14,13 @@ export function transformPointToNormalizedCoords(point: any, canvas: any) {
 }
 
 // Helper function to convert normalized coordinates back to canvas pixel coordinates
-export function deparseNormalizedCoords(normalizedPoint: any, canvas: any) {
+export function deparseNormalizedCoords(
+  normalizedPoint: {
+    x: number;
+    y: number;
+  },
+  canvas: any
+) {
   const rect = canvas.getBoundingClientRect();
 
   const centerX = rect.width / 2;

@@ -20,7 +20,9 @@ export function MarkupProvider({ children }: any) {
       value={{
         markupService,
       }}
-    ></MarkupContext.Provider>
+    >
+      {children}
+    </MarkupContext.Provider>
   );
 }
 

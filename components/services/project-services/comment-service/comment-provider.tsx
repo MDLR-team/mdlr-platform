@@ -9,6 +9,8 @@ interface CommentContentProps {
   comments: Comment[];
   commentService: CommentService;
   commentLogId: string;
+  search: string;
+  setSearch: (search: string) => void;
 }
 
 const CommentContext = createContext<CommentContentProps | undefined>(
@@ -21,6 +23,8 @@ export function CommentProvider({ children }: any) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentLogId, setCommentLogId] = useState<string>(uuidv4());
   const [commentService] = useState(() => projectService.commentService);
+
+  const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
     commentService.provideStates({
@@ -39,6 +43,8 @@ export function CommentProvider({ children }: any) {
         comments,
         commentService,
         commentLogId,
+        search,
+        setSearch,
       }}
     >
       {children}

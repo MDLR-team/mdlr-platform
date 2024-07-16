@@ -20,7 +20,7 @@ const MessageItem: React.FC<MessageItemProps> = ({
   annotation,
   author_username,
 }) => {
-  const { activeCommentService } = useActiveComment();
+  /// const { activeCommentService } = useActiveComment();
 
   // date to comment format when if it was recently we can show "just now" or "1 minute ago" or "x dayes ago" or "x months ago"
   const time = moment(created_at).fromNow();
@@ -63,7 +63,9 @@ const MessageItem: React.FC<MessageItemProps> = ({
 
             <IconButton
               disabled={view_state ? false : true}
-              onClick={() => activeCommentService.togglePaperMode(true)}
+              onClick={
+                () => {} /* activeCommentService.togglePaperMode(true) */
+              }
             >
               <FitIcon />
             </IconButton>

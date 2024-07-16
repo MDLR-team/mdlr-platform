@@ -9,24 +9,37 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
 import ActiveCommentMessage from "../active-comment-message/active-comment-message";
 import MiniComment from "@/components/comments/comment-layout/blocks/comment/mini-comment";
+import { useMarkup } from "@/components/services/markup-service/markup-provider";
+import { useEffect, useState } from "react";
+import { Comment } from "@/components/services/project-services/comment-service/comment-service";
 
 const ActiveCommentDialog = () => {
-  const {
-    activeCommentService,
-    activeComment,
-    activeCommentPosition,
-    childComments,
-    viewType,
-  } = useActiveComment();
+  const { markupService } = useMarkup();
+  const activeCommentService = markupService.activeCommentService;
 
-  if (!activeComment || !activeCommentPosition) return null;
+  const [xy, setXY] = useState<{ x: number; y: number } | null>(null);
+  const [activeComment, setActiveComment] = useState<Comment | null>(null);
+
+  useEffect(() => {
+    const sub = activeCommentService.xy$.subscribe((xy) => setXY(xy));
+    const sub2 = markupService.activeComment$.subscribe((comment) =>
+      setActiveComment(comment)
+    );
+
+    return () => {
+      sub.unsubscribe();
+      sub2.unsubscribe();
+    };
+  }, []);
+
+  if (!activeComment || !xy) return null;
 
   return (
     <Paper
       sx={{
         position: "absolute",
-        left: `${activeCommentPosition?.x + 27 + 10 || 0}px`,
-        top: `${activeCommentPosition?.y - 27 || 0}px`,
+        left: `${xy.x + 27 + 10 || 0}px`,
+        top: `${xy.y - 27 || 0}px`,
         minWidth: "250px",
         maxWidth: "250px",
         display: "flex",
@@ -53,7 +66,7 @@ const ActiveCommentDialog = () => {
             fontSize: "12px !important",
           }}
           size="small"
-          onClick={() => activeCommentService.deselectComment()}
+          onClick={() => markupService.closeComment()}
         >
           <CloseIcon fontSize="small" />
         </IconButton>
@@ -62,7 +75,8 @@ const ActiveCommentDialog = () => {
       {
         <CommentList>
           <List>
-            {childComments
+            <MessageItem {...activeComment} selectComment={() => {}} />
+            {/* childComments
               .filter((comment) => {
                 if (comment.parent_id) return;
 
@@ -76,7 +90,7 @@ const ActiveCommentDialog = () => {
                     key={comment.id}
                   />
                 </>
-              ))}
+              )) */}
           </List>
         </CommentList>
       }

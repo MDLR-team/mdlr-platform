@@ -4,7 +4,7 @@ import { toScreenXY } from "../../project-services/markup-3d-service/utils/to-sc
 import ProjectService from "../../project-services/project-service/project-service";
 import MarkupService from "../markup-service";
 
-interface Markup3D {
+export interface Markup3D {
   id: string;
   position: { x: number; y: number; z: number };
   svg: SVGElement;
@@ -25,6 +25,12 @@ class TopMarkupService {
         this.viewerEventsAdded = true;
       }
     });
+
+    // Subscribe to tempEnt3D$ to update markups based on temporary entities
+    this.markupService.tempEnt3D$.subscribe(() => this.onCameraChange());
+
+    // Subscribe to activeComment$ to apply grayscale filter
+    this.markupService.activeComment$.subscribe(this.applyGrayscaleFilter);
   }
 
   /**
@@ -76,9 +82,35 @@ class TopMarkupService {
     if (!viewer) return;
 
     const camera = viewer.getCamera();
+
+    // Update markup positions
     this.markups.forEach((markup) => {
       const { x, y } = toScreenXY(markup.position, camera, viewer.canvas);
       markup.svg.setAttribute("transform", `translate(${x}, ${y - 27})`);
+    });
+
+    // Update tempEnt3D positions
+    this.markupService.tempEnt3D$.value.forEach((tempEnt3D) => {
+      const { x, y } = toScreenXY(tempEnt3D.position, camera, viewer.canvas);
+      tempEnt3D.callback({ x, y });
+    });
+  };
+
+  /**
+   * Applies a grayscale filter to all SVGs except the active comment.
+   * @param activeCommentId - The ID of the active comment.
+   */
+  private applyGrayscaleFilter = (activeComment: Comment | null) => {
+    const activeCommentId = activeComment?.id;
+
+    this.markups.forEach((markup) => {
+      if (markup.id === activeCommentId || !activeComment) {
+        markup.svg.style.filter = "none";
+        markup.svg.style.opacity = "1";
+      } else {
+        markup.svg.style.opacity = "0.3";
+        markup.svg.style.filter = "grayscale(100%)";
+      }
     });
   };
 
