@@ -9,7 +9,7 @@ const PaperCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const parentRef = useRef<HTMLDivElement | null>(null);
 
-  const { isPaperMode } = useActiveComment();
+  // const { isPaperMode } = useActiveComment();
 
   const [commentBBoxes, setCommentBBoxes] = useState<
     Map<string, paper.Rectangle>
@@ -25,9 +25,9 @@ const PaperCanvas: React.FC = () => {
    * Manages drawing annotations on a Paper.js canvas in pen mode.
    * Handles mouse events for creating and modifying paths.
    */
-  useAnnotationDrawing(canvasRef);
+  //useAnnotationDrawing(canvasRef);
 
-  if (!isPaperMode) return null;
+  //if (!isPaperMode) return null;
 
   return (
     <>
@@ -47,7 +47,7 @@ const PaperCanvas: React.FC = () => {
         <canvas className="paper-canvas" ref={canvasRef} />
       </Box>
 
-      <ExplodedCommentLayout {...{ commentBBoxes }} />
+      {/*  <ExplodedCommentLayout {...{ commentBBoxes }} /> */}
     </>
   );
 };

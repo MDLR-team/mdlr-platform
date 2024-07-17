@@ -30,7 +30,7 @@ class TopMarkupService {
     this.markupService.tempEnt3D$.subscribe(() => this.onCameraChange());
 
     // Subscribe to activeComment$ to apply grayscale filter
-    this.markupService.activeComment$.subscribe(this.applyGrayscaleFilter);
+    this.markupService.enabled2D$.subscribe(this.applyGrayscaleFilter);
   }
 
   /**
@@ -100,11 +100,14 @@ class TopMarkupService {
    * Applies a grayscale filter to all SVGs except the active comment.
    * @param activeCommentId - The ID of the active comment.
    */
-  private applyGrayscaleFilter = (activeComment: Comment | null) => {
+  private applyGrayscaleFilter = (enabled2D: boolean) => {
+    const activeComment = this.markupService.activeComment$.value;
     const activeCommentId = activeComment?.id;
 
+    const allowGrayscale = enabled2D && activeComment;
+
     this.markups.forEach((markup) => {
-      if (markup.id === activeCommentId || !activeComment) {
+      if (markup.id === activeCommentId || !allowGrayscale) {
         markup.svg.style.filter = "none";
         markup.svg.style.opacity = "1";
       } else {
@@ -154,7 +157,8 @@ class TopMarkupService {
   };
 
   public dispose = () => {
-    // Add dispose logic if needed
+    this.markups.forEach((markup) => markup.svg.remove());
+    this.markups.clear();
   };
 }
 

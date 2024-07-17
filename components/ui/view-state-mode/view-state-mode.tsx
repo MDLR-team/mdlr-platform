@@ -37,11 +37,11 @@ const ViewStateMode = () => {
         <Darkarea />
       </FloatingWrapper>
 
-      {/* isPaperMode && !isPaperEditing && (
+      {enabled2D && (
         <FloatingWrapper data-type="draw">
           <PaperCanvas />
         </FloatingWrapper>
-      ) */}
+      )}
     </>
   );
 };

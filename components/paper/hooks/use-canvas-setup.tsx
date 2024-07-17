@@ -1,8 +1,10 @@
 import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
-import { useEffect } from "react";
+import { use, useEffect, useState } from "react";
 import paper, { Path, Tool } from "paper";
 import { deparseNormalizedCoords } from "@/components/services/project-services/active-comment-service/utils/point-2-normalized-coord";
 import { getAnnotationBoundingBox } from "@/components/services/project-services/active-comment-service/utils/bounding-box";
+import { useMarkup } from "@/components/services/markup-service/markup-provider";
+import { Comment } from "@/components/services/project-services/comment-service/comment-service";
 
 /**
  * Sets up and resizes the canvas based on its parent container.
@@ -15,14 +17,18 @@ const useCanvasSetup = (
   parentRef: React.MutableRefObject<HTMLDivElement | null>,
   setCommentBBoxes: (commentBBoxes: Map<string, paper.Rectangle>) => void
 ) => {
-  const { isPaperMode, activeCommentService, activeComment } =
-    useActiveComment();
-
-  const { childComments, annotation } = useActiveComment();
+  const { markupService } = useMarkup();
+  const [spatialComments, setSpatialComments] = useState<Comment[]>([]);
 
   useEffect(() => {
-    if (!isPaperMode) return;
+    const sub = markupService.spatialComments$.subscribe((comments) =>
+      setSpatialComments(comments)
+    );
 
+    return () => sub.unsubscribe();
+  }, [markupService]);
+
+  useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -67,7 +73,7 @@ const useCanvasSetup = (
         const commentBoundingBoxes: Map<string, paper.Rectangle> = new Map();
 
         // Draw existing annotations from childComments
-        childComments.forEach((comment) => {
+        spatialComments.forEach((comment) => {
           if (comment.annotation) {
             const lines: paper.Path[] = [];
 
@@ -106,7 +112,7 @@ const useCanvasSetup = (
           }
         });
 
-        const annotation = activeCommentService.annotation;
+        /* const annotation = activeCommentService.annotation;
 
         // Draw existing user annotations
         annotation.forEach((line) => {
@@ -121,7 +127,7 @@ const useCanvasSetup = (
             path.add(paperPoint);
           });
           path.simplify(10);
-        });
+        }); */
       };
 
       // Listen for changes in user annotations to redraw annotations
@@ -137,7 +143,7 @@ const useCanvasSetup = (
     return () => {
       window.removeEventListener("resize", resizeCanvas);
     };
-  }, [isPaperMode, activeComment, childComments, annotation]);
+  }, [spatialComments]);
 };
 
 export default useCanvasSetup;

@@ -5,7 +5,7 @@ import { createMarkupSvg } from "../../project-services/markup-3d-service/utils/
 import ProjectService from "../../project-services/project-service/project-service";
 import MarkupService from "../markup-service";
 
-interface Markup2D {
+export interface Markup2D {
   id: string;
   position: { x: number; y: number };
   svg: SVGElement;
