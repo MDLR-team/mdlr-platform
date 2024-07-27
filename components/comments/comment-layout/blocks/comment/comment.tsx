@@ -1,8 +1,5 @@
 import Avatar from "@/components/layout/avatar/avatar";
-import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
 import { Comment } from "@/components/services/project-services/comment-service/comment-service";
-import FitIcon from "@/components/ui/icons/fir-icon";
-import PencilIcon from "@/components/ui/icons/pencil-icon";
 import ResolveIcon from "@/components/ui/icons/resolve-icon";
 import { Box, IconButton } from "@mui/material";
 import moment from "moment";
