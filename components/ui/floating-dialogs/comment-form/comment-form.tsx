@@ -1,20 +1,11 @@
-import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
 import React, { useState, useRef, useEffect } from "react";
-import { Box, TextField, Button, IconButton } from "@mui/material";
+import { Box, TextField, IconButton } from "@mui/material";
 import styled from "styled-components";
 import { Paper } from "@mui/material";
-import { useMarkup3D } from "@/components/services/project-services/markup-3d-service/markup-3d-provider";
-import { useMarkup2D } from "@/components/services/project-services/markup-2d-service/markup-2d-provider";
-import { PointXY } from "@/components/services/project-services/active-comment-service/active-comment-service";
-import Markup3DService from "@/components/services/project-services/markup-3d-service/markup-3d-service";
-import Markup2DService from "@/components/services/project-services/markup-2d-service/markup-2d-service";
-import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
 import PencilIcon from "../../icons/pencil-icon";
 import PlusIcon from "../../icons/plus-icon";
 import ThreadIcon from "../../icons/thread-icon";
 import ImageIcon from "../../icons/image-icon";
-import { supabase } from "@/components/supabase-client";
-import { useViewer } from "@/components/forge/viewer-provider";
 import { useMarkup } from "@/components/services/markup-service/markup-provider";
 import { Comment } from "@/components/services/project-services/comment-service/comment-service";
 

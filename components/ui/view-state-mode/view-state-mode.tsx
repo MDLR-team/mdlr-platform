@@ -1,7 +1,5 @@
 import PaperCanvas from "@/components/paper/paper";
 import { useMarkup } from "@/components/services/markup-service/markup-provider";
-import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
-import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import styled from "styled-components";

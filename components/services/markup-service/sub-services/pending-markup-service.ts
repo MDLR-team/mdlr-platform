@@ -1,9 +1,6 @@
-import { transformPointToNormalizedCoords } from "../../project-services/active-comment-service/utils/point-2-normalized-coord";
-import {
-  createMarkupSvg,
-  MarkupSVGType,
-} from "../../project-services/markup-3d-service/utils/create-markup-svg";
-import { getPointer } from "../../project-services/pending-markup-3d-service/utils/get-pointer";
+import { transformPointToNormalizedCoords } from "./utils/point-2-normalized-coord";
+import { createMarkupSvg, MarkupSVGType } from "./utils/create-markup-svg";
+import { getPointer } from "./utils/get-pointer";
 import ProjectService from "../../project-services/project-service/project-service";
 import MarkupService from "../markup-service";
 import { Markup2D } from "./spatial-markup-service";
@@ -253,7 +250,9 @@ class PendingMarkupService {
     const x = e.clientX;
     const y = e.clientY;
 
-    const canvasRef = document.getElementById("paper-view-0");
+    const canvasRef = document.getElementsByClassName(
+      "paper-canvas"
+    )[0] as HTMLElement;
 
     const normilizedCoords = transformPointToNormalizedCoords(
       { x, y },

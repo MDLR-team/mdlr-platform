@@ -1,8 +1,7 @@
-import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
-import { use, useEffect, useState } from "react";
-import paper, { Path, Tool } from "paper";
-import { deparseNormalizedCoords } from "@/components/services/project-services/active-comment-service/utils/point-2-normalized-coord";
-import { getAnnotationBoundingBox } from "@/components/services/project-services/active-comment-service/utils/bounding-box";
+import { useEffect, useState } from "react";
+import paper, { Path } from "paper";
+import { deparseNormalizedCoords } from "@/components/services/markup-service/sub-services/utils/point-2-normalized-coord";
+import { getAnnotationBoundingBox } from "@/components/services/markup-service/sub-services/utils/bounding-box";
 import { useMarkup } from "@/components/services/markup-service/markup-provider";
 import { Comment } from "@/components/services/project-services/comment-service/comment-service";
 

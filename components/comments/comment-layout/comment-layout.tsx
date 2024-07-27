@@ -2,13 +2,10 @@ import React, { useMemo } from "react";
 
 import { useComment } from "../../services/project-services/comment-service/comment-provider";
 import { Box, IconButton, Paper } from "@mui/material";
-import PlusIcon from "@/components/ui/icons/plus-icon";
 import CommentsIcon from "@/components/ui/icons/comments-icon";
 import MessageItem from "./blocks/comment/comment";
 import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
 import { CommentList, Header, List } from "./comment-layout.styled";
-import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
-import { useMarkup3D } from "@/components/services/project-services/markup-3d-service/markup-3d-provider";
 import SearchBar from "./blocks/search-bar/search-bar";
 import { useMarkup } from "@/components/services/markup-service/markup-provider";
 

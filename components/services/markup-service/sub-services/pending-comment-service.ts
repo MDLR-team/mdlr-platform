@@ -2,7 +2,7 @@ import { BehaviorSubject } from "rxjs";
 import ProjectService from "../../project-services/project-service/project-service";
 import MarkupService from "../markup-service";
 import { Comment } from "../../project-services/comment-service/comment-service";
-import { createMarkupSvg } from "../../project-services/markup-3d-service/utils/create-markup-svg";
+import { createMarkupSvg } from "./utils/create-markup-svg";
 import { Markup3D } from "./top-markup-service";
 import { Markup2D } from "./spatial-markup-service";
 import hotkeys from "hotkeys-js";

@@ -3,12 +3,8 @@ import {
   CommentList,
   List,
 } from "@/components/comments/comment-layout/comment-layout.styled";
-import { useComment } from "@/components/services/project-services/comment-service/comment-provider";
 import { Paper, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
-import ActiveCommentMessage from "../active-comment-message/active-comment-message";
-import MiniComment from "@/components/comments/comment-layout/blocks/comment/mini-comment";
 import { useMarkup } from "@/components/services/markup-service/markup-provider";
 import { useEffect, useState } from "react";
 import { Comment } from "@/components/services/project-services/comment-service/comment-service";

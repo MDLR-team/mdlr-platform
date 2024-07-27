@@ -1,6 +1,6 @@
 import { Comment } from "../../project-services/comment-service/comment-service";
-import { createMarkupSvg } from "../../project-services/markup-3d-service/utils/create-markup-svg";
-import { toScreenXY } from "../../project-services/markup-3d-service/utils/to-screen-xy";
+import { createMarkupSvg } from "./utils/create-markup-svg";
+import { toScreenXY } from "./utils/to-screen-xy";
 import ProjectService from "../../project-services/project-service/project-service";
 import MarkupService from "../markup-service";
 

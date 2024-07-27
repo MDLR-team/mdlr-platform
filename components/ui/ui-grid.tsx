@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import Bar from "./bar/bar";
 import CommentsBlock from "../comments/comment-layout/comment-layout";
 import Share from "../layout/share/share";
@@ -43,34 +42,6 @@ const UIGrid = () => {
       </Wrapper>
     </>
   );
-
-  /*  return (
-    <>
-      <ViewStateMode />
-
-      <FloatingWrapper>
-        <CommentForm />
-        <ActiveCommentDialog />
-      </FloatingWrapper>
-
-      <Wrapper>
-        <Grid>
-          <BarWrapper>
-            <Bar />
-            <Share />
-          </BarWrapper>
-
-          <ContentWrapper>
-            <CommentsBlock />
-          </ContentWrapper>
-
-          <FooterWrapper style={{ justifyContent: "center" }}>
-            <ToolPanel />
-          </FooterWrapper>
-        </Grid>
-      </Wrapper>
-    </>
-  ); */
 };
 
 export default UIGrid;

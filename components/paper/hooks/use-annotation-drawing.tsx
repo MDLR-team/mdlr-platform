@@ -1,7 +1,6 @@
-import { useActiveComment } from "@/components/services/project-services/active-comment-service/active-comment-provider";
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { MutableRefObject, useEffect, useState } from "react";
 import { Path, Tool } from "paper";
-import { transformPointToNormalizedCoords } from "@/components/services/project-services/active-comment-service/utils/point-2-normalized-coord";
+import { transformPointToNormalizedCoords } from "@/components/services/markup-service/sub-services/utils/point-2-normalized-coord";
 import { useMarkup } from "@/components/services/markup-service/markup-provider";
 
 /**

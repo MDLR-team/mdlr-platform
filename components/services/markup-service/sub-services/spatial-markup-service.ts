@@ -1,7 +1,7 @@
-import { deparseNormalizedCoords } from "../../project-services/active-comment-service/utils/point-2-normalized-coord";
+import { deparseNormalizedCoords } from "./utils/point-2-normalized-coord";
 import { Comment } from "../../project-services/comment-service/comment-service";
-import { createMarkupComment } from "../../project-services/markup-3d-service/utils/create-markup-comment";
-import { createMarkupSvg } from "../../project-services/markup-3d-service/utils/create-markup-svg";
+import { createMarkupComment } from "./utils/create-markup-comment";
+import { createMarkupSvg } from "./utils/create-markup-svg";
 import ProjectService from "../../project-services/project-service/project-service";
 import MarkupService from "../markup-service";
 
