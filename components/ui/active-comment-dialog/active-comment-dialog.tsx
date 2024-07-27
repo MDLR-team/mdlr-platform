@@ -72,6 +72,7 @@ const ActiveCommentDialog = () => {
         <CommentList>
           <List>
             <MessageItem {...activeComment} selectComment={() => {}} />
+
             {/* childComments
               .filter((comment) => {
                 if (comment.parent_id) return;

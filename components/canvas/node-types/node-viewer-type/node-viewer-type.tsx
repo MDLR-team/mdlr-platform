@@ -60,6 +60,28 @@ const NodeViewerType = ({ data, isConnectable }: any) => {
           {!projectMetadata && (
             <Box
               sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              Select a project for insights
+            </Box>
+          )}
+
+          {projectMetadata && (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              {projectMetadata.name}
+            </Box>
+          )}
+
+          {!projectMetadata && (
+            <Box
+              sx={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
                 gap: "4px",
@@ -67,7 +89,7 @@ const NodeViewerType = ({ data, isConnectable }: any) => {
               }}
             >
               {projects.map((project) => (
-                <Box
+                <Thumbnail
                   sx={{
                     paddingBottom: "80%",
                     backgroundColor: "lightgrey",
@@ -78,8 +100,20 @@ const NodeViewerType = ({ data, isConnectable }: any) => {
                   }}
                   key={project.id}
                   onClick={() => viewerService.fetchProject(project.bim_urn)}
-                ></Box>
+                ></Thumbnail>
               ))}
+
+              {projects.length < 4 &&
+                Array.from({ length: 4 - projects.length }).map((_, index) => (
+                  <Box
+                    sx={{
+                      paddingBottom: "80%",
+                      borderRadius: "9px",
+                      border: "1px dashed black",
+                    }}
+                    key={index}
+                  ></Box>
+                ))}
             </Box>
           )}
 
@@ -231,6 +265,14 @@ export function useNodeViewer() {
   return service;
 }
 
+const Thumbnail = styled(Box)`
+  border: 1px solid transparent;
+
+  &:hover {
+    border: 1px solid black;
+  }
+`;
+
 const Wrapper = styled.div`
   width: 230px;
   height: 210px;
@@ -240,7 +282,12 @@ const Wrapper = styled.div`
   padding: 4px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 9px;
+
+  & > * {
+    width: 100%;
+  }
 
   & .MuiTab-root {
     min-width: max-content !important;

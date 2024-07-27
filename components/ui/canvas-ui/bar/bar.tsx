@@ -25,11 +25,11 @@ const Bar = () => {
           />
 
           <TitleWrapper style={{ width: "100%", display: "flex" }}>
-            Project Title
+            Insights Whiteboard (Beta)
           </TitleWrapper>
         </Box>
 
-        <Box sx={{ display: "flex", columnGap: "6px" }}>
+        {/* <Box sx={{ display: "flex", columnGap: "6px" }}>
           <IconButton onClick={() => true} data-active={"true"}>
             <CommentsIcon />
           </IconButton>
@@ -37,7 +37,7 @@ const Bar = () => {
           <IconButton onClick={() => true} data-active={"true"}>
             <SettingsIcon />
           </IconButton>
-        </Box>
+        </Box> */}
       </Paper>
     </Box>
   );

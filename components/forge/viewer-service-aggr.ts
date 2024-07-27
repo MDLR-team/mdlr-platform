@@ -28,6 +28,11 @@ class ViewerServiceAggr {
     this._viewer.setProgressiveRendering(true);
     this._viewer.setGhosting(false);
 
+    console.log("configureSceneAppearance");
+
+    // to home view
+    this._viewer.fitToView();
+
     try {
       (window as any).NOP_VIEWER.impl.controls.handleKeyUp = function (e: any) {
         e.preventDefault();
