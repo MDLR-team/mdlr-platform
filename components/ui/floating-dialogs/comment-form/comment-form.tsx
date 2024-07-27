@@ -15,40 +15,42 @@ import ThreadIcon from "../../icons/thread-icon";
 import ImageIcon from "../../icons/image-icon";
 import { supabase } from "@/components/supabase-client";
 import { useViewer } from "@/components/forge/viewer-provider";
+import { useMarkup } from "@/components/services/markup-service/markup-provider";
+import { Comment } from "@/components/services/project-services/comment-service/comment-service";
 
 export const FloatingComment = () => {
-  const { markupPosition: markupPosition3D, markup3DService } = useMarkup3D();
-  const { markupPosition: markupPosition2D, markup2DService } = useMarkup2D();
+  const { markupService } = useMarkup();
 
-  if (!markupPosition3D && !markupPosition2D) return <></>;
+  const [pendingComment, setPendingComment] = useState<Partial<Comment> | null>(
+    null
+  );
+  const [xy, setXY] = useState<{ x: number; y: number } | null>(null);
 
-  if (markupPosition3D)
-    return (
-      <CommentForm
-        markupPosition={markupPosition3D}
-        markupService={markup3DService}
-      />
+  useEffect(() => {
+    const sub1 = markupService.pendingComment$.subscribe((comment) =>
+      setPendingComment(comment)
     );
 
-  if (markupPosition2D)
-    return (
-      <CommentForm
-        markupPosition={markupPosition2D}
-        markupService={markup2DService}
-      />
+    const sub2 = markupService.pendingCommentService.xy$.subscribe((xy) =>
+      setXY(xy)
     );
 
-  return <></>;
+    return () => {
+      sub1.unsubscribe();
+      sub2.unsubscribe();
+    };
+  });
+
+  console.log(pendingComment, xy);
+
+  if (!pendingComment || !xy) return <></>;
+
+  return <CommentForm markupPosition={xy} />;
 };
 
 const CommentForm: React.FC<{
-  markupPosition: PointXY;
-  markupService: Markup3DService | Markup2DService;
-}> = ({ markupPosition, markupService }) => {
-  const { commentAdding, commentPointSelected } = useGlobalStates();
-
-  if (!(commentAdding && commentPointSelected)) return <></>;
-
+  markupPosition: { x: number; y: number };
+}> = ({ markupPosition }) => {
   return (
     <Paper
       sx={{
@@ -63,40 +65,46 @@ const CommentForm: React.FC<{
         pointerEvents: "all",
       }}
     >
-      <CommentMessage markupService={markupService} />
+      <CommentMessage />
     </Paper>
   );
 };
 
-const CommentMessage: React.FC<{
-  markupService: Markup3DService | Markup2DService;
-}> = ({ markupService }) => {
+const CommentMessage: React.FC<{}> = () => {
   const [comment, setComment] = useState("");
+  const [enabledPen, setEnabledPen] = useState(false);
+
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const { viewer } = useViewer();
-
-  const { commentAdding, commentPointSelected } = useGlobalStates();
-
-  const { activeComment, isPaperMode, isPenMode, activeCommentService } =
-    useActiveComment();
-
-  const { markup3DService } = useMarkup3D();
+  const { markupService } = useMarkup();
 
   useEffect(() => {
-    if (commentAdding && commentPointSelected) {
-      const timeoutId = setTimeout(() => {
-        inputRef.current?.focus();
-      }, 100); // Adjust the delay as necessary
+    const sub = markupService.pendingCommentService.enabledPen$.subscribe(
+      (enabledPen) => setEnabledPen(enabledPen)
+    );
 
-      return () => clearTimeout(timeoutId);
+    return () => sub.unsubscribe();
+  }, [markupService]);
+
+  const handlePenClick = () => {
+    if (enabledPen) {
+      markupService.pendingCommentService.deactivatePenTool();
+    } else {
+      markupService.pendingCommentService.activatePenTool();
     }
-  }, [commentAdding, commentPointSelected]);
+  };
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      inputRef.current?.focus();
+    }, 100); // Adjust the delay as necessary
+
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   const handleSubmit = async (event?: React.FormEvent<HTMLFormElement>) => {
     if (event) event.preventDefault();
 
-    markupService.pendingMarkupService?.saveComment(comment);
+    await markupService.saveComment(comment);
     setComment("");
   };
 
@@ -104,15 +112,11 @@ const CommentMessage: React.FC<{
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
       handleSubmit();
-    } else if (event.key === "Escape") {
-      markup3DService.toggleAddComment(false);
-
-      activeCommentService.togglePaperMode(false);
     }
   };
 
   const saveView = async () => {
-    if (!activeComment) return;
+    /* if (!activeComment) return;
 
     const viewState = viewer.getState({ viewport: true });
 
@@ -125,10 +129,8 @@ const CommentMessage: React.FC<{
       console.error("Error updating comment:", error);
     }
 
-    activeCommentService.togglePaperMode(false);
+    activeCommentService.togglePaperMode(false); */
   };
-
-  if (!(commentAdding && commentPointSelected)) return <></>;
 
   return (
     <Wrapper>
@@ -173,16 +175,8 @@ const CommentMessage: React.FC<{
               data-type="comment-actions"
             >
               <IconButton
-                data-active={isPenMode ? "true" : "false"}
-                onClick={async () => {
-                  if (activeComment?.view_state && isPaperMode) {
-                    activeCommentService.togglePenMode(true);
-                  } else {
-                  }
-                  /* activeCommentService.togglePaperMode(true);
-                  await saveView(); */
-                  //activeCommentService.togglePenMode(true);
-                }}
+                data-active={enabledPen ? "true" : "false"}
+                onClick={handlePenClick}
               >
                 <PencilIcon />
               </IconButton>

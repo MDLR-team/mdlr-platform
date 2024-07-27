@@ -9,7 +9,7 @@ import { useState } from "react";
 
 const LeftBar = () => {
   const menuItems = ["Personal", "Favourites", "Shared", "Recent", "Trash"];
-  const workspaceIcons = ["Workspace #1", "Workspace #2", "Workspace #3"];
+  const workspaceIcons = ["Project #1", "Project #2", "Project #3"];
 
   const { userMetadata, authService } = useAuth();
 
@@ -57,7 +57,7 @@ const LeftBar = () => {
       </Menu>
 
       <Paper
-        title="Workspaces"
+        title="Projects"
         sx={{ flexDirection: "column", gap: "3px !important" }}
       >
         <MenuWrapper>
@@ -79,13 +79,13 @@ const LeftBar = () => {
         </MenuWrapper>
       </Paper>
 
-      <Paper title="Workspaces" sx={{ flexDirection: "column" }}>
+      <Paper title="Projects" sx={{ flexDirection: "column" }}>
         <WidgetHeader>
           <IconButton>
             <WorkspaceIcon />
           </IconButton>
 
-          <Box style={{ fontWeight: "500" }}>Workspaces</Box>
+          <Box style={{ fontWeight: "500" }}>Projects</Box>
         </WidgetHeader>
 
         <MenuWrapper>
@@ -107,7 +107,7 @@ const LeftBar = () => {
         </MenuWrapper>
 
         <Button variant="contained" color="primary" size="large">
-          + New workspace
+          + New project
         </Button>
       </Paper>
     </>

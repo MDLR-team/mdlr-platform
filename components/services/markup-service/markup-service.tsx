@@ -5,10 +5,17 @@ import TopMarkupService from "./sub-services/top-markup-service";
 import ActiveCommentService from "./sub-services/active-comment-service";
 import PendingMarkupService from "./sub-services/pending-markup-service";
 import SpatialMarkupService from "./sub-services/spatial-markup-service";
+import PendingCommentService from "./sub-services/pending-comment-service";
 
 interface TempEnt3D {
   id: string;
   position: { x: number; y: number; z: number };
+  callback: (xy: { x: number; y: number }) => void;
+}
+
+interface TempEnt2D {
+  id: string;
+  position: { x: number; y: number };
   callback: (xy: { x: number; y: number }) => void;
 }
 
@@ -20,7 +27,9 @@ class MarkupService {
 
   public topComments$ = new BehaviorSubject<Comment[]>([]);
   public tempEnt3D$ = new BehaviorSubject<TempEnt3D[]>([]); // TempEnt3D are temporary entities that are not saved in the database, but needs to be displayed in the 3D canvas
+  public tempEnt2D$ = new BehaviorSubject<TempEnt2D[]>([]); // TempEnt2D are temporary entities that are not saved in the database, but needs to be displayed in the 2D canvas
 
+  public pendingComment$ = new BehaviorSubject<Partial<Comment> | null>(null);
   public activeComment$ = new BehaviorSubject<Comment | null>(null);
   public subComments$ = new BehaviorSubject<Comment[]>([]); // sub-comments are related to the activeComment
   public spatialComments$ = new BehaviorSubject<Comment[]>([]); // spatial comments are related to the activeComment
@@ -28,9 +37,11 @@ class MarkupService {
   public topMarkupService: TopMarkupService;
   public activeCommentService: ActiveCommentService;
   public pendingMarkupService: PendingMarkupService;
+  public pendingCommentService: PendingCommentService;
   public spatialMarkupService: SpatialMarkupService;
 
   public enabled2D$ = new BehaviorSubject<boolean>(false);
+  public enabledPending2D$ = new BehaviorSubject<boolean>(false);
   public enabledAdding$ = new BehaviorSubject<boolean>(false);
 
   constructor(private projectService: ProjectService) {
@@ -40,6 +51,10 @@ class MarkupService {
       this
     );
     this.pendingMarkupService = new PendingMarkupService(
+      this.projectService,
+      this
+    );
+    this.pendingCommentService = new PendingCommentService(
       this.projectService,
       this
     );
@@ -169,6 +184,42 @@ class MarkupService {
   };
 
   /**
+   * Adds a temporary 2D entity to the canvas.
+   * @param tempEnt2D - The temporary 2D entity to add.
+   */
+  public addTempEnt2D = (tempEnt2D: TempEnt2D) => {
+    // Add the temporary entity to the list of temporary entities
+    const list = this.tempEnt2D$.value.filter((ent) => ent.id !== tempEnt2D.id);
+    this.tempEnt2D$.next([...list, tempEnt2D]);
+
+    console.log("tempEnt2D:", this.tempEnt2D$);
+  };
+
+  /**
+   * Updates the position of a temporary 2D entity on the canvas.
+   */
+  public updateTempEnt2D = (id: string, position: { x: number; y: number }) => {
+    // Update the position of the temporary entity
+    const list = this.tempEnt2D$.value.map((ent) => {
+      if (ent.id === id) {
+        return { ...ent, position };
+      }
+      return ent;
+    });
+
+    this.tempEnt2D$.next(list);
+  };
+
+  /**
+   * Removes a temporary 2D entity from the canvas.
+   * @param id - The ID of the temporary 2D entity to remove.
+   */
+  public removeTempEnt2D = (id: string) => {
+    // Remove the temporary entity from the list of temporary entities
+    this.tempEnt2D$.next(this.tempEnt2D$.value.filter((ent) => ent.id !== id));
+  };
+
+  /**
    * Selects a comment based on its ID.
    * @param id - The ID of the comment to select.
    */
@@ -183,6 +234,13 @@ class MarkupService {
   public closeComment = () => {
     this.activeCommentService.closeComment();
     this.updateMarkups();
+  };
+
+  /**
+   * Saves a comment to the database.
+   */
+  public saveComment = (comment: string) => {
+    this.pendingCommentService.saveComment(comment);
   };
 
   /**
@@ -203,15 +261,19 @@ class MarkupService {
     this.topMarkupService.dispose();
     this.activeCommentService.dispose();
     this.pendingMarkupService.dispose();
+    this.pendingCommentService.dispose();
     this.spatialMarkupService.dispose();
 
     this.topComments$.complete();
     this.tempEnt3D$.complete();
+    this.tempEnt2D$.complete();
+    this.pendingComment$.complete();
     this.activeComment$.complete();
     this.subComments$.complete();
     this.spatialComments$.complete();
 
     this.enabled2D$.complete();
+    this.enabledPending2D$.complete();
     this.enabledAdding$.complete();
   }
 }

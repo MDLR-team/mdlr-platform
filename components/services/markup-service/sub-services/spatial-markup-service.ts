@@ -20,6 +20,9 @@ class SpatialMarkupService {
     private projectService: ProjectService,
     private markupService: MarkupService
   ) {
+    // Subscribe to tempEnt3D$ to update markups based on temporary entities
+    this.markupService.tempEnt2D$.subscribe(() => this.onCameraChange());
+
     this.markupService.spatialComments$.subscribe(this.updateMarkups);
     this.addEventListeners();
   }
@@ -152,6 +155,18 @@ class SpatialMarkupService {
    */
   private onCameraChange = (): void => {
     this.markups.forEach((markup) => this.setPosition(markup));
+
+    console.log(
+      "this.markupService.tempEnt2D$.value",
+      this.markupService.tempEnt2D$.value
+    );
+
+    // Update tempEnt3D positions
+    this.markupService.tempEnt2D$.value.forEach((tempEnt2D) => {
+      const canvas = this.markupService.svg2DCanvas;
+      const { x, y } = deparseNormalizedCoords(tempEnt2D.position, canvas!);
+      tempEnt2D.callback({ x, y });
+    });
   };
 
   /**

@@ -2,6 +2,7 @@ import { useActiveComment } from "@/components/services/project-services/active-
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { Path, Tool } from "paper";
 import { transformPointToNormalizedCoords } from "@/components/services/project-services/active-comment-service/utils/point-2-normalized-coord";
+import { useMarkup } from "@/components/services/markup-service/markup-provider";
 
 /**
  * Manages drawing annotations on a Paper.js canvas in pen mode.
@@ -11,11 +12,21 @@ import { transformPointToNormalizedCoords } from "@/components/services/project-
 const useAnnotationDrawing = (
   canvasRef: MutableRefObject<HTMLCanvasElement | null>
 ) => {
-  const { isPenMode, activeCommentService } = useActiveComment();
   const [line, setLine] = useState<paper.Path | null>(null);
 
+  const [enabledPen, setEnabledPen] = useState(false);
+  const { markupService } = useMarkup();
+
   useEffect(() => {
-    if (!isPenMode) return;
+    const sub = markupService.pendingCommentService.enabledPen$.subscribe(
+      (enabledPen) => setEnabledPen(enabledPen)
+    );
+
+    return () => sub.unsubscribe();
+  }, [markupService]);
+
+  useEffect(() => {
+    if (!enabledPen) return;
 
     const tool = new Tool();
 
@@ -46,7 +57,7 @@ const useAnnotationDrawing = (
           );
         });
 
-        activeCommentService.addAnnotationLine(formattedPoints);
+        markupService.pendingCommentService.addAnnotationLine(formattedPoints);
 
         line.remove();
         setLine(null);
@@ -56,7 +67,7 @@ const useAnnotationDrawing = (
     return () => {
       tool.remove();
     };
-  }, [isPenMode, line]);
+  }, [enabledPen, line]);
 };
 
 export default useAnnotationDrawing;

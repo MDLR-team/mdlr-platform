@@ -25,7 +25,7 @@ const PaperCanvas: React.FC = () => {
    * Manages drawing annotations on a Paper.js canvas in pen mode.
    * Handles mouse events for creating and modifying paths.
    */
-  //useAnnotationDrawing(canvasRef);
+  useAnnotationDrawing(canvasRef);
 
   //if (!isPaperMode) return null;
 

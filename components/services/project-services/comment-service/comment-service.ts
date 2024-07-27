@@ -129,7 +129,7 @@ class CommentService {
 
     // Check if there is a pending update to avoid redundant calls
     if (!this._pending) {
-      await this._checkAndUpdateMissingTags();
+      /* await */ this._checkAndUpdateMissingTags();
     }
 
     this._emit("COMMENTS_UPDATED", this._comments);

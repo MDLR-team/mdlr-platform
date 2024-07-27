@@ -1,10 +1,19 @@
-import { createMarkupSvg } from "../../project-services/markup-3d-service/utils/create-markup-svg";
+import { transformPointToNormalizedCoords } from "../../project-services/active-comment-service/utils/point-2-normalized-coord";
+import {
+  createMarkupSvg,
+  MarkupSVGType,
+} from "../../project-services/markup-3d-service/utils/create-markup-svg";
 import { getPointer } from "../../project-services/pending-markup-3d-service/utils/get-pointer";
 import ProjectService from "../../project-services/project-service/project-service";
 import MarkupService from "../markup-service";
 import { Markup2D } from "./spatial-markup-service";
 import { Markup3D } from "./top-markup-service";
 import hotkeys from "hotkeys-js";
+
+export interface PendingCommentOptions {
+  svgType?: MarkupSVGType;
+  id?: string;
+}
 
 class PendingMarkupService {
   private markup3D: Markup3D | null = null;
@@ -20,6 +29,23 @@ class PendingMarkupService {
     this.markupService.enabled2D$.subscribe(this.handleEnabled2DChange);
   }
 
+  /**
+   * Activates markup addition mode, setting the state to enabled.
+   */
+  public activate = () => {
+    this.markupService.enabledAdding$.next(true);
+  };
+
+  /**
+   * Deactivates markup addition mode, cleaning up and resetting the state.
+   */
+  public deactivate = () => {
+    this.markupService.enabledAdding$.next(false);
+  };
+
+  /**
+   * Handles changes to the enabling state of adding markups, activating or deactivating the appropriate mode.
+   */
   private handleEnabledAddingChange = (enabled: boolean) => {
     const viewer = this.markupService.viewer$.value;
     if (!viewer) return;
@@ -32,18 +58,27 @@ class PendingMarkupService {
     }
   };
 
+  /**
+   * Handles changes to the dimension mode (2D/3D), switching the current mode and deactivating the previous mode.
+   */
   private handleEnabled2DChange = (enabled: boolean) => {
     this.is3DMode = !enabled;
     this.deactivate();
   };
 
+  /**
+   * Activates the 3D mode, enabling the measure tool and adding necessary event listeners.
+   */
   private activate3DMode(viewer: any) {
-    viewer.toolController.activateTool("measure");
+    viewer.toolController?.activateTool("measure");
     this.addEventListeners3D();
   }
 
+  /**
+   * Deactivates the 3D mode, disabling the measure tool and removing event listeners.
+   */
   private deactivate3DMode(viewer: any) {
-    viewer.toolController.deactivateTool("measure");
+    viewer.toolController?.deactivateTool("measure");
 
     if (this.markup3D) {
       this.removeEventListeners3D();
@@ -53,10 +88,16 @@ class PendingMarkupService {
     viewer.toolController.deactivateTool("measure");
   }
 
+  /**
+   * Activates the 2D mode, adding necessary event listeners for 2D interactions.
+   */
   private activate2DMode() {
     this.addEventListeners2D();
   }
 
+  /**
+   * Deactivates the 2D mode, removing event listeners and cleaning up any existing 2D markups.
+   */
   private deactivate2DMode() {
     if (this.markup2D) {
       this.removeEventListeners2D();
@@ -64,6 +105,9 @@ class PendingMarkupService {
     }
   }
 
+  /**
+   * Cleans up and removes the 3D markup from the canvas.
+   */
   private cleanupMarkup3D() {
     if (this.markup3D) {
       this.markupService.svg3DCanvas?.removeChild(this.markup3D.svg);
@@ -72,25 +116,21 @@ class PendingMarkupService {
     }
   }
 
+  /**
+   * Cleans up and removes the 2D markup from the canvas.
+   */
   private cleanupMarkup2D() {
     if (this.markup2D) {
       this.markupService.svg2DCanvas?.removeChild(this.markup2D.svg);
+      this.markupService.removeTempEnt2D("pending");
       this.markup2D = null;
     }
   }
 
-  public activate = () => {
-    this.markupService.enabledAdding$.next(true);
-  };
-
-  public deactivate = () => {
-    this.markupService.enabledAdding$.next(false);
-  };
-
   /**
    * Adds an SVG element to the DOM to represent the pending markup.
    */
-  private addPendingMarkup3D() {
+  public addPendingMarkup3D() {
     const svg = createMarkupSvg(1, "pending");
     svg.style.pointerEvents = "none";
 
@@ -112,7 +152,7 @@ class PendingMarkupService {
   /**
    * Adds an SVG element to the DOM to represent the pending markup.
    */
-  private addPendingMarkup2D() {
+  public addPendingMarkup2D() {
     const svg = createMarkupSvg(1, "pending");
     svg.style.pointerEvents = "none";
 
@@ -123,6 +163,12 @@ class PendingMarkupService {
     };
 
     this.markupService.svg2DCanvas?.appendChild(svg);
+
+    this.markupService.addTempEnt2D({
+      id: "pending",
+      position: { x: 0, y: 0 },
+      callback: this.changeMarkupPosition,
+    });
   }
 
   /**
@@ -132,8 +178,16 @@ class PendingMarkupService {
     const markup = this.is3DMode ? this.markup3D : this.markup2D;
 
     if (markup) {
-      markup.svg.style.transform = `translate(${xy.x}px, ${xy.y - 27}px)`;
+      this.moveMarkup(markup.svg, xy);
     }
+  };
+
+  /**
+   * Moves the markup SVG to the specified screen coordinates.
+   */
+  public moveMarkup = (svg: SVGElement, xy: { x: number; y: number }) => {
+    if (!svg) return;
+    svg.style.transform = `translate(${xy.x}px, ${xy.y - 27}px)`;
   };
 
   /**
@@ -168,24 +222,40 @@ class PendingMarkupService {
   /**
    * Handles mouse move 2D
    */
-  private handleMouseMove2D = (event: any) => {
-    const { clientX, clientY } = event;
-    const { left, top } =
-      this.markupService.svg2DCanvas!.getBoundingClientRect();
+  private handleMouseMove2D = (e: any) => {
+    const x = e.clientX;
+    const y = e.clientY;
 
-    const offsetX = clientX - left;
-    const offsetY = clientY - top;
+    const canvasRef = document.getElementsByClassName(
+      "paper-canvas"
+    )[0] as HTMLElement;
 
     if (!this.markup2D) this.addPendingMarkup2D();
 
-    this.changeMarkupPosition({ x: offsetX, y: offsetY });
+    const normilizedCoords = transformPointToNormalizedCoords(
+      { x, y },
+      canvasRef!
+    );
+    this.markupService.updateTempEnt2D("pending", normilizedCoords);
   };
 
   /**
    * handkes mouse down 2d
    */
-  private handleMouseDown2D = (event: any) => {
+  private handleMouseDown2D = (e: any) => {
     this.deactivate();
+
+    const x = e.clientX;
+    const y = e.clientY;
+
+    const canvasRef = document.getElementById("paper-view-0");
+
+    const normilizedCoords = transformPointToNormalizedCoords(
+      { x, y },
+      canvasRef!
+    );
+
+    this.markupService.pendingCommentService.activate(normilizedCoords, "2D");
   };
 
   /**
@@ -193,6 +263,12 @@ class PendingMarkupService {
    * @param {MouseEvent} event - The mouse event triggered by clicking the mouse button.
    */
   private handleMouseDown3D = (event: any) => {
+    const ent3D = this.markupService.tempEnt3D$.value.find(
+      ({ id }) => id === "pending"
+    );
+    const { position } = ent3D!;
+    this.markupService.pendingCommentService.activate(position, "3D");
+
     this.deactivate();
   };
 

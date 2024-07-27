@@ -19,13 +19,32 @@ const useCanvasSetup = (
 ) => {
   const { markupService } = useMarkup();
   const [spatialComments, setSpatialComments] = useState<Comment[]>([]);
+  const [activeComment, setActiveComment] = useState<Comment | null>(null);
+  const [pendingComment, setPendingComment] = useState<Partial<Comment> | null>(
+    null
+  );
+
+  console.log("spatialComments", spatialComments);
+  console.log("activeComment", activeComment);
 
   useEffect(() => {
     const sub = markupService.spatialComments$.subscribe((comments) =>
       setSpatialComments(comments)
     );
 
-    return () => sub.unsubscribe();
+    const sub2 = markupService.activeComment$.subscribe((comment) =>
+      setActiveComment(comment)
+    );
+
+    const sub3 = markupService.pendingComment$.subscribe((comment) =>
+      setPendingComment(comment)
+    );
+
+    return () => {
+      sub.unsubscribe();
+      sub2.unsubscribe();
+      sub3.unsubscribe();
+    };
   }, [markupService]);
 
   useEffect(() => {
@@ -72,8 +91,13 @@ const useCanvasSetup = (
 
         const commentBoundingBoxes: Map<string, paper.Rectangle> = new Map();
 
+        const comments = [...spatialComments];
+        if (activeComment) {
+          comments.push(activeComment);
+        }
+
         // Draw existing annotations from childComments
-        spatialComments.forEach((comment) => {
+        comments.forEach((comment) => {
           if (comment.annotation) {
             const lines: paper.Path[] = [];
 
@@ -112,7 +136,7 @@ const useCanvasSetup = (
           }
         });
 
-        /* const annotation = activeCommentService.annotation;
+        const annotation = pendingComment?.annotation || [];
 
         // Draw existing user annotations
         annotation.forEach((line) => {
@@ -127,7 +151,7 @@ const useCanvasSetup = (
             path.add(paperPoint);
           });
           path.simplify(10);
-        }); */
+        });
       };
 
       // Listen for changes in user annotations to redraw annotations
@@ -143,7 +167,7 @@ const useCanvasSetup = (
     return () => {
       window.removeEventListener("resize", resizeCanvas);
     };
-  }, [spatialComments]);
+  }, [spatialComments, pendingComment]);
 };
 
 export default useCanvasSetup;

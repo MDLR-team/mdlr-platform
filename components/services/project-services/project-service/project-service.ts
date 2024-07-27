@@ -104,6 +104,8 @@ class ProjectService {
       .from("profiles")
       .select("*");
 
+    console.log("profileData", profileData);
+
     // If the project is found, return it
 
     if (projects) {
@@ -277,6 +279,12 @@ class ProjectService {
 
         const profilesMap = new Map(
           profiles.map((profile: any) => [profile.user_id, profile])
+        );
+
+        console.log(
+          "%cproject.userprojects",
+          "color: blue",
+          project.userprojects
         );
 
         project.userprojects.forEach((userproject: any) => {

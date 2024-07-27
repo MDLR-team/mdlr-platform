@@ -21,7 +21,7 @@ const UIGrid = () => {
       <ViewStateMode />
 
       <FloatingWrapper>
-        {/* <CommentForm /> */}
+        <CommentForm />
         <ActiveCommentDialog />
       </FloatingWrapper>
 

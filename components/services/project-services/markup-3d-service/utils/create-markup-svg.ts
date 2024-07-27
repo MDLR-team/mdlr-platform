@@ -13,11 +13,23 @@ function createMarkupSvg(content: string | number, type: MarkupSVGType) {
     "M0 13.5C0 6.04416 6.04416 0 13.5 0V0C20.9558 0 27 6.04416 27 13.5V13.5C27 20.9558 20.9558 27 13.5 27H0V13.5Z"
   );
 
-  const color = type === "default" ? "#333333" : "#FAE57E";
+  const color =
+    type === "default"
+      ? "#333333"
+      : type === "pendingComment"
+      ? "blue"
+      : "#FAE57E";
   path1.setAttribute("fill", color);
 
   if (type !== "default") {
     path1.setAttribute("stroke", "#333333");
+    path1.setAttribute("stroke-width", "2");
+  }
+
+  console.log("type", type);
+
+  if (type === "pendingComment") {
+    path1.setAttribute("stroke", "blue");
     path1.setAttribute("stroke-width", "2");
   }
 
@@ -62,6 +74,10 @@ const getInitials = (username: string) => {
   }
 };
 
-type MarkupSVGType = "default" | "placing" | "pending";
+export type MarkupSVGType =
+  | "default"
+  | "placing"
+  | "pending"
+  | "pendingComment";
 
 export { createMarkupSvg };

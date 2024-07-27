@@ -3,6 +3,8 @@ import WorkspaceItem from "../workspace-item/workspace-item";
 import { Box, InputBase, Paper } from "@mui/material";
 import { AvatarCss } from "../left-bar/left-bar";
 import { useWorkspace } from "@/components/services/workspace-services/workspace/workspace-provider";
+import CatalogItem from "../workspace-item/workspace-item";
+import CatalogCanvas from "../workspace-canvas/workspace-canvas";
 
 const Content = () => {
   const { projects } = useWorkspace();
@@ -41,6 +43,8 @@ const Content = () => {
       </Box>
 
       <CatalogWrapper>
+        <CatalogCanvas />
+
         {projects.map((project, i) => (
           <WorkspaceItem key={i} data={project} />
         ))}

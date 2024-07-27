@@ -10,16 +10,24 @@ const ViewStateMode = () => {
   const { markupService } = useMarkup();
 
   const [enabled2D, setEnabled2D] = useState(false);
+  const [enabledViewState, setEnabledViewState] = useState(false);
 
   useEffect(() => {
     const sub = markupService.enabled2D$.subscribe((enabled2D) =>
       setEnabled2D(enabled2D)
     );
+    const sub2 =
+      markupService.pendingCommentService.enabledViewState$.subscribe(
+        (enabledViewState) => setEnabledViewState(enabledViewState)
+      );
 
-    return () => sub.unsubscribe();
+    return () => {
+      sub.unsubscribe();
+      sub2.unsubscribe();
+    };
   }, [markupService]);
 
-  if (!enabled2D) return null;
+  if (!enabled2D && !enabledViewState) return null;
 
   return (
     <>
@@ -37,7 +45,7 @@ const ViewStateMode = () => {
         <Darkarea />
       </FloatingWrapper>
 
-      {enabled2D && (
+      {(enabled2D || enabledViewState) && (
         <FloatingWrapper data-type="draw">
           <PaperCanvas />
         </FloatingWrapper>

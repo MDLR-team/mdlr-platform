@@ -31,6 +31,8 @@ const NodePieChartType = ({ data, isConnectable }: any) => {
     };
   }, []);
 
+  console.log("items", items);
+
   return (
     <div className="text-updater-node">
       <Handle
