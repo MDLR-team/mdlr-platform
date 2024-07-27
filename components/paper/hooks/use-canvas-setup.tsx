@@ -24,9 +24,6 @@ const useCanvasSetup = (
     null
   );
 
-  console.log("spatialComments", spatialComments);
-  console.log("activeComment", activeComment);
-
   useEffect(() => {
     const sub = markupService.spatialComments$.subscribe((comments) =>
       setSpatialComments(comments)

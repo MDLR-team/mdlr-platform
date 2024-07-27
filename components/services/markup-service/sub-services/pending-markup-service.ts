@@ -33,6 +33,7 @@ class PendingMarkupService {
    * Activates markup addition mode, setting the state to enabled.
    */
   public activate = () => {
+    this.markupService.activatedService = this;
     this.markupService.enabledAdding$.next(true);
   };
 
@@ -40,6 +41,10 @@ class PendingMarkupService {
    * Deactivates markup addition mode, cleaning up and resetting the state.
    */
   public deactivate = () => {
+    if (this.markupService.activatedService instanceof PendingMarkupService) {
+      this.markupService.activatedService = null;
+    }
+
     this.markupService.enabledAdding$.next(false);
   };
 
@@ -323,15 +328,19 @@ class PendingMarkupService {
    */
   private addHotkeyListeners() {
     hotkeys("esc", this.deactivate);
-    hotkeys("c, C", this.activate);
+    hotkeys("c, C", this.openTool);
   }
+
+  private openTool = () => {
+    this.markupService.activateTool("ADD_COMMENT");
+  };
 
   /**
    * Removes hotkey listeners for interactive markup behavior.
    */
   private removeHotkeyListeners() {
     hotkeys.unbind("esc", this.deactivate);
-    hotkeys.unbind("c, C", this.activate);
+    hotkeys.unbind("c, C", this.openTool);
   }
 
   public dispose() {

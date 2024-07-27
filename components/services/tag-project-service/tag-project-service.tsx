@@ -29,8 +29,6 @@ class TagProjectService {
         }
 
         if (data) {
-          console.log("data", data);
-
           data.forEach((tagProject: TagProject) => {
             this._tagProject.set(tagProject.id, tagProject);
           });

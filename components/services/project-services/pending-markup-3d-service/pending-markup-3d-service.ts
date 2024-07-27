@@ -248,8 +248,6 @@ class PendingMarkup3DService {
       ]);
 
       if (error) throw error;
-
-      console.log("Comment added:", data);
     } catch (error) {
       console.error("Error inserting comment:", error);
     }

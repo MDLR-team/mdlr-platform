@@ -17,8 +17,6 @@ class StickerService {
     const previousNode = this._nodeService.getPreviousNode(this._stickerId);
     this._previousUserData = previousNode?.data?.userData || {};
 
-    console.log("previousNode", previousNode);
-
     const userData = previousNode?.data?.userData || {};
     const entities = userData.entities || [];
     const topics = userData.topics || [];
@@ -89,8 +87,6 @@ class StickerService {
 
       const entity = generatedMessage === "none" ? undefined : generatedMessage;
 
-      console.log("entity", entity);
-
       this._addGeneratedNode({
         type: "table",
         data: {
@@ -117,8 +113,6 @@ class StickerService {
     const columns = Array.from(chartData.keys());
     const chartTypes = ["pieChart", "lineChart"];
 
-    console.log("%ccolumns", "color: green", columns);
-
     const extendedMessage = `
      Determine if the user is requesting a chart. Available chart types:
       - "pieChart": Proportions or percentages within a whole.
@@ -132,8 +126,6 @@ class StickerService {
       If either is missing, return "none".
       Be aware that user can make mistakes or refer to columns in a different way. But if you think that user is referring to one of the columns, please return it in the exact form as it is in the list.
     `;
-
-    console.log("extendedMessage", extendedMessage);
 
     try {
       const response = await fetch("/api/gpt/create-message-v2", {
@@ -158,7 +150,6 @@ class StickerService {
       const data = (await response.json()) as GptResponseData;
 
       const generatedMessage = data.data.choices[0].message.content;
-      console.log("generatedMessage", generatedMessage);
 
       // we need to check whether parsed string is either "none" or array of two elements
       // Normalize the generated message to ensure it's in the expected format
@@ -186,8 +177,6 @@ class StickerService {
 
       if (chartTypes.includes(chartType) && columns.includes(columnName)) {
         const chartItems = chartData.get(columnName);
-
-        console.log("%c chart task", "color: red", chartType, columnName);
 
         this._addGeneratedNode({
           type: chartType,

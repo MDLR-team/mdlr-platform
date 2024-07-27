@@ -26,8 +26,6 @@ function createMarkupSvg(content: string | number, type: MarkupSVGType) {
     path1.setAttribute("stroke-width", "2");
   }
 
-  console.log("type", type);
-
   if (type === "pendingComment") {
     path1.setAttribute("stroke", "blue");
     path1.setAttribute("stroke-width", "2");

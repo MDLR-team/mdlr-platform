@@ -29,8 +29,6 @@ const MessagePage = () => {
     };
   }, []);
 
-  console.log("messages", messages);
-
   return (
     <TagMessageContext.Provider value={messageService}>
       <Box

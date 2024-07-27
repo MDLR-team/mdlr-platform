@@ -10,8 +10,6 @@ class ChartService {
     const previousNode = this._nodeService.getPreviousNode(chartId);
     const userData = previousNode?.data?.userData || {};
 
-    console.log("previousNodeA", previousNode);
-
     const chartItems = userData.chartItems || [];
 
     this._chartItems$.next(chartItems);

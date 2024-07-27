@@ -110,9 +110,6 @@ class ViewerServiceAggr {
     this._viewer = viewer;
     this._view = view;
 
-    console.log(" this._viewer", this._viewer);
-    console.log("this._view", this._view);
-
     this.viewer$.next(viewer);
     this.view$.next(view);
 

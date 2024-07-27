@@ -30,9 +30,9 @@ const ToolPanel = () => {
 
         <Divider orientation="vertical" />
 
-        <IconButton onDragStart={(e) => onDragStart(e, "thumbnail")} draggable>
+        {/* <IconButton onDragStart={(e) => onDragStart(e, "thumbnail")} draggable>
           <AiUploadIcon />
-        </IconButton>
+        </IconButton> */}
 
         <IconButton onDragStart={(e) => onDragStart(e, "viewer")} draggable>
           <AiUploadIcon />

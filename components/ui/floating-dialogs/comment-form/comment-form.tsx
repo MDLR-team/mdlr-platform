@@ -41,8 +41,6 @@ export const FloatingComment = () => {
     };
   });
 
-  console.log(pendingComment, xy);
-
   if (!pendingComment || !xy) return <></>;
 
   return <CommentForm markupPosition={xy} />;

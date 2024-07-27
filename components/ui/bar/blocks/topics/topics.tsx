@@ -29,8 +29,6 @@ const Topics = () => {
     };
   }, [projectService]);
 
-  console.log("topic AAs", topics);
-
   return (
     <Box
       sx={{

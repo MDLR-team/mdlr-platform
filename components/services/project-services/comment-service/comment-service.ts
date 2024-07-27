@@ -105,9 +105,6 @@ class CommentService {
             needsUpdate = true;
           }
 
-          if (needsUpdate)
-            console.log("%ceventType", "color: green", eventType);
-
           if (needsUpdate) this._upateComments();
         }
       )
@@ -117,9 +114,7 @@ class CommentService {
   }
 
   private async _upateComments() {
-    console.log("%c_comments", "color: green", this._comments);
     const topics = this._projectService.topics;
-    console.log("%ctopics", "color: green", topics);
 
     const sortedComments = Array.from(this._comments.values()).sort((a, b) => {
       return (

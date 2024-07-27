@@ -24,13 +24,21 @@ const ToolPanel = () => {
   const { markupService } = useMarkup();
 
   const [commentAdding, setCommentAdding] = useState(false);
+  const [measureEnabled, setMeasureEnabled] = useState(false);
 
   useEffect(() => {
     const sub = markupService.enabledAdding$.subscribe((enabledAdding) =>
       setCommentAdding(enabledAdding)
     );
 
-    return () => sub.unsubscribe();
+    const sub2 = markupService.measureService.enabled$.subscribe((enabled) =>
+      setMeasureEnabled(enabled)
+    );
+
+    return () => {
+      sub.unsubscribe();
+      sub2.unsubscribe();
+    };
   }, [markupService]);
 
   return (
@@ -55,8 +63,9 @@ const ToolPanel = () => {
             </IconButton>
 
             <IconButton
-              data-active={/* measureEnabled ? "true" : */ "false"}
+              data-active={measureEnabled ? "true" : "false"}
               onClick={() => {
+                markupService.activateTool("MEASURE");
                 //markup3DService.toggleMeasure(true);
               }}
             >

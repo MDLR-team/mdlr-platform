@@ -36,12 +36,15 @@ class PendingCommentService {
   public activate = (position: Vector3 | Vector2, type: "3D" | "2D") => {
     this.deactivate(); // Ensure clean state before activation
 
+    this.markupService.activatedService = this;
+
     const is3D = type === "3D";
     this.is3DMode = is3D;
 
     const activeComment = this.markupService.activeComment$.value;
 
     const userMetadata = this.projectService.authService.userMetadata;
+
     const comment: Partial<Comment> = {
       content: "",
       markup_position: is3D ? (position as Vector3) : null,
@@ -153,6 +156,10 @@ class PendingCommentService {
     this.removeHotkeyListeners();
     this.markupService.pendingComment$.next(null);
     this.enabledViewState$.next(false);
+
+    if (this.markupService.activatedService instanceof PendingCommentService) {
+      this.markupService.activatedService = null;
+    }
   };
 
   /**
@@ -190,8 +197,6 @@ class PendingCommentService {
       ]);
 
       if (error) throw error;
-
-      console.log("Comment added:", data);
     } catch (error) {
       console.error("Error inserting comment:", error);
     }

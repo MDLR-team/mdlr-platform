@@ -44,8 +44,10 @@ const CatalogCanvas: React.FC<WorkspaceItemProps> = () => {
               width: "100%",
             }}
           >
-            Project canvas
+            Project Board
           </Box>
+
+          <Box>{" "}</Box>
         </Box>
       </Box>
     </Wrapper>

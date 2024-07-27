@@ -40,7 +40,6 @@ const ActiveCommentMessage = () => {
 
       if (error) throw error;
 
-      console.log("Comment added:", data);
       setComment(""); // Reset the input field after successful submission
     } catch (error) {
       console.error("Error inserting comment:", error);

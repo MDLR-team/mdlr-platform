@@ -15,6 +15,8 @@ const NodeViewerType = ({ data, isConnectable }: any) => {
 
   const [projects, setProjects] = useState<Project[]>([]);
 
+  console.log("projects", projects);
+
   const [viewerService] = useState(
     () => new ViewerService(nodeService, data.id)
   );
@@ -40,8 +42,6 @@ const NodeViewerType = ({ data, isConnectable }: any) => {
       viewerService.dispose();
     };
   }, []);
-
-  console.log("projects", projects);
 
   return (
     <NodeViewerContext.Provider

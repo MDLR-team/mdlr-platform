@@ -61,21 +61,21 @@ const MessageItem: React.FC<MessageItemProps> = ({
               <ResolveIcon />
             </IconButton>
 
-            <IconButton
+            {/* <IconButton
               disabled={view_state ? false : true}
               onClick={
-                () => {} /* activeCommentService.togglePaperMode(true) */
+                () => {}
               }
             >
               <FitIcon />
-            </IconButton>
+            </IconButton> */}
           </Box>
 
-          {annotation && (
+          {/* annotation && (
             <IconButton>
               <PencilIcon />
             </IconButton>
-          )}
+          ) */}
         </Box>
 
         <Box sx={{ wordWrap: "break-word" }}>{content}</Box>

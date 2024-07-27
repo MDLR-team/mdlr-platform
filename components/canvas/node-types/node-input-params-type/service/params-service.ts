@@ -28,8 +28,6 @@ class ParamsService {
       this._params[index].value = value as boolean;
     }
 
-    console.log("Updated params:", this._params);
-
     this._params$.next([...this._params]);
   }
 

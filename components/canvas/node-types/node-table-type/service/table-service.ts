@@ -158,8 +158,6 @@ class TableService {
           });
         });
       }
-
-      console.log("%cdata", "color: purple", data);
     }
 
     this._nodeService.addUserdataToNode(nodeId, {

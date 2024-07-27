@@ -6,6 +6,7 @@ import ActiveCommentService from "./sub-services/active-comment-service";
 import PendingMarkupService from "./sub-services/pending-markup-service";
 import SpatialMarkupService from "./sub-services/spatial-markup-service";
 import PendingCommentService from "./sub-services/pending-comment-service";
+import MeasureService from "./sub-services/measure-service";
 
 interface TempEnt3D {
   id: string;
@@ -25,6 +26,12 @@ class MarkupService {
   public svg2DCanvas: HTMLElement | null = null;
   public html2DCanvas: HTMLElement | null = null;
 
+  public activatedService:
+    | PendingMarkupService
+    | PendingCommentService
+    | MeasureService
+    | null = null;
+
   public topComments$ = new BehaviorSubject<Comment[]>([]);
   public tempEnt3D$ = new BehaviorSubject<TempEnt3D[]>([]); // TempEnt3D are temporary entities that are not saved in the database, but needs to be displayed in the 3D canvas
   public tempEnt2D$ = new BehaviorSubject<TempEnt2D[]>([]); // TempEnt2D are temporary entities that are not saved in the database, but needs to be displayed in the 2D canvas
@@ -39,6 +46,8 @@ class MarkupService {
   public pendingMarkupService: PendingMarkupService;
   public pendingCommentService: PendingCommentService;
   public spatialMarkupService: SpatialMarkupService;
+
+  public measureService: MeasureService;
 
   public enabled2D$ = new BehaviorSubject<boolean>(false);
   public enabledPending2D$ = new BehaviorSubject<boolean>(false);
@@ -62,6 +71,7 @@ class MarkupService {
       this.projectService,
       this
     );
+    this.measureService = new MeasureService(this.projectService, this);
 
     this.projectService.viewerServiceAggr.viewer$.subscribe((viewer) => {
       this.viewer$.next(viewer);
@@ -191,8 +201,6 @@ class MarkupService {
     // Add the temporary entity to the list of temporary entities
     const list = this.tempEnt2D$.value.filter((ent) => ent.id !== tempEnt2D.id);
     this.tempEnt2D$.next([...list, tempEnt2D]);
-
-    console.log("tempEnt2D:", this.tempEnt2D$);
   };
 
   /**
@@ -247,15 +255,24 @@ class MarkupService {
    * Activates a tool based on the tool type.
    * @param toolType - The type of tool to activate.
    */
-  public activateTool(toolType: "ADD_COMMENT") {
+  public activateTool = (toolType: "ADD_COMMENT" | "MEASURE") => {
+    console.log("%c⧭", "color: #007300", this.activatedService);
+
+    if (this.activatedService) {
+      this.activatedService.deactivate();
+    }
+
     switch (toolType) {
       case "ADD_COMMENT":
         this.pendingMarkupService.activate();
         break;
+      case "MEASURE":
+        this.measureService.activate();
+        break;
       default:
         break;
     }
-  }
+  };
 
   public dispose() {
     this.topMarkupService.dispose();
@@ -263,6 +280,7 @@ class MarkupService {
     this.pendingMarkupService.dispose();
     this.pendingCommentService.dispose();
     this.spatialMarkupService.dispose();
+    this.measureService.dispose();
 
     this.topComments$.complete();
     this.tempEnt3D$.complete();

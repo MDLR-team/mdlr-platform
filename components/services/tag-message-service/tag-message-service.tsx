@@ -101,8 +101,6 @@ class TagMessageService {
     const content = tagMessage.content;
     const categories = this._categories;
 
-    console.log("categories", categories);
-
     const prompt = `Analyze the following message: ${content}. And categorize it by relevance to the following categories: ${categories.join(
       ", "
     )} (Note you can use only the give categories!). And for each category think of a 1-2 subcategory that could be relevant to the message.

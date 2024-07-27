@@ -29,7 +29,7 @@ class AuthService {
         type: "error",
       });
     } else {
-      this._router.push("/");
+      window.location.href = "/";
     }
   }
 

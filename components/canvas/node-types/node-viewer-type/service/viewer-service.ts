@@ -61,9 +61,7 @@ class ViewerService {
     metadata: any
   ): Promise<ElementItem[]> {
     const viewable = metadata[0]; // Assuming first viewable
-    console.log("viewable", viewable);
     const guid = viewable.guid;
-    console.log("guid", guid);
 
     try {
       const response = await axios.get(
@@ -148,10 +146,6 @@ class ViewerService {
         data: modelElements,
       },
     ];
-
-    console.log("entities", entities);
-    console.log("comments", comments);
-    console.log("modelElements", modelElements);
 
     this._nodeService.addUserdataToNode(this._nodeId, {
       modelElements,

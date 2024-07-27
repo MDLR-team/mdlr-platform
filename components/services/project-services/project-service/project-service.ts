@@ -104,8 +104,6 @@ class ProjectService {
       .from("profiles")
       .select("*");
 
-    console.log("profileData", profileData);
-
     // If the project is found, return it
 
     if (projects) {
@@ -239,8 +237,6 @@ class ProjectService {
       .select("id, prompt, tags, name")
       .eq("project_id", projectId);
 
-    console.log("%ctopics", "color: red", topics);
-
     if (error && error.code !== "PGRST116") {
       console.error("Error checking project topics:", error);
       return;
@@ -279,12 +275,6 @@ class ProjectService {
 
         const profilesMap = new Map(
           profiles.map((profile: any) => [profile.user_id, profile])
-        );
-
-        console.log(
-          "%cproject.userprojects",
-          "color: blue",
-          project.userprojects
         );
 
         project.userprojects.forEach((userproject: any) => {

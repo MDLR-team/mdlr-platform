@@ -24,8 +24,6 @@ const CatalogPage = () => {
     };
   }, []);
 
-  console.log("projects", projects);
-
   return (
     <TagProjectContext.Provider value={tagProjectService}>
       <ProjectNewForm />
