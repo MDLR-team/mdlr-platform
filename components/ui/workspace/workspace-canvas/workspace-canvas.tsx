@@ -15,7 +15,14 @@ const CatalogCanvas: React.FC<WorkspaceItemProps> = () => {
       <Paper
         sx={{ padding: "0px", overflow: "hidden", border: "1px solid grey" }}
       >
-        <Thumb style={{ backgroundColor: "white" }}></Thumb>
+        <Thumb
+          style={{
+            backgroundColor: "white",
+            backgroundImage: "/thumb/schema.jpg",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        ></Thumb>
       </Paper>
 
       <Box
@@ -42,12 +49,15 @@ const CatalogCanvas: React.FC<WorkspaceItemProps> = () => {
               whiteSpace: "nowrap",
               textOverflow: "ellipsis",
               width: "100%",
+              fontWeight: "bold",
             }}
           >
-            Project Board
+            Insight Whiteboard (Beta)
           </Box>
 
-          <Box>{" "}</Box>
+          <Box sx={{ opacity: 0.8 }}>
+            Interactive insights across project data
+          </Box>
         </Box>
       </Box>
     </Wrapper>
@@ -64,16 +74,12 @@ const Wrapper = styled.div`
 
   cursor: pointer;
 
-  background-color: #94c2db !important;
+  background-color: #f2f2f2 !important;
   border: 1px solid black !important;
+  //background-image: url("/thumb/schema.jpg");
+  background-size: cover;
+  background-position: center;
   border-radius: 8px;
-
-  &:hover {
-    & {
-      background-color: #e4e2df;
-      border: 1px solid #999999;
-    }
-  }
 
   & [data-type="users"] {
     & > * {
@@ -87,6 +93,9 @@ const Thumb = styled.div`
   padding-bottom: 50%;
   background: white;
   position: relative;
+
+  background-image: url("/thumb/schema.jpg");
+  background-size: cover;
 
   background-repeat: no-repeat;
   background-position: center;

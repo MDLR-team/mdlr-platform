@@ -15,9 +15,9 @@ const WorkspaceGrid = () => {
           <Content />
         </ContentWrapper>
 
-        <RightBarWrapper>
+        {/* <RightBarWrapper>
           <RightBar />
-        </RightBarWrapper>
+        </RightBarWrapper> */}
       </Grid>
     </Wrapper>
   );
@@ -48,7 +48,7 @@ const Grid = styled.div`
   width: 100%;
 
   display: grid;
-  grid-template-columns: 225px auto 260px;
+  grid-template-columns: 225px auto;
   gap: 27px;
 
   & > * > * {

@@ -20,7 +20,7 @@ const CatalogItem: React.FC<WorkspaceItemProps> = ({ data }) => {
   return (
     <Wrapper onClick={handleNavigate}>
       <Paper
-        sx={{ padding: "0px", overflow: "hidden", border: "1px solid grey" }}
+        sx={{ padding: "0px", overflow: "hidden", border: "1px solid black !important" }}
       >
         <Thumb style={{ backgroundImage: `url(${data.thumbnail})` }}></Thumb>
       </Paper>
