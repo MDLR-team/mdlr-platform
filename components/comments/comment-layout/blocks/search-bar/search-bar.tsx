@@ -1,7 +1,5 @@
-import { useMarkup3D } from "@/components/services/project-services/markup-3d-service/markup-3d-provider";
 import PlusIcon from "@/components/ui/icons/plus-icon";
 import { Box, IconButton, InputAdornment, TextField } from "@mui/material";
-import { useState } from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
 import SearchIcon from "@mui/icons-material/Search";
 import styled from "styled-components";

@@ -1,9 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Box } from "@mui/material";
-import { useActiveComment } from "../services/project-services/active-comment-service/active-comment-provider";
 import useAnnotationDrawing from "./hooks/use-annotation-drawing";
 import useCanvasSetup from "./hooks/use-canvas-setup";
-import ExplodedCommentLayout from "./blocks/exploded-comment-layout/exploded-comment-layout";
 
 const PaperCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);

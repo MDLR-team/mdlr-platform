@@ -1,18 +1,11 @@
-import { NextRouter } from "next/router";
 import base64url from "base64url";
 
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Project } from "@/components/types/supabase-data.types";
-import { supabase } from "@/components/supabase-client";
 import GlobalStatesService from "../global-states-service/global-states-service";
 import CommentService from "../comment-service/comment-service";
-import ActiveCommentService from "../active-comment-service/active-comment-service";
-import Markup3DService from "../markup-3d-service/markup-3d-service";
 import ViewerServiceAggr from "@/components/forge/viewer-service-aggr";
 import AuthService from "../../app-services/auth/auth-service";
-import Markup2DService from "../markup-2d-service/markup-2d-service";
-import HotkeyService from "../hotkey-service/hotkey-service";
-import { v4 as uuidv4 } from "uuid";
 import { CLIENT_ID } from "@/pages/api/token";
 import { BehaviorSubject } from "rxjs";
 import MarkupService from "../../markup-service/markup-service";
