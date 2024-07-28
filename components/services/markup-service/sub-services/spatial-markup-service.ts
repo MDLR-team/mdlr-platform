@@ -156,11 +156,6 @@ class SpatialMarkupService {
   private onCameraChange = (): void => {
     this.markups.forEach((markup) => this.setPosition(markup));
 
-    console.log(
-      "this.markupService.tempEnt2D$.value",
-      this.markupService.tempEnt2D$.value
-    );
-
     // Update tempEnt3D positions
     this.markupService.tempEnt2D$.value.forEach((tempEnt2D) => {
       const canvas = this.markupService.svg2DCanvas;

@@ -8,6 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useMarkup } from "@/components/services/markup-service/markup-provider";
 import { useEffect, useState } from "react";
 import { Comment } from "@/components/services/project-services/comment-service/comment-service";
+import SubcommentForm from "./blocks/subcomment-form";
 
 const ActiveCommentDialog = () => {
   const { markupService } = useMarkup();
@@ -88,6 +89,8 @@ const ActiveCommentDialog = () => {
                   />
                 </>
               )) */}
+
+            <SubcommentForm />
           </List>
         </CommentList>
       }
