@@ -5,19 +5,18 @@ import PencilIcon from "../../icons/pencil-icon";
 import ThreadIcon from "../../icons/thread-icon";
 import ImageIcon from "../../icons/image-icon";
 import { useRef, useState } from "react";
+import { useMarkup } from "@/components/services/markup-service/markup-provider";
 
 const SubcommentForm = () => {
   const [comment, setComment] = useState("");
   const [enabledPen, setEnabledPen] = useState(false);
 
+  const { markupService } = useMarkup();
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handlePenClick = () => {
-    if (enabledPen) {
-      //markupService.pendingCommentService.deactivatePenTool();
-    } else {
-      //markupService.pendingCommentService.activatePenTool();
-    }
+    markupService.activateTool("ADD_COMMENT");
   };
 
   const handleSubmit = () => {
@@ -36,14 +35,21 @@ const SubcommentForm = () => {
           margin: `0px !important`,
           flexShrink: 0,
           display: "flex",
-          alignItems: "flex-end",
+          alignItems: "flex-start",
           width: "100%",
         }}
         noValidate
         autoComplete="off"
         onSubmit={handleSubmit}
       >
-        <Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            width: "100%",
+          }}
+        >
           <TextField
             placeholder="Write a comment..."
             sx={{ backgroundColor: "rgba(0,0,0,0.08)", borderRadius: "8px" }}

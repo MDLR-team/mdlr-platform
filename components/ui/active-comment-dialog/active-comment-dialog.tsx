@@ -17,15 +17,21 @@ const ActiveCommentDialog = () => {
   const [xy, setXY] = useState<{ x: number; y: number } | null>(null);
   const [activeComment, setActiveComment] = useState<Comment | null>(null);
 
+  const [subComments, setSubComments] = useState<Comment[]>([]);
+
   useEffect(() => {
     const sub = activeCommentService.xy$.subscribe((xy) => setXY(xy));
     const sub2 = markupService.activeComment$.subscribe((comment) =>
       setActiveComment(comment)
     );
+    const sub3 = markupService.subComments$.subscribe((comments) =>
+      setSubComments(comments)
+    );
 
     return () => {
       sub.unsubscribe();
       sub2.unsubscribe();
+      sub3.unsubscribe();
     };
   }, []);
 
@@ -74,21 +80,15 @@ const ActiveCommentDialog = () => {
           <List>
             <MessageItem {...activeComment} selectComment={() => {}} />
 
-            {/* childComments
-              .filter((comment) => {
-                if (comment.parent_id) return;
-
-                return !comment.markup_position_2d;
-              })
-              .map((comment) => (
-                <>
-                  <MessageItem
-                    {...comment}
-                    selectComment={() => {}}
-                    key={comment.id}
-                  />
-                </>
-              )) */}
+            {subComments.map((comment) => (
+              <>
+                <MessageItem
+                  {...comment}
+                  selectComment={() => {}}
+                  key={comment.id}
+                />
+              </>
+            ))}
 
             <SubcommentForm />
           </List>
