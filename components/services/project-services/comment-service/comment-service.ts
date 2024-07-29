@@ -257,6 +257,17 @@ class CommentService {
     });
   }
 
+  public async handleResolveComment(commentId: string, resolved: boolean) {
+    const { data, error } = await this._supabase
+      .from("comments")
+      .update({ resolved })
+      .eq("id", commentId);
+
+    if (error) {
+      console.error("Error resolving comment:", error);
+    }
+  }
+
   public get comments() {
     return this._comments;
   }
@@ -285,6 +296,7 @@ export interface Comment {
   author_id: string;
   author_username: string;
   topic_tags: Record<string, string[]>;
+  resolved: boolean;
 }
 
 export default CommentService;

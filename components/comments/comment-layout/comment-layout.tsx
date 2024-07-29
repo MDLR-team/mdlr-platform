@@ -49,13 +49,16 @@ const CommentsBlock: React.FC = () => {
 
       <CommentList>
         <List>
-          {filteredComments.map((comment, i) => (
-            <MessageItem
-              {...comment}
-              selectComment={() => markupService.selectComment(comment.id)}
-              key={comment.id}
-            />
-          ))}
+          {filteredComments
+            .filter(markupService.checkFilters)
+            .map((comment, i) => (
+              <MessageItem
+                {...comment}
+                selectComment={() => markupService.selectComment(comment.id)}
+                key={comment.id}
+                hideActions={true}
+              />
+            ))}
         </List>
       </CommentList>
     </Paper>

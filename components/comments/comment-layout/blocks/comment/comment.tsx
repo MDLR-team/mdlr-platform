@@ -1,4 +1,5 @@
 import Avatar from "@/components/layout/avatar/avatar";
+import { useComment } from "@/components/services/project-services/comment-service/comment-provider";
 import { Comment } from "@/components/services/project-services/comment-service/comment-service";
 import ResolveIcon from "@/components/ui/icons/resolve-icon";
 import { Box, IconButton } from "@mui/material";
@@ -7,20 +8,29 @@ import styled from "styled-components";
 
 interface MessageItemProps extends Comment {
   selectComment: (id: any) => void;
+  hideActions?: boolean;
 }
 
 const MessageItem: React.FC<MessageItemProps> = ({
+  id,
   content,
   created_at,
   selectComment,
   view_state,
   annotation,
   author_username,
+  resolved,
+  hideActions,
 }) => {
-  /// const { activeCommentService } = useActiveComment();
+  const { commentService } = useComment();
 
   // date to comment format when if it was recently we can show "just now" or "1 minute ago" or "x dayes ago" or "x months ago"
   const time = moment(created_at).fromNow();
+
+  const handleResolveComment = (e: any) => {
+    e.stopPropagation();
+    commentService.handleResolveComment(id, true);
+  };
 
   return (
     <Wrapper>
@@ -53,8 +63,12 @@ const MessageItem: React.FC<MessageItemProps> = ({
             </Box>
           </Box>
 
-          <Box data-type={"action-panel"} sx={{ display: "flex", gap: "0px" }}>
-            <IconButton>
+          <Box
+            data-type={"action-panel"}
+            sx={{ display: "flex", gap: "0px" }}
+            data-hideactions={hideActions ? "true" : "false"}
+          >
+            <IconButton onClick={handleResolveComment}>
               <ResolveIcon />
             </IconButton>
 
@@ -98,7 +112,7 @@ const Wrapper = styled.div`
       }
     }
 
-    & div[data-type="action-panel"] {
+    & div[data-hideactions="true"] {
       display: none;
     }
   }

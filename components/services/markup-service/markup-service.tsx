@@ -101,22 +101,32 @@ class MarkupService {
     const activeComment = this.activeComment$.value;
 
     const isTopLevelComment = (comment: Comment) =>
-      !comment.parent_id && comment.markup_position;
+      !comment.parent_id &&
+      comment.markup_position &&
+      this.checkFilters(comment);
 
     const isActiveSubComment = (comment: Comment) =>
       activeComment &&
       comment.parent_id === activeComment.id &&
-      !comment.markup_position_2d;
+      !comment.markup_position_2d &&
+      this.checkFilters(comment);
 
     const isActiveSpatialComment = (comment: Comment) =>
       activeComment &&
       comment.parent_id === activeComment.id &&
-      comment.markup_position_2d;
+      comment.markup_position_2d &&
+      this.checkFilters(comment);
 
     this.topComments$.next(comments.filter(isTopLevelComment));
     this.subComments$.next(comments.filter(isActiveSubComment));
     this.spatialComments$.next(comments.filter(isActiveSpatialComment));
   }
+
+  public checkFilters = (Comment: Comment) => {
+    // remove resolved comments
+    if (Comment.resolved) return false;
+    return true;
+  };
 
   /**
    * Synchronize markups based on new comments
