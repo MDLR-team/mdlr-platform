@@ -258,6 +258,8 @@ class CommentService {
   }
 
   public async handleResolveComment(commentId: string, resolved: boolean) {
+    console.log("Resolving comment:", commentId, resolved);
+
     const { data, error } = await this._supabase
       .from("comments")
       .update({ resolved })

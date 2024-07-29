@@ -64,6 +64,29 @@ class PendingCommentService {
   };
 
   /**
+   * Active adding a subcomment
+   */
+  public activateSubComment = () => {
+    const activeComment = this.markupService.activeComment$.value;
+    if (!activeComment) return;
+
+    const userMetadata = this.projectService.authService.userMetadata;
+
+    const comment: Partial<Comment> = {
+      content: "",
+      markup_position: null,
+      markup_position_2d: null,
+      view_state: null,
+      parent_id: activeComment.id,
+      annotation: null,
+      author_id: userMetadata!.id,
+    };
+
+    this.markupService.pendingComment$.next(comment);
+    this.addHotkeyListeners();
+  };
+
+  /**
    * Adds an SVG element to the DOM to represent the pending markup.
    */
   public addPendingMarkup3D(position: Vector3) {

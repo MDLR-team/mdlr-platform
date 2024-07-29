@@ -86,6 +86,10 @@ class ActiveCommentService {
     this._markupService.activeComment$.next(null);
   };
 
+  public deactivate = () => {
+    this._markupService.activeComment$.next(null);
+  };
+
   public dispose() {
     this.xy$.complete();
   }

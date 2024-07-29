@@ -9,7 +9,6 @@ import { useMarkup } from "@/components/services/markup-service/markup-provider"
 
 const SubcommentForm = () => {
   const [comment, setComment] = useState("");
-  const [enabledPen, setEnabledPen] = useState(false);
 
   const { markupService } = useMarkup();
 
@@ -19,8 +18,14 @@ const SubcommentForm = () => {
     markupService.activateTool("ADD_COMMENT");
   };
 
-  const handleSubmit = () => {
-    // handle submit
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    markupService.pendingCommentService.activateSubComment();
+    await new Promise((resolve) => setTimeout(resolve, 500)); // Add a 3-second delay
+    await markupService.pendingCommentService.saveComment(comment);
+
+    setComment("");
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -77,10 +82,7 @@ const SubcommentForm = () => {
               }}
               data-type="comment-actions"
             >
-              <IconButton
-                data-active={enabledPen ? "true" : "false"}
-                onClick={handlePenClick}
-              >
+              <IconButton data-active={"false"} onClick={handlePenClick}>
                 <PencilIcon />
               </IconButton>
 
