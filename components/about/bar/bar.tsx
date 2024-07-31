@@ -38,7 +38,7 @@ const Wrapper = styled.div`
     & > div:first-child {
       font-size: 24px;
       font-weight: 700;
-      font-family: Born;
+      //font-family: Born;
     }
 
     &,

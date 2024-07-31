@@ -23,6 +23,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-family: "Roboto", sans-serif;
     background-color: #F1F0EE;
+    overflow-x: hidden;
 
     &, & * {
       color: #333333;
