@@ -72,7 +72,7 @@ const Share = () => {
             }}
           >
             <Typography id="share-modal-title" variant="h6" component="h2">
-              Share this project
+              Share this model
             </Typography>
             <IconButton onClick={handleClose}>
               <CloseIcon />
@@ -91,6 +91,9 @@ const Share = () => {
               fullWidth
               size="small"
               variant="outlined"
+              sx={{
+                height: "33px",
+              }}
             ></TextField>
 
             <Button variant="contained" color="primary" size="large">

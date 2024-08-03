@@ -64,14 +64,6 @@ const SearchBar = () => {
           ),
         }}
       />
-
-      <IconButton
-        data-type="exception"
-        data-add="comment"
-        //onClick={() => markup3DService.toggleAddComment()}
-      >
-        <PlusIcon />
-      </IconButton>
     </Wrapper>
   );
 };
