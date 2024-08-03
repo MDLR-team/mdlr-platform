@@ -46,6 +46,19 @@ const Wrapper = styled.div`
       font-size: 18px;
     }
   }
+
+  @media (max-width: 800px) {
+    & .right {
+      display: none;
+    }
+  }
+
+  @media (max-width: 576px) {
+    & .pricing-tab,
+    & .contact-tab {
+      display: none;
+    }
+  }
 `;
 
 export default Bar;

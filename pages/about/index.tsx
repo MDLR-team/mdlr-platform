@@ -4,6 +4,7 @@ import FeatureGrid from "@/components/about/features-cards/features-cards";
 import Features from "@/components/about/features/features";
 import Feedback from "@/components/about/feedback/feedback";
 import UseCase from "@/components/about/use-case/use-case";
+import { Box } from "@mui/material";
 import styled from "styled-components";
 
 const AboutPage = () => {
@@ -13,6 +14,48 @@ const AboutPage = () => {
 
       <Wrapper>
         <Cover />
+
+        <IssueDescription>
+          AEC projects involve managing numerous file types, often linked to 3D
+          data, making real-time insights challenging. Traditional tools fall
+          short in providing dynamic and collaborative environments for quick
+          analysis.
+          <br />
+          <br />
+          MdIr addresses this with:
+          <br />
+          <span style={{ color: "white", fontWeight: "bold" }}>3D Viewer</span>:
+          For detailed model interaction.
+          <br />
+          <span style={{ color: "white", fontWeight: "bold" }}>
+            Insight Whiteboard
+          </span>
+          : For dynamic data visualization.
+          <br />
+          <span style={{ color: "white", fontWeight: "bold" }}>AI Chats</span>:
+          For smart data retrieval and analysis.
+          <br />
+          <span style={{ color: "white", fontWeight: "bold" }}>
+            Interactive Dashboards
+          </span>
+          : For comprehensive project overviews.
+          <br />
+          <br />
+          With MdIr, users can quickly analyze content and generate insights
+          using the Insight Whiteboard. Describe what you need, and our platform
+          creates various charts and visualizations. These can be integrated
+          into the whiteboard and accessed instantly via chatbots and other
+          methods.
+          <br />
+          <br />
+          MdIr streamlines workflows, enhances collaboration, and delivers
+          real-time project insights effortlessly.
+          <br />
+          <br />
+          <span style={{ color: "white", fontWeight: "bold" }}>
+            MdIr makes it possible.
+          </span>
+        </IssueDescription>
 
         <FeatureGrid />
 
@@ -49,6 +92,43 @@ const AboutPage = () => {
   );
 };
 
+const IssueDescription = styled(Box)`
+  font-size: 1.25rem;
+  line-height: 1.5;
+  font-weight: 500;
+  padding: 20px;
+  align-self: center;
+  max-width: 600px;
+
+  &,
+  & *:not(span) {
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+
+  &,
+  & * {
+    font-size: 1.25rem;
+  }
+
+  & span {
+    font-weight: 700;
+    color: white;
+  }
+  margin-bottom: 150px;
+
+  @media (max-width: 576px) {
+    &,
+    & * {
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    & {
+      margin-top: 100px;
+    }
+  }
+`;
+
 const Wrapper = styled.div`
   width: 100vw;
   display: flex;
@@ -60,12 +140,12 @@ const Wrapper = styled.div`
     src: url("/fonts/born.otf");
   }
 
-  background-color: white;
+  background-color: black;
 
   && {
     &,
     & * {
-      color: black;
+      color: white;
 
       & h1,
       & h2,

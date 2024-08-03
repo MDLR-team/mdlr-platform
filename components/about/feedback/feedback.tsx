@@ -1,18 +1,34 @@
+import { Button } from "@mui/material";
 import styled from "styled-components";
 
 const Feedback = () => {
   return (
     <Wrapper>
       <Form>
-        <h1>We&apos;re Almost There!</h1>
-        <p>
-          We&apos;re currently working hard to bring you the best experience with
-          MdIr. Interested in testing our features early?
-          <br />
-          <br />
-          Don&apos;t hesitate to <u>contact us!</u>
-        </p>
+        <h1>Add collaboration to your project today!</h1>
       </Form>
+
+      <Button
+        sx={{
+          width: "200px",
+          height: "80px !important",
+          padding: "0px 30px",
+          borderRadius: "25px",
+          fontSize: "24px !important",
+          backgroundColor: "white !important",
+          color: "black !important",
+        }}
+        variant="contained"
+      >
+        <span
+          style={{
+            color: "black !important",
+            fontSize: "24px !important",
+          }}
+        >
+          Join the waitlist
+        </span>
+      </Button>
     </Wrapper>
   );
 };
@@ -23,16 +39,19 @@ const Wrapper = styled.div`
 
   padding: 80px 80px;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 150px;
+  margin-bottom: 150px;
 `;
 
 const Form = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 80%;
-  background-color: rgb(244, 244, 248);
-  padding: 60px 100px;
+  width: 100%;
   justify-content: center;
+  align-items: center;
 
   &,
   & * {
@@ -42,7 +61,8 @@ const Form = styled.div`
 
   & h1 {
     font-size: 56px;
-    font-weight: 700;
+    text-align: center;
+    max-width: 800px;
   }
 `;
 

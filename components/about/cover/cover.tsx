@@ -5,24 +5,59 @@ const Cover = () => {
   return (
     <Wrapper>
       <Box data-type="cover">
-        Transform project insights
+        Transform 3D data insights
         <br />
         with AI-powered precision.
       </Box>
 
+      {/* 
+        <Box data-type="cover">
+          Transform AEC Projects
+          <br />
+          with AI-Powered Precision
+        </Box> */}
+
       <Box
+        data-type="divider"
         sx={{
           width: "100%",
           height: "10px",
-          backgroundColor: "rgba(0, 0, 0, 0.08)",
-          maxWidth: "400px",
+          backgroundColor: "rgba(255, 255, 255, .2)",
+          maxWidth: "300px",
         }}
       ></Box>
 
-      <Box data-type="description">
-        MdIr is an AI-driven data visualization, analysis, and optimization
+      <Box
+        data-type="description"
+        sx={{
+          maxWidth: "900px",
+        }}
+      >
+        {/* MdIr is an AI-driven data visualization, analysis, and optimization */}
+        Utilize features like{" "}
+        <EntityLabel color="orange">
+          <img src="/previews/a1.svg" width="24" height="24" />
+          &nbsp;3D&nbsp;Viewer
+        </EntityLabel>
+        ,{" "}
+        <EntityLabel color="orange">
+          <img src="/previews/a3.svg" width="24" height="24" />
+          &nbsp;Insight&nbsp;Whiteboard
+        </EntityLabel>{" "}
+        and{" "}
+        <EntityLabel color="orange">
+          <img src="/previews/a2.svg" width="24" height="24" />
+          &nbsp;Dashboards
+        </EntityLabel>
+        .
         <br />
-        platform for the projects in the AEC sector
+        Replace your project management tools and gain data insights for AEC
+        professionals
+        <br />
+        {/* <br />
+        The tool is designed as a collaborative environment, integrating a
+        whiteboard with AI chats, a 3D viewer, and a dashboard that presents
+        easy-to-understand project data. */}
       </Box>
 
       <Button
@@ -32,14 +67,14 @@ const Cover = () => {
           padding: "0px 30px",
           borderRadius: "25px",
           fontSize: "24px !important",
-          backgroundColor: "black !important",
-          color: "white !important",
+          backgroundColor: "white !important",
+          color: "black !important",
         }}
         variant="contained"
       >
         <span
           style={{
-            color: "white !important",
+            color: "black !important",
             fontSize: "24px !important",
           }}
         >
@@ -50,14 +85,40 @@ const Cover = () => {
   );
 };
 
+const EntityLabel = styled.span<{
+  color: string;
+}>`
+  gap: 10px;
+
+  /* &&::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    min-width: 10px;
+    background-color: ${(props) => props.color};
+    border-radius: 50%;
+  } */
+
+  color: white;
+`;
+
 const Wrapper = styled.div`
   width: 100vw;
-  height: 100vh;
+
+  min-height: max-content;
 
   padding: 0px 80px;
   gap: 50px;
 
-  max-height: 800px;
+  @media (max-width: 576px) {
+    padding: 0px 20px;
+  }
+
+  @media (min-width: 1200px) {
+    height: 100vh;
+    max-height: 800px;
+  }
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -72,20 +133,55 @@ const Wrapper = styled.div`
     &,
     & * {
       font-size: 80px;
-      color: rgba(0, 0, 0, 1);
       font-weight: 300;
 
       & b {
-        color: rgb(16 60 247) !important;
         font-weight: 700;
         font-family: Born;
       }
     }
+
+    @media (max-width: 800px) {
+      &,
+      & * {
+        font-size: 40px;
+      }
+
+      & {
+        margin-top: 100px;
+      }
+    }
+  }
+
+  @media (max-width: 576px) {
+    & div[data-type="divider"] {
+      display: none;
+    }
   }
 
   && div[data-type="description"] {
-    font-size: 32px;
-    color: rgba(0, 0, 0, 0.6);
+    &,
+    & span {
+      font-size: 24px;
+    }
+
+    @media (max-width: 576px) {
+      &,
+      & span {
+        font-size: 18px;
+      }
+
+      & img {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    & span {
+      font-weight: 700;
+    }
+
+    color: rgba(255, 255, 255, 0.5);
     font-weight: 300;
   }
 `;
