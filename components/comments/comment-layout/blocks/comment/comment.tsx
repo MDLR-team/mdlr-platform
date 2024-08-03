@@ -136,7 +136,7 @@ const MessageItem: React.FC<MessageItemProps> = ({
                   height: "6px",
                   minHeight: "6px",
                   borderRadius: "50%",
-                  backgroundColor: stc(tag),
+                  backgroundColor: stc(tag.toLowerCase()),
                 }}
               />
 
