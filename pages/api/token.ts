@@ -1,19 +1,19 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import querystring from "querystring";
 
-export const BIM_ACCOUNT_ID = "b.54f7121e-7acd-4ff7-8232-368e9769e1f1";
+export const BIM_ACCOUNT_ID = "b.08ce7ab3-a669-4ba7-88f9-05349e0d2011";
 
-export const CLIENT_ID = "0wvaP6ZNVOjIdysgA9Ch8A0klnAnyPYlDNsYGCGee12ydMOG";
+export const CLIENT_ID = "e7MpHGpkUFGkjOcZewzvEoMF7CYtLKzwVBz3Knf9JkciJzAk";
 export const CLIENT_SECRET =
-  "jq81BMSxEClsEDrdJezNO82lry3DqvRzIiSoHS6SqwbUrbQCBOLH2ob71R5U5aQo";
+  "ihnI8r3YBGnZHAaVGrPHYXUQQOl3PgEFpt1RU6hxAKcHcWlCJKNBRyD6T3O2pBNE";
 export const AUTH_URL =
   "https://developer.api.autodesk.com/authentication/v2/token";
 
-const base64Encode = (clientId: string, clientSecret: string) => {
+export const base64Encode = (clientId: string, clientSecret: string) => {
   return Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
 };
 
-const getAccessToken = async () => {
+export const getAccessToken = async () => {
   const response = await fetch(AUTH_URL, {
     method: "POST",
     headers: {

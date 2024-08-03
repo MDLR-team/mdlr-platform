@@ -24,31 +24,31 @@ const SettingsPanel = () => {
 
       <Divider />
 
-      {/*  <Box
-        sx={{
-          display: "flex",
-          gap: "27px",
-          width: "100%",
-          justifyContent: "space-between",
-        }}
-      >
-        <Button
-          onClick={() => globalStatesService.toggleSettingsPanel(false)}
-          size={"small"}
-          color={"secondary"}
+      {/*   <Box
+          sx={{
+            display: "flex",
+            gap: "27px",
+            width: "100%",
+            justifyContent: "space-between",
+          }}
         >
-          Cancel
-        </Button>
+          <Button
+            onClick={() => globalStatesService.toggleSettingsPanel(false)}
+            size={"small"}
+            color={"secondary"}
+          >
+            Cancel
+          </Button>
 
-        <Button
-          onClick={() => globalStatesService.toggleSettingsPanel(false)}
-          size={"small"}
-          variant="contained"
-          color={"primary"}
-        >
-          Save
-        </Button>
-      </Box> */}
+          <Button
+            onClick={() => globalStatesService.toggleSettingsPanel(false)}
+            size={"small"}
+            variant="contained"
+            color={"primary"}
+          >
+            Save
+          </Button>
+        </Box> */}
     </Paper>
   );
 };
