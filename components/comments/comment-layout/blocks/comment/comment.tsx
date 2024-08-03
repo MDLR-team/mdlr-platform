@@ -5,6 +5,7 @@ import ResolveIcon from "@/components/ui/icons/resolve-icon";
 import { Box, IconButton } from "@mui/material";
 import moment from "moment";
 import { useMemo } from "react";
+import stc from "string-to-color";
 import styled from "styled-components";
 
 interface MessageItemProps extends Comment {
@@ -117,14 +118,28 @@ const MessageItem: React.FC<MessageItemProps> = ({
             <Box
               key={i}
               sx={{
-                backgroundColor: "#f0f0f0",
+                //backgroundColor: "#f0f0f0",
                 padding: "2px 4px",
                 borderRadius: "5px",
                 fontSize: "12px",
                 color: "rgba(0, 0, 0, 1)",
                 border: "1px solid #ccc",
+                display: "flex",
+                alignItems: "center",
+                gap: "4px",
               }}
             >
+              <Box
+                sx={{
+                  minWidth: "6px",
+                  width: "6px",
+                  height: "6px",
+                  minHeight: "6px",
+                  borderRadius: "50%",
+                  backgroundColor: stc(tag),
+                }}
+              />
+
               {`${tag} - ${percentage}%`}
             </Box>
           ))}

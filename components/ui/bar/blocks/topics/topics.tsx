@@ -2,11 +2,13 @@ import { ProjectItem } from "@/components/explorer/explorer-service/explorer-ser
 import { useProject } from "@/components/services/project-services/project-service/project-provider";
 import { ProjectTopic } from "@/components/services/project-services/project-service/project-service";
 import { Box, Button, InputAdornment, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
+import { use, useEffect, useMemo, useState } from "react";
 
 import CancelIcon from "@mui/icons-material/Cancel";
 import SearchIcon from "@mui/icons-material/Search";
 import styled from "styled-components";
+import stc from "string-to-color";
+import { useComment } from "@/components/services/project-services/comment-service/comment-provider";
 
 const Topics = () => {
   const { projectService } = useProject();
@@ -120,6 +122,8 @@ const Topics = () => {
             {name}
           </Box>
 
+          <ProgressBar tags={tags} />
+
           <Box
             sx={{
               display: "flex",
@@ -132,14 +136,28 @@ const Topics = () => {
               <Box
                 key={i}
                 sx={{
-                  backgroundColor: "#f0f0f0",
+                  //backgroundColor: "#f0f0f0",
                   padding: "2px 4px",
                   borderRadius: "5px",
                   fontSize: "12px",
                   color: "rgba(0, 0, 0, 1)",
                   border: "1px solid #ccc",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "4px",
                 }}
               >
+                <Box
+                  sx={{
+                    minWidth: "6px",
+                    width: "6px",
+                    height: "6px",
+                    minHeight: "6px",
+                    borderRadius: "50%",
+                    backgroundColor: stc(tag),
+                  }}
+                />
+
                 {tag}
               </Box>
             ))}
@@ -158,6 +176,66 @@ const Topics = () => {
           </Box>
         </Box>
       ))}
+    </Box>
+  );
+};
+
+const ProgressBar: React.FC<{
+  tags: string[];
+}> = ({ tags }) => {
+  const { comments } = useComment();
+
+  const tagsShare = useMemo(() => {
+    const tagsMap = new Map<string, number>();
+
+    comments.forEach((comment) => {
+      if (!comment.topic_tags) return;
+
+      Object.values(comment.topic_tags).forEach(([tagEntry, key]) => {
+        let tag = tagEntry?.[0];
+        const percentage = tagEntry?.[1] as any as number;
+
+        if (!tag || percentage === undefined) return;
+
+        // lowercase
+        tag = tag.toLowerCase();
+
+        if (!tagsMap.has(tag)) {
+          tagsMap.set(tag, 0);
+        }
+
+        const value = tagsMap.get(tag)! || 0;
+
+        tagsMap.set(tag, (value + percentage) as number);
+      });
+    });
+
+    return tagsMap;
+  }, [comments, tags]);
+
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        height: "10px",
+        backgroundColor: "#f0f0f0",
+        display: "flex",
+      }}
+    >
+      {tags.map((tag, i) => {
+        const share = tagsShare.get(tag.toLowerCase()) || 0;
+
+        return (
+          <Box
+            key={i}
+            sx={{
+              backgroundColor: stc(tag),
+              width: `${share}%`,
+              height: "100%",
+            }}
+          />
+        );
+      })}
     </Box>
   );
 };
