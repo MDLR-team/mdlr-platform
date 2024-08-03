@@ -20,9 +20,7 @@ const SettingsPanel = () => {
         maxWidth: "400px",
       }}
     >
-      <Topics />
-
-      <Divider />
+      <Thumbnail />
 
       {/*   <Box
           sx={{

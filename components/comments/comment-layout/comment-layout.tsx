@@ -1,18 +1,20 @@
 import React, { useMemo } from "react";
 
 import { useComment } from "../../services/project-services/comment-service/comment-provider";
-import { Box, IconButton, Paper } from "@mui/material";
+import { Box, Button, IconButton, Paper } from "@mui/material";
 import CommentsIcon from "@/components/ui/icons/comments-icon";
 import MessageItem from "./blocks/comment/comment";
 import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
 import { CommentList, Header, List } from "./comment-layout.styled";
 import SearchBar from "./blocks/search-bar/search-bar";
 import { useMarkup } from "@/components/services/markup-service/markup-provider";
+import styled from "styled-components";
+import TopicsWindow from "./blocks/topics-window/topics-window";
 
 const CommentsBlock: React.FC = () => {
   const { comments, search } = useComment();
   const { markupService } = useMarkup();
-  const { isCommentsPanelOpen } = useGlobalStates();
+  const { isCommentsPanelOpen, setIsAiTopicsOpen } = useGlobalStates();
 
   const filteredComments = useMemo(() => {
     return comments
@@ -31,38 +33,77 @@ const CommentsBlock: React.FC = () => {
   if (!isCommentsPanelOpen) return null;
 
   return (
-    <Paper sx={{ flexDirection: "column" }}>
-      {/* Header */}
-      <Header>
-        <Box sx={{ display: "flex", gap: "6px", alignItems: "center" }}>
-          <IconButton>
-            <CommentsIcon />
-          </IconButton>
+    <>
+      <Paper sx={{ flexDirection: "column" }}>
+        {/* Header */}
+        <Header>
+          <Box sx={{ display: "flex", gap: "6px", alignItems: "center" }}>
+            <IconButton>
+              <CommentsIcon />
+            </IconButton>
 
-          <div>Comments</div>
-        </Box>
-      </Header>
+            <div>Comments</div>
+          </Box>
 
-      <Header>
-        <SearchBar />
-      </Header>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={() => setIsAiTopicsOpen(true)}
+          >
+            AI topics
+          </Button>
+        </Header>
 
-      <CommentList>
-        <List>
-          {filteredComments
-            .filter(markupService.checkFilters)
-            .map((comment, i) => (
-              <MessageItem
-                {...comment}
-                selectComment={() => markupService.selectComment(comment.id)}
-                key={comment.id}
-                hideActions={true}
-              />
-            ))}
-        </List>
-      </CommentList>
-    </Paper>
+        <Header>
+          <SearchBar />
+        </Header>
+
+        <CommentList>
+          <List>
+            {filteredComments
+              .filter(markupService.checkFilters)
+              .map((comment, i) => (
+                <MessageItem
+                  {...comment}
+                  selectComment={() => markupService.selectComment(comment.id)}
+                  key={comment.id}
+                  hideActions={true}
+                />
+              ))}
+          </List>
+        </CommentList>
+      </Paper>
+
+      <TopicsWindow />
+    </>
   );
 };
+
+const AIButton = styled(Button)`
+  background: conic-gradient(
+    from -160deg at 50% 50%,
+    #e92a67 0deg,
+    #a853ba 120deg,
+    #2a8af6 240deg,
+    #e92a67 360deg
+  ) !important;
+  box-shadow: 6px 2px 15px rgba(42, 138, 246, 0.3),
+    -6px 2px 15px rgba(233, 42, 103, 0.3);
+
+  &&::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    background: white;
+    opacity: 0.3;
+    border-radius: 4px;
+  }
+`;
 
 export default CommentsBlock;

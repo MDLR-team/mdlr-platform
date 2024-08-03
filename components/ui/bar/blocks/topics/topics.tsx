@@ -1,8 +1,12 @@
 import { ProjectItem } from "@/components/explorer/explorer-service/explorer-service";
 import { useProject } from "@/components/services/project-services/project-service/project-provider";
 import { ProjectTopic } from "@/components/services/project-services/project-service/project-service";
-import { Box } from "@mui/material";
+import { Box, Button, InputAdornment, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
+
+import CancelIcon from "@mui/icons-material/Cancel";
+import SearchIcon from "@mui/icons-material/Search";
+import styled from "styled-components";
 
 const Topics = () => {
   const { projectService } = useProject();
@@ -39,6 +43,62 @@ const Topics = () => {
         overflow: "hidden",
       }}
     >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
+        <Wrapper
+          sx={{
+            display: "flex",
+            gap: "6px",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <TextField
+            sx={{ margin: "0px" }}
+            multiline
+            fullWidth
+            rows={1}
+            disabled
+            value={""}
+            onChange={(e) => true}
+            variant="outlined"
+            required
+            size="small"
+            margin="normal"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon
+                    style={{
+                      fontSize: "16px",
+                      color: "#8C8C8C !important",
+                      opacity: 0.5,
+                    }}
+                  />
+                </InputAdornment>
+              ),
+            }}
+          />
+
+          <Button
+            sx={{
+              minWidth: "max-content",
+            }}
+            disabled
+            variant="contained"
+            color="primary"
+            size="small"
+          >
+            + New topic
+          </Button>
+        </Wrapper>
+      </Box>
+
       {topicItems.map(({ id, prompt, name, tags }, i) => (
         <Box
           key={i}
@@ -101,5 +161,13 @@ const Topics = () => {
     </Box>
   );
 };
+
+const Wrapper = styled(Box)`
+  & .MuiInputBase-root {
+    border-radius: 9px;
+
+    height: 27px;
+  }
+`;
 
 export default Topics;

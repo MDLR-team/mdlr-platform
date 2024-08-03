@@ -17,6 +17,8 @@ interface GlobalStatesProps {
   commentAdding: boolean;
   commentAwaitingSelection: boolean;
   commentPointSelected: boolean;
+  setIsAiTopicsOpen: (isOpen: boolean) => void;
+  isAiTopicsOpen: boolean;
 }
 
 // Context creation
@@ -45,6 +47,7 @@ export const GlobalStatesProvider: React.FC<ProviderProps> = ({ children }) => {
   // UI Panel States
   const [isSettingsPanelOpen, setIsSettingsPanelOpen] = useState(false);
   const [isCommentsPanelOpen, setIsCommentsPanelOpen] = useState(false);
+  const [isAiTopicsOpen, setIsAiTopicsOpen] = useState(false);
 
   // States related to the comment adding process
   const [commentAdding, setCommentAdding] = useState(false);
@@ -75,6 +78,8 @@ export const GlobalStatesProvider: React.FC<ProviderProps> = ({ children }) => {
     commentAdding,
     commentAwaitingSelection,
     commentPointSelected,
+    setIsAiTopicsOpen,
+    isAiTopicsOpen,
   };
 
   // Render provider with context

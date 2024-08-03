@@ -4,14 +4,17 @@ import { Comment } from "@/components/services/project-services/comment-service/
 import ResolveIcon from "@/components/ui/icons/resolve-icon";
 import { Box, IconButton } from "@mui/material";
 import moment from "moment";
+import { useMemo } from "react";
 import styled from "styled-components";
 
 interface MessageItemProps extends Comment {
   selectComment: (id: any) => void;
   hideActions?: boolean;
+  showTopicTags?: boolean;
 }
 
 const MessageItem: React.FC<MessageItemProps> = ({
+  topic_tags,
   id,
   content,
   created_at,
@@ -21,6 +24,7 @@ const MessageItem: React.FC<MessageItemProps> = ({
   author_username,
   resolved,
   hideActions,
+  showTopicTags = false,
 }) => {
   const { commentService } = useComment();
 
@@ -31,6 +35,14 @@ const MessageItem: React.FC<MessageItemProps> = ({
     e.stopPropagation();
     commentService.handleResolveComment(id, true);
   };
+
+  const allTags = useMemo(() => {
+    if (!topic_tags) return [];
+
+    return Object.values(topic_tags).reduce((acc, val) => {
+      return [...acc, ...val];
+    }, []) as any as [string, number][];
+  }, [topic_tags]);
 
   return (
     <Wrapper>
@@ -91,6 +103,33 @@ const MessageItem: React.FC<MessageItemProps> = ({
 
         <Box sx={{ wordWrap: "break-word" }}>{content}</Box>
       </Box>
+
+      {showTopicTags && (
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "6px",
+          }}
+        >
+          {allTags.map(([tag, percentage], i) => (
+            <Box
+              key={i}
+              sx={{
+                backgroundColor: "#f0f0f0",
+                padding: "2px 4px",
+                borderRadius: "5px",
+                fontSize: "12px",
+                color: "rgba(0, 0, 0, 1)",
+                border: "1px solid #ccc",
+              }}
+            >
+              {`${tag} - ${percentage}%`}
+            </Box>
+          ))}
+        </Box>
+      )}
     </Wrapper>
   );
 };
