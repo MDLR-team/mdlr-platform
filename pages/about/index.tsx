@@ -16,45 +16,26 @@ const AboutPage = () => {
         <Cover />
 
         <IssueDescription>
-          AEC projects involve managing numerous file types, often linked to 3D
-          data, making real-time insights challenging. Traditional tools fall
-          short in providing dynamic and collaborative environments for quick
-          analysis.
-          <br />
-          <br />
-          MdIr addresses this with:
-          <br />
-          <span style={{ color: "white", fontWeight: "bold" }}>3D Viewer</span>:
-          For detailed model interaction.
-          <br />
-          <span style={{ color: "white", fontWeight: "bold" }}>
-            Insight Whiteboard
-          </span>
-          : For dynamic data visualization.
-          <br />
-          <span style={{ color: "white", fontWeight: "bold" }}>AI Chats</span>:
-          For smart data retrieval and analysis.
-          <br />
-          <span style={{ color: "white", fontWeight: "bold" }}>
-            Interactive Dashboards
-          </span>
-          : For comprehensive project overviews.
-          <br />
-          <br />
-          With MdIr, users can quickly analyze content and generate insights
-          using the Insight Whiteboard. Describe what you need, and our platform
-          creates various charts and visualizations. These can be integrated
-          into the whiteboard and accessed instantly via chatbots and other
-          methods.
-          <br />
-          <br />
-          MdIr streamlines workflows, enhances collaboration, and delivers
-          real-time project insights effortlessly.
-          <br />
-          <br />
-          <span style={{ color: "white", fontWeight: "bold" }}>
-            MdIr makes it possible.
-          </span>
+          <IssueDescription>
+            <span style={{ color: "white", fontWeight: "bold" }}>
+              Designed for AEC industry professionals
+            </span>
+            , Mdlr addresses the challenge of managing numerous file types,
+            often linked to 3D data, by providing a dynamic and collaborative
+            environment for quick analysis.
+            <br />
+            <br />
+            Traditional tools fall short, but{" "}
+            <span style={{ color: "white", fontWeight: "bold" }}>
+              Mdlr allows users to swiftly analyse content and generate insights
+            </span>{" "}
+            using the Insight Whiteboard. <br />
+            <br />
+            Simply describe your requirements, and our platform will create
+            various charts and visualizations that can be integrated into the
+            whiteboard and accessed instantly through chatbots and other
+            methods.
+          </IssueDescription>
         </IssueDescription>
 
         <FeatureGrid />
@@ -114,7 +95,7 @@ const IssueDescription = styled(Box)`
     font-weight: 700;
     color: white;
   }
-  margin-bottom: 150px;
+  margin-bottom: 80px;
 
   @media (max-width: 576px) {
     &,

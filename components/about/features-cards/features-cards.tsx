@@ -72,11 +72,11 @@ const FeatureGrid = () => {
       <GridContainer>
         <FeatureCard>
           <Badge type="viewer" />
-          <FeatureTitle>Interactive Commenting</FeatureTitle>
+          <FeatureTitle>Share your any format 3D models with team</FeatureTitle>
           <FeatureDescription>
-            Add comments, scribbles, and media to 3D models. Tag team members,
-            highlight areas, and embed images/videos for comprehensive reviews.
-            Enhance communication and streamline feedback
+            Comment and discuss changes to the project at each stage in a
+            real-time multiplayer 3D environment — tag team members, highlight
+            areas and embed any files for comprehensive reviews.
           </FeatureDescription>
 
           <Box
@@ -112,11 +112,12 @@ const FeatureGrid = () => {
         </FeatureCard>
         <FeatureCard>
           <Badge type="whiteboard" />
-          <FeatureTitle>Smart Comment Categorization</FeatureTitle>
+          <FeatureTitle>AI-Driven Task and Comment Dashboards</FeatureTitle>
           <FeatureDescription>
-            AI categorizes comments by topics. Visualize focus areas with
-            percentage breakdowns to prioritize and address critical feedback
-            efficiently
+            Leverage AI to analyze and manage comments and tasks by topics,
+            performers, and dates within a fully integrated 3D model
+            environment. Effortlessly track and organize project details to
+            enhance collaboration and efficiency.
           </FeatureDescription>
 
           <Box
@@ -153,11 +154,14 @@ const FeatureGrid = () => {
         </FeatureCard>
         <FeatureCard>
           <Badge type="whiteboard" />
-          <FeatureTitle>Customizable Data Visualizations</FeatureTitle>
+          <FeatureTitle>
+            Access 3D Model Specifications through Collaborative Whiteboards
+          </FeatureTitle>
           <FeatureDescription>
-            Create role-specific dashboards with interactive whiteboard tools.
-            Drag-and-drop data widgets to generate customized charts and
-            visualizations tailored to team needs
+            Create role-specific whiteboards and use drag-and-drop data widgets
+            to generate customized project charts and visualizations. Enhance
+            your workflow with an AI-driven chatbot, making it easier to access
+            and manage all 3D model specifications collaboratively.
           </FeatureDescription>
 
           <Box

@@ -7,11 +7,10 @@ const Bar = () => {
       <div className="left">
         <Box>MDLR</Box>
 
-        <div className="pricing-tab">Pricing</div>
-        <div className="contact-tab">Contact</div>
+        <div className="pricing-tab">About</div>
       </div>
       <div className="right">
-        <Box>Book demo</Box>
+        <Box>Sign up for free</Box>
       </div>
     </Wrapper>
   );

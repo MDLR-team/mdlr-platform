@@ -5,7 +5,9 @@ const Feedback = () => {
   return (
     <Wrapper>
       <Form>
-        <h1>Add collaboration to your project today!</h1>
+        <h1>
+          Achieve Better Results by&nbsp;Streamlining Your&nbsp;Project Workflow Today
+        </h1>
       </Form>
 
       <Button
@@ -26,7 +28,7 @@ const Feedback = () => {
             fontSize: "24px !important",
           }}
         >
-          Join the waitlist
+          Sign up for free
         </span>
       </Button>
     </Wrapper>

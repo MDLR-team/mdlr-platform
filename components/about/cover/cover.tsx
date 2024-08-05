@@ -5,9 +5,7 @@ const Cover = () => {
   return (
     <Wrapper>
       <Box data-type="cover">
-        Transform 3D data insights
-        <br />
-        with AI-powered precision.
+        Manage your AEC projects efficiently with MDLR
       </Box>
 
       {/* 
@@ -30,11 +28,13 @@ const Cover = () => {
       <Box
         data-type="description"
         sx={{
-          maxWidth: "900px",
+          maxWidth: "750px",
         }}
       >
         {/* MdIr is an AI-driven data visualization, analysis, and optimization */}
-        Utilize features like{" "}
+        Optimize workflows and unite teams with Mdlr, an AI-driven tool
+        integrating 3D, 2D, and tabular data. <br />
+        Use features like{" "}
         <EntityLabel color="orange">
           <img src="/previews/a1.svg" width="24" height="24" />
           &nbsp;3D&nbsp;Viewer
@@ -42,17 +42,14 @@ const Cover = () => {
         ,{" "}
         <EntityLabel color="orange">
           <img src="/previews/a3.svg" width="24" height="24" />
-          &nbsp;Insight&nbsp;Whiteboard
+          &nbsp;Whiteboard
         </EntityLabel>{" "}
         and{" "}
         <EntityLabel color="orange">
           <img src="/previews/a2.svg" width="24" height="24" />
           &nbsp;Dashboards
-        </EntityLabel>
-        .
-        <br />
-        Replace your project management tools and gain data insights for AEC
-        professionals
+        </EntityLabel>{" "}
+        to gain valuable project insights
         <br />
         {/* <br />
         The tool is designed as a collaborative environment, integrating a
@@ -78,7 +75,7 @@ const Cover = () => {
             fontSize: "24px !important",
           }}
         >
-          Join the waitlist
+          Sign up for free
         </span>
       </Button>
     </Wrapper>
@@ -130,6 +127,8 @@ const Wrapper = styled.div`
   }
 
   && div[data-type="cover"] {
+    max-width: 1000px;
+
     &,
     & * {
       font-size: 80px;
