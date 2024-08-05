@@ -33,8 +33,7 @@ const Cover = () => {
       >
         {/* MdIr is an AI-driven data visualization, analysis, and optimization */}
         Optimize workflows and unite teams with Mdlr, an AI-driven tool
-        integrating 3D, 2D, and tabular data. <br />
-        Use features like{" "}
+        integrating 3D, 2D, and tabular data. Use features like{" "}
         <EntityLabel color="orange">
           <img src="/previews/a1.svg" width="24" height="24" />
           &nbsp;3D&nbsp;Viewer
