@@ -89,7 +89,7 @@ const FeatureGrid = () => {
               bottom: "0",
             }}
           >
-            <Box
+            <ImageWrapper1
               sx={{
                 position: "absolute",
                 width: "100%",
@@ -107,7 +107,7 @@ const FeatureGrid = () => {
                   backgroundPosition: "center",
                 }}
               ></Box>
-            </Box>
+            </ImageWrapper1>
           </Box>
         </FeatureCard>
         <FeatureCard>
@@ -240,6 +240,11 @@ const FeatureGrid = () => {
     </>
   );
 };
+const ImageWrapper1 = styled(Box)`
+  @media (max-width: 576px) {
+    transform: scale(1.3) translate(-20px, -30px);
+  }
+`;
 
 const Badge: React.FC<{
   type: "viewer" | "whiteboard" | "dashboard";
