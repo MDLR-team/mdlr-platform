@@ -131,7 +131,7 @@ const FeatureGrid = () => {
               minHeight: "200px",
             }}
           >
-            <Box
+            <ImageWrapper2
               sx={{
                 position: "absolute",
                 width: "80%",
@@ -150,7 +150,7 @@ const FeatureGrid = () => {
                   backgroundPosition: "center",
                 }}
               ></Box>
-            </Box>
+            </ImageWrapper2>
           </Box>
         </FeatureCard>
         <FeatureCard>
@@ -244,6 +244,16 @@ const FeatureGrid = () => {
 const ImageWrapper1 = styled(Box)`
   @media (max-width: 576px) {
     transform: scale(1.3) translate(-20px, -30px);
+  }
+`;
+
+const ImageWrapper2 = styled(Box)`
+  @media (max-width: 576px) {
+    transform: scale(1.3) translate(-10%, 0px);
+  }
+
+  @media (min-width: 576px) {
+    transform: translate(-10%, 30%);
   }
 `;
 
