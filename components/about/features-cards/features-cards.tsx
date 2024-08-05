@@ -128,6 +128,7 @@ const FeatureGrid = () => {
               display: "flex",
               right: "0",
               bottom: "0",
+              minHeight: "200px",
             }}
           >
             <Box
