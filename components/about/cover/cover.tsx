@@ -85,6 +85,7 @@ const EntityLabel = styled.span<{
   color: string;
 }>`
   gap: 10px;
+  white-space: nowrap;
 
   /* &&::before {
     content: "";
