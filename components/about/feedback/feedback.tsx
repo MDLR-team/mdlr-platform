@@ -6,7 +6,8 @@ const Feedback = () => {
     <Wrapper>
       <Form>
         <h1>
-          Achieve Better Results by&nbsp;Streamlining Your&nbsp;Project Workflow Today
+          Achieve Better Results by&nbsp;Streamlining Your&nbsp;Project Workflow
+          Today
         </h1>
       </Form>
 
@@ -65,6 +66,10 @@ const Form = styled.div`
     font-size: 56px;
     text-align: center;
     max-width: 800px;
+
+    @media (max-width: 576px) {
+      font-size: 36px;
+    }
   }
 `;
 
