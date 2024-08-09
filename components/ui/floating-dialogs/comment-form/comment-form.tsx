@@ -8,6 +8,10 @@ import ThreadIcon from "../../icons/thread-icon";
 import ImageIcon from "../../icons/image-icon";
 import { useMarkup } from "@/components/services/markup-service/markup-provider";
 import { Comment } from "@/components/services/project-services/comment-service/comment-service";
+import { MentionsInput, Mention } from "react-mentions";
+import { ProjectUser } from "@/components/services/project-services/project-service/project-service";
+import { useProject } from "@/components/services/project-services/project-service/project-provider";
+import handleImageUpload from "./blocks/utils/handle-image-upload";
 
 export const FloatingComment = () => {
   const { markupService } = useMarkup();
@@ -60,11 +64,15 @@ const CommentForm: React.FC<{
 };
 
 const CommentMessage: React.FC<{}> = () => {
+  const { projectService } = useProject();
+  const { markupService } = useMarkup();
+
   const [comment, setComment] = useState("");
   const [enabledPen, setEnabledPen] = useState(false);
+  const [images, setImages] = useState<string[]>([]);
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const { markupService } = useMarkup();
+  const mentionRef = useRef<any>(null);
 
   useEffect(() => {
     const sub = markupService.pendingCommentService.enabledPen$.subscribe(
@@ -93,8 +101,9 @@ const CommentMessage: React.FC<{}> = () => {
   const handleSubmit = async (event?: React.FormEvent<HTMLFormElement>) => {
     if (event) event.preventDefault();
 
-    await markupService.saveComment(comment);
+    await markupService.saveComment({ content: comment, images });
     setComment("");
+    setImages([]);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -104,21 +113,18 @@ const CommentMessage: React.FC<{}> = () => {
     }
   };
 
-  const saveView = async () => {
-    /* if (!activeComment) return;
+  const [projectUsers, setProjectUsers] = useState<ProjectUser[]>([]);
 
-    const viewState = viewer.getState({ viewport: true });
+  useEffect(() => {
+    const sub = projectService.projectUsers$.subscribe((users) =>
+      setProjectUsers(users)
+    );
 
-    try {
-      await supabase
-        .from("comments")
-        .update({ view_state: viewState })
-        .eq("id", activeComment.id);
-    } catch (error) {
-      console.error("Error updating comment:", error);
-    }
+    return () => sub.unsubscribe();
+  }, [projectService]);
 
-    activeCommentService.togglePaperMode(false); */
+  const handleThreadClick = () => {
+    setComment(comment + "@");
   };
 
   return (
@@ -137,22 +143,25 @@ const CommentMessage: React.FC<{}> = () => {
         onSubmit={handleSubmit}
       >
         <Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
-          <TextField
-            placeholder="Write a comment..."
-            multiline
-            fullWidth
-            autoFocus
-            minRows={1}
-            maxRows={12}
-            size="small"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            onKeyDown={handleKeyDown}
-            variant="standard"
-            required
-            margin="normal"
-            inputRef={inputRef}
-          />
+          <InputFieldWrapper>
+            <MentionsInput
+              ref={mentionRef}
+              placeholder="Write a comment..."
+              value={comment}
+              onChange={(e: any) => setComment(e.target.value)}
+              inputRef={inputRef}
+              onKeyDown={(e: any) => handleKeyDown(e)}
+              spellCheck={false}
+            >
+              <Mention
+                trigger="@"
+                data={projectUsers.map((user) => ({
+                  id: user.id,
+                  display: user.username,
+                }))}
+              />
+            </MentionsInput>
+          </InputFieldWrapper>
 
           {comment && (
             <Box
@@ -170,13 +179,51 @@ const CommentMessage: React.FC<{}> = () => {
                 <PencilIcon />
               </IconButton>
 
-              <IconButton data-active={"false"}>
+              <IconButton data-active={"false"} onClick={handleThreadClick}>
                 <ThreadIcon />
               </IconButton>
 
-              <IconButton data-active={"false"}>
-                <ImageIcon />
-              </IconButton>
+              <label htmlFor="image-upload">
+                <input
+                  style={{ display: "none" }}
+                  id="image-upload"
+                  name="image-upload"
+                  type="file"
+                  onChange={(e) =>
+                    handleImageUpload(e, setImages, projectService)
+                  }
+                />
+                <IconButton data-active={"false"} component="span">
+                  <ImageIcon />
+                </IconButton>
+              </label>
+            </Box>
+          )}
+
+          {images.length > 0 && (
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "4px",
+                marginTop: "4px",
+              }}
+              data-type="attached-images"
+            >
+              {images.map((image, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    width: "50px",
+                    height: "50px",
+                    backgroundImage: `url(${image})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: "8px",
+                    border: "1px solid #E0E0E0",
+                  }}
+                ></Box>
+              ))}
             </Box>
           )}
         </Box>
@@ -193,6 +240,46 @@ const CommentMessage: React.FC<{}> = () => {
     </Wrapper>
   );
 };
+
+export const InputFieldWrapper = styled.div`
+  padding: 5px;
+  font-family: inherit !important;
+  line-height: 1.43;
+
+  &[data-type="subcomment"] {
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    width: 100%;
+  }
+
+  & > div > div > div:first-child {
+    padding: 0px;
+    border: none !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
+  }
+
+  &,
+  & * {
+    font-size: inherit !important;
+    line-height: 1.4 !important;
+  }
+
+  & strong {
+    background-color: white !important;
+    color: blue !important;
+  }
+
+  & textarea {
+    &,
+    &:focus,
+    &:focus-visible {
+      padding: 0px;
+      border: none;
+      outline: none;
+    }
+  }
+`;
 
 export const Wrapper = styled.div`
   &&&& {

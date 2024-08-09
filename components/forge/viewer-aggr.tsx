@@ -149,6 +149,8 @@ class Viewer extends React.Component {
     const urns = this._urns;
     const viewerService = this._viewerService;
 
+    console.log("urns", urns);
+
     await viewerService!.loadDocuments(urns);
 
     // Once loading is completed

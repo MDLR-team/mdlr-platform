@@ -7,6 +7,7 @@ import moment from "moment";
 import { useMemo } from "react";
 import stc from "string-to-color";
 import styled from "styled-components";
+import CommentContent from "./blocks/comment-content";
 
 interface MessageItemProps extends Comment {
   selectComment: (id: any) => void;
@@ -102,7 +103,7 @@ const MessageItem: React.FC<MessageItemProps> = ({
           ) */}
         </Box>
 
-        <Box sx={{ wordWrap: "break-word" }}>{content}</Box>
+        <CommentContent content={content} />
       </Box>
 
       {showTopicTags && (

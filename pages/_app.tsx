@@ -30,6 +30,19 @@ const TextFieldStyles = css`
   }
 `;
 
+const MentionListStyles = css`
+  & ul[role="listbox"] {
+    & li {
+      padding: 5px;
+    }
+
+    & li:hover,
+    & li[aria-selected="true"] {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+  }
+`;
+
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
@@ -263,6 +276,9 @@ const GlobalStyle = createGlobalStyle`
 
   // TextFields
   ${TextFieldStyles}
+
+  // Mentions
+  ${MentionListStyles}
 `;
 
 export default App;

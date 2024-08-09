@@ -10,6 +10,7 @@ import { CLIENT_ID } from "@/pages/api/token";
 import { BehaviorSubject } from "rxjs";
 import MarkupService from "../../markup-service/markup-service";
 import TopicsService from "../topics-service/topics-service";
+import ApsService from "../../aps-service/aps-service";
 
 class ProjectService {
   private _wasInitialized: boolean = false;
@@ -50,6 +51,7 @@ class ProjectService {
   //private _hotkeyService: HotkeyService;
 
   private _topicsService: TopicsService;
+  private _apsService: ApsService;
 
   constructor(
     private _supabase: SupabaseClient,
@@ -61,6 +63,7 @@ class ProjectService {
     this._commentService = new CommentService(this);
     //this._activeCommentService = new ActiveCommentService(this);
     this._viewerServiceAggr = new ViewerServiceAggr(this);
+    this._apsService = new ApsService(this);
 
     this.projectUsers = new Map();
 
@@ -356,6 +359,7 @@ class ProjectService {
     //this._hotkeyService.dispose();
 
     this._topicsService.dispose();
+    this._apsService.dispose();
   }
 }
 

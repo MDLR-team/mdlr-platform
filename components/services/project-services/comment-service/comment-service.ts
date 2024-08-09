@@ -299,6 +299,7 @@ export interface Comment {
   author_username: string;
   topic_tags: Record<string, string[]>;
   resolved: boolean;
+  images: string[];
 }
 
 export default CommentService;

@@ -1,18 +1,28 @@
 import { Box, IconButton, TextField } from "@mui/material";
-import { Wrapper } from "../../floating-dialogs/comment-form/comment-form";
+import {
+  InputFieldWrapper,
+  Wrapper,
+} from "../../floating-dialogs/comment-form/comment-form";
 import PlusIcon from "../../icons/plus-icon";
 import PencilIcon from "../../icons/pencil-icon";
 import ThreadIcon from "../../icons/thread-icon";
 import ImageIcon from "../../icons/image-icon";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMarkup } from "@/components/services/markup-service/markup-provider";
+import { useProject } from "@/components/services/project-services/project-service/project-provider";
+import { ProjectUser } from "@/components/services/project-services/project-service/project-service";
+import { Mention, MentionsInput } from "react-mentions";
+import handleImageUpload from "../../floating-dialogs/comment-form/blocks/utils/handle-image-upload";
 
 const SubcommentForm = () => {
-  const [comment, setComment] = useState("");
-
+  const { projectService } = useProject();
   const { markupService } = useMarkup();
 
+  const [comment, setComment] = useState("");
+  const [images, setImages] = useState<string[]>([]);
+
   const inputRef = useRef<HTMLInputElement>(null);
+  const mentionRef = useRef<any>(null);
 
   const handlePenClick = () => {
     markupService.activateTool("ADD_COMMENT");
@@ -23,13 +33,34 @@ const SubcommentForm = () => {
 
     markupService.pendingCommentService.activateSubComment();
     await new Promise((resolve) => setTimeout(resolve, 500)); // Add a 3-second delay
-    await markupService.pendingCommentService.saveComment(comment);
+    await markupService.pendingCommentService.saveComment({
+      content: comment,
+      images,
+    });
 
     setComment("");
+    setImages([]);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    // handle key down
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      handleSubmit(event);
+    }
+  };
+
+  const [projectUsers, setProjectUsers] = useState<ProjectUser[]>([]);
+
+  useEffect(() => {
+    const sub = projectService.projectUsers$.subscribe((users) =>
+      setProjectUsers(users)
+    );
+
+    return () => sub.unsubscribe();
+  }, [projectService]);
+
+  const handleThreadClick = () => {
+    setComment(comment + "@");
   };
 
   return (
@@ -55,23 +86,25 @@ const SubcommentForm = () => {
             width: "100%",
           }}
         >
-          <TextField
-            placeholder="Write a comment..."
-            sx={{ backgroundColor: "rgba(0,0,0,0.08)", borderRadius: "8px" }}
-            multiline
-            fullWidth
-            autoFocus
-            minRows={1}
-            maxRows={12}
-            size="small"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            onKeyDown={handleKeyDown}
-            variant="standard"
-            required
-            margin="normal"
-            inputRef={inputRef}
-          />
+          <InputFieldWrapper data-type="subcomment">
+            <MentionsInput
+              ref={mentionRef}
+              placeholder="Write a comment..."
+              value={comment}
+              onChange={(e: any) => setComment(e.target.value)}
+              inputRef={inputRef}
+              onKeyDown={(e: any) => handleKeyDown(e)}
+              spellCheck={false}
+            >
+              <Mention
+                trigger="@"
+                data={projectUsers.map((user) => ({
+                  id: user.id,
+                  display: user.username,
+                }))}
+              />
+            </MentionsInput>
+          </InputFieldWrapper>
 
           {comment && (
             <Box
@@ -86,13 +119,51 @@ const SubcommentForm = () => {
                 <PencilIcon />
               </IconButton>
 
-              <IconButton data-active={"false"}>
+              <IconButton data-active={"false"} onClick={handleThreadClick}>
                 <ThreadIcon />
               </IconButton>
 
-              <IconButton data-active={"false"}>
-                <ImageIcon />
-              </IconButton>
+              <label htmlFor="image-upload">
+                <input
+                  style={{ display: "none" }}
+                  id="image-upload"
+                  name="image-upload"
+                  type="file"
+                  onChange={(e) =>
+                    handleImageUpload(e, setImages, projectService)
+                  }
+                />
+                <IconButton data-active={"false"} component="span">
+                  <ImageIcon />
+                </IconButton>
+              </label>
+            </Box>
+          )}
+
+          {images.length > 0 && (
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "4px",
+                marginTop: "4px",
+              }}
+              data-type="attached-images"
+            >
+              {images.map((image, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    width: "50px",
+                    height: "50px",
+                    backgroundImage: `url(${image})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: "8px",
+                    border: "1px solid #E0E0E0",
+                  }}
+                ></Box>
+              ))}
             </Box>
           )}
         </Box>

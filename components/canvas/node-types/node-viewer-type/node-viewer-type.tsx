@@ -1,10 +1,9 @@
-import { Box, Button, CircularProgress, Tab, Tabs } from "@mui/material";
+import { Box } from "@mui/material";
 import { createContext, useContext, useEffect, useState } from "react";
 import { Handle, Position } from "reactflow";
 import styled from "styled-components";
 import { useNodes } from "../../node-service/node-provider";
 import ViewerService from "./service/viewer-service";
-import InputData from "./blocks/input-data/input-data";
 import { Project } from "@/components/types/supabase-data.types";
 
 const NodeViewerType = ({ data, isConnectable }: any) => {
@@ -64,7 +63,7 @@ const NodeViewerType = ({ data, isConnectable }: any) => {
                 justifyContent: "center",
               }}
             >
-              Select a project for insights
+              Select a model for insights
             </Box>
           )}
 

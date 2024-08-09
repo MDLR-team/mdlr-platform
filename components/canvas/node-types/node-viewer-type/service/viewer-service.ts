@@ -46,7 +46,7 @@ class ViewerService {
 
   async getModelMetadata(urn: string, accessToken: string) {
     const response = await axios.get(
-      `https://developer.api.autodesk.com/modelderivative/v2/designdata/${urn}/metadata`,
+      `https://developer.api.autodesk.com/modelderivative/v2/regions/eu/designdata/${urn}/metadata`,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
       }
@@ -65,7 +65,7 @@ class ViewerService {
 
     try {
       const response = await axios.get(
-        `https://developer.api.autodesk.com/modelderivative/v2/designdata/${urn}/metadata/${guid}/properties`,
+        `https://developer.api.autodesk.com/modelderivative/v2/regions/eu/designdata/${urn}/metadata/${guid}/properties`,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
         }
@@ -113,6 +113,8 @@ class ViewerService {
   public async fetchProject(urn: string) {
     this._urn = urn;
 
+    console.log("Fetching project for urn:", urn);
+
     let { data: project, error: findError } = await supabase
       .from("projects")
       .select(
@@ -133,6 +135,8 @@ class ViewerService {
     const topics = await this.fetchTopics(projectId);
 
     this._project$.next(project);
+
+    //dXJuOmFkc2sud2lwZW1lYTpmcy5maWxlOnZmLjdjT05oMDFSUkxHcEpMbXdpcGVtNWc_dmVyc2lvbj0x
 
     const entities: EntityItem[] = [
       {

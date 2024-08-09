@@ -202,13 +202,13 @@ class PendingCommentService {
   /**
    * Saves the pending comment to the database.
    */
-  public saveComment = async (content: string) => {
+  public saveComment = async (updatedComment: Partial<Comment>) => {
     const pendingComment = this.markupService.pendingComment$.value;
     if (!pendingComment) return;
 
     const comment: Partial<Comment> = {
       ...pendingComment,
-      content,
+      ...updatedComment,
     };
 
     try {

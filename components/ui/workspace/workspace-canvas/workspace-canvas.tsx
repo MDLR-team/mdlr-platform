@@ -18,7 +18,7 @@ const CatalogCanvas: React.FC<WorkspaceItemProps> = () => {
         <Thumb
           style={{
             backgroundColor: "white",
-            backgroundImage: "/thumb/schema.jpg",
+            backgroundImage: "/thumb/schema.png",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -94,7 +94,7 @@ const Thumb = styled.div`
   background: white;
   position: relative;
 
-  background-image: url("/thumb/schema.jpg");
+  background-image: url("/thumb/schema.png");
   background-size: cover;
 
   background-repeat: no-repeat;

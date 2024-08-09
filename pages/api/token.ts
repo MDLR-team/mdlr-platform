@@ -22,7 +22,8 @@ export const getAccessToken = async () => {
     },
     body: new URLSearchParams({
       grant_type: "client_credentials",
-      scope: "data:read bucket:read bucket:create data:write data:create",
+      scope:
+        "data:read data:write data:create data:search bucket:read bucket:create bucket:update bucket:delete code:all account:read account:write viewables:read",
     }).toString(),
   });
 

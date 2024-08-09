@@ -257,8 +257,8 @@ class MarkupService {
   /**
    * Saves a comment to the database.
    */
-  public saveComment = (comment: string) => {
-    this.pendingCommentService.saveComment(comment);
+  public saveComment = (updatedComment: Partial<Comment>) => {
+    this.pendingCommentService.saveComment(updatedComment);
   };
 
   /**
