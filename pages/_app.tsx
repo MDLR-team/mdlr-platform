@@ -252,6 +252,58 @@ const GlobalStyle = createGlobalStyle`
     display: none !important;
   }
 
+    
+  // Properties panel
+  & &.docking-panel-title {
+       border-bottom: 1px solid transparent !important;
+  }
+
+  & &.docking-panel.model-structure-panel {
+    & {
+      z-index: 1000 !important;
+    }
+
+    & &.docking-panel-title {
+       border-bottom: 1px solid transparent !important;
+    }
+
+    & {
+      border-radius: 9px !important;
+      overflow: hidden !important;
+      box-shadow: none !important;
+      border: 1px solid #E0E0E0 !important;
+    }
+
+    &&&&& > div {
+      background-color: #ffffff !important;
+
+      &, & * {
+        color: #333333;
+        font-family: "Roboto", sans-serif;
+        font-size: 12px;
+      }
+
+      & .collapsed.group, & .model-div {
+        background-color: white;
+
+        &:hover {
+          background-color: rgba(0,0,0,.005) !important;
+        }
+      }
+    }
+  }
+
+  & &.adsk-control.adsk-searchbox {
+    & input {
+      background-color: white !important;
+      width: calc(100% - 18px) !important;
+      margin-left: 9px !important;
+      border-radius: 9px;
+      border: 1px solid rgba(0,0,0,0.2) !important;
+      box-shadow: none !important;
+    }
+  }
+
   & .viewcubeWrapper {
     left: auto !important;
     top: auto !important;

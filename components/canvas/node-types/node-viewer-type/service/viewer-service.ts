@@ -71,6 +71,8 @@ class ViewerService {
         }
       );
 
+      console.log("response AA", response.data);
+
       const data = response.data.data;
 
       const { collection } = data;
