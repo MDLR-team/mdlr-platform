@@ -1,3 +1,8 @@
+import AuthService from "@/components/services/app-services/auth/auth-service";
+import { supabase } from "@/components/supabase-client";
+import { CLIENT_ID } from "@/pages/api/token";
+import base64url from "base64url";
+
 class ExplorerService {
   private _project_id: queryType;
   private _folder_id: queryType;
@@ -60,7 +65,7 @@ class ExplorerService {
       //check that format is supported. It should be .rvt, .ifc
       const name = item.attributes.displayName || item.attributes.name;
       const format =
-        name.endsWith(".rvt") || name.endsWith(".ifc") || name.endsWith(".skp");
+        name.endsWith(".rvt") || name.endsWith(".ifc") || name.endsWith(".skp") || name.endsWith(".nwd") || name.endsWith(".3dm");
       if (!format) {
         disabled = true;
       }
@@ -75,6 +80,64 @@ class ExplorerService {
       link,
       disabled,
     };
+  }
+
+  private _getBim360ProjectId(urn: string): string {
+    const decoded = base64url.decode(urn as string);
+
+    const parts = decoded.split(":");
+    const lastPart = parts[parts.length - 1];
+
+    // Extract the substring after 'vf.' and before '?'
+    const startIndex = lastPart.indexOf("vf.") + 3; // Add 3 to skip 'vf.'
+    const endIndex = lastPart.indexOf("?");
+    const projectId = lastPart.substring(startIndex, endIndex);
+
+    return projectId;
+  }
+
+  public async createModel(
+    authService: AuthService,
+    urn: string,
+    name?: string
+  ): Promise<any> {
+    const bimId = this._getBim360ProjectId(urn);
+
+    // If the project was not found, create a new one
+    const { data: newProject, error: createError } = await supabase
+      .from("projects")
+      .insert([
+        {
+          title: name || "New Project",
+          bim_id: bimId,
+          bim_urn: urn,
+          bim_client_id: CLIENT_ID,
+        },
+      ])
+      .select("*")
+      .single();
+
+    const userMetadata = authService.userMetadata;
+    if (userMetadata) {
+      const { id: userId } = userMetadata;
+
+      // Create the userprojects link
+      const { error: userProjectError } = await supabase
+        .from("userprojects")
+        .insert([
+          {
+            project_id: newProject.id,
+            user_id: userId,
+          },
+        ]);
+
+      if (userProjectError) {
+        console.error("Error creating userprojects link:", userProjectError);
+        return { project: null, error: userProjectError };
+      }
+    }
+
+    return newProject;
   }
 
   public async getViewerLink(item: ExplorerItem): Promise<string> {
@@ -102,6 +165,35 @@ class ExplorerService {
 
       const viewerUrl = `/viewer/${urn}`;
       return viewerUrl;
+    }
+
+    return "";
+  }
+
+  public async getViewerUrn(item: ExplorerItem): Promise<string> {
+    if (item.type === "items") {
+      const href = item.source.relationships.versions.links.related.href;
+
+      const url = "/api/bim360/model-versions";
+
+      const body = {
+        href,
+      };
+
+      const resp = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      const data: ModelVersionData = await resp.json();
+
+      const lastVersion = data.data[data.data.length - 1];
+      const urn = lastVersion.relationships.derivatives.data.id;
+
+      return urn;
     }
 
     return "";

@@ -106,9 +106,9 @@ const LeftBar = () => {
           ))}
         </MenuWrapper>
 
-        <Button variant="contained" color="primary" size="large">
+       {/* <Button variant="contained" color="primary" size="large">
           + New project
-        </Button>
+        </Button> */}
       </Paper>
     </>
   );

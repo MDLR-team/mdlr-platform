@@ -230,6 +230,15 @@ const GlobalStyle = createGlobalStyle`
       }
     }
 
+    &.MuiButton-containedSecondary {
+      background-color: white;
+      border: 1px solid grey;
+      
+      &:hover {
+        background-color: white;
+      }
+    }
+
     &, & * {
       color: #333333 !important;
       text-transform: none !important;
@@ -291,6 +300,11 @@ const GlobalStyle = createGlobalStyle`
         }
       }
     }
+  }
+
+  // Poppers
+  & &.base-Popper-root {
+    z-index: 10 !important;
   }
 
   & &.adsk-control.adsk-searchbox {
