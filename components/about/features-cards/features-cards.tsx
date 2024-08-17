@@ -21,6 +21,17 @@ const GridContainer = styled.div`
   @media (max-width: 576px) {
     grid-template-columns: repeat(1, 1fr);
   }
+
+  @media (min-width: 576px) {
+    & > div:nth-child(1),
+    & > div:nth-child(4) {
+      border-right: 0px solid var(--border-color);
+    }
+
+    & > div:nth-child(1), & > div:nth-child(2) {
+      border-bottom: 0px solid var(--border-color);
+    }
+  }
 `;
 
 const FeatureCard = styled.div`

@@ -23,7 +23,7 @@ const LandingPageStyles = css`
     --text-secondary: rgba(0, 0, 0, 0.8);
     --button-primary: black;
     --button-text-primary: white;
-    --border-color: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.9);
     --bar-color: white;
   }
 
