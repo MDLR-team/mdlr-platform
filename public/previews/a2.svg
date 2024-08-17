@@ -1,9 +1,14 @@
-<svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M17.5 25C21.6421 25 25 21.6421 25 17.5C25 13.3579 21.6421 10 17.5 10C13.3579 10 10 13.3579 10 17.5C10 21.6421 13.3579 25 17.5 25ZM17.5 35C27.165 35 35 27.165 35 17.5C35 7.83502 27.165 0 17.5 0C7.83502 0 0 7.83502 0 17.5C0 27.165 7.83502 35 17.5 35Z" fill="url(#paint0_angular_1326_475)"/>
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_1424_546)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M18 25.5C22.1421 25.5 25.5 22.1421 25.5 18C25.5 13.8579 22.1421 10.5 18 10.5C13.8579 10.5 10.5 13.8579 10.5 18C10.5 22.1421 13.8579 25.5 18 25.5ZM18 35.5C27.665 35.5 35.5 27.665 35.5 18C35.5 8.33502 27.665 0.5 18 0.5C8.33502 0.5 0.5 8.33502 0.5 18C0.5 27.665 8.33502 35.5 18 35.5Z" fill="url(#paint0_linear_1424_546)"/>
+</g>
 <defs>
-<radialGradient id="paint0_angular_1326_475" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(17.5 17.5) rotate(90) scale(17.5)">
-<stop stop-color="#FFAA06"/>
-<stop offset="1" stop-color="#CB5B5B"/>
-</radialGradient>
+<linearGradient id="paint0_linear_1424_546" x1="18" y1="0.5" x2="18" y2="35.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#F13904"/>
+<stop offset="1" stop-color="#FFAA91"/>
+</linearGradient>
+<clipPath id="clip0_1424_546">
+<rect width="35" height="35" fill="white" transform="translate(0.5 0.5)"/>
+</clipPath>
 </defs>
 </svg>

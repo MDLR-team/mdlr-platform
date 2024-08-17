@@ -17,16 +17,14 @@ const AboutPage = () => {
 
         <IssueDescription>
           <IssueDescription>
-            <span style={{ color: "white", fontWeight: "bold" }}>
-              Designed for AEC industry professionals
-            </span>
+            <span>Designed for AEC industry professionals</span>
             , Mdlr addresses the challenge of managing numerous file types,
             often linked to 3D data, by providing a dynamic and collaborative
             environment for quick analysis.
             <br />
             <br />
             Traditional tools fall short, but{" "}
-            <span style={{ color: "white", fontWeight: "bold" }}>
+            <span>
               Mdlr allows users to swiftly analyse content and generate insights
             </span>{" "}
             using the Insight Whiteboard. <br />
@@ -83,7 +81,7 @@ const IssueDescription = styled(Box)`
 
   &,
   & *:not(span) {
-    color: rgba(255, 255, 255, 0.5) !important;
+    color: var(--text-secondary) !important;
   }
 
   &,
@@ -93,7 +91,7 @@ const IssueDescription = styled(Box)`
 
   & span {
     font-weight: 700;
-    color: white;
+    color: var(--text-primary);
   }
   margin-bottom: 80px;
 
@@ -121,12 +119,12 @@ const Wrapper = styled.div`
     src: url("/fonts/born.otf");
   }
 
-  background-color: black;
+  background-color: var(--background-color);
 
   && {
     &,
     & * {
-      color: white;
+      color: var(--text-primary);
 
       & h1,
       & h2,
@@ -134,7 +132,7 @@ const Wrapper = styled.div`
       & h4,
       & h5,
       & h6 {
-        //font-family: Born;
+        font-family: "Euclid Circular A", sans-serif;
         font-weight: 700;
       }
     }

@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import styled from "styled-components";
 
 const Bar = () => {
@@ -9,9 +9,16 @@ const Bar = () => {
 
         <div className="pricing-tab">About</div>
       </div>
-      <div className="right">
-        <Box>Sign up for free</Box>
-      </div>
+      <Button
+        sx={{
+          padding: "25px 30px",
+          borderRadius: "25px",
+        }}
+        variant="contained"
+        color="primary"
+      >
+        Request a demo
+      </Button>
     </Wrapper>
   );
 };
@@ -21,11 +28,15 @@ const Wrapper = styled.div`
   display: flex;
   position: relative;
   z-index: 1000;
-  background-color: white;
+  background-color: var(--background-color);
   height: 80px;
   padding: 0px 80px;
   align-items: center;
   justify-content: space-between;
+
+  & {
+    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+  }
 
   .left,
   .right {

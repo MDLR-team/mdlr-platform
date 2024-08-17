@@ -15,7 +15,7 @@ const GridContainer = styled.div`
   max-width: 1200px;
   align-self: center;
 
-  border: 1px solid #212121;
+  border: 1px solid var(--border-color);
   border-radius: 10px;
 
   @media (max-width: 576px) {
@@ -30,7 +30,7 @@ const FeatureCard = styled.div`
   border-radius: 0px;
   //box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: relative;
-  border: 0.5px solid #212121;
+  border: 0.5px solid var(--border-color);
   overflow: hidden;
 
   display: flex;
@@ -56,6 +56,11 @@ const FeatureCard = styled.div`
 const FeatureTitle = styled.h2`
   font-size: 1.5rem;
   margin-bottom: 10px;
+
+  &,
+  & * {
+    color: var(--text-primary);
+  }
 `;
 
 const FeatureDescription = styled.p`
@@ -63,7 +68,10 @@ const FeatureDescription = styled.p`
   line-height: 1.5;
   font-weight: 500;
 
-  opacity: 0.5;
+  &,
+  & * {
+    color: var(--text-secondary) !important;
+  }
 `;
 
 const FeatureGrid = () => {

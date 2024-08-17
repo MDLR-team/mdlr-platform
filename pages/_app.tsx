@@ -1,7 +1,7 @@
 import AuthProvider from "@/components/services/app-services/auth/auth-provider";
 import Wrapper from "@/components/layout/wrapper/wrapper";
 import type { AppProps } from "next/app";
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, css } from "styled-components";
 import AboutPage from "./about";
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -16,6 +16,110 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 };
 
+const LandingPageStyles = css`
+  :root {
+    --background-color: white;
+    --text-primary: black;
+    --text-secondary: rgba(0, 0, 0, 0.8);
+    --button-primary: black;
+    --button-text-primary: white;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --bar-color: white;
+  }
+
+  @font-face {
+    font-family: "Euclid Circular A";
+    src: url("/fonts/Euclid Circular A Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Euclid Circular A";
+    src: url("/fonts/Euclid Circular A Bold Italic.ttf") format("truetype");
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: "Euclid Circular A";
+    src: url("/fonts/Euclid Circular A Italic.ttf") format("truetype");
+    font-weight: normal;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: "Euclid Circular A";
+    src: url("/fonts/Euclid Circular A Light.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Euclid Circular A";
+    src: url("/fonts/Euclid Circular A Light Italic.ttf") format("truetype");
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: "Euclid Circular A";
+    src: url("/fonts/Euclid Circular A Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Euclid Circular A";
+    src: url("/fonts/Euclid Circular A Medium Italic.ttf") format("truetype");
+    font-weight: 500;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: "Euclid Circular A";
+    src: url("/fonts/Euclid Circular A Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Euclid Circular A";
+    src: url("/fonts/Euclid Circular A SemiBold.ttf") format("truetype");
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Euclid Circular A";
+    src: url("/fonts/Euclid Circular A SemiBold Italic.ttf") format("truetype");
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  & .MuiButton-root {
+    border-radius: 200px !important;
+
+    &.MuiButton-containedPrimary {
+      background-color: var(--button-primary) !important;
+      &,
+      & * {
+        color: var(--button-text-primary) !important;
+      }
+    }
+
+    &.MuiButton-sizeLarge {
+      padding: 12px 24px !important;
+      height: 80px !important;
+
+      &,
+      & * {
+        font-size: 24px !important;
+      }
+    }
+  }
+`;
+
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
@@ -29,8 +133,12 @@ const GlobalStyle = createGlobalStyle`
       color: #333333;
       font-size: 12px;
       box-sizing: border-box;
+      font-family: "Inter", sans-serif
     }
   }
+
+  // Landing Page Styles
+  ${LandingPageStyles}
 
   ::-webkit-scrollbar {
     width: 3px; /* width of the entire scrollbar */
@@ -114,10 +222,6 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
 
-    &:not([data-type='exception']) {
-    border-radius: 9px !important;
-    }
-
     &[data-active="true"] {
       background-color: #FEFAE5 !important;
     }
@@ -134,7 +238,6 @@ const GlobalStyle = createGlobalStyle`
 
   // MuiButton
   && .MuiButton-root {
-    border-radius: 8px !important;
     min-width: max-content;
     height: 33px;
 

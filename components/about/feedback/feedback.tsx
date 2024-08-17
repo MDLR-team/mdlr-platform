@@ -18,14 +18,14 @@ const Feedback = () => {
           padding: "0px 30px",
           borderRadius: "25px",
           fontSize: "24px !important",
-          backgroundColor: "white !important",
-          color: "black !important",
+          backgroundColor: "var(--button-primary) !important",
+          color: "var(--button-text-primary) !important",
         }}
         variant="contained"
       >
         <span
           style={{
-            color: "black !important",
+            color: "var(--button-text-primary) !important",
             fontSize: "24px !important",
           }}
         >
@@ -58,7 +58,7 @@ const Form = styled.div`
 
   &,
   & * {
-    color: black;
+    color: var(--text-primary);
     font-size: 36px;
   }
 
