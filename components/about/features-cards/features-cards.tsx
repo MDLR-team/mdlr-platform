@@ -284,7 +284,7 @@ const Badge: React.FC<{
       case "viewer":
         return "3D Viewer";
       case "whiteboard":
-        return "Insight Whiteboard";
+        return "Whiteboard";
       case "dashboard":
         return "Dashboard";
     }

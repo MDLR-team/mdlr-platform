@@ -1,4 +1,5 @@
 import { Button } from "@mui/material";
+import Link from "next/link";
 import styled from "styled-components";
 
 const Feedback = () => {
@@ -11,27 +12,30 @@ const Feedback = () => {
         </h1>
       </Form>
 
-      <Button
-        sx={{
-          width: "200px",
-          height: "80px !important",
-          padding: "0px 30px",
-          borderRadius: "25px",
-          fontSize: "24px !important",
-          backgroundColor: "var(--button-primary) !important",
-          color: "var(--button-text-primary) !important",
-        }}
-        variant="contained"
-      >
-        <span
-          style={{
-            color: "var(--button-text-primary) !important",
+      <Link href="/requestdemo">
+        <Button
+          sx={{
+            width: "200px",
+            height: "80px !important",
+            padding: "0px 30px",
+            borderRadius: "25px",
             fontSize: "24px !important",
+            backgroundColor: "var(--button-primary) !important",
+            color: "var(--button-text-primary) !important",
           }}
+          variant="contained"
+          size="large"
         >
-          Sign up for free
-        </span>
-      </Button>
+          <span
+            style={{
+              color: "var(--button-text-primary) !important",
+              fontSize: "24px !important",
+            }}
+          >
+            Request a demo
+          </span>
+        </Button>
+      </Link>
     </Wrapper>
   );
 };

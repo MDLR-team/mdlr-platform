@@ -1,4 +1,5 @@
 import { Box, Button } from "@mui/material";
+import Link from "next/link";
 import styled from "styled-components";
 
 const Cover = () => {
@@ -60,9 +61,11 @@ const Cover = () => {
         easy-to-understand project data. */}
           </Box>
 
-          <Button variant="contained" color="primary" size="large">
-            Request a demo
-          </Button>
+          <Link href="/requestdemo">
+            <Button variant="contained" color="primary" size="large">
+              Request a demo
+            </Button>
+          </Link>
         </Wrapper>
       </CoverWrapper>
 

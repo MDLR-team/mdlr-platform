@@ -10,7 +10,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       <GlobalStyle />
 
       <Wrapper>
-        <AboutPage />
+        <Component {...pageProps} />
       </Wrapper>
     </>
   );
@@ -25,6 +25,7 @@ const LandingPageStyles = css`
     --button-text-primary: white;
     --border-color: rgba(0, 0, 0, 0.9);
     --bar-color: white;
+    --primary-font-family: "Euclid Circular A", sans-serif;
   }
 
   @font-face {
@@ -118,6 +119,12 @@ const LandingPageStyles = css`
       }
     }
   }
+
+  &#use-cases-menu {
+    & > &.MuiPaper-root {
+      max-width: max-content !important;
+    }
+  }
 `;
 
 const GlobalStyle = createGlobalStyle`
@@ -125,8 +132,8 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Roboto", sans-serif;
-    background-color: #F1F0EE;
+    font-family: "Inter", sans-serif;
+    background-color: var(--background-color);
     overflow-x: hidden;
 
     &, & * {
@@ -189,7 +196,7 @@ const GlobalStyle = createGlobalStyle`
     & {
       & {
         border-radius: 8px !important;
-        border: 1px solid #E0E0E0 !important;
+        border: 1px solid var(--border-color) !important;
         box-shadow: none !important;
         position: relative;
         display: flex;
@@ -203,7 +210,7 @@ const GlobalStyle = createGlobalStyle`
 
   & .MuiPopover-paper {
     &, & * {
-      font-size: 12px !important;
+      font-size: 12px;
       color: #333333;
     }
 
