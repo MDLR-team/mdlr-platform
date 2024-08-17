@@ -137,7 +137,7 @@ const GlobalStyle = createGlobalStyle`
     overflow-x: hidden;
 
     &, & * {
-      color: #333333;
+      color: var(--text-primary);
       font-size: 12px;
       box-sizing: border-box;
       font-family: "Inter", sans-serif
@@ -146,6 +146,7 @@ const GlobalStyle = createGlobalStyle`
 
   // Landing Page Styles
   ${LandingPageStyles}
+  
 
   ::-webkit-scrollbar {
     width: 3px; /* width of the entire scrollbar */
@@ -209,9 +210,10 @@ const GlobalStyle = createGlobalStyle`
   }
 
   & .MuiPopover-paper {
+    max-width: max-content !important;
+
     &, & * {
       font-size: 12px;
-      color: #333333;
     }
 
     & .MuiMenuItem-root {
