@@ -18,22 +18,23 @@ const AboutPage = () => {
 
         <IssueDescription>
           <IssueDescription>
-            <span>Designed for AEC industry professionals</span>
-            , Mdlr addresses the challenge of managing numerous file types,
-            often linked to 3D data, by providing a dynamic and collaborative
-            environment for quick analysis.
-            <br />
-            <br />
-            Traditional tools fall short, but{" "}
             <span>
-              Mdlr allows users to swiftly analyse content and generate insights
+              Mdlr addresses the challenge of managing numerous data types
             </span>{" "}
-            using the Insight Whiteboard. <br />
+            by providing{" "}
+            <span>
+              a real-time collaborative environment for quick analysis.
+            </span>
             <br />
-            Simply describe your requirements, and our platform will create
-            various charts and visualizations that can be integrated into the
-            whiteboard and accessed instantly through chatbots and other
-            methods.
+            <br />
+            Current tools fall short in analysing 3D models. This solution lets
+            accurately estimate models, share ideas in a 3D viewer, gain
+            insights from charts on a Whiteboard, and prepare ready-to-use
+            presentations for clients on a Dashboard.
+            <br />
+            <br />
+            Mdlr can be used as a standalone tool for AEC industry professionals
+            or integrated via API into existing platforms.
           </IssueDescription>
         </IssueDescription>
 
