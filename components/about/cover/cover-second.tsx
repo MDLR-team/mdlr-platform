@@ -15,7 +15,7 @@ const Cover: React.FC<{
 
       {type === "startups" && (
         <Box data-type="cover">
-          Integrating Mdlr's Tools into Your Startup or Small Business
+          Integrating Mdlr&apos;s Tools into Your Startup or Small Business
         </Box>
       )}
 
@@ -43,10 +43,10 @@ const Cover: React.FC<{
             maxWidth: "750px",
           }}
         >
-          Mdlr’s powerful tools, like the 3D Viewer, Insight Whiteboard, and
-          Interactive Dashboards, aren’t just for our platform. They can be
-          integrated into your startup, enhancing your existing AEC solutions
-          with advanced visualization and analysis capabilities.
+          Mdlr&apos;s powerful tools, like the 3D Viewer, Insight Whiteboard,
+          and Interactive Dashboards, aren&apos;t just for our platform. They
+          can be integrated into your startup, enhancing your existing AEC
+          solutions with advanced visualization and analysis capabilities.
         </Box>
       )}
     </Wrapper>

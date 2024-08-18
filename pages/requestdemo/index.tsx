@@ -97,8 +97,8 @@ const DemoForm: React.FC = () => {
                 gutterBottom
                 sx={{ fontStyle: "italic", fontSize: "1rem" }}
               >
-                "MDLR has streamlined our project management, saving us
-                countless hours on data analysis and visualization."
+                &quot;MDLR has streamlined our project management, saving us
+                countless hours on data analysis and visualization.&quot;
               </Typography>
               <Typography variant="subtitle1" gutterBottom>
                 - Alex Johnson, Lead Architect
@@ -115,8 +115,9 @@ const DemoForm: React.FC = () => {
                 gutterBottom
                 sx={{ fontStyle: "italic", fontSize: "1rem" }}
               >
-                "The integration of 3D models and real-time data insights in one
-                platform has completely transformed how we manage our projects."
+                &quot;The integration of 3D models and real-time data insights
+                in one platform has completely transformed how we manage our
+                projects.&quot;
               </Typography>
               <Typography variant="subtitle1" gutterBottom>
                 - Emily Davis, Project Manager
