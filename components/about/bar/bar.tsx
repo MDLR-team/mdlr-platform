@@ -84,26 +84,43 @@ const Bar = () => {
         <div className="pricing-tab">About</div>
       </div>
 
-      <Link href="/requestdemo">
-        <Button
-          sx={{
-            padding: "25px 30px",
-            borderRadius: "25px",
-            display: "flex",
-            gap: "10px",
+      <Box className="right">
+        <a
+          href="https://mr-vr.vercel.app/"
+          style={{
+            textDecoration: "none",
           }}
-          variant="contained"
-          color="primary"
         >
-          Request a demo{" "}
-          <ArrowForwardIcon
-            sx={{
-              fontSize: "18px",
+          <div
+            className="pricing-tab"
+            style={{
+              textDecoration: "none",
             }}
-            className="arrow-icon"
-          />
-        </Button>
-      </Link>
+          >
+            Sign In
+          </div>
+        </a>
+        <Link href="/requestdemo">
+          <Button
+            sx={{
+              padding: "25px 30px",
+              borderRadius: "25px",
+              display: "flex",
+              gap: "10px",
+            }}
+            variant="contained"
+            color="primary"
+          >
+            Request a demo{" "}
+            <ArrowForwardIcon
+              sx={{
+                fontSize: "18px",
+              }}
+              className="arrow-icon"
+            />
+          </Button>
+        </Link>
+      </Box>
     </Wrapper>
   );
 };
@@ -149,15 +166,17 @@ const Wrapper = styled.div`
     margin-right: 20px;
     gap: 40px;
 
+    &,
+    & * {
+      font-size: 18px;
+    }
+  }
+
+  .left {
     & > div:first-child {
       font-size: 24px;
       font-weight: 700;
       //font-family: Born;
-    }
-
-    &,
-    & * {
-      font-size: 18px;
     }
   }
 
