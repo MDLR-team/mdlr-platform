@@ -28,7 +28,8 @@ const GridContainer = styled.div`
       border-right: 0px solid var(--border-color);
     }
 
-    & > div:nth-child(1), & > div:nth-child(2) {
+    & > div:nth-child(1),
+    & > div:nth-child(2) {
       border-bottom: 0px solid var(--border-color);
     }
   }
@@ -64,7 +65,7 @@ const FeatureCard = styled.div`
   }
 `;
 
-const FeatureTitle = styled.h2`
+export const FeatureTitle = styled.h2`
   font-size: 1.5rem;
   margin-bottom: 10px;
 
@@ -74,13 +75,12 @@ const FeatureTitle = styled.h2`
   }
 `;
 
-const FeatureDescription = styled.p`
-  font-size: 1.25rem;
-  line-height: 1.5;
-  font-weight: 500;
-
+export const FeatureDescription = styled.p`
   &,
   & * {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    font-weight: 500;
     color: var(--text-secondary) !important;
   }
 `;

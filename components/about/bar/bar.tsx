@@ -69,12 +69,17 @@ const Bar = () => {
             },
           }}
         >
-          <SectionItem onClick={handleClose}>
-            For Teams <ArrowForwardIcon className="arrow-icon" />
-          </SectionItem>
-          <SectionItem onClick={handleClose}>
-            For Startups <ArrowForwardIcon className="arrow-icon" />
-          </SectionItem>
+          <Link href={"/use-cases/for-teams"}>
+            <SectionItem onClick={handleClose}>
+              For Teams <ArrowForwardIcon className="arrow-icon" />
+            </SectionItem>
+          </Link>
+
+          <Link href={"/use-cases/for-startups"}>
+            <SectionItem onClick={handleClose}>
+              For Startups <ArrowForwardIcon className="arrow-icon" />
+            </SectionItem>
+          </Link>
         </Menu>
         <div className="pricing-tab">About</div>
       </div>
