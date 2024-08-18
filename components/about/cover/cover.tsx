@@ -10,8 +10,7 @@ const Cover = () => {
 
         <Wrapper>
           <Box data-type="cover">
-            Manage your <AECWithTooltip>AEC</AECWithTooltip> projects
-            efficiently with MDLR
+            Manage your design and construction projects efficiently with MDLR
           </Box>
 
           {/* 
@@ -54,7 +53,7 @@ const Cover = () => {
               <img src="/previews/a2.svg" width="24" height="24" />
               &nbsp;Dashboards
             </EntityLabel>{" "}
-            to gain valuable project insights
+            to gain valuable project insights and effective decision-making.
             <br />
             {/* <br />
         The tool is designed as a collaborative environment, integrating a
@@ -187,6 +186,7 @@ const Wrapper = styled.div`
         font-weight: 700;
         font-family: Born;
       }
+      line-height: 1;
     }
 
     @media (max-width: 800px) {
