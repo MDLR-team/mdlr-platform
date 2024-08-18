@@ -113,7 +113,7 @@ export const FeatureCardsForStartups = () => {
         <FeatureTitle>Reusable Components for AEC Startups</FeatureTitle>
         <FeatureDescription>
           Mdlr&rsquo;s tools are modular and can be easily integrated into other
-          AEC-related platforms. Whether you're building a new application or
+          AEC-related platforms. Whether you&rsquo;re building a new application or
           enhancing an existing one, you can incorporate Mdlr&rsquo;s 3D Viewer,
           Insight Whiteboard, and Interactive Dashboards to enrich your
           offerings.
@@ -175,7 +175,7 @@ export const FeatureCardsForStartups = () => {
         <FeatureDescription>
           Mdlr provides extensive support for integration, ensuring that our
           tools work seamlessly within your environment. Additionally, our
-          robust security measures protect your data and your users' data,
+          robust security measures protect your data and your users&rsquo; data,
           ensuring compliance and peace of mind.
         </FeatureDescription>
       </FeatureCard>

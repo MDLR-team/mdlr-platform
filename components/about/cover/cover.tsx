@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Tooltip } from "@mui/material";
 import Link from "next/link";
 import styled from "styled-components";
 
@@ -10,7 +10,8 @@ const Cover = () => {
 
         <Wrapper>
           <Box data-type="cover">
-            Manage your AEC projects efficiently with MDLR
+            Manage your <AECWithTooltip>AEC</AECWithTooltip> projects
+            efficiently with MDLR
           </Box>
 
           {/* 
@@ -76,6 +77,21 @@ const Cover = () => {
   );
 };
 
+const AECWithTooltip: React.FC<{
+  children: React.ReactNode;
+}> = () => {
+  return (
+    <Tooltip title="Architecture, Engineering, and Construction">
+      <UnderlinedText>AEC</UnderlinedText>
+    </Tooltip>
+  );
+};
+
+const UnderlinedText = styled.span`
+  text-decoration: underline;
+  cursor: pointer;
+`;
+
 const CoverImage = styled.div`
   width: 1200px;
   position: relative;
@@ -98,7 +114,8 @@ export const EntityLabel = styled.span<{
   gap: 10px;
   white-space: nowrap;
 
-  &, & * {
+  &,
+  & * {
     font-weight: 700;
   }
 

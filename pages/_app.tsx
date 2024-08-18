@@ -288,6 +288,13 @@ const GlobalStyle = createGlobalStyle`
     bottom: 10px !important;
     border: 1px solid grey;
   }
+
+  // tooltips
+  & .MuiTooltip-tooltip {
+    font-size: 14px;
+    background-color: black;
+    padding: 8px 16px;
+  }
 `;
 
 export default App;
