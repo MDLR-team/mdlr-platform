@@ -46,7 +46,7 @@ const FeatureCards = () => {
 
           <FeatureTitle>Step 1: Upload Your Project Data </FeatureTitle>
           <FeatureDescription>
-            Begin by uploading your project files into Mdlr. Whether it's 3D
+            Begin by uploading your project files into Mdlr. Whether it&apos;s 3D
             models or other data formats, our platform supports various inputs
             to get your project set up quickly.
           </FeatureDescription>
@@ -133,7 +133,7 @@ export const FeatureCardsForStartups = () => {
 
         <FeatureTitle>Step 1: Integrate the API</FeatureTitle>
         <FeatureDescription>
-          Begin by integrating Mdlr's API into your existing platform. Our team
+          Begin by integrating Mdlr&apos;s API into your existing platform. Our team
           will guide you through the setup process, ensuring a smooth
           integration.
         </FeatureDescription>
@@ -154,7 +154,7 @@ export const FeatureCardsForStartups = () => {
         <FeatureDescription>
           Once integrated, configure the advanced visualisation capabilities to
           suit your needs. Utilise our 3D Viewer, Whiteboard, and Dashboard to
-          enhance your system's functionality.
+          enhance your system&apos;s functionality.
         </FeatureDescription>
       </FeatureCard>
       <FeatureCard>
