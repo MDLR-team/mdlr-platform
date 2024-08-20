@@ -7,16 +7,10 @@ const Cover: React.FC<{
 }> = ({ type = "teams" }) => {
   return (
     <Wrapper>
-      {type === "teams" && (
-        <Box data-type="cover">
-          How Mdlr Benefits Architects, Developers, and AEC Professionals
-        </Box>
-      )}
+      {type === "teams" && <Box data-type="cover">For AEC Professionals</Box>}
 
       {type === "startups" && (
-        <Box data-type="cover">
-          Integrating Mdlr&apos;s Tools into Your Startup or Small Business
-        </Box>
+        <Box data-type="cover">For Platform Developers</Box>
       )}
 
       {type === "teams" && (
