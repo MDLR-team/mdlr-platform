@@ -82,7 +82,10 @@ const Bar = () => {
             </SectionItem>
           </Link>
         </Menu>
-        <div className="pricing-tab">Pricing</div>
+
+        <Link href="/pricing">
+          <Box className="pricing-tab">Pricing</Box>
+        </Link>
       </div>
 
       <Box className="right">
