@@ -10,7 +10,7 @@ const Cover = () => {
 
         <Wrapper>
           <Box data-type="cover">
-            Manage your design and construction projects efficiently with MDLR
+            Manage your design and&nbsp;construction projects efficiently with Mdlr
           </Box>
 
           {/* 
@@ -37,23 +37,22 @@ const Cover = () => {
             }}
           >
             {/* MdIr is an AI-driven data visualization, analysis, and optimization */}
-            Optimize workflows and unite teams with Mdlr, an AI-driven tool
-            integrating 3D, 2D, and tabular data. Use features like{" "}
+            Visualise in{" "}
             <EntityLabel color="orange">
               <img src="/previews/a1.svg" width="24" height="24" />
               &nbsp;3D&nbsp;Viewer
             </EntityLabel>
-            ,{" "}
+            , gain valuable project insights on{" "}
             <EntityLabel color="orange">
               <img src="/previews/a3.svg" width="24" height="24" />
               &nbsp;Whiteboard
             </EntityLabel>{" "}
-            and{" "}
+            , and make data-driven decisions using{" "}
             <EntityLabel color="orange">
               <img src="/previews/a2.svg" width="24" height="24" />
               &nbsp;Dashboards
             </EntityLabel>{" "}
-            to gain valuable project insights and effective decision-making.
+            — all in one place.
             <br />
             {/* <br />
         The tool is designed as a collaborative environment, integrating a

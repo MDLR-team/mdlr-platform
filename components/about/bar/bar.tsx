@@ -71,17 +71,18 @@ const Bar = () => {
         >
           <Link href={"/use-cases/for-teams"}>
             <SectionItem onClick={handleClose}>
-              For Teams <ArrowForwardIcon className="arrow-icon" />
+              For AEC Professionals <ArrowForwardIcon className="arrow-icon" />
             </SectionItem>
           </Link>
 
           <Link href={"/use-cases/for-startups"}>
             <SectionItem onClick={handleClose}>
-              For Startups <ArrowForwardIcon className="arrow-icon" />
+              For Platform Developers{" "}
+              <ArrowForwardIcon className="arrow-icon" />
             </SectionItem>
           </Link>
         </Menu>
-        <div className="pricing-tab">About</div>
+        <div className="pricing-tab">Pricing</div>
       </div>
 
       <Box className="right">

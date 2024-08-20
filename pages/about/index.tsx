@@ -18,23 +18,25 @@ const AboutPage = () => {
 
         <IssueDescription>
           <IssueDescription>
+            <span>Mdlr addresses the challenge</span> of{" "}
+            <span>managing numerous data types</span> by providing{" "}
+            <span>a real-time collaborative environment</span> for{" "}
+            <span>quick analysis.</span>
+            <br />
+            <br />
             <span>
-              Mdlr addresses the challenge of managing numerous data types
+              Current tools fall short in analysing 3D models. Mdlr
             </span>{" "}
-            by providing{" "}
-            <span>
-              a real-time collaborative environment for quick analysis.
-            </span>
+            lets you accurately <span>estimate models, share ideas</span> in a{" "}
+            <span>3D viewer, gain insights</span> from <span>charts</span> on a{" "}
+            <span>Whiteboard</span>, and{" "}
+            <span>prepare ready-to-use presentations for clients</span> on a{" "}
+            <span>Dashboard</span>.
             <br />
             <br />
-            Current tools fall short in analysing 3D models. This solution lets
-            accurately estimate models, share ideas in a 3D viewer, gain
-            insights from charts on a Whiteboard, and prepare ready-to-use
-            presentations for clients on a Dashboard.
-            <br />
-            <br />
-            Mdlr can be used as a standalone tool for AEC industry professionals
-            or integrated via API into existing platforms.
+            <span>Mdlr</span> can be used{" "}
+            <span>as a standalone tool for AEC industry professionals</span>
+            or <span>integrated via API into existing platforms.</span>
           </IssueDescription>
         </IssueDescription>
 

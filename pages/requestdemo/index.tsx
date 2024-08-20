@@ -195,7 +195,7 @@ const DemoForm: React.FC = () => {
             </TextField>
           </Box>
 
-          <Box marginBottom="16px">
+          {/* <Box marginBottom="16px">
             <Typography variant="subtitle2">
               Number of Projects Managed Annually
             </Typography>
@@ -206,7 +206,7 @@ const DemoForm: React.FC = () => {
                 </MenuItem>
               ))}
             </TextField>
-          </Box>
+          </Box> */}
 
           <Button
             variant="contained"

@@ -125,6 +125,10 @@ const LandingPageStyles = css`
       max-width: max-content !important;
     }
   }
+
+  a {
+    text-decoration: none;
+  }
 `;
 
 const GlobalStyle = createGlobalStyle`

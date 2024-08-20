@@ -91,11 +91,13 @@ const FeatureGrid = () => {
       <GridContainer>
         <FeatureCard>
           <Badge type="viewer" />
-          <FeatureTitle>Share your any format 3D models with team</FeatureTitle>
+          <FeatureTitle>
+            Share 3D models in any format with your team
+          </FeatureTitle>
           <FeatureDescription>
-            Comment and discuss changes to the project at each stage in a
-            real-time multiplayer 3D environment — tag team members, highlight
-            areas and embed any files for comprehensive reviews.
+            Comment and discuss project changes at each stage in a real-time,
+            multiplayer 3D environment — tag team members, highlight areas, and
+            embed files for comprehensive reviews.
           </FeatureDescription>
 
           <Box
@@ -133,10 +135,9 @@ const FeatureGrid = () => {
           <Badge type="whiteboard" />
           <FeatureTitle>AI-Driven Task and Comment Dashboards</FeatureTitle>
           <FeatureDescription>
-            Leverage AI to analyze and manage comments and tasks by topics,
-            performers, and dates within a fully integrated 3D model
-            environment. Effortlessly track and organize project details to
-            enhance collaboration and efficiency.
+            Use AI to analyse and manage comments and tasks by topic, performer,
+            and date within a 3D model environment. Effortlessly track and
+            organise project details to enhance collaboration and efficiency.
           </FeatureDescription>
 
           <Box
@@ -179,7 +180,7 @@ const FeatureGrid = () => {
           </FeatureTitle>
           <FeatureDescription>
             Create role-specific whiteboards and use drag-and-drop data widgets
-            to generate customized project charts and visualizations. Enhance
+            to generate customised project charts and visualisations. Enhance
             your workflow with an AI-driven chatbot, making it easier to access
             and manage all 3D model specifications collaboratively.
           </FeatureDescription>
@@ -218,10 +219,11 @@ const FeatureGrid = () => {
         </FeatureCard>
         <FeatureCard>
           <Badge type="dashboard" />
-          <FeatureTitle>Instant Dashboards via Chatbot</FeatureTitle>
+          <FeatureTitle>Instant Dashboards</FeatureTitle>
           <FeatureDescription>
-            Get your project dashboards through Telegram by text or voice
-            commands
+            The dashboard allows you to create and present comprehensive,
+            data-rich visualisations and presentations, providing a clear,
+            organised view of project progress and insights.
           </FeatureDescription>
 
           <Box

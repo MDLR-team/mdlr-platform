@@ -26,13 +26,9 @@ const Cover: React.FC<{
             maxWidth: "750px",
           }}
         >
-          Mdlr is designed to streamline project management and enhance
-          collaboration for architects, developers, and AEC professionals.
-          <br />
-          <br />
-          Our platform integrates powerful tools like the 3D Viewer, Insight
-          Whiteboard, and Interactive Dashboards to help you manage complex
-          projects efficiently, all within a secure environment.
+          Mdlr is a powerful, standalone tool designed to streamline your
+          project workflows, allowing you to manage 3D models, collaborate with
+          your team, and make data-driven decisions efficiently.
         </Box>
       )}
 
@@ -43,10 +39,9 @@ const Cover: React.FC<{
             maxWidth: "750px",
           }}
         >
-          Mdlr&apos;s powerful tools, like the 3D Viewer, Insight Whiteboard,
-          and Interactive Dashboards, aren&apos;t just for our platform. They
-          can be integrated into your startup, enhancing your existing AEC
-          solutions with advanced visualization and analysis capabilities.
+          Mdlr can be seamlessly integrated into your existing platforms through
+          an API, enhancing your system with advanced visualisation and analysis
+          capabilities tailored for your sector.
         </Box>
       )}
     </Wrapper>
