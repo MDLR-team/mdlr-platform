@@ -100,9 +100,6 @@ class CommentService {
             needsUpdate = true;
           }
 
-          if (needsUpdate)
-            console.log("%ceventType", "color: green", eventType);
-
           if (needsUpdate) this._upateComments();
         }
       )
