@@ -5,6 +5,7 @@ import Features from "@/components/about/features/features";
 import Feedback from "@/components/about/feedback/feedback";
 import Footer from "@/components/about/footer/footer";
 import UseCase from "@/components/about/use-case/use-case";
+import Screens from "@/components/screens/screens";
 import { Box } from "@mui/material";
 import styled from "styled-components";
 
@@ -39,6 +40,8 @@ const AboutPage = () => {
             or <span>integrated via API into existing platforms.</span>
           </IssueDescription>
         </IssueDescription>
+
+        <Screens />
 
         <FeatureGrid />
 
@@ -99,7 +102,7 @@ const IssueDescription = styled(Box)`
     font-weight: 700;
     color: var(--text-primary);
   }
-  margin-bottom: 80px;
+  margin-bottom: 30px;
 
   @media (max-width: 576px) {
     &,

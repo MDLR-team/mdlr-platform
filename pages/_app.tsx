@@ -271,7 +271,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     &, & * {
-      color: #333333 !important;
+      color: #333333;
       text-transform: none !important;
     }
   }
