@@ -122,6 +122,15 @@ class Viewer extends React.Component {
         this._viewer = view.viewer;
         this._view = view;
 
+        // Set the viewer profile
+        const profileSettings = Autodesk.Viewing.ProfileSettings.clone(
+          Autodesk.Viewing.ProfileSettings.AEC
+        );
+        profileSettings.settings.wheelSetsPivot = true;
+
+        const profile = new Autodesk.Viewing.Profile(profileSettings);
+        this._viewer.setProfile(profile);
+
         this._viewer.addEventListener(
           Autodesk.Viewing.AGGREGATE_SELECTION_CHANGED_EVENT,
           this.handleSelectionChanged
