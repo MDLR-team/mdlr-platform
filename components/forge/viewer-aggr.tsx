@@ -20,6 +20,8 @@ class Viewer extends React.Component {
   private $setViewerService: any;
   private $setIsModelLoaded: any;
 
+  private isDemo: boolean = false;
+
   /**
    * Constructs the Viewer component.
    * @param props - The properties passed to the Viewer component.
@@ -98,14 +100,34 @@ class Viewer extends React.Component {
       api: "streamingV2",
     };
 
+    const id = this._projectService.id;
+    if (id === "475b0639-a5d8-46d7-b94b-00cf2dcbdc05") {
+      this.isDemo = true;
+    }
+
+    const isDemo = this.isDemo;
+    let demoAccessToken;
+    if (isDemo)
+      demoAccessToken = await (
+        await fetch(
+          "https://hd24ouudmhx7ixzla4i6so2atm0fgsex.lambda-url.us-west-2.on.aws"
+        )
+      ).text();
+
     Autodesk.Viewing.Initializer(
       {
         ...options,
-        getAccessToken: (
-          onTokenReady: (token: string, expires: number) => void
-        ) => {
-          onTokenReady(forgeToken.access_token, forgeToken.expires_in);
-        },
+        ...(!isDemo
+          ? {
+              getAccessToken: (
+                onTokenReady: (token: string, expires: number) => void
+              ) => {
+                onTokenReady(forgeToken.access_token, forgeToken.expires_in);
+              },
+            }
+          : {
+              accessToken: demoAccessToken,
+            }),
       },
       async () => {
         const options3d = {
@@ -155,10 +177,8 @@ class Viewer extends React.Component {
    * If multiple models are to be loaded, it applies a theming color to all models after loading.
    */
   public async loadModels(): Promise<void> {
-    const urns = this._urns;
+    let urns = this._urns;
     const viewerService = this._viewerService;
-
-    console.log("urns", urns);
 
     await viewerService!.loadDocuments(urns);
 

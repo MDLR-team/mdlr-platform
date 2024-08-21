@@ -164,6 +164,8 @@ class ProjectService {
     const endIndex = lastPart.indexOf("?");
     const projectId = lastPart.substring(startIndex, endIndex);
 
+    console.log("BIM 360 Project ID:", projectId);
+
     return projectId;
   }
 
