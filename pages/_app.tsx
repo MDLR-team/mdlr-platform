@@ -48,13 +48,14 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Roboto", sans-serif;
+    font-family: "Inter", sans-serif;
     background-color: #F1F0EE;
 
     &, & * {
       color: #333333;
       font-size: 12px;
       box-sizing: border-box;
+      font-family: "Inter", sans-serif;
     }
   }
 

@@ -2,13 +2,14 @@ import styled, { css } from "styled-components";
 import LeftBar from "./left-bar/left-bar";
 import RightBar from "./right-bar/right-bar";
 import Content from "./content/content";
+import LeftBar2 from "./left-bar/left-bar-v2";
 
 const WorkspaceGrid = () => {
   return (
     <Wrapper>
       <Grid>
         <LeftBarWrapper>
-          <LeftBar />
+          <LeftBar2 />
         </LeftBarWrapper>
 
         <ContentWrapper>
@@ -27,6 +28,7 @@ const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  background-color: #f4f4f4;
 
   position: fixed;
 
@@ -44,11 +46,11 @@ const Wrapper = styled.div`
 `;
 
 const Grid = styled.div`
-  margin: 18px 18px 0px 18px;
+  margin: 0px 18px 0px 0px;
   width: 100%;
 
   display: grid;
-  grid-template-columns: 225px auto;
+  grid-template-columns: 250px auto;
   gap: 27px;
 
   & > * > * {
@@ -64,6 +66,8 @@ const ContentWrapper = styled.div`
   overflow-x: hidden;
 
   gap: 18px;
+
+  padding: 0px 0px 0px 18px;
 `;
 
 const BarWrapper = css`
