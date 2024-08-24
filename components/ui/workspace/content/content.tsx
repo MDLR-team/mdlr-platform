@@ -78,11 +78,11 @@ const Content = () => {
           >
             <Button
               variant="contained"
-              color="primary"
+              color="secondary"
               size="large"
-              onClick={handleOpenUploadModal}
+              onClick={handlePopperClick}
             >
-              Upload Model
+              Invite Members
             </Button>
           </Box>
 
@@ -95,19 +95,21 @@ const Content = () => {
           >
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               size="large"
-              onClick={handlePopperClick}
-              startIcon={<SyncIcon />}
+              sx={{
+                minWidth: "180px",
+              }}
+              onClick={handleOpenUploadModal}
             >
-              Synchronise
+              New Model
             </Button>
           </Box>
         </Paper>
       </Box>
 
       <CatalogWrapper>
-        <CatalogCanvas />
+        {/*  <CatalogCanvas /> */}
 
         {projects.map((project, i) => (
           <WorkspaceItem key={i} data={project} />

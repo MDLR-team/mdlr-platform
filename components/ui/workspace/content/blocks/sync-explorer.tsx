@@ -68,8 +68,19 @@ const SyncExplorer = () => {
           <CircularProgress />
         </Box>
       ) : (
-        <TableContainer component={Paper}>
-          <Table>
+        <TableContainer
+          component={Paper}
+          sx={{
+            maxHeight: "max-content !important",
+            display: "block",
+            border: "0px solid #e0e0e0 !important",
+          }}
+        >
+          <Table
+            sx={{
+              maxHeight: "max-content !important",
+            }}
+          >
             <TableHead>
               <TableRow>
                 <TableCell></TableCell>
@@ -82,7 +93,7 @@ const SyncExplorer = () => {
                 return (
                   <TableRow
                     key={item.id}
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: "pointer", maxHeight: "48px" }}
                     onClick={async () => {
                       if (item.disabled) return;
 

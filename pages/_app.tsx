@@ -44,6 +44,11 @@ const MentionListStyles = css`
 `;
 
 const GlobalStyle = createGlobalStyle`
+  // variables
+  :root {
+    --color-error-500: #DE3830
+  }
+
   body {
     margin: 0;
     padding: 0;
@@ -237,6 +242,15 @@ const GlobalStyle = createGlobalStyle`
       
       &:hover {
         background-color: white;
+      }
+    }
+
+    &.MuiButton-containedError {
+      background-color: transparent !important;
+      border: 1px solid var(--color-error-500) !important;
+
+      &, & * {
+        color: var(--color-error-500) !important;
       }
     }
 

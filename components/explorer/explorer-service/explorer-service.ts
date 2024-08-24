@@ -65,7 +65,15 @@ class ExplorerService {
       //check that format is supported. It should be .rvt, .ifc
       const name = item.attributes.displayName || item.attributes.name;
       const format =
-        name.endsWith(".rvt") || name.endsWith(".ifc") || name.endsWith(".skp") || name.endsWith(".3dm");
+        name.endsWith(".rvt") ||
+        name.endsWith(".ifc") ||
+        name.endsWith(".skp") ||
+        name.endsWith(".3dm") ||
+        name.endsWith(".dwg") ||
+        name.endsWith(".xlsx") ||
+        name.endsWith(".pdf") ||
+        name.endsWith(".docx");
+
       if (!format) {
         disabled = true;
       }

@@ -1,26 +1,26 @@
 import styled, { css } from "styled-components";
 import LeftBar from "./left-bar/left-bar";
-import RightBar from "./right-bar/right-bar";
 import Content from "./content/content";
 import LeftBar2 from "./left-bar/left-bar-v2";
+import Tabs from "../tabs/tabs";
 
-const WorkspaceGrid = () => {
+const WorkspaceGrid: React.FC<{
+  children: React.ReactNode;
+}> = ({ children }) => {
   return (
-    <Wrapper>
-      <Grid>
-        <LeftBarWrapper>
-          <LeftBar2 />
-        </LeftBarWrapper>
+    <>
+      <Wrapper>
+        {/* <Tabs /> */}
 
-        <ContentWrapper>
-          <Content />
-        </ContentWrapper>
+        <Grid>
+          <LeftBarWrapper>
+            <LeftBar2 />
+          </LeftBarWrapper>
 
-        {/* <RightBarWrapper>
-          <RightBar />
-        </RightBarWrapper> */}
-      </Grid>
-    </Wrapper>
+          <ContentWrapper>{children}</ContentWrapper>
+        </Grid>
+      </Wrapper>
+    </>
   );
 };
 
@@ -35,6 +35,7 @@ const Wrapper = styled.div`
   z-index: 4;
 
   display: flex;
+  flex-direction: column;
   pointer-events: none;
 
   && *[data-type="user-profile"] {
@@ -48,10 +49,12 @@ const Wrapper = styled.div`
 const Grid = styled.div`
   margin: 0px 18px 0px 0px;
   width: 100%;
+  height: 100%;
 
   display: grid;
-  grid-template-columns: 250px auto;
-  gap: 27px;
+  grid-template-columns: 280px auto;
+
+  position: relative;
 
   & > * > * {
     pointer-events: all;
@@ -67,7 +70,7 @@ const ContentWrapper = styled.div`
 
   gap: 18px;
 
-  padding: 0px 0px 0px 18px;
+  padding: 0px 18px 18px 18px;
 `;
 
 const BarWrapper = css`

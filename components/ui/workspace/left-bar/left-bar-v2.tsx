@@ -9,6 +9,8 @@ import {
   Typography,
   IconButton,
   Divider,
+  Badge,
+  Chip,
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -18,8 +20,7 @@ import AddIcon from "@mui/icons-material/Add";
 import SettingsModal from "./blocks/settings-modal";
 
 const SidebarContainer = styled.div`
-  width: 280px;
-  height: 100vh;
+  height: 100%;
   background-color: white;
   padding: 16px;
   display: flex;
@@ -50,6 +51,25 @@ const PanelButton = styled(Button)`
   display: flex;
   justify-content: flex-start !important;
   text-transform: none;
+
+  & .MuiChip-root {
+    opacity: 0;
+  }
+
+  &:hover .MuiChip-root {
+    opacity: 1;
+  }
+
+  &[data-disabled="true"] {
+    &:hover {
+      cursor: not-allowed;
+      background-color: white;
+    }
+  }
+
+  &[data-active="true"] {
+    background-color: #dfdfdf;
+  }
 `;
 
 const StyledModal = styled(Modal)`
@@ -234,25 +254,28 @@ const LeftBar2: React.FC = () => {
         >
           {" "}
           <PanelButton
-            onClick={handleSettingsOpen}
+            data-active="true"
             startIcon={<PanelIcon icon="/icons/a1.svg" />}
           >
             3D Viewer
           </PanelButton>
           <PanelButton
-            onClick={handleSettingsOpen}
+            data-disabled="true"
             startIcon={<PanelIcon icon="/icons/a3.svg" />}
           >
-            Whiteboards
+            Whiteboards{" "}
+            <Chip sx={{ marginLeft: "5px" }} label="Coming Soon" size="small" />
           </PanelButton>
           <PanelButton
-            onClick={handleSettingsOpen}
+            data-disabled="true"
             startIcon={<PanelIcon icon="/icons/a2.svg" />}
           >
-            Dashboards
+            Dashboards{" "}
+            <Chip sx={{ marginLeft: "5px" }} label="Coming Soon" size="small" />
           </PanelButton>
         </Box>
       </Box>
+
       <Box
         sx={{
           display: "flex",
@@ -261,6 +284,23 @@ const LeftBar2: React.FC = () => {
           width: "100%",
         }}
       >
+        {/* <Box
+          sx={{
+            backgroundColor: "#f9e05e4d",
+            padding: "8px",
+            borderRadius: "8px",
+            border: "1px solid #f9e05e",
+            display: "flex",
+            flexDirection: "column",
+            marginBottom: "24px",
+          }}
+        >
+          <Box>Unlock more features with a Pro Plan</Box>
+          <Button variant="contained" color="primary" sx={{ marginTop: "8px" }}>
+            Upgrade to Pro
+          </Button>
+        </Box> */}
+
         <PanelButton onClick={handleSettingsOpen} startIcon={<SettingsIcon />}>
           Settings
         </PanelButton>
