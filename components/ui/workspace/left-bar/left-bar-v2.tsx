@@ -154,7 +154,7 @@ const LeftBar2: React.FC = () => {
                 gap: "6px",
               }}
             >
-              <Box>ilia's Workspace</Box>
+              <Box>ilia&apos;s Workspace</Box>
             </Box>
 
             <KeyboardArrowDownIcon />
@@ -262,6 +262,10 @@ const LeftBar2: React.FC = () => {
           <PanelButton
             data-disabled="true"
             startIcon={<PanelIcon icon="/icons/a3.svg" />}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
           >
             Whiteboards{" "}
             <Chip sx={{ marginLeft: "5px" }} label="Coming Soon" size="small" />
