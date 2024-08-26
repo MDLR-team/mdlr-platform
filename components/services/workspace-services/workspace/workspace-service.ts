@@ -3,6 +3,7 @@ import { SupabaseClient } from "@supabase/supabase-js";
 import { CLIENT_ID } from "@/pages/api/token";
 import AuthService from "../../app-services/auth/auth-service";
 import { BehaviorSubject } from "rxjs";
+import { ProjectUser } from "../../project-services/project-service/project-service";
 
 class WorkspaceService {
   private _projects: any[] = [];
@@ -13,11 +14,19 @@ class WorkspaceService {
 
   public workspaces$ = new BehaviorSubject<Workspace[]>([]);
   public activeWorkspace$ = new BehaviorSubject<Workspace | null>(null);
+  public workspaceUsers$ = new BehaviorSubject<ProjectUser[]>([]);
 
   constructor(
     private _supabase: SupabaseClient,
     private _authService: AuthService
-  ) {}
+  ) {
+    this.activeWorkspace$.subscribe(async (workspace) => {
+      if (workspace) {
+        const users = await this.getWorkspaceUsers(workspace.id);
+        this.workspaceUsers$.next(users);
+      }
+    });
+  }
 
   private async getWorkspaces() {
     const supabase = this._supabase;
@@ -170,6 +179,108 @@ class WorkspaceService {
       this._activeWorkspace = { ...this._activeWorkspace, name: newName };
       this.activeWorkspace$.next(this._activeWorkspace);
     }
+  }
+
+  public async getWorkspaceUsers(workspaceId: number): Promise<ProjectUser[]> {
+    const { data: workspaceUsers, error } = await this._supabase
+      .from("workspace_users")
+      .select("user_id")
+      .eq("workspace_id", workspaceId);
+
+    if (error) {
+      console.error("Error fetching workspace users:", error);
+      return [];
+    }
+
+    const userIds = workspaceUsers.map(
+      (workspaceUser) => workspaceUser.user_id
+    );
+
+    const { data: users, error: userError } = await this._supabase
+      .from("profiles")
+      .select("*")
+      .in("user_id", userIds);
+
+    if (userError) {
+      console.error("Error fetching user details:", userError);
+      return [];
+    }
+
+    return users as ProjectUser[];
+  }
+
+  public async addUserToWorkspace(
+    workspaceId: number,
+    identifier: string
+  ): Promise<string | null> {
+    let userId: string | null = null;
+
+    // Attempt to fetch user by email from the users table
+    const { data: emailUser, error: emailUserError } = await this._supabase
+      .from("users")
+      .select("id")
+      .eq("email", identifier)
+      .single();
+
+    if (emailUser) {
+      userId = emailUser.id;
+    }
+
+    // If not found by email, attempt to fetch by username from the profiles table
+    if (!userId) {
+      const { data: profileUser, error: profileUserError } =
+        await this._supabase
+          .from("profiles")
+          .select("user_id")
+          .eq("username", identifier)
+          .single();
+
+      if (profileUser) {
+        userId = profileUser.user_id;
+      } else if (profileUserError?.code !== "PGRST116") {
+        console.error("Error fetching user by username:", profileUserError);
+        return "Error searching for user by username.";
+      }
+    }
+
+    if (!userId) {
+      return "User not found.";
+    }
+
+    // Check if the user is already in the workspace
+    const { data: existingUser, error: existingUserError } =
+      await this._supabase
+        .from("workspace_users")
+        .select("*")
+        .eq("workspace_id", workspaceId)
+        .eq("user_id", userId)
+        .single();
+
+    if (existingUser) {
+      return "User is already a member of the workspace.";
+    }
+
+    if (existingUserError && existingUserError.code !== "PGRST116") {
+      console.error(
+        "Error checking existing user in workspace:",
+        existingUserError
+      );
+      return "Error adding user to workspace.";
+    }
+
+    // Add the user to the workspace with the VIEWER role
+    const { error: insertError } = await this._supabase
+      .from("workspace_users")
+      .insert([{ user_id: userId, workspace_id: workspaceId, role: 3 }]); // Role 3 = VIEWER
+
+    if (insertError) {
+      console.error("Error adding user to workspace:", insertError);
+      return "Error adding user to workspace.";
+    }
+
+    await this.getWorkspaceUsers(workspaceId);
+
+    return null; // Success
   }
 
   public provideStates(states: States) {

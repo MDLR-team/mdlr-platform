@@ -13,7 +13,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import PersonIcon from "@mui/icons-material/Person";
 import AddIcon from "@mui/icons-material/Add";
-import SettingsModal from "./blocks/settings-modal";
+import SettingsModal from "./blocks/settings-modal/settings-modal";
 import { useWorkspace } from "@/components/services/workspace-services/workspace/workspace-provider";
 import Link from "next/link";
 

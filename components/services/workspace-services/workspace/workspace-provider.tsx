@@ -5,12 +5,15 @@ import { useRouter } from "next/router";
 import { Project, Workspace } from "@/components/types/supabase-data.types";
 import WorkspaceService from "./workspace-service";
 import { useAuth } from "../../app-services/auth/auth-provider";
+import { UserMetadata } from "@supabase/supabase-js";
+import { ProjectUser } from "../../project-services/project-service/project-service";
 
 interface WorkspaceProps {
   workspaceService: WorkspaceService;
   projects: Project[];
   workspaces: Workspace[];
   activeWorkspace: Workspace | null;
+  workspaceUsers: ProjectUser[];
   isReady: boolean;
   settingsOpened: boolean;
   settingsTab: number;
@@ -32,6 +35,7 @@ export function WorkspaceProvider({ children }: any) {
   const [activeWorkspace, setActiveWorkspace] = useState<Workspace | null>(
     null
   );
+  const [workspaceUsers, setWorkspaceUsers] = useState<ProjectUser[]>([]);
 
   const [projects, setProjects] = useState<Project[]>([]);
 
@@ -49,6 +53,9 @@ export function WorkspaceProvider({ children }: any) {
     const a = workspaceService.activeWorkspace$.subscribe((workspace) =>
       setActiveWorkspace(workspace)
     );
+    const p = workspaceService.workspaceUsers$.subscribe((users) =>
+      setWorkspaceUsers(users)
+    );
 
     workspaceService.provideStates({
       setProjects,
@@ -58,6 +65,7 @@ export function WorkspaceProvider({ children }: any) {
     return () => {
       w.unsubscribe();
       a.unsubscribe();
+      p.unsubscribe();
     };
   }, [router]);
 
@@ -67,6 +75,7 @@ export function WorkspaceProvider({ children }: any) {
         workspaceService,
         projects,
         workspaces,
+        workspaceUsers,
         activeWorkspace,
         isReady,
         settingsOpened,

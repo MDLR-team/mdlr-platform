@@ -58,6 +58,33 @@ class AuthService {
     this._router.push("/");
   }
 
+  public async renameUser(username: string) {
+    const user_id = this._userMetadata!.id!;
+
+    // Update the username in the profiles table
+    const { error } = await this._supabase
+      .from("profiles")
+      .update({ username })
+      .eq("user_id", user_id);
+
+    if (error) {
+      console.error(error);
+      this.$setMessage({
+        message: error.message,
+        type: "error",
+      });
+    } else {
+      this.$setMessage({
+        message: "Username updated successfully",
+        type: "success",
+      });
+
+      // Update the local user metadata with the new username
+      this._userMetadata!.username = username;
+      this.$setUserMetadata(this._userMetadata);
+    }
+  }
+
   // get user
   public async getUser(): Promise<UserMetadata | null> {
     const user = await this._supabase.auth.getUser();
