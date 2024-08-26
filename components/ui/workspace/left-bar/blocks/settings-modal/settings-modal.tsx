@@ -22,7 +22,7 @@ const ModalContent = styled(Box)`
   flex-direction: column;
 `;
 
-const TabPanel = styled.div`
+export const TabPanel = styled.div`
   padding-top: 16px;
 
   width: 400px;
@@ -56,10 +56,10 @@ const TabPanel = styled.div`
       }
 
       & .MuiFormControl-root {
-        margin: 0;
+        margin: 0 !important;
 
         & .MuiInputBase-root {
-          height: 32px;
+          height: 32px !important;
           & input::placeholder {
             opacity: 1;
           }

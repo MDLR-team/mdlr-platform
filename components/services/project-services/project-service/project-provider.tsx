@@ -10,6 +10,7 @@ import ProjectService, { ProjectUser } from "./project-service";
 import { supabase } from "@/components/supabase-client";
 import AuthService from "../../app-services/auth/auth-service";
 import { useAuth } from "../../app-services/auth/auth-provider";
+import { useWorkspace } from "../../workspace-services/workspace/workspace-provider";
 
 interface ProjectProviderProps {
   children: React.ReactNode;
@@ -31,6 +32,7 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
   children,
 }) => {
   const { authService } = useAuth();
+  const { workspaceService } = useWorkspace();
 
   const [title, setTitle] = useState<string>("");
   const [thumbnail, setThumbnail] = useState<string | null>(null);
@@ -53,6 +55,12 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
     const th = projectService.thumbnail$.subscribe(setThumbnail);
     const pu = projectService.projectUsers$.subscribe(setProjectUsers);
     const r = projectService.isReady$.subscribe(setIsReady);
+
+    const wp = projectService.workspaceId$.subscribe(async (workspaceId) => {
+      if (workspaceId) {
+        await workspaceService.setActiveWorkspace(workspaceId);
+      }
+    });
 
     return () => {
       projectService.dispose();

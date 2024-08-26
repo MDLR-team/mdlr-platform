@@ -6,31 +6,34 @@ import UIGrid from "@/components/ui/ui-grid";
 import { GlobalStatesProvider } from "@/components/services/project-services/global-states-service/global-states-provider";
 import React from "react";
 import { MarkupProvider } from "@/components/services/markup-service/markup-provider";
+import { WorkspaceProvider } from "@/components/services/workspace-services/workspace/workspace-provider";
 
 const ViewerPage = () => {
   return (
-    <ProjectProvider>
-      <GlobalStatesProvider>
-        <ViewerProvider>
-          <CommentProvider>
-            <MarkupProvider>
-              <div
-                style={{
-                  display: "flex",
-                  width: "100vw",
-                  height: "100vh",
-                  position: "relative",
-                }}
-              >
-                <UIGrid />
+    <WorkspaceProvider>
+      <ProjectProvider>
+        <GlobalStatesProvider>
+          <ViewerProvider>
+            <CommentProvider>
+              <MarkupProvider>
+                <div
+                  style={{
+                    display: "flex",
+                    width: "100vw",
+                    height: "100vh",
+                    position: "relative",
+                  }}
+                >
+                  <UIGrid />
 
-                <ViewerW />
-              </div>
-            </MarkupProvider>
-          </CommentProvider>
-        </ViewerProvider>
-      </GlobalStatesProvider>
-    </ProjectProvider>
+                  <ViewerW />
+                </div>
+              </MarkupProvider>
+            </CommentProvider>
+          </ViewerProvider>
+        </GlobalStatesProvider>
+      </ProjectProvider>
+    </WorkspaceProvider>
   );
 };
 

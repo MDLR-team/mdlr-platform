@@ -23,6 +23,7 @@ class ProjectService {
   public bimId: string | null = null;
   public createdAt: string | null = null;
   public thumbnail: string | null = null;
+  public workspaceId: number | null = null;
 
   public topics: Map<string, string> = new Map();
   private _topics$ = new BehaviorSubject<Map<string, string>>(new Map());
@@ -38,6 +39,7 @@ class ProjectService {
   public title$ = new BehaviorSubject<string>("");
   public thumbnail$ = new BehaviorSubject<string | null>(null);
   public projectUsers$ = new BehaviorSubject<ProjectUser[]>([]);
+  public workspaceId$ = new BehaviorSubject<number | null>(null);
 
   private _globalStatesService: GlobalStatesService;
   private _commentService: CommentService;
@@ -88,8 +90,9 @@ class ProjectService {
       .select(
         `
         *,
-        userprojects!inner(
-          user_id
+        workspaces!inner(
+          id,
+          workspace_users(user_id)
         )
       `
       )
@@ -267,6 +270,7 @@ class ProjectService {
         this.bimId = project.bim_id;
         this.createdAt = project.created_at;
         this.thumbnail = project.thumbnail;
+        this.workspaceId = project.workspace_id;
 
         // Populate the projectUsers map
         this.projectUsers.clear();
@@ -275,7 +279,7 @@ class ProjectService {
           profiles.map((profile: any) => [profile.user_id, profile])
         );
 
-        project.userprojects.forEach((userproject: any) => {
+        project.workspaces.workspace_users.forEach((userproject: any) => {
           const profile = profilesMap.get(userproject.user_id);
 
           if (profile) {
@@ -291,6 +295,7 @@ class ProjectService {
         this.projectUsers$.next(Array.from(this.projectUsers.values()));
         this.title$.next(this.title);
         this.thumbnail$.next(this.thumbnail);
+        this.workspaceId$.next(this.workspaceId);
         this.isReady$.next(true);
 
         this._commentService.init();

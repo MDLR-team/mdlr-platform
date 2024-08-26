@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { Project } from "@/components/types/supabase-data.types";
 import Avatar from "@/components/layout/avatar/avatar";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useWorkspace } from "@/components/services/workspace-services/workspace/workspace-provider";
 
 interface WorkspaceItemProps {
   data: Project;
@@ -39,7 +40,7 @@ const CatalogItem: React.FC<WorkspaceItemProps> = ({ data }) => {
     // Add your move logic here
   };
 
-  const userprojects = data.userprojects;
+  const { workspaceUsers } = useWorkspace();
 
   return (
     <Wrapper onClick={handleNavigate}>
@@ -129,7 +130,7 @@ const CatalogItem: React.FC<WorkspaceItemProps> = ({ data }) => {
         </Box>
 
         <Box sx={{ display: "flex" }} data-type="users">
-          {userprojects.map((userproject, i) => (
+          {workspaceUsers.map((userproject, i) => (
             <Avatar
               key={i}
               username={userproject?.username || ""}

@@ -6,13 +6,18 @@ import {
   Typography,
   IconButton,
   TextField,
+  Divider,
 } from "@mui/material";
 import styled from "styled-components";
 import ShareIcon from "@/components/ui/icons/share-icon";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy"; // Import the copy icon
 import { useAuth } from "@/components/services/app-services/auth/auth-provider";
 import Avatar from "../avatar/avatar";
 import { useProject } from "@/components/services/project-services/project-service/project-provider";
 import CloseIcon from "@mui/icons-material/Close";
+import MembersTab from "@/components/ui/workspace/left-bar/blocks/settings-modal/blocks/members-tab";
+import { TabPanel } from "@/components/ui/workspace/left-bar/blocks/settings-modal/settings-modal";
+import { useRouter } from "next/router";
 
 // Styled components
 const ModalBox = styled(Box)`
@@ -20,10 +25,9 @@ const ModalBox = styled(Box)`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 400px;
   background-color: white;
   box-shadow: 24px;
-  padding: 10px;
+  padding: 0px 20px 20px 20px;
   border-radius: 8px;
 `;
 
@@ -32,8 +36,22 @@ const Share = () => {
   const { projectUsers } = useProject();
   const [open, setOpen] = useState(false);
 
+  const router = useRouter();
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleCopyLink = () => {
+    const shareableLink = `${window.location.origin}${router.asPath}`;
+    navigator.clipboard
+      .writeText(shareableLink)
+      .then(() => {
+        console.log("Link copied to clipboard");
+      })
+      .catch((err) => {
+        console.error("Failed to copy link: ", err);
+      });
+  };
 
   return (
     <>
@@ -64,62 +82,65 @@ const Share = () => {
         aria-describedby="share-modal-description"
       >
         <ModalBox>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Typography id="share-modal-title" variant="h6" component="h2">
-              Share this model
-            </Typography>
-            <IconButton onClick={handleClose}>
-              <CloseIcon />
-            </IconButton>
-          </Box>
-
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              gap: "10px",
-            }}
-          >
-            <TextField
-              placeholder="Invite others by email"
-              fullWidth
-              size="small"
-              variant="outlined"
-              sx={{
-                height: "33px",
-              }}
-            ></TextField>
-
-            <Button variant="contained" color="primary" size="large">
-              Invite
-            </Button>
-          </Box>
-
-          <Box sx={{ mt: 3 }}>
-            <Typography variant="body2">Who has access</Typography>
-
-            {projectUsers.map((projectUser, i) => (
+          <TabPanel>
+            <div>
               <Box
-                key={i}
                 sx={{
                   display: "flex",
-                  alignItems: "center",
-                  mt: 1,
+                  flexDirection: "column",
+                  gap: "6px",
+                  width: "100%",
                 }}
               >
-                <Avatar username={projectUser.username} size="large" />
-                <Typography variant="body2" sx={{ ml: 1 }}>
-                  {projectUser.username}
-                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography
+                    id="share-modal-title"
+                    variant="h6"
+                    component="h2"
+                    sx={{
+                      fontWeight: 700,
+                    }}
+                  >
+                    Share this model
+                  </Typography>
+
+                  <Box
+                    sx={{
+                      display: "flex",
+                      gap: "6px",
+                      alignItems: "center",
+                      cursor: "pointer",
+                      color: "primary.main", // Use your theme's primary color
+                    }}
+                    onClick={handleCopyLink}
+                  >
+                    <ContentCopyIcon />
+                    <Typography
+                      id="share-modal-title"
+                      variant="h6"
+                      component="h2"
+                    >
+                      Copy link
+                    </Typography>
+
+                    <IconButton onClick={handleClose}>
+                      <CloseIcon />
+                    </IconButton>
+                  </Box>
+                </Box>
+
+                <Divider />
               </Box>
-            ))}
-          </Box>
+
+              <MembersTab />
+            </div>
+          </TabPanel>
         </ModalBox>
       </Modal>
     </>

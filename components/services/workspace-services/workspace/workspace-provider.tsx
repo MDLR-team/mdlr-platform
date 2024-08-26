@@ -57,15 +57,20 @@ export function WorkspaceProvider({ children }: any) {
       setWorkspaceUsers(users)
     );
 
-    workspaceService.provideStates({
-      setProjects,
-      setIsReady,
-    });
+    const s = workspaceService.projects$.subscribe((projects) =>
+      setProjects(projects)
+    );
+
+    const r = workspaceService.isReady$.subscribe((ready) => setIsReady(ready));
+
+    workspaceService.provideStates();
 
     return () => {
       w.unsubscribe();
       a.unsubscribe();
       p.unsubscribe();
+      s.unsubscribe();
+      r.unsubscribe();
     };
   }, [router]);
 
