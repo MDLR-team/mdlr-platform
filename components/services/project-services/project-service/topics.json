@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Project areas",
+    "prompt": "1. Design: Architectural and engineering plans, standards compliance, and innovation.\n\n2. Management: Project planning, scheduling, resource allocation, and coordination.\n\n3. Cost: Budgeting, cost estimation, financial management, and control.\n\n4. Quality: Quality assurance, standards compliance, inspection, and best practices.\n\n5. Risk: Risk identification, assessment, mitigation, safety, and compliance.",
+    "tags": ["design", "management", "cost", "quality", "risk"]
+  },
+  {
+    "name": "Issue focus",
+    "prompt": "1. Team: Issues related to the project team and internal communication.\n\n2. Site: Issues specific to the construction site and its conditions.\n\n3. Client: Issues related to client requirements, feedback, and satisfaction.\n\n4. Quality Control: Issues related to maintaining quality standards and inspections.\n\n5. Budget: Issues related to financial aspects, including costs and budget management.",
+    "tags": ["Team", "Site", "Client", "Quality Control", "Budget"]
+  }
+]

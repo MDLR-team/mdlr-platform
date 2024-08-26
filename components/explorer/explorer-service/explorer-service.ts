@@ -10,7 +10,14 @@ class ExplorerService {
   private $setStatus: any;
   private $setData: any;
 
+  public autoBrowsing = ["hub", "projects"];
+
   constructor() {}
+
+  public checkAutoBrowsing() {
+    // remove first item from autoBrowsing
+    this.autoBrowsing.shift();
+  }
 
   public async init() {
     this.$setStatus("loading");
@@ -69,10 +76,11 @@ class ExplorerService {
         name.endsWith(".ifc") ||
         name.endsWith(".skp") ||
         name.endsWith(".3dm") ||
-        name.endsWith(".dwg") ||
-        name.endsWith(".xlsx") ||
-        name.endsWith(".pdf") ||
-        name.endsWith(".docx");
+        name.endsWith(".nwd");
+      //name.endsWith(".dwg") ||
+      //name.endsWith(".xlsx") ||
+      //name.endsWith(".pdf") ||
+      //name.endsWith(".docx");
 
       if (!format) {
         disabled = true;

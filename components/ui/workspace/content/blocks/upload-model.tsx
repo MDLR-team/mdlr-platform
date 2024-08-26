@@ -1,4 +1,11 @@
-import { Box, Typography, List, ListItem, ListItemText, Link } from "@mui/material";
+import {
+  Box,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Link,
+} from "@mui/material";
 
 const UploadModel = () => {
   return (
@@ -42,7 +49,9 @@ const UploadModel = () => {
         <ListItem>
           <ListItemText
             primary="3. Synchronise and Find Your Model"
-            secondary={"Return to the current page, click the 'Synchronise' button, find the model in the explorer, and click the '+' button on the right side to add it."}
+            secondary={
+              "Return to the current page, find the model in the explorer, and click the 'Sync' button on the right side to add it."
+            }
           />
         </ListItem>
       </List>

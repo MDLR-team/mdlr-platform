@@ -31,6 +31,8 @@ const SyncExplorer = () => {
 
   const { authService } = useAuth();
 
+  const [history, setHistory] = useState<ExtractedIds[]>([]);
+
   const [data, setData] = useState<ExplorerItem[]>([]);
   const [explorerService] = useState<ExplorerService>(
     () => new ExplorerService()
@@ -50,6 +52,8 @@ const SyncExplorer = () => {
     setOpenSnackbar(false);
   };
 
+  const [browserReady, setBrowserReady] = useState(false);
+
   useEffect(() => {
     explorerService.provideStates({
       project_id: projectId as any,
@@ -61,9 +65,34 @@ const SyncExplorer = () => {
     explorerService.init();
   }, [uuid]);
 
+  useEffect(() => {
+    const autoBrowsing = explorerService.autoBrowsing;
+
+    if (autoBrowsing.length > 0) {
+      const firstItem = data[0];
+
+      if (firstItem) {
+        const link = firstItem.link;
+        const { projectId, folderId } = extractIdsFromUrl(link);
+
+        setProjectId(projectId);
+        setFolderId(folderId);
+        setUuid(uuidv4());
+
+        explorerService.checkAutoBrowsing();
+      }
+    } else {
+      setBrowserReady(true);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    setHistory((prevHistory) => [...prevHistory, { projectId, folderId }]);
+  }, [uuid]);
+
   return (
     <>
-      {status === "loading" ? (
+      {status === "loading" || !browserReady ? (
         <Box display="flex" justifyContent="center" alignItems="center">
           <CircularProgress />
         </Box>
@@ -76,6 +105,27 @@ const SyncExplorer = () => {
             border: "0px solid #e0e0e0 !important",
           }}
         >
+          <Button
+            variant="outlined"
+            color="primary"
+            disabled={history.length === 0} // Disable if there's no history
+            onClick={() => {
+              const previousState = history[history.length - 2];
+
+              if (previousState) {
+                setHistory((prevHistory) =>
+                  prevHistory.slice(0, prevHistory.length - 2)
+                );
+
+                setProjectId(previousState.projectId);
+                setFolderId(previousState.folderId);
+                setUuid(uuidv4());
+              }
+            }}
+          >
+            Back
+          </Button>
+
           <Table
             sx={{
               maxHeight: "max-content !important",
@@ -103,6 +153,7 @@ const SyncExplorer = () => {
                         const { projectId, folderId } = extractIdsFromUrl(
                           item.link
                         );
+
                         setProjectId(projectId);
                         setFolderId(folderId);
                         setUuid(uuidv4());

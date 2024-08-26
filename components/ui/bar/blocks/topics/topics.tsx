@@ -101,6 +101,45 @@ const Topics = () => {
         </Wrapper>
       </Box>
 
+      {topicItems.length === 0 && (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+            marginTop: "10px",
+            padding: "10px",
+            border: "1px solid #ccc",
+            borderRadius: "10px",
+          }}
+        >
+          <b>No topics found</b>
+
+          <Box>
+            The project does not have any topics yet. Would you like to use the
+            default topics?
+            <Box
+              sx={{
+                display: "flex",
+                gap: "10px",
+                marginTop: "10px",
+              }}
+            >
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                onClick={() => {
+                  projectService.addDefaultTopics();
+                }}
+              >
+                Use default topics
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      )}
+
       {topicItems.map(({ id, prompt, name, tags }, i) => (
         <Box
           key={i}

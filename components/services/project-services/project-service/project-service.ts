@@ -11,6 +11,7 @@ import { BehaviorSubject } from "rxjs";
 import MarkupService from "../../markup-service/markup-service";
 import TopicsService from "../topics-service/topics-service";
 import ApsService from "../../aps-service/aps-service";
+import defaultProjectTopics from "./topics.json";
 
 class ProjectService {
   private _wasInitialized: boolean = false;
@@ -230,6 +231,21 @@ class ProjectService {
     }
 
     return null;
+  }
+
+  public async addDefaultTopics() {
+    const topics = defaultProjectTopics;
+
+    const { data, error } = await this._supabase
+      .from("project_topics")
+      .insert(topics.map((topic) => ({ ...topic, project_id: this.id })));
+
+    if (error) {
+      console.error("Error adding default topics:", error);
+      return;
+    }
+
+    await this.checkAndInsertProjectTopics(this.id as string);
   }
 
   private async checkAndInsertProjectTopics(projectId: string) {
