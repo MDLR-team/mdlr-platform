@@ -21,6 +21,7 @@ const MessageItem: React.FC<MessageItemProps> = ({
   content,
   created_at,
   selectComment,
+  images,
   view_state,
   annotation,
   author_username,
@@ -104,6 +105,39 @@ const MessageItem: React.FC<MessageItemProps> = ({
         </Box>
 
         <CommentContent content={content} />
+
+        {hideActions && images.length > 0 && (
+          <Box
+            sx={{
+              color: "blue",
+            }}
+          >
+            2 images
+          </Box>
+        )}
+
+        {!hideActions && images.length > 0 && (
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "6px",
+            }}
+          >
+            {images.map((img, i) => (
+              <Box
+                key={i}
+                sx={{
+                  backgroundImage: `url(${img})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  paddingBlock: "40%",
+                  borderRadius: "8px",
+                }}
+              />
+            ))}
+          </Box>
+        )}
       </Box>
 
       {showTopicTags && (
