@@ -1,8 +1,5 @@
 import styled, { css } from "styled-components";
-import LeftBar from "./left-bar/left-bar";
-import Content from "./content/content";
 import LeftBar2 from "./left-bar/left-bar-v2";
-import Tabs from "../tabs/tabs";
 
 const WorkspaceGrid: React.FC<{
   children: React.ReactNode;
@@ -71,6 +68,7 @@ const ContentWrapper = styled.div`
   gap: 18px;
 
   padding: 0px 18px 18px 18px;
+  margin-top: 72px;
 `;
 
 const BarWrapper = css`

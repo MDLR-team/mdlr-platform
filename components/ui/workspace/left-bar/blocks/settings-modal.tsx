@@ -15,6 +15,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import LogoutIcon from "@mui/icons-material/Logout";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Avatar from "@/components/layout/avatar/avatar";
+import { useWorkspace } from "@/components/services/workspace-services/workspace/workspace-provider";
 
 const StyledModal = styled(Modal)`
   display: flex;
@@ -94,10 +95,10 @@ const SettingsModal: React.FC<{
   open: boolean;
   onClose: () => void;
 }> = ({ open, onClose }) => {
-  const [tabValue, setTabValue] = useState(0);
+  const { settingsTab, setSettingsTab } = useWorkspace();
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue);
+    setSettingsTab(newValue);
   };
 
   return (
@@ -109,7 +110,7 @@ const SettingsModal: React.FC<{
     >
       <ModalContent>
         <Tabs
-          value={tabValue}
+          value={settingsTab}
           onChange={handleTabChange}
           aria-label="settings tabs"
           sx={{
@@ -121,7 +122,7 @@ const SettingsModal: React.FC<{
           <Tab label="Account" />
         </Tabs>
 
-        <TabPanelComponent value={tabValue} index={0}>
+        <TabPanelComponent value={settingsTab} index={0}>
           <Box data-type="section">
             <Box data-type="header">
               <Typography variant="h6">Workspace Name</Typography>
@@ -161,7 +162,7 @@ const SettingsModal: React.FC<{
           </Box>
         </TabPanelComponent>
 
-        <TabPanelComponent value={tabValue} index={1}>
+        <TabPanelComponent value={settingsTab} index={1}>
           <Box data-type="section">
             <Box sx={{ display: "flex", alignItems: "center", gap: "6px" }}>
               <TextField
@@ -208,7 +209,7 @@ const SettingsModal: React.FC<{
           </Box>
         </TabPanelComponent>
 
-        <TabPanelComponent value={tabValue} index={2}>
+        <TabPanelComponent value={settingsTab} index={2}>
           <Box data-type="section">
             <Box data-type="header">
               <Typography variant="h6">Image</Typography>
@@ -261,7 +262,7 @@ const SettingsModal: React.FC<{
           </Box>
         </TabPanelComponent>
 
-        <TabPanelComponent value={tabValue} index={3}>
+        <TabPanelComponent value={settingsTab} index={3}>
           <Typography variant="h6">Billing</Typography>
           <Typography variant="body1">
             Billing information and options will go here.

@@ -6,18 +6,16 @@ import {
   MenuItem,
   Modal,
   Box,
-  Typography,
-  IconButton,
   Divider,
-  Badge,
   Chip,
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
-import DeleteIcon from "@mui/icons-material/Delete";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import PersonIcon from "@mui/icons-material/Person";
 import AddIcon from "@mui/icons-material/Add";
 import SettingsModal from "./blocks/settings-modal";
+import { useWorkspace } from "@/components/services/workspace-services/workspace/workspace-provider";
+import Link from "next/link";
 
 const SidebarContainer = styled.div`
   height: 100%;
@@ -72,20 +70,6 @@ const PanelButton = styled(Button)`
   }
 `;
 
-const StyledModal = styled(Modal)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ModalContent = styled(Box)`
-  background-color: white;
-  padding: 24px;
-  outline: none;
-  min-width: 300px;
-  border-radius: 8px;
-`;
-
 const PanelIcon = styled.div<{
   icon: string;
 }>`
@@ -99,7 +83,9 @@ const PanelIcon = styled.div<{
 
 const LeftBar2: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const { settingsOpened, setSettingsOpened, setSettingsTab } = useWorkspace();
+
+  const { workspaces, activeWorkspace } = useWorkspace();
 
   const handleWorkspaceClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -110,11 +96,12 @@ const LeftBar2: React.FC = () => {
   };
 
   const handleSettingsOpen = () => {
-    setIsSettingsOpen(true);
+    setSettingsOpened(true);
+    setSettingsTab(0);
   };
 
   const handleSettingsClose = () => {
-    setIsSettingsOpen(false);
+    setSettingsOpened(false);
   };
 
   return (
@@ -127,39 +114,41 @@ const LeftBar2: React.FC = () => {
           width: "100%",
         }}
       >
-        <WorkspaceButton
-          onClick={handleWorkspaceClick}
-          startIcon={
-            <Box
-              sx={{
-                width: "20px",
-                height: "20px",
-                borderRadius: "50%",
-                backgroundColor: "black",
-              }}
-            ></Box>
-          }
-        >
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              width: "100%",
-            }}
+        {activeWorkspace && (
+          <WorkspaceButton
+            onClick={handleWorkspaceClick}
+            startIcon={
+              <Box
+                sx={{
+                  width: "20px",
+                  height: "20px",
+                  borderRadius: "50%",
+                  backgroundColor: "black",
+                }}
+              ></Box>
+            }
           >
             <Box
               sx={{
                 display: "flex",
-                alignItems: "center",
-                gap: "6px",
+                justifyContent: "space-between",
+                width: "100%",
               }}
             >
-              <Box>ilia&apos;s Workspace</Box>
-            </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                }}
+              >
+                <Box>{activeWorkspace.name}</Box>
+              </Box>
 
-            <KeyboardArrowDownIcon />
-          </Box>
-        </WorkspaceButton>
+              <KeyboardArrowDownIcon />
+            </Box>
+          </WorkspaceButton>
+        )}
 
         <Menu
           anchorEl={anchorEl}
@@ -173,57 +162,26 @@ const LeftBar2: React.FC = () => {
               minWidth: "225px",
             }}
           >
-            <MenuItem
-              sx={{
-                display: "flex",
-                gap: "6px",
-              }}
-              onClick={handleWorkspaceClose}
-            >
-              <Box
+            {workspaces.map((workspace) => (
+              <MenuItem
                 sx={{
-                  width: "20px",
-                  height: "20px",
-                  borderRadius: "50%",
-                  backgroundColor: "black",
+                  display: "flex",
+                  gap: "6px",
                 }}
-              ></Box>
-              Workspace 1
-            </MenuItem>
-            <MenuItem
-              sx={{
-                display: "flex",
-                gap: "6px",
-              }}
-              onClick={handleWorkspaceClose}
-            >
-              <Box
-                sx={{
-                  width: "20px",
-                  height: "20px",
-                  borderRadius: "50%",
-                  backgroundColor: "black",
-                }}
-              ></Box>
-              Workspace 2
-            </MenuItem>
-            <MenuItem
-              sx={{
-                display: "flex",
-                gap: "6px",
-              }}
-              onClick={handleWorkspaceClose}
-            >
-              <Box
-                sx={{
-                  width: "20px",
-                  height: "20px",
-                  borderRadius: "50%",
-                  backgroundColor: "black",
-                }}
-              ></Box>
-              Workspace 3
-            </MenuItem>
+                key={workspace.id}
+                onClick={handleWorkspaceClose}
+              >
+                <Box
+                  sx={{
+                    width: "20px",
+                    height: "20px",
+                    borderRadius: "50%",
+                    backgroundColor: "black",
+                  }}
+                ></Box>
+                {workspace.name}
+              </MenuItem>
+            ))}
 
             <Divider />
 
@@ -253,12 +211,14 @@ const LeftBar2: React.FC = () => {
           }}
         >
           {" "}
-          <PanelButton
-            data-active="true"
-            startIcon={<PanelIcon icon="/icons/a1.svg" />}
-          >
-            3D Viewer
-          </PanelButton>
+          <Link href="/workspace">
+            <PanelButton
+              data-active="true"
+              startIcon={<PanelIcon icon="/icons/a1.svg" />}
+            >
+              3D Viewer
+            </PanelButton>
+          </Link>
           <PanelButton
             data-disabled="true"
             startIcon={<PanelIcon icon="/icons/a3.svg" />}
@@ -311,7 +271,7 @@ const LeftBar2: React.FC = () => {
         {<PanelButton startIcon={<PersonIcon />}>Billing</PanelButton>}
       </Box>
 
-      <SettingsModal open={isSettingsOpen} onClose={handleSettingsClose} />
+      <SettingsModal open={settingsOpened} onClose={handleSettingsClose} />
     </SidebarContainer>
   );
 };

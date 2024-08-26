@@ -1,47 +1,22 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import WorkspaceItem from "../workspace-item/workspace-item";
-import {
-  Box,
-  Button,
-  InputBase,
-  Paper,
-  Modal,
-  Typography,
-  Popper,
-  IconButton,
-} from "@mui/material";
-import { Sync as SyncIcon } from "@mui/icons-material"; // Import the Sync icon
-import { AvatarCss } from "../left-bar/left-bar";
+import { Box, Button, InputBase, Paper } from "@mui/material";
 import { useWorkspace } from "@/components/services/workspace-services/workspace/workspace-provider";
-import CatalogCanvas from "../workspace-canvas/workspace-canvas";
-import UploadModel from "./blocks/upload-model";
-import SyncExplorer from "./blocks/sync-explorer";
+import Link from "next/link";
 
 const Content = () => {
   const { projects } = useWorkspace();
 
-  const [openUploadModal, setOpenUploadModal] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleOpenUploadModal = () => setOpenUploadModal(true);
-  const handleCloseUploadModal = () => setOpenUploadModal(false);
+  const { setSettingsOpened, setSettingsTab } = useWorkspace();
 
   const handlePopperClick = (event: any) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
+    setSettingsOpened(true);
+    setSettingsTab(1);
   };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "sync-popper" : undefined;
 
   return (
     <Wrapper>
-      <Paper sx={{ opacity: 0, pointerEvents: "none" }}>
-        <Box sx={{ display: "flex", gap: "9px", alignItems: "center" }}>
-          <AvatarCss style={{ cursor: "pointer" }} />
-        </Box>
-      </Paper>
-
       <Box
         sx={{ width: "100%", display: "flex", justifyContent: "space-between" }}
       >
@@ -93,17 +68,18 @@ const Content = () => {
               gap: "10px",
             }}
           >
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              sx={{
-                minWidth: "180px",
-              }}
-              onClick={handleOpenUploadModal}
-            >
-              New Model
-            </Button>
+            <Link href="/workspace/new-model">
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                sx={{
+                  minWidth: "180px",
+                }}
+              >
+                New Model
+              </Button>
+            </Link>
           </Box>
         </Paper>
       </Box>
@@ -115,34 +91,6 @@ const Content = () => {
           <WorkspaceItem key={i} data={project} />
         ))}
       </CatalogWrapper>
-
-      {/* Upload Model Modal */}
-      <Modal
-        open={openUploadModal}
-        onClose={handleCloseUploadModal}
-        aria-labelledby="upload-model-title"
-        aria-describedby="upload-model-description"
-      >
-        <ModalContent>
-          <UploadModel />
-        </ModalContent>
-      </Modal>
-
-      {/* Synchronise Popper */}
-      <Popper id={id} open={open} anchorEl={anchorEl} placement="bottom">
-        <Paper
-          sx={{
-            padding: 2,
-            minWidth: "400px",
-            maxWidth: "400px",
-            overflowX: "hidden",
-            overflowY: "scroll",
-            maxHeight: "400px",
-          }}
-        >
-          <SyncExplorer />
-        </Paper>
-      </Popper>
     </Wrapper>
   );
 };

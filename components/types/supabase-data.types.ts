@@ -8,3 +8,9 @@ export interface Project {
   thumbnail: string;
   userprojects: { user_id: string; username?: string }[];
 }
+
+export interface Workspace {
+  id: number;
+  name: string;
+  created_at: string;
+}
