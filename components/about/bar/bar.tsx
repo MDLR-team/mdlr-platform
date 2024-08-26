@@ -90,7 +90,7 @@ const Bar = () => {
 
       <Box className="right">
         <a
-          href="https://mr-vr.vercel.app/"
+          href="https://beta.mdlr.app/login"
           style={{
             textDecoration: "none",
           }}
