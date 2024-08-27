@@ -11,7 +11,7 @@ const Screens = () => {
       title: "3D Viewer",
       backgroundImage:
         "url(https://images.ctfassets.net/kftzwdyauwt9/2Wet7rkEt83TBP19pRaoSU/c227e5b5949a5931c343eeb70e4bd99f/Mac_App_Hero_V1.png?w=3840&q=90&fm=webp)",
-      thumbnail: "/thumbs/c1.png",
+      thumbnail: "/thumbs/c11.png",
     },
     {
       title: "Whiteboard",
@@ -42,12 +42,13 @@ const Screens = () => {
       <Box
         sx={{
           width: "100%",
-          paddingBottom: "51%",
+          height: "max-content",
           position: "relative",
           borderRadius: "10px",
-          backgroundImage: slides[selectedSlide].backgroundImage,
+          //backgroundImage: slides[selectedSlide].backgroundImage,
           backgroundSize: "cover",
           backgroundPosition: "center",
+          padding: "20px",
         }}
       >
         <Box
@@ -56,7 +57,7 @@ const Screens = () => {
             height: "100%",
             display: "flex",
             flexDirection: "column",
-            position: "absolute",
+            position: "relative",
           }}
         >
           <Box
@@ -115,21 +116,32 @@ const Screens = () => {
           >
             <Box
               sx={{
-                width: "70%",
+                width: "100%",
                 position: "relative",
               }}
             >
               <Box
                 sx={{
+                  padding: "10px",
                   width: "100%",
-                  paddingBottom: "53.5%",
-                  position: "relative",
-                  borderRadius: "10px",
-                  backgroundImage: `url(${slides[selectedSlide].thumbnail})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
+                  backgroundColor: "rgb(236, 236, 236)",
+                  borderRadius: "20px",
                 }}
-              ></Box>
+              >
+                <Box
+                  sx={{
+                    width: "100%",
+                    paddingBottom: "54.5%",
+                    position: "relative",
+                    borderRadius: "10px",
+                    backgroundImage: `url(${slides[selectedSlide].thumbnail})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.15)",
+                    border: "1px solid white",
+                  }}
+                ></Box>
+              </Box>
             </Box>
           </Box>
         </Box>
