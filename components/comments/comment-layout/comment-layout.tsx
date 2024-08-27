@@ -1,7 +1,15 @@
 import React, { useMemo } from "react";
 
 import { useComment } from "../../services/project-services/comment-service/comment-provider";
-import { Box, Button, IconButton, Paper, Tab, Tabs } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  Paper,
+  Tab,
+  Tabs,
+} from "@mui/material";
 import CommentsIcon from "@/components/ui/icons/comments-icon";
 import MessageItem from "./blocks/comment/comment";
 import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
@@ -10,7 +18,7 @@ import SearchBar from "./blocks/search-bar/search-bar";
 import { useMarkup } from "@/components/services/markup-service/markup-provider";
 import styled from "styled-components";
 import TopicsWindow from "./blocks/topics-window/topics-window";
-import PromptSearchBar from "@/components/prompt-search/blocks/search-bar";
+import PromptSearchBar from "@/components/prompt-search/blocks/search-bar/search-bar";
 
 const CommentsBlock: React.FC = () => {
   const { comments, search, mlSearch, searchType, setSearchType } =
@@ -100,12 +108,18 @@ const CommentsBlock: React.FC = () => {
             {filteredComments
               .filter(markupService.checkFilters)
               .map((comment, i) => (
-                <MessageItem
-                  {...comment}
-                  selectComment={() => markupService.selectComment(comment.id)}
-                  key={comment.id}
-                  hideActions={true}
-                />
+                <React.Fragment key={comment.id}>
+                  <MessageItem
+                    {...comment}
+                    selectComment={() =>
+                      markupService.selectComment(comment.id)
+                    }
+                    key={comment.id}
+                    hideActions={true}
+                  />
+
+                  <Divider />
+                </React.Fragment>
               ))}
           </List>
         </CommentList>

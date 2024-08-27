@@ -27,6 +27,6 @@ export const CommentList = styled.div`
 export const List = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 12px;
   min-height: max-content;
 `;

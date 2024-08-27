@@ -76,7 +76,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #8C8C8C; /* color of the scroll thumb /
+    background: rgba(0,0,0,0.1); /* color of the scroll thumb */
     border-radius: 3px; / roundness of the scroll thumb */
     }
     
