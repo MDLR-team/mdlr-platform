@@ -29,6 +29,20 @@ const LandingPageStyles = css`
   }
 
   @font-face {
+    font-family: "DM Sans";
+    src: url("/fonts/DMSans-Medium.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "DM Sans";
+    src: url("/fonts/DMSans-Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  @font-face {
     font-family: "Euclid Circular A";
     src: url("/fonts/Euclid Circular A Bold.ttf") format("truetype");
     font-weight: bold;
@@ -132,11 +146,14 @@ const LandingPageStyles = css`
 `;
 
 const GlobalStyle = createGlobalStyle`
+// Landing Page Styles
+  ${LandingPageStyles}
+
   body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Inter", sans-serif;
+    font-family: "DM Sans", sans-serif;
     background-color: var(--background-color);
     overflow-x: hidden;
 
@@ -144,13 +161,13 @@ const GlobalStyle = createGlobalStyle`
       color: var(--text-primary);
       font-size: 12px;
       box-sizing: border-box;
-      font-family: "Inter", sans-serif
+      font-family: "DM Sans", sans-serif //"Inter", sans-serif
+    }
+
+    & .MuiTypography-root, & .MuiButton-root {
+      font-family: "DM Sans", sans-serif;
     }
   }
-
-  // Landing Page Styles
-  ${LandingPageStyles}
-  
 
   ::-webkit-scrollbar {
     width: 3px; /* width of the entire scrollbar */

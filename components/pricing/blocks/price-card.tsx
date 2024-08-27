@@ -13,6 +13,7 @@ import {
   FeatureDescription,
   FeatureTitle,
 } from "@/components/about/features-cards/features-cards";
+import Link from "next/link";
 
 interface PriceCardProps {
   title: string;
@@ -65,9 +66,24 @@ const PriceCard: React.FC<PriceCardProps> = ({
             <FeatureItem key={index} text={feature} />
           ))}
         </List>
-        <Button variant="contained" color="primary" fullWidth>
-          {buttonText}
-        </Button>
+
+        <Link
+          href="/request-demo"
+          style={{
+            width: "100%",
+          }}
+        >
+          <Button
+            sx={{
+              width: "100%",
+            }}
+            variant="contained"
+            color="primary"
+            fullWidth
+          >
+            {buttonText}
+          </Button>
+        </Link>
       </CardContent>
     </PricingCard>
   );

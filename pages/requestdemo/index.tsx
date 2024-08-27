@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 
-const locations = ["USA", "Canada", "UK", "Australia"]; // Add more locations as needed
+const locations = ["Europe", "United Kingdom", "North America", "Other"];
 const rolePositions = [
   "Architect",
   "Developer",
@@ -67,17 +67,69 @@ const DemoForm: React.FC = () => {
             gutterBottom
             sx={{
               fontFamily: "var(--primary-font-family) !important",
+              paddingBottom: "20px",
             }}
           >
-            Explore MDLR with a free demo
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            See how MDLR can revolutionize your AEC projects with AI-driven
-            tools for architects, developers, and project managers.
+            Request a&nbsp;Demo&nbsp;page
           </Typography>
 
-          {/* Testimonial Block */}
           <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "40px 1fr",
+              columnGap: "12px",
+              rowGap: "5px",
+            }}
+          >
+            {[
+              ["25%", "Increase in Team Engagement"],
+              ["15%", "Reduction in Project Costs"],
+              ["20%", "Faster Project Completion"],
+              ["100%", "Better Built Environment"],
+            ].map((benefit, index) => (
+              <React.Fragment key={index}>
+                <Box
+                  sx={{
+                    backgroundColor: "rgb(167, 243, 208)",
+                    padding: "5px",
+                    borderRadius: "5px",
+                    border: "1px solid rgba(4, 120, 87, .5)",
+                    display: "flex",
+                    alignItems: "center",
+                    textAlign: "center",
+                    maxHeight: "25px",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Typography
+                    variant="body1"
+                    gutterBottom
+                    sx={{
+                      textAlign: "center",
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: "rgb(4, 120, 87)",
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        lineHeight: "1",
+                      }}
+                    >
+                      {benefit[0]}
+                    </span>
+                  </Typography>
+                </Box>
+
+                <Typography variant="body1" gutterBottom>
+                  {benefit[1]}
+                </Typography>
+              </React.Fragment>
+            ))}
+          </Box>
+
+          {/* Testimonial Block */}
+          {/* <Box
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -123,7 +175,7 @@ const DemoForm: React.FC = () => {
                 - Emily Davis, Project Manager
               </Typography>
             </Box>
-          </Box>
+          </Box> */}
         </Box>
 
         <Box
@@ -174,8 +226,15 @@ const DemoForm: React.FC = () => {
             </TextField>
           </Box>
 
-          <Typography variant="subtitle1" gutterBottom>
-            MDLR Features of Interest*
+          <Typography
+            variant="subtitle2"
+            gutterBottom
+            sx={{
+              lineHeight: "1.2",
+            }}
+          >
+            Which MDLR features are you most interested in? Please select or
+            describe the ones that matter most to you.*
           </Typography>
           <FormControlLabel control={<Checkbox />} label="3D Viewer" />
           <FormControlLabel control={<Checkbox />} label="Insight Whiteboard" />
@@ -214,7 +273,7 @@ const DemoForm: React.FC = () => {
             fullWidth
             sx={{ marginTop: "20px", height: "50px !important" }}
           >
-            Schedule Your Demo
+            Send to get Mdlr
           </Button>
         </Box>
       </Box>

@@ -83,7 +83,7 @@ const PricingPage: React.FC = () => {
                 description="Ideal for small teams."
                 price="$49/month"
                 features={starterFeatures}
-                buttonText="Get Started"
+                buttonText="Contact Us"
               />
             </Grid>
             <Grid item xs={12} md={4}>
@@ -92,7 +92,7 @@ const PricingPage: React.FC = () => {
                 description="Perfect for growing firms."
                 price="$99/month"
                 features={professionalFeatures}
-                buttonText="Get Started"
+                buttonText="Contact Us"
               />
             </Grid>
             <Grid item xs={12} md={4}>

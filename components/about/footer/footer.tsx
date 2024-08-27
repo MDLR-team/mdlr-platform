@@ -25,9 +25,7 @@ const Footer: React.FC = () => {
           variant="h5"
           sx={{ marginTop: "10px", fontWeight: "bold", lineHeight: 1.2 }}
         >
-          We are transforming the AEC industry by providing AI-driven tools for
-          project management, empowering professionals to deliver better
-          outcomes faster.
+          Mdlr – AI For Better Built Environment
         </Typography>
       </Box>
 
@@ -35,17 +33,19 @@ const Footer: React.FC = () => {
         <Typography variant="h6" sx={{ marginBottom: "10px" }}>
           Legal
         </Typography>
+        <Link
+          href="mailto:hello@mdlr.app"
+          color="inherit"
+          underline="hover"
+          display="block"
+        >
+          Contacts
+        </Link>
+        <Link href="#" color="inherit" underline="hover" display="block">
+          Cookies
+        </Link>
         <Link href="#" color="inherit" underline="hover" display="block">
           Privacy Policy
-        </Link>
-        <Link href="#" color="inherit" underline="hover" display="block">
-          Terms of Service
-        </Link>
-        <Link href="#" color="inherit" underline="hover" display="block">
-          Compliance
-        </Link>
-        <Link href="#" color="inherit" underline="hover" display="block">
-          Imprint
         </Link>
       </Box>
 
@@ -61,7 +61,10 @@ const Footer: React.FC = () => {
         }}
       >
         <Typography variant="body2">
-          info@mdlr.com — Copyright © 2024 MDLR Inc. All rights reserved
+          <Link href="mailto:hello@mdlr.app" color="inherit" underline="hover">
+            hello@mdlr.app
+          </Link>{" "}
+          — Copyright © 2024 MDLR Limited. All rights reserved
         </Typography>
       </Box>
     </Wrapper>
