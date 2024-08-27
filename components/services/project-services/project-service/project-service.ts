@@ -12,6 +12,8 @@ import MarkupService from "../../markup-service/markup-service";
 import TopicsService from "../topics-service/topics-service";
 import ApsService from "../../aps-service/aps-service";
 import defaultProjectTopics from "./topics.json";
+import PromptSearchService from "@/components/prompt-search/prompt-search-service/prompt-search-service";
+import WorkspaceService from "../../workspace-services/workspace/workspace-service";
 
 class ProjectService {
   private _wasInitialized: boolean = false;
@@ -55,10 +57,12 @@ class ProjectService {
 
   private _topicsService: TopicsService;
   private _apsService: ApsService;
+  private _promptSearchService: PromptSearchService;
 
   constructor(
     private _supabase: SupabaseClient,
     private _authService: AuthService,
+    private _workspaceService: WorkspaceService,
     private _urn: string
   ) {
     this._globalStatesService = new GlobalStatesService(this);
@@ -67,6 +71,7 @@ class ProjectService {
     //this._activeCommentService = new ActiveCommentService(this);
     this._viewerServiceAggr = new ViewerServiceAggr(this);
     this._apsService = new ApsService(this);
+    this._promptSearchService = new PromptSearchService(this);
 
     this.projectUsers = new Map();
 
@@ -349,6 +354,22 @@ class ProjectService {
 
   public get markupService() {
     return this._markupService;
+  }
+
+  public get topicsService() {
+    return this._topicsService;
+  }
+
+  public get apsService() {
+    return this._apsService;
+  }
+
+  public get workspaceService() {
+    return this._workspaceService;
+  }
+
+  public get promptSearchService() {
+    return this._promptSearchService;
   }
 
   public get supabase() {

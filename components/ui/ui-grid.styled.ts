@@ -48,7 +48,7 @@ export const BarWrapper = styled.div`
 
   & > *:first-child {
     width: 100%;
-    max-width: 250px;
+    max-width: 300px;
   }
 `;
 
@@ -58,7 +58,7 @@ export const ContentWrapper = styled.div`
 
   & > *:first-child {
     width: 100%;
-    max-width: 250px;
+    max-width: 300px;
   }
 
   height: 100%;

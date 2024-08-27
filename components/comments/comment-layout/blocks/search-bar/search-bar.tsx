@@ -41,6 +41,7 @@ const SearchBar = () => {
           fullWidth
           rows={1}
           value={search}
+          placeholder="Search by content or author name"
           onChange={(e) => setSearch(e.target.value)}
           variant="outlined"
           required

@@ -11,6 +11,10 @@ interface CommentContentProps {
   commentLogId: string;
   search: string;
   setSearch: (search: string) => void;
+  mlSearch: Set<string> | null;
+  setMlSearch: (mlSearch: Set<string> | null) => void;
+  searchType: "default" | "ml";
+  setSearchType: (searchType: "default" | "ml") => void;
 }
 
 const CommentContext = createContext<CommentContentProps | undefined>(
@@ -25,6 +29,9 @@ export function CommentProvider({ children }: any) {
   const [commentService] = useState(() => projectService.commentService);
 
   const [search, setSearch] = useState<string>("");
+  const [mlSearch, setMlSearch] = useState<Set<string> | null>(null);
+
+  const [searchType, setSearchType] = useState<"default" | "ml">("ml");
 
   useEffect(() => {
     commentService.provideStates({
@@ -45,6 +52,10 @@ export function CommentProvider({ children }: any) {
         commentLogId,
         search,
         setSearch,
+        mlSearch,
+        setMlSearch,
+        searchType,
+        setSearchType,
       }}
     >
       {children}

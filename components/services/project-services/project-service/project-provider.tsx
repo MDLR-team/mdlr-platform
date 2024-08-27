@@ -43,7 +43,7 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
   const { urn } = router.query as { urn: string };
 
   const [projectService] = useState(
-    () => new ProjectService(supabase, authService, urn)
+    () => new ProjectService(supabase, authService, workspaceService, urn)
   );
 
   const projectServiceRef = useRef<ProjectService | null>(null);

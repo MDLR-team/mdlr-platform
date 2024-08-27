@@ -297,7 +297,7 @@ export interface Comment {
   annotation: any[] | null;
   author_id: string;
   author_username: string;
-  topic_tags: Record<string, string[]>;
+  topic_tags: Record<string, [string, number][]>;
   resolved: boolean;
   images: string[];
 }

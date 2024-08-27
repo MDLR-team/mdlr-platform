@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 
 import { useComment } from "../../services/project-services/comment-service/comment-provider";
-import { Box, Button, IconButton, Paper } from "@mui/material";
+import { Box, Button, IconButton, Paper, Tab, Tabs } from "@mui/material";
 import CommentsIcon from "@/components/ui/icons/comments-icon";
 import MessageItem from "./blocks/comment/comment";
 import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
@@ -10,25 +10,37 @@ import SearchBar from "./blocks/search-bar/search-bar";
 import { useMarkup } from "@/components/services/markup-service/markup-provider";
 import styled from "styled-components";
 import TopicsWindow from "./blocks/topics-window/topics-window";
+import PromptSearchBar from "@/components/prompt-search/blocks/search-bar";
 
 const CommentsBlock: React.FC = () => {
-  const { comments, search } = useComment();
+  const { comments, search, mlSearch, searchType, setSearchType } =
+    useComment();
   const { markupService } = useMarkup();
   const { isCommentsPanelOpen, setIsAiTopicsOpen } = useGlobalStates();
 
   const filteredComments = useMemo(() => {
-    return comments
-      .filter((comment) => !comment.parent_id)
-      .filter((comment) => {
-        if (!search) return true;
+    if (searchType === "default") {
+      return comments
+        .filter((comment) => !comment.parent_id)
+        .filter((comment) => {
+          if (!search) return true;
 
-        // search by content or author name
-        return (
-          comment.content.toLowerCase().includes(search.toLowerCase()) ||
-          comment.author_username.toLowerCase().includes(search.toLowerCase())
-        );
-      });
-  }, [comments, search]);
+          // search by content or author name
+          return (
+            comment.content.toLowerCase().includes(search.toLowerCase()) ||
+            comment.author_username.toLowerCase().includes(search.toLowerCase())
+          );
+        });
+    } else {
+      return comments
+        .filter((comment) => !comment.parent_id)
+        .filter((comment) => {
+          if (!mlSearch) return true;
+
+          return mlSearch.has(`${comment.id}`);
+        });
+    }
+  }, [comments, search, searchType, mlSearch]);
 
   if (!isCommentsPanelOpen) return null;
 
@@ -47,7 +59,7 @@ const CommentsBlock: React.FC = () => {
 
           <Button
             variant="contained"
-            color="primary"
+            color="secondary"
             size="small"
             onClick={() => setIsAiTopicsOpen(true)}
           >
@@ -55,9 +67,33 @@ const CommentsBlock: React.FC = () => {
           </Button>
         </Header>
 
-        <Header>
-          <SearchBar />
-        </Header>
+        {/* <Header>
+          <Tabs
+            value={searchType === "default" ? 0 : 1}
+            onChange={(_, value) =>
+              setSearchType(value === 0 ? "default" : "ml")
+            }
+            aria-label="settings tabs"
+            sx={{
+              maxWidth: "max-content",
+            }}
+          >
+            <Tab label="Default" />
+            <Tab label="AI Search" />
+          </Tabs>
+        </Header> */}
+
+        {searchType === "ml" && (
+          <Header>
+            <PromptSearchBar />
+          </Header>
+        )}
+
+        {searchType === "default" && (
+          <Header>
+            <SearchBar />
+          </Header>
+        )}
 
         <CommentList>
           <List>
