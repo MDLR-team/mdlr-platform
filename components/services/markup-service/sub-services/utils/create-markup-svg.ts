@@ -1,4 +1,4 @@
-import stc from "string-to-color";
+import { getColor, getInitials } from "@/components/layout/avatar/avatar";
 
 function createMarkupSvg(content: string | number, type: MarkupSVGType) {
   const svgNS = "http://www.w3.org/2000/svg";
@@ -39,14 +39,15 @@ function createMarkupSvg(content: string | number, type: MarkupSVGType) {
       "d",
       "M24 13.5C24 19.299 19.299 24 13.5 24C7.70101 24 3 19.299 3 13.5C3 7.70101 7.70101 3 13.5 3C19.299 3 24 7.70101 24 13.5Z"
     );
-    path2.setAttribute("fill", stc(content.toString()));
+    path2.setAttribute("fill", getColor(content.toString()));
 
     const text = document.createElementNS(svgNS, "text");
     text.setAttribute("x", "14");
     text.setAttribute("y", "14");
     text.setAttribute("text-anchor", "middle");
     text.setAttribute("dominant-baseline", "middle");
-    text.setAttribute("fill", "#333333");
+    text.setAttribute("fill", "#FFFFFF"); // Set text color using CSS property
+    text.style.fontWeight = "500"; // Set font weight using CSS property
 
     text.style.fontSize = "10px"; // Set font size using CSS property
     text.textContent = getInitials(content.toString());
@@ -59,18 +60,6 @@ function createMarkupSvg(content: string | number, type: MarkupSVGType) {
 
   return g;
 }
-
-const getInitials = (username: string) => {
-  const nameParts = username!.split(" ");
-  if (nameParts.length > 1) {
-    return (
-      nameParts[0].charAt(0).toUpperCase() +
-      nameParts[1].charAt(0).toUpperCase()
-    );
-  } else {
-    return nameParts[0].charAt(0).toUpperCase();
-  }
-};
 
 export type MarkupSVGType =
   | "default"

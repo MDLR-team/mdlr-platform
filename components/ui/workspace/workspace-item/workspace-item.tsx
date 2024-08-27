@@ -1,4 +1,11 @@
-import { Box, Paper, IconButton, Menu, MenuItem } from "@mui/material";
+import {
+  Box,
+  Paper,
+  IconButton,
+  Menu,
+  MenuItem,
+  AvatarGroup,
+} from "@mui/material";
 import styled from "styled-components";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -129,15 +136,25 @@ const CatalogItem: React.FC<WorkspaceItemProps> = ({ data }) => {
           <Box>Modified 12 hours ago</Box>
         </Box>
 
-        <Box sx={{ display: "flex" }} data-type="users">
-          {workspaceUsers.map((userproject, i) => (
+        <AvatarGroup max={100}>
+          {workspaceUsers
+            .filter((_, i) => i <= 2)
+            .map((userproject, i) => (
+              <Avatar
+                key={i}
+                username={userproject?.username || ""}
+                size={"small"}
+              />
+            ))}
+
+          {workspaceUsers.length > 3 && (
             <Avatar
-              key={i}
-              username={userproject?.username || ""}
+              username={`+${workspaceUsers.length - 3}`}
               size={"small"}
+              isCount
             />
-          ))}
-        </Box>
+          )}
+        </AvatarGroup>
       </Box>
     </Wrapper>
   );

@@ -229,7 +229,7 @@ const CommentMessage: React.FC<{}> = () => {
         </Box>
 
         <IconButton
-          sx={{ backgroundColor: "#FAE57E" }}
+          color="primary"
           type="submit"
           data-type="exception"
           data-add="comment"

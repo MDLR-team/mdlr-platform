@@ -6,11 +6,11 @@ export const Header = styled.div`
   align-items: center;
 
   & .MuiIconButton-root[data-add="comment"] {
-    background-color: #fae57e;
+    background-color: var(--color-primary);
     border-radius: 50% !important;
 
     &:hover {
-      background-color: #f9e05e;
+      background-color: var(--color-primary);
     }
   }
 `;

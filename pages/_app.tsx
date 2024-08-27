@@ -46,7 +46,10 @@ const MentionListStyles = css`
 const GlobalStyle = createGlobalStyle`
   // variables
   :root {
-    --color-error-500: #DE3830
+    --color-primary: #F6754C;
+    --color-secondary: #0E1931;
+
+    --color-error-500: #DE3830;
   }
 
   body {
@@ -201,7 +204,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     &[data-active="true"] {
-      background-color: #FEFAE5 !important;
+      background-color: #EDF1F4;
     }
 
     & > svg {
@@ -212,10 +215,17 @@ const GlobalStyle = createGlobalStyle`
     &.Mui-disabled {
       opacity: 0.4;
     }
+
+    &.MuiIconButton-colorPrimary {
+      background-color: var(--color-primary);
+      &, & * {
+        stroke: white !important;
+      }  
+    }
   }
 
   // MuiButton
-  && .MuiButton-root {
+  && .MuiButton-root, && .MuiButtonBase-root {
     border-radius: 8px !important;
     min-width: max-content;
     height: 33px;
@@ -229,19 +239,29 @@ const GlobalStyle = createGlobalStyle`
     }
 
     &.MuiButton-containedPrimary {
-      background-color: #f9e05e;
+      background-color: var(--color-primary);
       
       &:hover {
-        background-color: #f9e05e;
+        background-color: var(--color-primary);
+      }
+
+      &, & * {
+        color: white !important;
+        stroke: white !important;
       }
     }
 
     &.MuiButton-containedSecondary {
       background-color: white;
-      border: 1px solid grey;
+      border: 1px solid var(--color-primary);
       
       &:hover {
         background-color: white;
+      }
+
+      &, & * {
+        color: black !important;
+        stroke: black !important;
       }
     }
 
@@ -255,8 +275,14 @@ const GlobalStyle = createGlobalStyle`
     }
 
     &, & * {
-      color: #333333 !important;
+      color: #333333;
       text-transform: none !important;
+    }
+  }
+
+  & .MuiButtonBase-root {
+    &, & * {
+      color: #333333 !important;
     }
   }
 

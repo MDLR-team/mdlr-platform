@@ -1,87 +1,59 @@
 import React, { useMemo } from "react";
 import stc from "string-to-color";
-import styled, { css } from "styled-components";
 import chroma from "chroma-js";
+import { Avatar as MuiAvatar } from "@mui/material";
 
 const Avatar: React.FC<{
   username: string;
   size: "large" | "small";
-}> = ({ username, size }) => {
-  const initials = useMemo(() => {
-    const nameParts = username!.split(" ");
-    if (nameParts.length > 1) {
-      return (
-        nameParts[0].charAt(0).toUpperCase() +
-        nameParts[1].charAt(0).toUpperCase()
-      );
-    } else {
-      return nameParts[0].charAt(0).toUpperCase();
-    }
-  }, [username]);
-
-  const color = stc(username);
-  const secondColor = chroma(color)
-    .set("hsl.h", "+40") // Shift hue by 40 degrees
-    .set("hsl.l", "-0.1") // Increase lightness
-    .hex();
+  isCount?: boolean;
+}> = ({ username, size, isCount }) => {
+  const initials = useMemo(() => getInitials(username), [username]);
+  const color = useMemo(() => getColor(username), [username]);
 
   return (
-    <AvatarWrapper color={secondColor} secondColor={color} size={size}>
-      {initials}
-    </AvatarWrapper>
+    <MuiAvatar
+      sx={{
+        width: size === "large" ? 32 : 24,
+        height: size === "large" ? 32 : 24,
+        fontSize: size === "large" ? 14 : 10,
+        ...(isCount
+          ? { backgroundColor: "darkgrey" }
+          : { backgroundColor: color }),
+        color: "#FFFFFF", // Ensure the text color is white
+      }}
+    >
+      {isCount ? username : initials}
+    </MuiAvatar>
   );
 };
 
-const AvatarWrapper = styled.div<{
-  color: string;
-  secondColor: string;
-  size: "large" | "small";
-}>`
-  min-width: 36px;
-  min-height: 36px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    ${(props) => props.color} 0%,
-    ${(props) => props.secondColor} 100%
-  );
+export const getColor = (username: string) => {
+  let color = stc(username);
 
-  ${(props) =>
-    props.size === "large"
-      ? css``
-      : css`
-          & {
-            min-width: 24px;
-            min-height: 24px;
-            width: 24px;
-            height: 24px;
+  let chromaColor = chroma(color).hsl();
+  let [hue, saturation, lightness] = chromaColor;
 
-            & {
-              &,
-              & * {
-                font-size: 10px;
-              }
-            }
-          }
-        `}
+  saturation = Math.min(0.7, Math.max(0.3, saturation));
+  lightness = Math.min(0.7, Math.max(0.4, lightness));
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color = chroma.hsl(hue, saturation, lightness).hex();
 
-  font-weight: 400;
-  font-size: 12px;
-
-  border: 1px solid #333333;
-  color: black;
-
-  cursor: pointer;
-
-  & * {
-    pointer-events: none;
+  const luminance = chroma(color).luminance();
+  if (luminance > 0.6) {
+    color = chroma(color).darken(1.5).hex();
   }
-`;
+
+  return color;
+};
+
+export const getInitials = (username: string) => {
+  const nameParts = username!.split(" ");
+  if (nameParts.length > 1) {
+    return nameParts[0].charAt(0).toUpperCase();
+  } else {
+    return nameParts[0].charAt(0).toUpperCase();
+  }
+};
 
 export default Avatar;

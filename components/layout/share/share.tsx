@@ -7,6 +7,7 @@ import {
   IconButton,
   TextField,
   Divider,
+  AvatarGroup,
 } from "@mui/material";
 import styled from "styled-components";
 import ShareIcon from "@/components/ui/icons/share-icon";
@@ -56,13 +57,11 @@ const Share = () => {
   return (
     <>
       <Box sx={{ display: "flex", columnGap: "9px" }}>
-        <Box sx={{ display: "flex" }}>
+        <AvatarGroup max={100}>
           {projectUsers.map((projectUser, i) => (
-            <Box key={i} sx={{ marginLeft: "-6px" }}>
-              <Avatar username={projectUser.username} size="large" />
-            </Box>
+            <Avatar key={i} username={projectUser.username} size="large" />
           ))}
-        </Box>
+        </AvatarGroup>
 
         <Button
           sx={{ minWidth: "97px" }}
