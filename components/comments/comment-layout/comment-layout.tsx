@@ -62,17 +62,23 @@ const CommentsBlock: React.FC = () => {
               <CommentsIcon />
             </IconButton>
 
-            <div>Comments</div>
+            <Box
+              sx={{
+                fontSize: "14px",
+              }}
+            >
+              Comments
+            </Box>
           </Box>
 
-          <Button
+          {/* <Button
             variant="contained"
             color="secondary"
             size="small"
             onClick={() => setIsAiTopicsOpen(true)}
           >
             AI topics
-          </Button>
+          </Button> */}
         </Header>
 
         {/* <Header>

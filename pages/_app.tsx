@@ -47,6 +47,8 @@ const GlobalStyle = createGlobalStyle`
   // variables
   :root {
     --color-primary: #F6754C;
+    --color-primary-dark: #EC6033;
+
     --color-secondary: #0E1931;
 
     --color-error-500: #DE3830;
@@ -240,9 +242,15 @@ const GlobalStyle = createGlobalStyle`
 
     &.MuiButton-containedPrimary {
       background-color: var(--color-primary);
+      border: 1.5px solid var(--color-primary-dark);
       
       &:hover {
         background-color: var(--color-primary);
+      }
+
+      &.Mui-disabled {
+        background-color: lightgrey;
+        border: 1px solid lightgrey;
       }
 
       &, & * {
@@ -253,7 +261,7 @@ const GlobalStyle = createGlobalStyle`
 
     &.MuiButton-containedSecondary {
       background-color: white;
-      border: 1px solid var(--color-primary);
+      border: 1px solid lightgrey;
       
       &:hover {
         background-color: white;

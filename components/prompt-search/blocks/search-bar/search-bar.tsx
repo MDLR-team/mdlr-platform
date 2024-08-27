@@ -13,6 +13,9 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import AIGradient from "../ai-gradient";
+import InsightsIcon from "@mui/icons-material/Insights";
+import DataSaverOffIcon from "@mui/icons-material/DataSaverOff";
+import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
 
 const PromptSearchBar = () => {
   const { projectService } = useProject();
@@ -20,6 +23,8 @@ const PromptSearchBar = () => {
   const promptSearchService = projectService.promptSearchService;
 
   const [loading, setLoading] = useState(false);
+
+  const { setIsAiTopicsOpen } = useGlobalStates();
 
   useEffect(() => {
     const fids = promptSearchService.filteredIds$.subscribe(setMlSearch);
@@ -73,6 +78,7 @@ const PromptSearchBar = () => {
             background: "white",
             padding: "8px",
             alignItems: "flex-end",
+            gap: "12px",
           }}
         >
           <TextField
@@ -133,7 +139,26 @@ const PromptSearchBar = () => {
                 alignItems: "center",
               }}
             >
-              <ThumbUpOffAltIcon
+              <Button
+                size="small"
+                variant="contained"
+                color="secondary"
+                sx={{
+                  marginRight: "6px",
+                }}
+                onClick={() => setIsAiTopicsOpen(true)}
+                startIcon={
+                  <DataSaverOffIcon
+                    sx={{
+                      fontSize: "14px !important",
+                    }}
+                  />
+                }
+              >
+                Topics
+              </Button>
+
+              {/* <ThumbUpOffAltIcon
                 sx={{
                   color: "#8C8C8C",
                   fontSize: "16px",
@@ -146,7 +171,7 @@ const PromptSearchBar = () => {
                   fontSize: "16px",
                   cursor: "pointer",
                 }}
-              />
+              /> */}
             </Box>
 
             <Button
@@ -156,13 +181,8 @@ const PromptSearchBar = () => {
               color="primary"
               onClick={onComplete}
               disabled={loading}
-              startIcon={
-                loading && (
-                  <CircularProgress size={16} color="inherit" /> // Add spinner here
-                )
-              }
             >
-              {loading ? "" : "Go"}
+              {loading ? <CircularProgress size={16} color="inherit" /> : "Go"}
             </Button>
           </Box>
         </Box>
