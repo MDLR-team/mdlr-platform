@@ -23,7 +23,7 @@ const Screens = () => {
       title: "Dashboard",
       backgroundImage:
         "url(https://images.ctfassets.net/kftzwdyauwt9/2Wet7rkEt83TBP19pRaoSU/c227e5b5949a5931c343eeb70e4bd99f/Mac_App_Hero_V1.png?w=3840&q=90&fm=webp)",
-      thumbnail: "/thumbs/c3.png",
+      thumbnail: "/thumbs/c33.png",
     },
   ];
 
