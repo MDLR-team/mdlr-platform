@@ -36,7 +36,6 @@ class Bim360Service {
         }
 
         const data: any = await response.json();
-        console.log("data", data);
 
         this.token = data;
         this.token.expires_at = Date.now() + this.token.expires_in * 1000;

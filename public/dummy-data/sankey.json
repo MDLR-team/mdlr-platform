@@ -1,0 +1,59 @@
+[
+  { "source": "Design", "target": "Concept Design", "value": 120 },
+  { "source": "Design", "target": "Detailed Design", "value": 80 },
+  { "source": "Design", "target": "Design Revisions", "value": 40 },
+
+  { "source": "Management", "target": "Project Planning", "value": 100 },
+  { "source": "Management", "target": "Resource Allocation", "value": 70 },
+  { "source": "Management", "target": "Progress Tracking", "value": 50 },
+
+  { "source": "Cost", "target": "Estimation", "value": 200 },
+  { "source": "Cost", "target": "Cost Overruns", "value": 30 },
+  { "source": "Cost", "target": "Savings", "value": 20 },
+
+  { "source": "Quality", "target": "Inspections", "value": 60 },
+  { "source": "Quality", "target": "Compliance", "value": 50 },
+  { "source": "Quality", "target": "Testing", "value": 40 },
+
+  { "source": "Risk", "target": "Risk Identification", "value": 90 },
+  { "source": "Risk", "target": "Mitigation Strategies", "value": 70 },
+  { "source": "Risk", "target": "Risk Monitoring", "value": 50 },
+
+  { "source": "Team", "target": "Team Meetings", "value": 60 },
+  { "source": "Team", "target": "Coordination", "value": 80 },
+  { "source": "Team", "target": "Training", "value": 30 },
+
+  { "source": "Site", "target": "Site Preparation", "value": 110 },
+  { "source": "Site", "target": "Construction Work", "value": 150 },
+  { "source": "Site", "target": "Safety Checks", "value": 40 },
+
+  { "source": "Client", "target": "Client Requirements", "value": 100 },
+  { "source": "Client", "target": "Feedback", "value": 60 },
+  { "source": "Client", "target": "Approvals", "value": 40 },
+
+  { "source": "Quality Control", "target": "Internal Audits", "value": 50 },
+  { "source": "Quality Control", "target": "External Audits", "value": 30 },
+  {
+    "source": "Quality Control",
+    "target": "Continuous Improvement",
+    "value": 40
+  },
+
+  { "source": "Budget", "target": "Initial Budget", "value": 250 },
+  { "source": "Budget", "target": "Budget Revisions", "value": 50 },
+  { "source": "Budget", "target": "Contingency Fund", "value": 30 },
+  { "source": "Design Revisions", "target": "Project Planning", "value": 20 },
+  { "source": "Detailed Design", "target": "Resource Allocation", "value": 15 },
+  { "source": "Cost Overruns", "target": "Design Revisions", "value": 10 },
+  { "source": "Estimation", "target": "Concept Design", "value": 25 },
+  {
+    "source": "Risk Identification",
+    "target": "Site Preparation",
+    "value": 15
+  },
+  { "source": "Risk Monitoring", "target": "Safety Checks", "value": 10 },
+  { "source": "Client Requirements", "target": "Internal Audits", "value": 20 },
+  { "source": "Feedback", "target": "Continuous Improvement", "value": 15 },
+  { "source": "Initial Budget", "target": "Resource Allocation", "value": 30 },
+  { "source": "Budget Revisions", "target": "Coordination", "value": 10 }
+]

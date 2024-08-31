@@ -1,0 +1,415 @@
+[
+  {
+    "id": 369,
+    "created_at": "2024-08-27T20:41:14.246742+00:00",
+    "content": "The roof drainage system should be checked to ensure it can handle expected rainfall levels. @[Charlie Davies](e11e6bb2-311b-4754-bd4b-fca4ddcc2a7b), @[Charlie Wright](55e96f90-2825-4d96-a630-aac141d1f343)",
+    "markup_position": {
+      "x": -64.43553039577972,
+      "y": 38.94933959014034,
+      "z": 140
+    },
+    "resolved": false,
+    "project_id": "4e43c4d0-942c-4772-aac2-d9e56a89d5de",
+    "author_id": "55e96f90-2825-4d96-a630-aac141d1f343",
+    "view_state": {
+      "viewport": {
+        "up": [-0.32256646715129894, -0.3470247682175584, 0.8806387934409202],
+        "eye": [65.03415879546904, 143.9001043883278, 190.22191286584857],
+        "name": "",
+        "target": [
+          -1277.6034950002497, -1300.5417953646388, -870.7658690417853
+        ],
+        "pivotPoint": [
+          -128.26483154296875, 8.744972225223435, 149.37714189158862
+        ],
+        "projection": "perspective",
+        "aspectRatio": 1.8319027618277226,
+        "fieldOfView": 58.08672224915897,
+        "worldUpVector": [0, 0, 1],
+        "isOrthographic": false,
+        "distanceToOrbit": 222.42406396293296
+      }
+    },
+    "parent_id": null,
+    "annotation": [
+      [
+        {
+          "x": 0.26466376177742756,
+          "y": 0.47639484978540775
+        },
+        {
+          "x": 0.05650925533965933,
+          "y": 0.43991416309012876
+        },
+        {
+          "x": -0.08941349144145654,
+          "y": 0.388412017167382
+        },
+        {
+          "x": -0.11516456440282995,
+          "y": 0.30686695278969955
+        },
+        {
+          "x": -0.042203191012272,
+          "y": 0.06866952789699571
+        },
+        {
+          "x": 0.3762517446100456,
+          "y": 0.1781115879828326
+        },
+        {
+          "x": 0.5457796416057537,
+          "y": 0.28969957081545067
+        },
+        {
+          "x": 0.4320457360263546,
+          "y": 0.4034334763948498
+        },
+        {
+          "x": 0.12517878323665504,
+          "y": 0.4742489270386266
+        },
+        {
+          "x": 0.0522174098460971,
+          "y": 0.47639484978540775
+        },
+        {
+          "x": -0.029327654531585298,
+          "y": 0.3197424892703863
+        },
+        {
+          "x": -0.05293280474617758,
+          "y": 0.259656652360515
+        }
+      ],
+      [
+        {
+          "x": 0.24320453430961642,
+          "y": 0.6201716738197425
+        },
+        {
+          "x": 0.2410586115628353,
+          "y": 0.6072961373390557
+        },
+        {
+          "x": 0.20243200212077522,
+          "y": 0.5236051502145923
+        },
+        {
+          "x": 0.19384831113365075,
+          "y": 0.48283261802575106
+        },
+        {
+          "x": 0.19384831113365075,
+          "y": 0.47639484978540775
+        },
+        {
+          "x": 0.18311869739974515,
+          "y": 0.5257510729613734
+        },
+        {
+          "x": 0.19170238838686962,
+          "y": 0.48068669527896996
+        },
+        {
+          "x": 0.19170238838686962,
+          "y": 0.4892703862660944
+        },
+        {
+          "x": 0.22174530684180524,
+          "y": 0.5150214592274678
+        }
+      ]
+    ],
+    "markup_position_2d": null,
+    "topic_tags": {
+      "12": [
+        ["Risk", 70],
+        ["Quality", 30]
+      ],
+      "13": [
+        ["Quality Control", 60],
+        ["Team", 40]
+      ]
+    },
+    "images": [
+      "https://ixuszjrnviwgquuqfbmk.supabase.co/storage/v1/object/public/thumbs/4e43c4d0-942c-4772-aac2-d9e56a89d5de-1724791235262.png",
+      "https://ixuszjrnviwgquuqfbmk.supabase.co/storage/v1/object/public/thumbs/4e43c4d0-942c-4772-aac2-d9e56a89d5de-1724791239421.png"
+    ],
+    "author_username": "Charlie Wright"
+  },
+  {
+    "id": 368,
+    "created_at": "2024-08-27T20:39:36.615764+00:00",
+    "content": "The roof drainage system should be checked to ensure it can handle expected rainfall levels.",
+    "markup_position": {
+      "x": -63.88166681992406,
+      "y": 38.13241507016451,
+      "z": 140
+    },
+    "resolved": true,
+    "project_id": "4e43c4d0-942c-4772-aac2-d9e56a89d5de",
+    "author_id": "55e96f90-2825-4d96-a630-aac141d1f343",
+    "view_state": null,
+    "parent_id": null,
+    "annotation": null,
+    "markup_position_2d": null,
+    "topic_tags": {
+      "12": [
+        ["Risk", 60],
+        ["Quality", 40]
+      ],
+      "13": [
+        ["Quality Control", 50],
+        ["Site", 50]
+      ]
+    },
+    "images": [
+      "https://ixuszjrnviwgquuqfbmk.supabase.co/storage/v1/object/public/thumbs/4e43c4d0-942c-4772-aac2-d9e56a89d5de-1724791167197.png",
+      "https://ixuszjrnviwgquuqfbmk.supabase.co/storage/v1/object/public/thumbs/4e43c4d0-942c-4772-aac2-d9e56a89d5de-1724791173021.png"
+    ],
+    "author_username": "Charlie Wright"
+  },
+  {
+    "id": 367,
+    "created_at": "2024-08-27T20:35:29.54339+00:00",
+    "content": "The staircases might need to be wider to comply with the latest safety regulations.",
+    "markup_position": {
+      "x": -93.34865488627065,
+      "y": 9.651918884316366,
+      "z": 90.49999237060547
+    },
+    "resolved": false,
+    "project_id": "4e43c4d0-942c-4772-aac2-d9e56a89d5de",
+    "author_id": "e11e6bb2-311b-4754-bd4b-fca4ddcc2a7b",
+    "view_state": null,
+    "parent_id": null,
+    "annotation": null,
+    "markup_position_2d": null,
+    "topic_tags": {
+      "12": [
+        ["Design", 50],
+        ["Risk", 50]
+      ],
+      "13": [
+        ["Quality Control", 70],
+        ["Site", 30]
+      ]
+    },
+    "images": [],
+    "author_username": "Charlie Davies"
+  },
+  {
+    "id": 366,
+    "created_at": "2024-08-27T20:35:15.163553+00:00",
+    "content": "Are the materials specified for the exterior walls suitable for the local climate?",
+    "markup_position": {
+      "x": -98.72899512902437,
+      "y": 16.421375961680127,
+      "z": 115.74999237060547
+    },
+    "resolved": false,
+    "project_id": "4e43c4d0-942c-4772-aac2-d9e56a89d5de",
+    "author_id": "e11e6bb2-311b-4754-bd4b-fca4ddcc2a7b",
+    "view_state": null,
+    "parent_id": null,
+    "annotation": null,
+    "markup_position_2d": null,
+    "topic_tags": {
+      "12": [
+        ["Design", 40],
+        ["Quality", 30],
+        ["Risk", 30]
+      ],
+      "13": [
+        ["Site", 60],
+        ["Quality Control", 40]
+      ]
+    },
+    "images": [],
+    "author_username": "Charlie Davies"
+  },
+  {
+    "id": 365,
+    "created_at": "2024-08-27T20:34:51.368794+00:00",
+    "content": "Can we add more insulation in the walls to improve energy efficiency?\n@[Charlie Davies](e11e6bb2-311b-4754-bd4b-fca4ddcc2a7b) @[Charlie Wright](55e96f90-2825-4d96-a630-aac141d1f343)",
+    "markup_position": {
+      "x": 11.691392252569734,
+      "y": 12.000003814697266,
+      "z": 105.73183724474184
+    },
+    "resolved": false,
+    "project_id": "4e43c4d0-942c-4772-aac2-d9e56a89d5de",
+    "author_id": "e11e6bb2-311b-4754-bd4b-fca4ddcc2a7b",
+    "view_state": null,
+    "parent_id": null,
+    "annotation": null,
+    "markup_position_2d": null,
+    "topic_tags": {
+      "12": [
+        ["Design", 40],
+        ["Quality", 60]
+      ],
+      "13": [
+        ["Quality Control", 50],
+        ["Client", 50]
+      ]
+    },
+    "images": [],
+    "author_username": "Charlie Davies"
+  },
+  {
+    "id": 363,
+    "created_at": "2024-08-27T20:32:43.830169+00:00",
+    "content": "@[Charlie Wright](55e96f90-2825-4d96-a630-aac141d1f343) Please check the alignment of the HVAC ducts; it appears they might interfere with the ceiling grid.",
+    "markup_position": {
+      "x": -59.404836672104175,
+      "y": 25.825671186782472,
+      "z": 140
+    },
+    "resolved": false,
+    "project_id": "4e43c4d0-942c-4772-aac2-d9e56a89d5de",
+    "author_id": "ed487464-20ee-49e8-a1ff-68cbb1f96b03",
+    "view_state": null,
+    "parent_id": null,
+    "annotation": null,
+    "markup_position_2d": null,
+    "topic_tags": {
+      "12": [
+        ["Design", 50],
+        ["Quality", 50]
+      ],
+      "13": [["Quality Control", 100]]
+    },
+    "images": [],
+    "author_username": "Valeria Nikitina"
+  },
+  {
+    "id": 362,
+    "created_at": "2024-08-27T20:32:16.558042+00:00",
+    "content": "@[Jury Akimov](329374ee-696c-48a5-ad29-57eb8cc24d06) I'm concerned about the load-bearing capacity of the roof structure in this design.",
+    "markup_position": {
+      "x": 26.153411471867575,
+      "y": 9.537266998326754,
+      "z": 140
+    },
+    "resolved": false,
+    "project_id": "4e43c4d0-942c-4772-aac2-d9e56a89d5de",
+    "author_id": "55e96f90-2825-4d96-a630-aac141d1f343",
+    "view_state": null,
+    "parent_id": null,
+    "annotation": null,
+    "markup_position_2d": null,
+    "topic_tags": {
+      "12": [
+        ["Design", 60],
+        ["Quality", 40],
+        ["Risk", 50]
+      ],
+      "13": [["Quality Control", 100]]
+    },
+    "images": [],
+    "author_username": "Charlie Wright"
+  },
+  {
+    "id": 361,
+    "created_at": "2024-08-27T20:31:43.923483+00:00",
+    "content": "The column spacing in the main hall might need reevaluation for load distribution",
+    "markup_position": {
+      "x": 60.266577162383335,
+      "y": 45.75361541621158,
+      "z": 105.10416420455469
+    },
+    "resolved": false,
+    "project_id": "4e43c4d0-942c-4772-aac2-d9e56a89d5de",
+    "author_id": "ed487464-20ee-49e8-a1ff-68cbb1f96b03",
+    "view_state": null,
+    "parent_id": null,
+    "annotation": null,
+    "markup_position_2d": null,
+    "topic_tags": {
+      "12": [
+        ["Design", 50],
+        ["Risk", 50]
+      ],
+      "13": [["Quality Control", 100]]
+    },
+    "images": [],
+    "author_username": "Valeria Nikitina"
+  },
+  {
+    "id": 360,
+    "created_at": "2024-08-27T20:29:30.974066+00:00",
+    "content": "Let's revisit the color scheme for the interior; it seems too dark for the intended use",
+    "markup_position": {
+      "x": 101.94791408402766,
+      "y": 27.099589547961354,
+      "z": 28.973681021342635
+    },
+    "resolved": false,
+    "project_id": "4e43c4d0-942c-4772-aac2-d9e56a89d5de",
+    "author_id": "55e96f90-2825-4d96-a630-aac141d1f343",
+    "view_state": null,
+    "parent_id": null,
+    "annotation": null,
+    "markup_position_2d": null,
+    "topic_tags": {
+      "12": [["Design", 60]],
+      "13": [["Quality Control", 100]]
+    },
+    "images": [],
+    "author_username": "Charlie Wright"
+  },
+  {
+    "id": 359,
+    "created_at": "2024-08-27T20:29:10.717537+00:00",
+    "content": "@[Jury Akimov](329374ee-696c-48a5-ad29-57eb8cc24d06) Could we consider a different cladding material for the facade to improve the building's aesthetic? ",
+    "markup_position": {
+      "x": 111.89501383519706,
+      "y": 32.6793327331543,
+      "z": 98.23470662389536
+    },
+    "resolved": false,
+    "project_id": "4e43c4d0-942c-4772-aac2-d9e56a89d5de",
+    "author_id": "55e96f90-2825-4d96-a630-aac141d1f343",
+    "view_state": null,
+    "parent_id": null,
+    "annotation": null,
+    "markup_position_2d": null,
+    "topic_tags": {
+      "12": [
+        ["Design", 70],
+        ["Quality", 30]
+      ],
+      "13": [
+        ["Client", 50],
+        ["Quality Control", 50]
+      ]
+    },
+    "images": [],
+    "author_username": "Charlie Wright"
+  },
+  {
+    "id": 353,
+    "created_at": "2024-08-24T15:27:42.853283+00:00",
+    "content": "asddsadsdas",
+    "markup_position": {
+      "x": 147.68844049062074,
+      "y": 29.602382604278503,
+      "z": 140
+    },
+    "resolved": true,
+    "project_id": "4e43c4d0-942c-4772-aac2-d9e56a89d5de",
+    "author_id": "e11e6bb2-311b-4754-bd4b-fca4ddcc2a7b",
+    "view_state": null,
+    "parent_id": null,
+    "annotation": null,
+    "markup_position_2d": null,
+    "topic_tags": {
+      "12": [],
+      "13": []
+    },
+    "images": [],
+    "author_username": "Charlie Davies"
+  }
+]

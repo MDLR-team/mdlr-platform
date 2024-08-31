@@ -266,8 +266,6 @@ class MarkupService {
    * @param toolType - The type of tool to activate.
    */
   public activateTool = (toolType: "ADD_COMMENT" | "MEASURE") => {
-    console.log("%c⧭", "color: #007300", this.activatedService);
-
     if (this.activatedService) {
       this.activatedService.deactivate();
     }

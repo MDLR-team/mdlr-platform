@@ -103,8 +103,6 @@ class ApsService {
         dbId: 4,
       }, */
     });
-
-    console.log("data", data);
   }
 
   public dispose() {}

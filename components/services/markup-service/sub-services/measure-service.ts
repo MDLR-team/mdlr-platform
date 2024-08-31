@@ -32,8 +32,6 @@ class MeasureService {
     measureTool.deleteMeasurements();
     measureTool.deactivate();
 
-    console.log("Dea");
-
     viewer.toolController.deactivateTool("measure");
 
     this.enabled$.next(false);

@@ -71,8 +71,6 @@ class ViewerService {
         }
       );
 
-      console.log("response AA", response.data);
-
       const data = response.data.data;
 
       const { collection } = data;
@@ -114,8 +112,6 @@ class ViewerService {
 
   public async fetchProject(urn: string) {
     this._urn = urn;
-
-    console.log("Fetching project for urn:", urn);
 
     let { data: project, error: findError } = await supabase
       .from("projects")
