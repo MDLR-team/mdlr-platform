@@ -16,6 +16,7 @@ import AddIcon from "@mui/icons-material/Add";
 import SettingsModal from "./blocks/settings-modal/settings-modal";
 import { useWorkspace } from "@/components/services/workspace-services/workspace/workspace-provider";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const SidebarContainer = styled.div`
   height: 100%;
@@ -50,11 +51,11 @@ const PanelButton = styled(Button)`
   justify-content: flex-start !important;
   text-transform: none;
 
-  & .MuiChip-root {
+  &[data-disabled="true"] .MuiChip-root {
     opacity: 0;
   }
 
-  &:hover .MuiChip-root {
+  &[data-disabled="true"]:hover .MuiChip-root {
     opacity: 1;
   }
 
@@ -103,6 +104,8 @@ const LeftBar2: React.FC = () => {
   const handleSettingsClose = () => {
     setSettingsOpened(false);
   };
+
+  const router = useRouter();
 
   return (
     <SidebarContainer>
@@ -213,13 +216,16 @@ const LeftBar2: React.FC = () => {
           {" "}
           <Link href="/workspace">
             <PanelButton
-              data-active="true"
+              data-active={router.asPath === "/workspace" ? "true" : "false"}
               startIcon={<PanelIcon icon="/icons/a1.svg" />}
             >
               3D Viewer
             </PanelButton>
           </Link>
           <PanelButton
+            data-active={
+              router.asPath === "/workspace/whiteboards" ? "true" : "false"
+            }
             data-disabled="true"
             startIcon={<PanelIcon icon="/icons/a3.svg" />}
             sx={{
@@ -230,13 +236,35 @@ const LeftBar2: React.FC = () => {
             Whiteboards{" "}
             <Chip sx={{ marginLeft: "5px" }} label="Coming Soon" size="small" />
           </PanelButton>
-          <PanelButton
-            data-disabled="true"
-            startIcon={<PanelIcon icon="/icons/a2.svg" />}
-          >
-            Dashboards{" "}
-            <Chip sx={{ marginLeft: "5px" }} label="Coming Soon" size="small" />
-          </PanelButton>
+          <Link href="/workspace/dashboards">
+            <PanelButton
+              data-active={
+                router.asPath === "/workspace/dashboards" ? "true" : "false"
+              }
+              startIcon={<PanelIcon icon="/icons/a2.svg" />}
+            >
+              <Box
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Box
+                  sx={{
+                    fontSize: "14px",
+                  }}
+                >
+                  Dashboards
+                </Box>
+                <Chip
+                  sx={{ marginLeft: "5px" }}
+                  label="Demo only"
+                  size="small"
+                />
+              </Box>
+            </PanelButton>
+          </Link>
         </Box>
       </Box>
 

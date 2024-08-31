@@ -16,14 +16,21 @@ import { useWorkspace } from "@/components/services/workspace-services/workspace
 
 interface WorkspaceItemProps {
   data: Project;
+  isDashboard?: boolean;
 }
 
-const CatalogItem: React.FC<WorkspaceItemProps> = ({ data }) => {
+const CatalogItem: React.FC<WorkspaceItemProps> = ({ data, isDashboard }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleNavigate = (e: any) => {
     e.preventDefault(); // Prevent default link behavior
-    window.location.href = `/viewer/${data.bim_urn}`; // Navigate with a full page reload
+
+    if (isDashboard) {
+      // Navigate without a full page reload
+      window.location.href = `/dashboard/${data.id}`;
+    } else {
+      window.location.href = `/viewer/${data.bim_urn}`;
+    } // Navigate with a full page reload
   };
 
   const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {

@@ -4,16 +4,14 @@ import WorkspaceItem from "../workspace-item/workspace-item";
 import { Box, Button, InputBase, Paper } from "@mui/material";
 import { useWorkspace } from "@/components/services/workspace-services/workspace/workspace-provider";
 import Link from "next/link";
+import { CatalogWrapper, Wrapper } from "../content/content";
 
 const Content = () => {
   const { projects } = useWorkspace();
 
   const { setSettingsOpened, setSettingsTab } = useWorkspace();
 
-  const handlePopperClick = (event: any) => {
-    setSettingsOpened(true);
-    setSettingsTab(1);
-  };
+  console.log("projects", projects);
 
   return (
     <Wrapper>
@@ -53,58 +51,44 @@ const Content = () => {
           >
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               size="large"
-              onClick={handlePopperClick}
+              sx={{
+                minWidth: "180px",
+              }}
+              disabled
             >
-              Invite Members
+              New Dashboard
             </Button>
-          </Box>
-
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-            }}
-          >
-            <Link href="/workspace/new-model">
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                sx={{
-                  minWidth: "180px",
-                }}
-              >
-                New Model
-              </Button>
-            </Link>
           </Box>
         </Paper>
       </Box>
 
       <CatalogWrapper>
-        {/*  <CatalogCanvas /> */}
-
-        {projects.map((project, i) => (
-          <WorkspaceItem key={i} data={project} />
+        {[
+          {
+            id: "1282e768-7c9f-417b-8d31-a86679353284",
+            created_at: "2024-08-31T12:15:40.328177+00:00",
+            title: "Dashboard Demo",
+            bim_id: "Kghl2PEiR6yqQKdj6EhMig",
+            bim_client_id: "e7MpHGpkUFGkjOcZewzvEoMF7CYtLKzwVBz3Knf9JkciJzAk",
+            bim_urn:
+              "dXJuOmFkc2sud2lwcHJvZDpmcy5maWxlOnZmLktnaGwyUEVpUjZ5cVFLZGo2RWhNaWc_dmVyc2lvbj0x",
+            thumbnail: "/thumb/Screen_2.png",
+            workspace_id: 2,
+            userprojects: [
+              {
+                user_id: "55e96f90-2825-4d96-a630-aac141d1f343",
+                username: "Charlie Wright",
+              },
+            ],
+          },
+        ].map((project, i) => (
+          <WorkspaceItem key={i} data={project as any} isDashboard />
         ))}
       </CatalogWrapper>
     </Wrapper>
   );
 };
-
-export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-`;
-
-export const CatalogWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 27px;
-`;
 
 export default Content;
