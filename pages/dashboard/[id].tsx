@@ -2,6 +2,7 @@ import DashboardViewer from "@/components/dashboard-viewer/dashboard-viewer";
 import { DashboardServiceProvider } from "@/components/services/dashboard-services/dashboard-service/dashboard-service-provider";
 import { WorkspaceProvider } from "@/components/services/workspace-services/workspace/workspace-provider";
 import Bar from "@/components/ui/dashboard-page/bar/bar";
+import CommentsBlock from "@/components/ui/dashboard-page/comment-layout/comment-layout";
 import Share from "@/components/ui/dashboard-page/share/share";
 import ToolPanel from "@/components/ui/dashboard-page/tool-panel/tool-panel";
 import {
@@ -33,7 +34,9 @@ const DashboardPage = () => {
                 <Share />
               </BarWrapper>
 
-              <ContentWrapper>{/* <CommentsBlock /> */}</ContentWrapper>
+              <ContentWrapper>
+                <CommentsBlock />
+              </ContentWrapper>
 
               <FooterWrapper style={{ justifyContent: "center" }}>
                 <ToolPanel />

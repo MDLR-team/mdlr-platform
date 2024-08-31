@@ -7,7 +7,8 @@ const Avatar: React.FC<{
   username: string;
   size: "large" | "small";
   isCount?: boolean;
-}> = ({ username, size, isCount }) => {
+  isCopilot?: boolean;
+}> = ({ username, size, isCount, isCopilot }) => {
   const initials = useMemo(() => getInitials(username), [username]);
   const color = useMemo(() => getColor(username), [username]);
 
@@ -17,7 +18,12 @@ const Avatar: React.FC<{
         width: size === "large" ? 32 : 24,
         height: size === "large" ? 32 : 24,
         fontSize: size === "large" ? 14 : 10,
-        ...(isCount
+        ...(isCopilot
+          ? {
+              background:
+                "linear-gradient(97deg, #4168FF 0%, #AB62F8 58%, #F4A700 100%)",
+            }
+          : isCount
           ? { backgroundColor: "darkgrey" }
           : { backgroundColor: color }),
         color: "#FFFFFF", // Ensure the text color is white
