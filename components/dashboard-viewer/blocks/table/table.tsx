@@ -97,7 +97,9 @@ const TableSection = () => {
       >
         <Box>2 minutes ago</Box>
 
-        <Box>124 comments</Box>
+        <Box>
+          <b>124 comments</b>
+        </Box>
       </Box>
     </TableLayout>
   );

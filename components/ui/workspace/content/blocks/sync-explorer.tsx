@@ -208,7 +208,8 @@ const SyncExplorer = () => {
                                   authService,
                                   urn,
                                   item.name,
-                                  workspaceService.activeWorkspace$.value.id
+                                  workspaceService.activeWorkspace$.value
+                                    ?.id as any
                                 );
 
                                 window.location.href = "/workspace";

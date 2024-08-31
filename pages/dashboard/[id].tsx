@@ -3,6 +3,7 @@ import { DashboardServiceProvider } from "@/components/services/dashboard-servic
 import { WorkspaceProvider } from "@/components/services/workspace-services/workspace/workspace-provider";
 import Bar from "@/components/ui/dashboard-page/bar/bar";
 import Share from "@/components/ui/dashboard-page/share/share";
+import ToolPanel from "@/components/ui/dashboard-page/tool-panel/tool-panel";
 import {
   BarWrapper,
   ContentWrapper,
@@ -34,9 +35,9 @@ const DashboardPage = () => {
 
               <ContentWrapper>{/* <CommentsBlock /> */}</ContentWrapper>
 
-              <FooterWrapper
-                style={{ justifyContent: "center" }}
-              ></FooterWrapper>
+              <FooterWrapper style={{ justifyContent: "center" }}>
+                <ToolPanel />
+              </FooterWrapper>
             </Grid>
           </Wrapper>
 
