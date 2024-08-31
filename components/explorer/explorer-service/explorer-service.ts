@@ -115,7 +115,8 @@ class ExplorerService {
   public async createModel(
     authService: AuthService,
     urn: string,
-    name?: string
+    name?: string,
+    workspaceId?: string
   ): Promise<any> {
     const bimId = this._getBim360ProjectId(urn);
 
@@ -128,6 +129,7 @@ class ExplorerService {
           bim_id: bimId,
           bim_urn: urn,
           bim_client_id: CLIENT_ID,
+          workspace_id: workspaceId,
         },
       ])
       .select("*")

@@ -72,15 +72,6 @@ export const Logo = styled.div`
   cursor: pointer;
 `;
 
-const Title = styled.div`
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-
-  font-weight: 500;
-  font-size: 15px;
-`;
-
 export const TitleWrapper = styled.div`
   border: 1px solid transparent;
   display: flex;

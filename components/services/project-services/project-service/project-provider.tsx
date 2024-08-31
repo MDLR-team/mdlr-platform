@@ -69,6 +69,8 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
       th.unsubscribe();
       pu.unsubscribe();
       r.unsubscribe();
+
+      wp.unsubscribe();
     };
   }, [router.isReady]);
 

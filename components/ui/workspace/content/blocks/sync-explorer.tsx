@@ -30,6 +30,7 @@ const SyncExplorer = () => {
   >("idle");
 
   const { authService } = useAuth();
+  const { workspaceService } = useWorkspace();
 
   const [history, setHistory] = useState<ExtractedIds[]>([]);
 
@@ -206,10 +207,11 @@ const SyncExplorer = () => {
                                 await explorerService.createModel(
                                   authService,
                                   urn,
-                                  item.name
+                                  item.name,
+                                  workspaceService.activeWorkspace$.value.id
                                 );
 
-                                window.location.reload();
+                                window.location.href = "/workspace";
                               } else {
                                 setAlertMessage(
                                   "This model is already synchronized."
@@ -238,7 +240,7 @@ const SyncExplorer = () => {
       {/* Snackbar for alerts */}
       <Snackbar
         open={openSnackbar}
-        autoHideDuration={6000}
+        autoHideDuration={60000}
         onClose={handleCloseSnackbar}
       >
         <Alert
