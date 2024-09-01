@@ -70,7 +70,7 @@ const DemoForm: React.FC = () => {
               paddingBottom: "20px",
             }}
           >
-            Request a&nbsp;Demo&nbsp;page
+            Request a&nbsp;Demo
           </Typography>
 
           <Box
