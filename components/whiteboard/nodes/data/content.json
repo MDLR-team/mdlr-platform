@@ -1,0 +1,26 @@
+{
+  "title": "Construction Site Summary:",
+  "summary": [
+    {
+      "title": "Rainfall Management",
+      "content": "**Risk**: Concerns about the roof drainage system's capacity to handle expected rainfall need addressing to prevent water damage."
+    },
+    {
+      "title": "Safety and Compliance",
+      "content": "**Quality Control**: Staircase compliance with safety regulations and HVAC duct alignment issues require immediate attention."
+    },
+    {
+      "title": "Material Suitability",
+      "content": "**Quality & Risk**: Questions about exterior wall material suitability for the local climate and the need for additional insulation to improve energy efficiency."
+    },
+    {
+      "title": "Structural Integrity",
+      "content": "**Design**: Concerns about the roof's load-bearing capacity and column spacing in the main hall suggest a need for reassessment."
+    },
+    {
+      "title": "Interior Design",
+      "content": "**Design & Quality**: Feedback on the interior being too dark and suggestions for alternative façade cladding to improve aesthetics."
+    }
+  ],
+  "overall": "The focus is on ensuring safety, optimizing materials for climate, and addressing structural and aesthetic concerns, with a strong emphasis on quality control and risk management."
+}

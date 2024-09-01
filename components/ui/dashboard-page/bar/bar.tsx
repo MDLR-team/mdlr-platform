@@ -4,7 +4,9 @@ import { Logo, TitleWrapper } from "../../bar/bar";
 import SettingsIcon from "../../icons/settings-icon";
 import CommentsIcon from "../../icons/comments-icon";
 
-const Bar = () => {
+const Bar: React.FC<{
+  isWhiteboard?: boolean;
+}> = ({ isWhiteboard }) => {
   return (
     <>
       <Box sx={{ position: "relative" }}>
@@ -26,9 +28,17 @@ const Bar = () => {
               }}
             />
 
-            <TitleWrapper style={{ width: "100%", display: "flex" }}>
-              Dashboard page
-            </TitleWrapper>
+            {!isWhiteboard && (
+              <TitleWrapper style={{ width: "100%", display: "flex" }}>
+                Dashboard page
+              </TitleWrapper>
+            )}
+
+            {isWhiteboard && (
+              <TitleWrapper style={{ width: "100%", display: "flex" }}>
+                Whiteboard page
+              </TitleWrapper>
+            )}
           </Box>
 
           <Box sx={{ display: "flex", columnGap: "6px" }}>

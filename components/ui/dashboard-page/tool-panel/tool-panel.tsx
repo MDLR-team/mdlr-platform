@@ -4,8 +4,14 @@ import CommentIcon from "../../icons/comment-icon";
 import MeasureIcon from "../../icons/measure-icon";
 
 import ConfigsIcon from "../../icons/configs-icon";
+import AiUploadIcon from "../../icons/ai-upload-icon";
+import AiStickerIcon from "../../icons/ai-sticker-icon";
+import PencilIcon from "../../icons/pencil-icon";
+import TextIcon from "../../icons/text-icon";
 
-const ToolPanel = () => {
+const ToolPanel: React.FC<{
+  isWhiteboard?: boolean;
+}> = ({ isWhiteboard }) => {
   return (
     <Box sx={{ position: "relative" }}>
       <Paper sx={{ display: "flex", gap: "6px", minWidth: "max-content" }}>
@@ -13,15 +19,37 @@ const ToolPanel = () => {
           <CursorIcon />
         </IconButton>
 
+        {isWhiteboard && (
+          <>
+            <IconButton>
+              <AiUploadIcon />
+            </IconButton>
+
+            <IconButton>
+              <AiStickerIcon />
+            </IconButton>
+
+            <IconButton>
+              <TextIcon />
+            </IconButton>
+
+            <IconButton>
+              <PencilIcon />
+            </IconButton>
+          </>
+        )}
+
         <IconButton data-active={false ? "true" : "false"} onClick={() => {}}>
           <CommentIcon />
         </IconButton>
 
-        <IconButton data-active={false ? "true" : "false"} onClick={() => {}}>
-          <MeasureIcon />
-        </IconButton>
+        {!isWhiteboard && (
+          <IconButton data-active={false ? "true" : "false"} onClick={() => {}}>
+            <MeasureIcon />
+          </IconButton>
+        )}
 
-        {true && (
+        {true && !isWhiteboard && (
           <IconButton data-active={false ? "true" : "false"} onClick={() => {}}>
             <ConfigsIcon />
           </IconButton>

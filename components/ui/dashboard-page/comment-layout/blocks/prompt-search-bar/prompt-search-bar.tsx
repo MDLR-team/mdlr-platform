@@ -3,8 +3,15 @@ import { TextField, Button, Box, CircularProgress } from "@mui/material";
 import styled from "styled-components";
 import CancelIcon from "@mui/icons-material/Cancel";
 
-const PromptSearchBar = () => {
+const PromptSearchBar: React.FC<{
+  extended?: boolean;
+  isWhiteboard?: boolean;
+}> = ({ extended, isWhiteboard }) => {
   const [loading, setLoading] = useState(false);
+
+  const placeholder = isWhiteboard
+    ? "Describe your chart, including type, sorting, and key metrics. E.g., 'Bar chart of costs by phase, sorted by highest cost' or 'Line chart of task completion over time, sorted by date.'"
+    : "Ask Copilot for insights or actions, e.g., 'Show project risks' or 'Download dashboard as PDF'";
 
   return (
     <Box
@@ -40,12 +47,51 @@ const PromptSearchBar = () => {
             gap: "12px",
           }}
         >
+          {isWhiteboard && (
+            <Box
+              sx={{
+                display: "flex",
+                gap: "6px",
+                flexWrap: "wrap",
+              }}
+            >
+              {[
+                "Bar Chart",
+                "Pie Chart",
+                "Line Chart",
+                "Scatter Plot",
+                "Sankey Diagram",
+                "Gantt Chart",
+                "Heat Map",
+              ].map((chartType, index) => (
+                <Button
+                  key={index}
+                  size="small"
+                  variant="contained"
+                  color="secondary"
+                  sx={{
+                    background: "white",
+                    color: "black",
+                    border: "1px solid #E0E0E0",
+                    backgroundColor: "#F3F4F6 !important",
+                    borderRadius: "9px",
+                    textTransform: "none",
+                    fontSize: "10px",
+                    height: "10px",
+                  }}
+                >
+                  {chartType}
+                </Button>
+              ))}
+            </Box>
+          )}
+
           <TextField
             multiline
             fullWidth
-            minRows={2}
+            minRows={extended ? 8 : 2}
             maxRows={10}
-            placeholder="Ask Copilot for insights or actions, e.g., 'Show project risks' or 'Download dashboard as PDF'"
+            placeholder={placeholder}
             value={""}
             onChange={(event) => {}}
             variant="outlined"
