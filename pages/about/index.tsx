@@ -81,7 +81,6 @@ const AboutPage = () => {
 };
 
 const IssueDescription = styled(Box)`
-  font-size: 1.25rem;
   line-height: 1.5;
   font-weight: 500;
   padding: 20px;
@@ -95,7 +94,7 @@ const IssueDescription = styled(Box)`
 
   &,
   & * {
-    font-size: 1.25rem;
+    font-size: var(--font-size-m);
   }
 
   & span {
@@ -107,7 +106,6 @@ const IssueDescription = styled(Box)`
   @media (max-width: 576px) {
     &,
     & * {
-      font-size: 18px;
       line-height: 1.25;
     }
 

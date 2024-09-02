@@ -67,7 +67,8 @@ const Form = styled.div`
   }
 
   & h1 {
-    font-size: 56px;
+    font-size: var(--font-size-2);
+    line-height: var(--line-height-1);
     text-align: center;
     max-width: 800px;
 

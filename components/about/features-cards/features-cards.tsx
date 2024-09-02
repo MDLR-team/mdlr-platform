@@ -3,14 +3,13 @@ import { Box } from "@mui/material";
 import React, { useMemo } from "react";
 import styled from "styled-components";
 
-const GridContainer = styled.div`
+const GridContainer = styled(Box)`
   width: 100%;
 
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: minmax(250px, auto);
   grid-gap: 0px;
-  padding: 20px;
 
   max-width: 1200px;
   align-self: center;
@@ -78,7 +77,7 @@ export const FeatureTitle = styled.h2`
 export const FeatureDescription = styled.p`
   &,
   & * {
-    font-size: 1.25rem;
+    font-size: var(--font-size-m);
     line-height: 1.5;
     font-weight: 500;
     color: var(--text-secondary) !important;
@@ -88,7 +87,14 @@ export const FeatureDescription = styled.p`
 const FeatureGrid = () => {
   return (
     <>
-      <GridContainer>
+      <GridContainer
+        sx={{
+          padding: {
+            xs: "15px",
+            sm: "20px",
+          },
+        }}
+      >
         <FeatureCard>
           <Badge type="viewer" />
           <FeatureTitle>

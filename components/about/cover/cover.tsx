@@ -10,25 +10,9 @@ const Cover = () => {
 
         <Wrapper>
           <Box data-type="cover">
-            Manage your design and&nbsp;construction projects efficiently with Mdlr
+            Manage your design and&nbsp;construction projects efficiently with
+            Mdlr
           </Box>
-
-          {/* 
-        <Box data-type="cover">
-          Transform AEC Projects
-          <br />
-          with AI-Powered Precision
-        </Box> */}
-
-          {/* <Box
-          data-type="divider"
-          sx={{
-            width: "100%",
-            height: "10px",
-            backgroundColor: "rgba(255, 255, 255, .2)",
-            maxWidth: "300px",
-          }}
-        ></Box> */}
 
           <Box
             data-type="description"
@@ -179,21 +163,13 @@ const Wrapper = styled.div`
 
     &,
     & * {
-      font-size: 80px;
+      font-size: var(--font-size-1);
+      line-height: var(--line-height-0);
       font-family: "Euclid Circular A", sans-serif;
-      font-weight: & b {
-        font-weight: 700;
-        font-family: Born;
-      }
-      line-height: 1;
+      font-weight: 700;
     }
 
     @media (max-width: 800px) {
-      &,
-      & * {
-        font-size: 40px;
-      }
-
       & {
         margin-top: 100px;
       }
@@ -209,15 +185,10 @@ const Wrapper = styled.div`
   && div[data-type="description"] {
     &,
     & span {
-      font-size: 24px;
+      font-size: var(--font-size-l);
     }
 
     @media (max-width: 576px) {
-      &,
-      & span {
-        font-size: 18px;
-      }
-
       & img {
         width: 18px;
         height: 18px;

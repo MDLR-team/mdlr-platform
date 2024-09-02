@@ -23,7 +23,12 @@ const Footer: React.FC = () => {
         </Typography>
         <Typography
           variant="h5"
-          sx={{ marginTop: "10px", fontWeight: "bold", lineHeight: 1.2 }}
+          sx={{
+            marginTop: "10px",
+            fontWeight: "bold",
+            fontSize: "var(--font-size-5)",
+            lineHeight: "var(--line-height-1)",
+          }}
         >
           Mdlr – AI For Better Built Environment
         </Typography>

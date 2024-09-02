@@ -135,7 +135,9 @@ const Screens = () => {
                   <Box
                     sx={{
                       fontSize: "var(--font-size-3)",
+                      lineHeight: "var(--line-height-1)",
                       fontFamily: "var(--primary-font-family)",
+                      fontWeight: "bold",
                     }}
                   >
                     {slide.title}

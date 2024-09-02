@@ -27,9 +27,40 @@ const LandingPageStyles = css`
     --bar-color: white;
     --primary-font-family: "Euclid Circular A", sans-serif;
 
+    // titles
+    --font-size-1: 70px;
+    @media (max-width: 576px) {
+      --font-size-1: 36px;
+    }
+
+    --font-size-2: 56px;
     --font-size-3: 40px;
+    @media (max-width: 576px) {
+      --font-size-3: 32px;
+    }
+
+    --font-size-5: 24px;
+
+    // text
+    --font-size-l: 24px;
+    @media (max-width: 576px) {
+      --font-size-l: 18px;
+    }
+
+    --font-size-m: 20px;
+    @media (max-width: 576px) {
+      --font-size-m: 16px;
+    }
+
     --font-size-p: 18px;
+    @media (max-width: 576px) {
+      --font-size-p: 16px;
+    }
+
     --font-size-d: 14px;
+
+    --line-height-0: 1;
+    --line-height-1: 1.2;
   }
 
   @font-face {
