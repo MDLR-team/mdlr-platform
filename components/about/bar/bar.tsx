@@ -21,7 +21,11 @@ const Bar = () => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper
+      sx={{
+        padding: { xs: "0px 20px", sm: "0px 80px" },
+      }}
+    >
       <div className="left">
         <Link href="/">
           <Box
@@ -148,14 +152,13 @@ const SectionItem = styled(Box)`
   }
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled(Box)`
   width: 100%;
   display: flex;
   position: relative;
   z-index: 1000;
   background-color: var(--background-color);
   height: 80px;
-  padding: 0px 80px;
   align-items: center;
   justify-content: space-between;
 

@@ -26,6 +26,10 @@ const LandingPageStyles = css`
     --border-color: rgba(0, 0, 0, 0.9);
     --bar-color: white;
     --primary-font-family: "Euclid Circular A", sans-serif;
+
+    --font-size-3: 40px;
+    --font-size-p: 18px;
+    --font-size-d: 14px;
   }
 
   @font-face {

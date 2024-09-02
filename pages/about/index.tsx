@@ -5,7 +5,7 @@ import Features from "@/components/about/features/features";
 import Feedback from "@/components/about/feedback/feedback";
 import Footer from "@/components/about/footer/footer";
 import UseCase from "@/components/about/use-case/use-case";
-import Screens from "@/components/screens/screens";
+import Screens from "@/components/screens/screens-v2";
 import { Box } from "@mui/material";
 import styled from "styled-components";
 
