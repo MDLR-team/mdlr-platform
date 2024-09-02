@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Button, ButtonGroup } from "@mui/material";
+import { Box, Button, ButtonGroup, Divider } from "@mui/material";
 import { title } from "process";
 import CheckIcon from "@mui/icons-material/Check";
 
@@ -90,6 +90,8 @@ const Screens = () => {
             gap: "80px",
           }}
         >
+          <Divider />
+
           {slides.map((slide, index) => (
             <Box
               key={index}
@@ -210,6 +212,8 @@ const Screens = () => {
               </Box>
             </Box>
           ))}
+
+          <Divider />
         </Box>
       </Box>
     </Box>
