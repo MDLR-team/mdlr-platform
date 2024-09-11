@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@antv/g2": "^5.1.19",
+    "@antv/g6": "^5.0.21",
     "@apollo/client": "^3.11.3",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
