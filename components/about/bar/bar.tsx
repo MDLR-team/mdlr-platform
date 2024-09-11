@@ -1,4 +1,13 @@
-import { Box, Button, Menu, MenuItem } from "@mui/material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import styled from "styled-components";
 import { useState } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -7,9 +16,13 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Link from "next/link";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const Bar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false); // For mobile menu toggle
   const open = Boolean(anchorEl);
 
   const handleClick = (event: any) => {
@@ -18,6 +31,10 @@ const Bar = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const toggleMobileMenu = () => {
+    setMenuOpen(!menuOpen);
   };
 
   return (
@@ -39,6 +56,7 @@ const Bar = () => {
           </Box>
         </Link>
 
+        {/* Desktop Menu */}
         <div
           className="pricing-tab"
           onClick={handleClick}
@@ -129,6 +147,78 @@ const Bar = () => {
           </Button>
         </Link>
       </Box>
+
+      {/* Mobile Menu Button */}
+      <IconButton className="burger-menu" onClick={toggleMobileMenu}>
+        {menuOpen ? <CloseIcon /> : <MenuIcon />}
+      </IconButton>
+
+      {/* Mobile Menu Accordion */}
+      {menuOpen && (
+        <MobileMenu>
+          <Accordion
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              border: "0px",
+            }}
+          >
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <SectionItemMobile
+                sx={{
+                  padding: "0px !important",
+                }}
+              >
+                Use Cases
+              </SectionItemMobile>
+            </AccordionSummary>
+            <AccordionDetails
+              sx={{
+                padding: "24px !important",
+              }}
+            >
+              <Link href={"/use-cases/for-teams"}>
+                <SectionItemMobile onClick={toggleMobileMenu}>
+                  For AEC Professionals
+                </SectionItemMobile>
+              </Link>
+              <Link href={"/use-cases/for-startups"}>
+                <SectionItemMobile onClick={toggleMobileMenu}>
+                  For Platform Developers
+                </SectionItemMobile>
+              </Link>
+            </AccordionDetails>
+          </Accordion>
+
+          <Link href="/pricing">
+            <SectionItemMobile onClick={toggleMobileMenu}>
+              Pricing
+            </SectionItemMobile>
+          </Link>
+          <Link href="/requestdemo">
+            <Button
+              sx={{
+                padding: "25px 30px",
+                borderRadius: "25px",
+                display: "flex",
+                gap: "10px",
+                marginTop: "36px",
+                marginLeft: "20px",
+              }}
+              variant="contained"
+              color="primary"
+            >
+              Request a demo{" "}
+              <ArrowForwardIcon
+                sx={{
+                  fontSize: "18px",
+                }}
+                className="arrow-icon"
+              />
+            </Button>
+          </Link>
+        </MobileMenu>
+      )}
     </Wrapper>
   );
 };
@@ -204,6 +294,52 @@ const Wrapper = styled(Box)`
     & .contact-tab {
       display: none;
     }
+  }
+
+  @media (min-width: 576px) {
+    & .burger-menu {
+      display: none;
+    }
+  }
+`;
+
+const SectionItemMobile = styled(Box)`
+  padding: 10px 20px;
+  border-radius: 0px;
+  cursor: pointer;
+
+  &,
+  & * {
+    font-size: 18px;
+  }
+`;
+
+const MobileMenu = styled(Box)`
+  position: fixed;
+  top: 80px;
+  width: 100%;
+  background-color: var(--background-color);
+  z-index: 1500;
+
+  height: 100vh;
+  left: 0;
+
+  & .MuiPaper-root {
+    border: 0px !important;
+    gap: 0px !important;
+  }
+
+  & .MuiAccordionSummary-content {
+    margin: 0px !important;
+  }
+
+  & .MuiAccordionSummary-root {
+    min-height: 0px !important;
+    padding: 0px 10px !important;
+  }
+
+  & .MuiAccordionDetails {
+    padding: 8px 16px 16px;
   }
 `;
 

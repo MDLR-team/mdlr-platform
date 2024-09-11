@@ -269,7 +269,7 @@ const GlobalStyle = createGlobalStyle`
     & {
       & {
         border-radius: 8px !important;
-        border: 1px solid var(--border-color) !important;
+        border: 1px solid var(--border-color);
         box-shadow: none !important;
         position: relative;
         display: flex;
