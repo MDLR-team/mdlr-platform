@@ -316,7 +316,7 @@ const Badge: React.FC<{
         fontWeight: "bold",
         alignItems: "center",
         gap: "10px",
-        fontSize: "1.25rem",
+        fontSize: "var(--font-size-d)",
         border: "1px solid #212121",
         maxWidth: "max-content",
         padding: "5px 10px",

@@ -1,4 +1,5 @@
 import { Box, Button, Tooltip } from "@mui/material";
+import { display } from "html2canvas/dist/types/css/property-descriptors/display";
 import Link from "next/link";
 import styled from "styled-components";
 
@@ -52,8 +53,30 @@ const Cover = () => {
         </Wrapper>
       </CoverWrapper>
 
-      <CoverImage>
-        <Img></Img>
+      <CoverImage
+        sx={{
+          width: {
+            xs: "70vw",
+            sm: "1200px",
+          },
+
+          margin: {
+            xs: "80px auto",
+            sm: "50px 0px",
+          },
+        }}
+      >
+        <Img
+          sx={{
+            display: { xs: "none", sm: "block" },
+          }}
+        ></Img>
+
+        <ImgMobile
+          sx={{
+            display: { xs: "block", sm: "none" },
+          }}
+        ></ImgMobile>
       </CoverImage>
     </>
   );
@@ -74,18 +97,25 @@ const UnderlinedText = styled.span`
   cursor: pointer;
 `;
 
-const CoverImage = styled.div`
-  width: 1200px;
+const CoverImage = styled(Box)`
   position: relative;
   align-self: center;
-  margin: 50px 0px;
 `;
 
-const Img = styled.div`
+const Img = styled(Box)`
   position: relative;
   width: 100%;
   padding-bottom: 23.25%;
   background-image: url("/thumbs/cover.svg");
+  background-size: cover;
+  background-position: center;
+`;
+
+const ImgMobile = styled(Box)`
+  position: relative;
+  width: 100%;
+  padding-bottom: 204%;
+  background-image: url("/thumbs/cover-mobile.svg");
   background-size: cover;
   background-position: center;
 `;

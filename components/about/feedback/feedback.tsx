@@ -29,7 +29,6 @@ const Feedback = () => {
           <span
             style={{
               color: "var(--button-text-primary) !important",
-              fontSize: "24px !important",
             }}
           >
             Request a demo
@@ -44,7 +43,14 @@ const Wrapper = styled.div`
   width: 100%;
   display: flex;
 
-  padding: 80px 80px;
+  @media (min-width: 576px) {
+    padding: 80px 80px;
+  }
+
+  @media (max-width: 576px) {
+    padding: 0px 20px;
+  }
+
   justify-content: center;
   flex-direction: column;
   align-items: center;
@@ -64,6 +70,13 @@ const Form = styled.div`
   & * {
     color: var(--text-primary);
     font-size: 36px;
+  }
+
+  @media (max-width: 576px) {
+    &,
+    & * {
+      font-size: 30px !important;
+    }
   }
 
   & h1 {

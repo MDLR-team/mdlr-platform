@@ -110,7 +110,7 @@ const IssueDescription = styled(Box)`
     }
 
     & {
-      margin-top: 100px;
+      margin-top: 0px;
     }
   }
 `;

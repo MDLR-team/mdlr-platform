@@ -4,10 +4,14 @@ import type { AppProps } from "next/app";
 import { createGlobalStyle, css } from "styled-components";
 import AboutPage from "./about";
 
+import { Analytics } from "@vercel/analytics/react";
+
 const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <GlobalStyle />
+
+      <Analytics />
 
       <Wrapper>
         <Component {...pageProps} />
@@ -159,12 +163,24 @@ const LandingPageStyles = css`
     }
 
     &.MuiButton-sizeLarge {
-      padding: 12px 24px !important;
-      height: 80px !important;
+      @media (min-width: 576px) {
+        padding: 12px 24px !important;
+        height: 80px !important;
 
-      &,
-      & * {
-        font-size: 24px !important;
+        &,
+        & * {
+          font-size: 24px !important;
+        }
+      }
+
+      @media (max-width: 576px) {
+        padding: 8px 16px !important;
+        height: 48px !important;
+
+        &,
+        & * {
+          font-size: 16px !important;
+        }
       }
     }
   }
