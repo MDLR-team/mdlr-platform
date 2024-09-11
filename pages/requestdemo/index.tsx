@@ -52,6 +52,7 @@ const DemoForm: React.FC = () => {
         sx={{
           display: "flex",
           gap: "80px",
+          flexDirection: { xs: "column", sm: "row" },
         }}
       >
         <Box
@@ -190,6 +191,7 @@ const DemoForm: React.FC = () => {
               width: "100%",
               display: "flex",
               gap: "20px",
+              flexDirection: { xs: "column", sm: "row" },
             }}
           >
             <Box
