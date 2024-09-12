@@ -76,7 +76,8 @@ const Wrapper = styled.div`
 
     &,
     & * {
-      font-size: 64px;
+      font-size: var(--font-size-1);
+      font-weight: 700;
       font-family: "Euclid Circular A", sans-serif;
       font-weight: & b {
         font-weight: 700;

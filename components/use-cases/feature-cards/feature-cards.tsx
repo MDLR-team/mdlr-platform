@@ -46,9 +46,9 @@ const FeatureCards = () => {
 
           <FeatureTitle>Step 1: Upload Your Project Data </FeatureTitle>
           <FeatureDescription>
-            Begin by uploading your project files into Mdlr. Whether it&apos;s 3D
-            models or other data formats, our platform supports various inputs
-            to get your project set up quickly.
+            Begin by uploading your project files into Mdlr. Whether it&apos;s
+            3D models or other data formats, our platform supports various
+            inputs to get your project set up quickly.
           </FeatureDescription>
         </FeatureCard>
         <FeatureCard>
@@ -118,125 +118,149 @@ const FeatureCards = () => {
 
 export const FeatureCardsForStartups = () => {
   return (
-    <GridContainer>
-      <FeatureCard>
-        <Box
-          sx={{
-            width: "50px",
-            height: "50px",
-            backgroundImage:
-              'url("https://liveblocks.io/_next/image?url=%2Fimages%2Fproducts%2Fdashboard.png&w=256&q=75")',
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+    <>
+      <Box
+        sx={{
+          textAlign: "center",
+          padding: "10px",
+          color: "var(--text-color)",
+          //border: "1px solid var(--border-color)",
+          width: "100%",
+          maxWidth: "200px",
+          margin: "0 auto",
+          borderRadius: "100px",
+          marginBottom: "20px",
+        }}
+      >
+        <h2
+          style={{
+            fontSize: "1.5rem",
           }}
-        />
+        >
+          How it works
+        </h2>
+      </Box>
 
-        <FeatureTitle>Step 1: Integrate the API</FeatureTitle>
-        <FeatureDescription>
-          Begin by integrating Mdlr&apos;s API into your existing platform. Our team
-          will guide you through the setup process, ensuring a smooth
-          integration.
-        </FeatureDescription>
-      </FeatureCard>
-      <FeatureCard>
-        <Box
-          sx={{
-            width: "50px",
-            height: "50px",
-            backgroundImage:
-              'url("https://liveblocks.io/_next/image?url=%2Fimages%2Fproducts%2Finfrastructure.png&w=256&q=75")',
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
+      <GridContainer>
+        <FeatureCard>
+          <Box
+            sx={{
+              width: "50px",
+              height: "50px",
+              backgroundImage:
+                'url("https://liveblocks.io/_next/image?url=%2Fimages%2Fproducts%2Fdashboard.png&w=256&q=75")',
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
 
-        <FeatureTitle>Step 2: Configure Visualisation Features </FeatureTitle>
-        <FeatureDescription>
-          Once integrated, configure the advanced visualisation capabilities to
-          suit your needs. Utilise our 3D Viewer, Whiteboard, and Dashboard to
-          enhance your system&apos;s functionality.
-        </FeatureDescription>
-      </FeatureCard>
-      <FeatureCard>
-        <Box
-          sx={{
-            width: "50px",
-            height: "50px",
-            backgroundImage:
-              'url("https://liveblocks.io/_next/image?url=%2Fimages%2Fproducts%2Finfrastructure.png&w=256&q=75")',
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
+          <FeatureTitle>Step 1: Integrate the API</FeatureTitle>
+          <FeatureDescription>
+            Begin by integrating Mdlr&apos;s API into your existing platform.
+            Our team will guide you through the setup process, ensuring a smooth
+            integration.
+          </FeatureDescription>
+        </FeatureCard>
+        <FeatureCard>
+          <Box
+            sx={{
+              width: "50px",
+              height: "50px",
+              backgroundImage:
+                'url("https://liveblocks.io/_next/image?url=%2Fimages%2Fproducts%2Finfrastructure.png&w=256&q=75")',
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
 
-        <FeatureTitle>Step 3: Enable Data Analysis</FeatureTitle>
-        <FeatureDescription>
-          Leverage our AI-driven tools to add robust data analysis features to
-          your platform. Set up the AI tools to generate insights and
-          visualisations from your data.
-        </FeatureDescription>
-      </FeatureCard>
+          <FeatureTitle>Step 2: Configure Visualisation Features </FeatureTitle>
+          <FeatureDescription>
+            Once integrated, configure the advanced visualisation capabilities
+            to suit your needs. Utilise our 3D Viewer, Whiteboard, and Dashboard
+            to enhance your system&apos;s functionality.
+          </FeatureDescription>
+        </FeatureCard>
+        <FeatureCard>
+          <Box
+            sx={{
+              width: "50px",
+              height: "50px",
+              backgroundImage:
+                'url("https://liveblocks.io/_next/image?url=%2Fimages%2Fproducts%2Finfrastructure.png&w=256&q=75")',
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
 
-      <FeatureCard>
-        <Box
-          sx={{
-            width: "50px",
-            height: "50px",
-            backgroundImage:
-              'url("https://liveblocks.io/_next/image?url=%2Fimages%2Fproducts%2Finfrastructure.png&w=256&q=75")',
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
+          <FeatureTitle>Step 3: Enable Data Analysis</FeatureTitle>
+          <FeatureDescription>
+            Leverage our AI-driven tools to add robust data analysis features to
+            your platform. Set up the AI tools to generate insights and
+            visualisations from your data.
+          </FeatureDescription>
+        </FeatureCard>
 
-        <FeatureTitle>Step 4: Customise User Experience</FeatureTitle>
-        <FeatureDescription>
-          Tailor the user interface and experience to match your platform’s
-          design. Customise the integration to ensure seamless interaction
-          between your system and Mdlr’s advanced features.
-        </FeatureDescription>
-      </FeatureCard>
+        <FeatureCard>
+          <Box
+            sx={{
+              width: "50px",
+              height: "50px",
+              backgroundImage:
+                'url("https://liveblocks.io/_next/image?url=%2Fimages%2Fproducts%2Finfrastructure.png&w=256&q=75")',
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
 
-      <FeatureCard>
-        <Box
-          sx={{
-            width: "50px",
-            height: "50px",
-            backgroundImage:
-              'url("https://liveblocks.io/_next/image?url=%2Fimages%2Fproducts%2Finfrastructure.png&w=256&q=75")',
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
+          <FeatureTitle>Step 4: Customise User Experience</FeatureTitle>
+          <FeatureDescription>
+            Tailor the user interface and experience to match your platform’s
+            design. Customise the integration to ensure seamless interaction
+            between your system and Mdlr’s advanced features.
+          </FeatureDescription>
+        </FeatureCard>
 
-        <FeatureTitle>Step 5: Test and Validate</FeatureTitle>
-        <FeatureDescription>
-          Thoroughly test the integration to ensure all functionalities work as
-          expected. Validate the visualisations, analytics, and presentation
-          features to guarantee they meet your requirements.
-        </FeatureDescription>
-      </FeatureCard>
+        <FeatureCard>
+          <Box
+            sx={{
+              width: "50px",
+              height: "50px",
+              backgroundImage:
+                'url("https://liveblocks.io/_next/image?url=%2Fimages%2Fproducts%2Finfrastructure.png&w=256&q=75")',
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
 
-      <FeatureCard>
-        <Box
-          sx={{
-            width: "50px",
-            height: "50px",
-            backgroundImage:
-              'url("https://liveblocks.io/_next/image?url=%2Fimages%2Fproducts%2Finfrastructure.png&w=256&q=75")',
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
+          <FeatureTitle>Step 5: Test and Validate</FeatureTitle>
+          <FeatureDescription>
+            Thoroughly test the integration to ensure all functionalities work
+            as expected. Validate the visualisations, analytics, and
+            presentation features to guarantee they meet your requirements.
+          </FeatureDescription>
+        </FeatureCard>
 
-        <FeatureTitle>Step 6: Deploy and Monitor</FeatureTitle>
-        <FeatureDescription>
-          Deploy the integrated features to your live environment. Continuously
-          monitor the performance and gather feedback to make any necessary
-          adjustments for optimal performance.
-        </FeatureDescription>
-      </FeatureCard>
-    </GridContainer>
+        <FeatureCard>
+          <Box
+            sx={{
+              width: "50px",
+              height: "50px",
+              backgroundImage:
+                'url("https://liveblocks.io/_next/image?url=%2Fimages%2Fproducts%2Finfrastructure.png&w=256&q=75")',
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+
+          <FeatureTitle>Step 6: Deploy and Monitor</FeatureTitle>
+          <FeatureDescription>
+            Deploy the integrated features to your live environment.
+            Continuously monitor the performance and gather feedback to make any
+            necessary adjustments for optimal performance.
+          </FeatureDescription>
+        </FeatureCard>
+      </GridContainer>
+    </>
   );
 };
 

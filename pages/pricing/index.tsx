@@ -66,7 +66,8 @@ const PricingPage: React.FC = () => {
         <PricingContainer maxWidth="lg">
           <Box
             sx={{
-              fontSize: "64px",
+              fontSize: "var(--font-size-2)",
+              fontWeight: "bold",
               fontFamily: "var(--primary-font-family)",
               margin: "0 auto",
               textAlign: "center",
@@ -109,12 +110,13 @@ const PricingPage: React.FC = () => {
           <FAQSection>
             <Box
               sx={{
-                fontSize: "48px",
+                fontSize: "var(--font-size-3)",
                 fontFamily: "var(--primary-font-family)",
                 margin: "0 auto",
                 textAlign: "center",
                 marginBottom: "80px",
                 marginTop: "120px",
+                fontWeight: "bold",
               }}
             >
               Frequently Asked Questions
