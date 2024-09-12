@@ -22,7 +22,7 @@ const UploadModel = () => {
               <>
                 Go to the following link:{" "}
                 <Link
-                  href={`https://acc.autodesk.com/docs/files/projects/c901e171-64a9-467c-807e-ada73f00e226?folderUrn=urn%3Aadsk.wipprod%3Afs.folder%3Aco.tOS3alZfSXaKtGO20lfeZQ&viewModel=detail&moduleId=folders`}
+                  href={`https://acc.autodesk.eu/build/files/projects/b3ea54e3-2df4-4360-80ba-80e11c7b9926?folderUrn=urn%3Aadsk.wipemea%3Afs.folder%3Aco.n0qEa_lVQCO5YH-UHpLcRw&viewModel=detail&moduleId=folders`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
