@@ -2,10 +2,13 @@ import AuthProvider from "@/components/services/app-services/auth/auth-provider"
 import Wrapper from "@/components/layout/wrapper/wrapper";
 import type { AppProps } from "next/app";
 import { createGlobalStyle, css } from "styled-components";
+import { Analytics } from "@vercel/analytics/react"
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
+      <Analytics />
+
       <GlobalStyle />
 
       <AuthProvider>
