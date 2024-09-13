@@ -2,11 +2,10 @@ import { useState } from "react";
 import { Box, Button, ButtonGroup, Divider } from "@mui/material";
 import { title } from "process";
 import CheckIcon from "@mui/icons-material/Check";
+import WideScreen from "../about/layout/wide-screen";
+import WideHeader from "../about/layout/wide-header";
 
 const Screens = () => {
-  // State to manage the selected slide
-  const [selectedSlide, setSelectedSlide] = useState(0);
-
   // Define the slides data
   const slides = [
     {
@@ -57,168 +56,118 @@ const Screens = () => {
   ];
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        maxWidth: "1300px",
-        margin: "0 auto",
-        position: "relative",
-        marginBottom: "80px",
-        borderRadius: "20px",
-        overflow: "hidden",
-      }}
-    >
-      <Box
-        sx={{
-          width: "100%",
-          height: "max-content",
-          position: "relative",
-          borderRadius: "10px",
-          //backgroundImage: slides[selectedSlide].backgroundImage,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          padding: "20px",
-        }}
-      >
+    <WideScreen>
+      {slides.map((slide, index) => (
         <Box
+          key={index}
           sx={{
             width: "100%",
             height: "100%",
             display: "flex",
+            justifyContent: "center",
+            alignItems: "flex-start",
             flexDirection: "column",
-            position: "relative",
-            gap: "80px",
           }}
         >
-          <Divider />
-
-          {slides.map((slide, index) => (
+          <WideHeader>
             <Box
-              key={index}
               sx={{
-                width: "100%",
-                height: "100%",
                 display: "flex",
-                justifyContent: "center",
-                alignItems: "flex-start",
                 flexDirection: "column",
+                gap: "10px",
+                maxWidth: { xs: "auto", sm: "50%" },
+              }}
+            >
+              <Box
+                sx={{
+                  fontSize: "var(--font-size-d)",
+                }}
+              >
+                {slide.badge}
+              </Box>
+              <Box
+                sx={{
+                  fontSize: "var(--font-size-3)",
+                  lineHeight: "var(--line-height-1)",
+                  fontFamily: "var(--primary-font-family)",
+                  fontWeight: "bold",
+                }}
+              >
+                {slide.title}
+              </Box>
+              <Box
+                sx={{
+                  fontSize: "var(--font-size-p)",
+                }}
+              >
+                {slide.description}
+              </Box>
+            </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+                width: "300px",
+              }}
+            >
+              {slide.features.map((feature, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    display: "flex",
+                    gap: "10px",
+                    alignItems: "center",
+                  }}
+                >
+                  <CheckIcon
+                    sx={{
+                      fontSize: "var(--font-size-d)",
+                    }}
+                  />
+
+                  <Box sx={{ fontSize: "var(--font-size-d)" }}>{feature}</Box>
+                </Box>
+              ))}
+            </Box>
+          </WideHeader>
+
+          <Box
+            sx={{
+              width: "100%",
+              position: "relative",
+              marginTop: "40px",
+            }}
+          >
+            <Box
+              sx={{
+                padding: { xs: "5px", sm: "10px" },
+                width: "100%",
+                backgroundColor: "rgb(236, 236, 236)",
+                borderRadius: { xs: "15px", sm: "20px" },
               }}
             >
               <Box
                 sx={{
                   width: "100%",
-                  display: "flex",
-                  flexDirection: {
-                    xs: "column",
-                    lg: "row",
-                  },
-                  justifyContent: "space-between",
-                  gap: "40px",
-                  alignItems: { xs: "flex-start", lg: "flex-end" },
-                }}
-              >
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "10px",
-                    maxWidth: { xs: "auto", sm: "50%" },
-                  }}
-                >
-                  <Box
-                    sx={{
-                      fontSize: "var(--font-size-d)",
-                    }}
-                  >
-                    {slide.badge}
-                  </Box>
-                  <Box
-                    sx={{
-                      fontSize: "var(--font-size-3)",
-                      lineHeight: "var(--line-height-1)",
-                      fontFamily: "var(--primary-font-family)",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {slide.title}
-                  </Box>
-                  <Box
-                    sx={{
-                      fontSize: "var(--font-size-p)",
-                    }}
-                  >
-                    {slide.description}
-                  </Box>
-                </Box>
-
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "10px",
-                    width: "300px",
-                  }}
-                >
-                  {slide.features.map((feature, index) => (
-                    <Box
-                      key={index}
-                      sx={{
-                        display: "flex",
-                        gap: "10px",
-                        alignItems: "center",
-                      }}
-                    >
-                      <CheckIcon
-                        sx={{
-                          fontSize: "var(--font-size-d)",
-                        }}
-                      />
-
-                      <Box sx={{ fontSize: "var(--font-size-d)" }}>
-                        {feature}
-                      </Box>
-                    </Box>
-                  ))}
-                </Box>
-              </Box>
-
-              <Box
-                sx={{
-                  width: "100%",
+                  paddingBottom: "54.5%",
                   position: "relative",
-                  marginTop: "40px",
+                  borderRadius: "10px",
+                  backgroundImage: `url(${slide.thumbnail})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.15)",
+                  border: "1px solid white",
                 }}
-              >
-                <Box
-                  sx={{
-                    padding: { xs: "5px", sm: "10px" },
-                    width: "100%",
-                    backgroundColor: "rgb(236, 236, 236)",
-                    borderRadius: { xs: "15px", sm: "20px" },
-                  }}
-                >
-                  <Box
-                    sx={{
-                      width: "100%",
-                      paddingBottom: "54.5%",
-                      position: "relative",
-                      borderRadius: "10px",
-                      backgroundImage: `url(${slide.thumbnail})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                      boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.15)",
-                      border: "1px solid white",
-                    }}
-                  ></Box>
-                </Box>
-              </Box>
+              ></Box>
             </Box>
-          ))}
-
-          <Divider />
+          </Box>
         </Box>
-      </Box>
-    </Box>
+      ))}
+
+      <Divider />
+    </WideScreen>
   );
 };
 
