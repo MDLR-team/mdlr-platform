@@ -69,12 +69,7 @@ class WorkspaceService {
 
     const { data: projectData, error: projectError } = await supabase
       .from("projects")
-      .select(
-        `
-        *,
-        userprojects!inner(user_id)
-      `
-      )
+      .select(`*`)
       .eq("workspace_id", activeWorkspace.id)
       .not("bim_id", "is", null)
       .eq("bim_client_id", CLIENT_ID)
@@ -102,12 +97,6 @@ class WorkspaceService {
     });
 
     const projects = projectData as Project[];
-    projects.forEach((project) => {
-      project.userprojects.forEach((userproject: any) => {
-        const profile = profilesMap.get(userproject.user_id);
-        userproject.username = profile?.username;
-      });
-    });
 
     this.projects$.next(projects);
     this.isReady$.next(true);

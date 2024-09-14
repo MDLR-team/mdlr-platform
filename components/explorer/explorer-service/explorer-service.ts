@@ -135,26 +135,6 @@ class ExplorerService {
       .select("*")
       .single();
 
-    const userMetadata = authService.userMetadata;
-    if (userMetadata) {
-      const { id: userId } = userMetadata;
-
-      // Create the userprojects link
-      const { error: userProjectError } = await supabase
-        .from("userprojects")
-        .insert([
-          {
-            project_id: newProject.id,
-            user_id: userId,
-          },
-        ]);
-
-      if (userProjectError) {
-        console.error("Error creating userprojects link:", userProjectError);
-        return { project: null, error: userProjectError };
-      }
-    }
-
     return newProject;
   }
 

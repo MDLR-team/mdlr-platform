@@ -69,6 +69,10 @@ class ViewerServiceAggr {
 
           this._viewer.fitToView();
 
+          setTimeout(() => {
+            this.makeScreenshot();
+          }, 1000);
+
           this._viewer.removeEventListener(
             Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT,
             objectTreeCreatedHandler
@@ -85,6 +89,15 @@ class ViewerServiceAggr {
       );
     });
   }
+
+  private makeScreenshot = () => {
+    const projectService = this._projectService;
+    const thumbnail = projectService.thumbnail$.value;
+
+    if (thumbnail) return;
+
+    projectService.handleAddThumbnail();
+  };
 
   public loadAggregatedDocument(urn: string): Promise<void> {
     return new Promise((resolve, reject) => {

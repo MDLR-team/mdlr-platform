@@ -115,14 +115,7 @@ class ViewerService {
 
     let { data: project, error: findError } = await supabase
       .from("projects")
-      .select(
-        `
-      *,
-      userprojects!inner(
-        user_id
-      )
-    `
-      )
+      .select("*")
       .eq("bim_urn", urn)
       .single();
 

@@ -14,6 +14,7 @@ import ApsService from "../../aps-service/aps-service";
 import defaultProjectTopics from "./topics.json";
 import PromptSearchService from "@/components/prompt-search/prompt-search-service/prompt-search-service";
 import WorkspaceService from "../../workspace-services/workspace/workspace-service";
+import html2canvas from "html2canvas";
 
 class ProjectService {
   private _wasInitialized: boolean = false;
@@ -103,6 +104,7 @@ class ProjectService {
       `
       )
       .eq("bim_id", bimId)
+      .eq("bim_client_id", CLIENT_ID)
       .single();
 
     let { data: profileData, error: profileError } = await supabase
@@ -130,26 +132,6 @@ class ProjectService {
       ])
       .select("*")
       .single();
-
-    const userMetadata = this._authService.userMetadata;
-    if (userMetadata) {
-      const { id: userId } = userMetadata;
-
-      // Create the userprojects link
-      const { error: userProjectError } = await supabase
-        .from("userprojects")
-        .insert([
-          {
-            project_id: newProject.id,
-            user_id: userId,
-          },
-        ]);
-
-      if (userProjectError) {
-        console.error("Error creating userprojects link:", userProjectError);
-        return { project: null, error: userProjectError };
-      }
-    }
 
     if (createError) {
       console.error("Error creating new project:", createError);
@@ -323,6 +305,21 @@ class ProjectService {
       }
     }
   }
+
+  public handleAddThumbnail = async () => {
+    const element = document.querySelector(".forge-viewer");
+
+    if (element) {
+      const canvas = await html2canvas(element as HTMLElement);
+      const dataURL = canvas.toDataURL("image/png");
+
+      const thumbnail = await this.uploadThumbnailFromBase64(dataURL);
+
+      if (thumbnail) {
+        this.updateMetadata({ thumbnail });
+      }
+    }
+  };
 
   public get globalStatesService() {
     return this._globalStatesService;

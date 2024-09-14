@@ -5,21 +5,6 @@ import html2canvas from "html2canvas";
 const Thumbnail = () => {
   const { thumbnail, projectService } = useProject();
 
-  const handleAddThumbnail = async () => {
-    const element = document.querySelector(".forge-viewer");
-
-    if (element) {
-      const canvas = await html2canvas(element as HTMLElement);
-      const dataURL = canvas.toDataURL("image/png");
-
-      const thumbnail = await projectService.uploadThumbnailFromBase64(dataURL);
-
-      if (thumbnail) {
-        projectService.updateMetadata({ thumbnail });
-      }
-    }
-  };
-
   return (
     <Paper
       sx={{ background: "#F1F0EE", position: "relative", overflow: "hidden" }}
@@ -48,7 +33,7 @@ const Thumbnail = () => {
         }}
       >
         {!thumbnail && <p>We don&#x27;t have any thumbs now.</p>}
-        <Button variant="contained" onClick={handleAddThumbnail}>
+        <Button variant="contained" onClick={projectService.handleAddThumbnail}>
           Add Thumbnail
         </Button>
       </Box>
