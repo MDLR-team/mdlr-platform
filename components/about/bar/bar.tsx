@@ -108,6 +108,10 @@ const Bar = () => {
         <Link href="/pricing">
           <Box className="pricing-tab">Pricing</Box>
         </Link>
+
+        <Link href="/enterprise">
+          <Box className="pricing-tab">Enterprise</Box>
+        </Link>
       </div>
 
       <Box className="right">
@@ -195,6 +199,13 @@ const Bar = () => {
               Pricing
             </SectionItemMobile>
           </Link>
+
+          <Link href="/pricing">
+            <SectionItemMobile onClick={toggleMobileMenu}>
+              Enterprise
+            </SectionItemMobile>
+          </Link>
+
           <Link href="/requestdemo">
             <Button
               sx={{
