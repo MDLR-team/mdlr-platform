@@ -56,7 +56,7 @@ const Screens = () => {
   ];
 
   return (
-    <WideScreen>
+    <WideScreen id="Product">
       {slides.map((slide, index) => (
         <Box
           key={index}

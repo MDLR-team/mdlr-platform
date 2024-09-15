@@ -38,9 +38,12 @@ const EnterpriseSmallFeatures = () => {
             </Box>
           </Box>
 
-          <Link href="/requestdemo">
+          <a
+            href="https://calendly.com/mdlr-team/ai-strategy-implementation-with-mdlr"
+            target="_blank"
+          >
             <Button
-            size="large"
+              size="large"
               sx={{
                 padding: "25px 30px",
                 borderRadius: "25px",
@@ -52,7 +55,7 @@ const EnterpriseSmallFeatures = () => {
             >
               Talk to Sales
             </Button>
-          </Link>
+          </a>
         </WideHeader>
       </Box>
 

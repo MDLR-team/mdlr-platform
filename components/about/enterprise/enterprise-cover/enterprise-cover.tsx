@@ -18,11 +18,14 @@ const EnterpriseCover: React.FC = () => {
           solutions using adaptable tools—no code required.
         </Box>
 
-        <Link href="/requestdemo">
+        <a
+          href="https://calendly.com/mdlr-team/ai-strategy-implementation-with-mdlr"
+          target="_blank"
+        >
           <Button variant="contained" color="primary" size="large">
             Talk to Sales
           </Button>
-        </Link>
+        </a>
       </Wrapper>
 
       <WideScreen dividerDisabled>

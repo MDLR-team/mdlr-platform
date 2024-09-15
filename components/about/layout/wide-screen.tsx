@@ -3,7 +3,8 @@ import { Box, Divider } from "@mui/material";
 const WideScreen: React.FC<{
   dividerDisabled?: boolean;
   children?: React.ReactNode;
-}> = ({ dividerDisabled = false, children }) => {
+  id?: string;
+}> = ({ dividerDisabled = false, children, id }) => {
   return (
     <Box
       sx={{
@@ -15,6 +16,7 @@ const WideScreen: React.FC<{
         borderRadius: "20px",
         overflow: "hidden",
       }}
+      {...{ id }}
     >
       <Box
         sx={{

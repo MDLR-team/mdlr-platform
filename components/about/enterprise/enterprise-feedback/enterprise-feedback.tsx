@@ -20,7 +20,10 @@ const EnterpriseFeedback = () => {
         to discuss how MDLR can streamline your projects.
       </FeatureDescription>
 
-      <Link href="/requestdemo">
+      <a
+        href="https://calendly.com/mdlr-team/ai-strategy-implementation-with-mdlr"
+        target="_blank"
+      >
         <Button
           sx={{
             marginTop: "50px",
@@ -43,7 +46,7 @@ const EnterpriseFeedback = () => {
             Book a Free Consultation
           </span>
         </Button>
-      </Link>
+      </a>
     </Wrapper>
   );
 };

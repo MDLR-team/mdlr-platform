@@ -37,6 +37,14 @@ const Bar = () => {
     setMenuOpen(!menuOpen);
   };
 
+  // Function to scroll to a specific section
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <Wrapper
       sx={{
@@ -57,61 +65,147 @@ const Bar = () => {
         </Link>
 
         {/* Desktop Menu */}
-        <div
-          className="pricing-tab"
-          onClick={handleClick}
-          onMouseOver={handleClick}
-          aria-controls={open ? "use-cases-menu" : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-        >
-          Use Cases <KeyboardArrowDownIcon />
-        </div>
-        <Menu
-          id="use-cases-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            onMouseLeave: handleClose,
-          }}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
-          PaperProps={{
-            sx: {
-              maxWidth: "max-content !important",
-              marginTop: "10px",
-              border: "1px solid var(--border-color) !important",
-            },
-          }}
-        >
-          <Link href={"/use-cases/for-teams"}>
-            <SectionItem onClick={handleClose}>
-              For AEC Professionals <ArrowForwardIcon className="arrow-icon" />
-            </SectionItem>
-          </Link>
+        {/* <>
+          <div
+            className="pricing-tab"
+            onClick={handleClick}
+            onMouseOver={handleClick}
+            aria-controls={open ? "use-cases-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+          >
+            Use Cases <KeyboardArrowDownIcon />
+          </div>
+          <Menu
+            id="use-cases-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              onMouseLeave: handleClose,
+            }}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            PaperProps={{
+              sx: {
+                maxWidth: "max-content !important",
+                marginTop: "10px",
+                border: "1px solid var(--border-color) !important",
+              },
+            }}
+          >
+            <Link href={"/use-cases/for-teams"}>
+              <SectionItem onClick={handleClose}>
+                For AEC Professionals{" "}
+                <ArrowForwardIcon className="arrow-icon" />
+              </SectionItem>
+            </Link>
 
-          <Link href={"/use-cases/for-startups"}>
-            <SectionItem onClick={handleClose}>
-              For Platform Developers{" "}
-              <ArrowForwardIcon className="arrow-icon" />
-            </SectionItem>
-          </Link>
-        </Menu>
+            <Link href={"/use-cases/for-startups"}>
+              <SectionItem onClick={handleClose}>
+                For Platform Developers{" "}
+                <ArrowForwardIcon className="arrow-icon" />
+              </SectionItem>
+            </Link>
+          </Menu>
+        </> */}
 
-        <Link href="/pricing">
+        {/* <Link href="/pricing">
           <Box className="pricing-tab">Pricing</Box>
-        </Link>
+        </Link> */}
+
+        <Box className="pricing-tab" onClick={() => scrollToSection("Product")}>
+          Product
+        </Box>
 
         <Link href="/enterprise">
           <Box className="pricing-tab">Enterprise</Box>
         </Link>
+
+        <>
+          <div
+            className="pricing-tab"
+            onClick={handleClick}
+            onMouseOver={handleClick}
+            aria-controls={open ? "use-cases-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+          >
+            Support <KeyboardArrowDownIcon />
+          </div>
+          <Menu
+            id="use-cases-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              onMouseLeave: handleClose,
+            }}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            PaperProps={{
+              sx: {
+                maxWidth: "max-content !important",
+                marginTop: "10px",
+                border: "1px solid var(--border-color) !important",
+              },
+            }}
+          >
+            <Link href={"/requestdemo"}>
+              <SectionItem onClick={handleClose}>
+                <Box
+                  sx={{
+                    width: "25px",
+                    height: "25px",
+                    backgroundImage: "url(/bar/rocket.svg)",
+                  }}
+                />
+                Request a Demo
+              </SectionItem>
+            </Link>
+
+            <a
+              href="https://calendly.com/mdlr-team/ai-strategy-implementation-with-mdlr"
+              target="_blank"
+            >
+              <SectionItem onClick={handleClose}>
+                <Box
+                  sx={{
+                    width: "25px",
+                    height: "25px",
+                    backgroundImage: "url(/bar/calendar.svg)",
+                  }}
+                />
+                Book a Free Consultation
+              </SectionItem>
+            </a>
+
+            <Link href={"/"}>
+              <SectionItem onClick={handleClose}>
+                <Box
+                  sx={{
+                    width: "25px",
+                    height: "25px",
+                    backgroundImage: "url(/bar/feedback.svg)",
+                  }}
+                />
+                Leave a Feedback
+              </SectionItem>
+            </Link>
+          </Menu>
+        </>
       </div>
 
       <Box className="right">
@@ -160,7 +254,7 @@ const Bar = () => {
       {/* Mobile Menu Accordion */}
       {menuOpen && (
         <MobileMenu>
-          <Accordion
+          {/* <Accordion
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -192,19 +286,87 @@ const Bar = () => {
                 </SectionItemMobile>
               </Link>
             </AccordionDetails>
-          </Accordion>
+          </Accordion> */}
 
-          <Link href="/pricing">
-            <SectionItemMobile onClick={toggleMobileMenu}>
-              Pricing
-            </SectionItemMobile>
-          </Link>
+          <SectionItemMobile
+            onClick={() => {
+              scrollToSection("Product");
+              toggleMobileMenu();
+            }}
+          >
+            Product
+          </SectionItemMobile>
 
-          <Link href="/pricing">
+          <Link href="/enterprise">
             <SectionItemMobile onClick={toggleMobileMenu}>
               Enterprise
             </SectionItemMobile>
           </Link>
+
+          <Accordion
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              border: "0px",
+            }}
+          >
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <SectionItemMobile
+                sx={{
+                  padding: "0px !important",
+                }}
+              >
+                Support
+              </SectionItemMobile>
+            </AccordionSummary>
+            <AccordionDetails
+              sx={{
+                padding: "24px !important",
+              }}
+            >
+              <Link href={"/requestdemo"}>
+                <SectionItemMobile onClick={handleClose}>
+                  <Box
+                    sx={{
+                      width: "25px",
+                      height: "25px",
+                      backgroundImage: "url(/bar/rocket.svg)",
+                    }}
+                  />
+                  Request a Demo
+                </SectionItemMobile>
+              </Link>
+
+              <a
+                href="https://calendly.com/mdlr-team/ai-strategy-implementation-with-mdlr"
+                target="_blank"
+              >
+                <SectionItemMobile onClick={handleClose}>
+                  <Box
+                    sx={{
+                      width: "25px",
+                      height: "25px",
+                      backgroundImage: "url(/bar/calendar.svg)",
+                    }}
+                  />
+                  Book a Free Consultation
+                </SectionItemMobile>
+              </a>
+
+              <Link href={"/"}>
+                <SectionItemMobile onClick={handleClose}>
+                  <Box
+                    sx={{
+                      width: "25px",
+                      height: "25px",
+                      backgroundImage: "url(/bar/feedback.svg)",
+                    }}
+                  />
+                  Leave a Feedback
+                </SectionItemMobile>
+              </Link>
+            </AccordionDetails>
+          </Accordion>
 
           <Link href="/requestdemo">
             <Button
@@ -318,6 +480,8 @@ const SectionItemMobile = styled(Box)`
   padding: 10px 20px;
   border-radius: 0px;
   cursor: pointer;
+  display: flex;
+  gap: 20px;
 
   &,
   & * {
@@ -351,6 +515,19 @@ const MobileMenu = styled(Box)`
 
   & .MuiAccordionDetails {
     padding: 8px 16px 16px;
+  }
+
+  & .MuiAccordion-root {
+    padding: 10px 20px;
+    margin: 0px !important;
+
+    & .MuiAccordionSummary-root {
+      padding: 0px !important;
+    }
+
+    &::before {
+      display: none;
+    }
   }
 `;
 
