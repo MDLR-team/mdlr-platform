@@ -192,7 +192,7 @@ const Bar = () => {
               </SectionItem>
             </a>
 
-            <Link href={"/"}>
+            <Link href={"/feedback"}>
               <SectionItem onClick={handleClose}>
                 <Box
                   sx={{
@@ -353,7 +353,7 @@ const Bar = () => {
                 </SectionItemMobile>
               </a>
 
-              <Link href={"/"}>
+              <Link href={"/feedback"}>
                 <SectionItemMobile onClick={handleClose}>
                   <Box
                     sx={{

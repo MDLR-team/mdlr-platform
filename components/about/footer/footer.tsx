@@ -69,10 +69,7 @@ const Footer: React.FC = () => {
         }}
       >
         <Typography variant="body2">
-          <Link href="mailto:hello@mdlr.app" color="inherit" underline="hover">
-            hello@mdlr.app
-          </Link>{" "}
-          — Copyright © 2024 MDLR Limited. All rights reserved
+          Copyright © 2024 MDLR Limited. All rights reserved
         </Typography>
       </Box>
     </Wrapper>
