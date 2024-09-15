@@ -1,27 +1,44 @@
 import { Box, Button } from "@mui/material";
 import Link from "next/link";
 import styled from "styled-components";
+import WideScreen from "../../layout/wide-screen";
 
 const EnterpriseCover: React.FC = () => {
   return (
-    <Wrapper>
-      <Box data-type="cover">Build AEC Tools, Fast</Box>
-      <Box
-        data-type="description"
-        sx={{
-          maxWidth: "750px",
-        }}
-      >
-        MDLR empowers AEC professionals and startups to quickly design solutions
-        using adaptable tools—no code required.
-      </Box>
+    <>
+      <Wrapper>
+        <Box data-type="cover">Build AEC Tools, Fast</Box>
+        <Box
+          data-type="description"
+          sx={{
+            maxWidth: "750px",
+          }}
+        >
+          MDLR empowers AEC professionals and startups to quickly design
+          solutions using adaptable tools—no code required.
+        </Box>
 
-      <Link href="/requestdemo">
-        <Button variant="contained" color="primary" size="large">
-          Talk to Sales
-        </Button>
-      </Link>
-    </Wrapper>
+        <Link href="/requestdemo">
+          <Button variant="contained" color="primary" size="large">
+            Talk to Sales
+          </Button>
+        </Link>
+      </Wrapper>
+
+      <WideScreen dividerDisabled>
+        <Box
+          sx={{
+            width: "100%",
+            paddingBottom: "48.2%",
+            backgroundImage: "url(/thumbs/an.png)",
+            backgroundSize: "contain",
+            backgroundPosition: "center",
+            overflow: "hidden",
+            borderRadius: "20px",
+          }}
+        ></Box>
+      </WideScreen>
+    </>
   );
 };
 
@@ -41,7 +58,7 @@ const Wrapper = styled.div`
 
   @media (min-width: 1200px) {
     height: 100vh;
-    max-height: 600px;
+    max-height: 400px;
   }
 
   display: flex;

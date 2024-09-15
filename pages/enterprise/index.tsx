@@ -4,6 +4,7 @@ import EnterpriseCover from "@/components/about/enterprise/enterprise-cover/ente
 import EnterpriseFeedback from "@/components/about/enterprise/enterprise-feedback/enterprise-feedback";
 import EnterpriseInterests from "@/components/about/enterprise/enterprise-interests/enterprise-interests";
 import EnterpriseKit from "@/components/about/enterprise/enterprise-kit/enterprise-kit";
+import EnterpriseSmallFeatures from "@/components/about/enterprise/enterprise-small-features/enterprise-small-features";
 import Feedback from "@/components/about/feedback/feedback";
 import Footer from "@/components/about/footer/footer";
 import FeatureCards from "@/components/use-cases/feature-cards/feature-cards";
@@ -21,7 +22,10 @@ const SecondPage = () => {
 
         <EnterpriseKit />
 
+        <EnterpriseSmallFeatures />
+
         <EnterpriseFeedback />
+
         <Footer />
       </Wrapper>
     </>

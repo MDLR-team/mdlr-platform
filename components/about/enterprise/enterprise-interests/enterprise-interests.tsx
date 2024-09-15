@@ -37,21 +37,21 @@ const EnterpriseInterests = () => {
                 fontWeight: "bold",
               }}
             >
-              AI-Powered Solutions for the AEC Industry
+              Is It Time for Tailored AEC Solutions?
             </Box>
             <Box
               sx={{
                 fontSize: "var(--font-size-p)",
               }}
             >
-              Accelerate the development of custom AEC tools with MDLR&apos;s
-              AI-enhanced platform, tailored to your needs.
+              When standard tools fall short, custom 3D viewers, data insights,
+              and dashboards give you the flexibility you need—no code required.
             </Box>
           </Box>
         </WideHeader>
 
         {/* Block */}
-        <GridContainer>
+        {/* <GridContainer>
           <FeatureCard>
             <FeatureTitle>Unified Toolset</FeatureTitle>
             <FeatureDescription>
@@ -73,7 +73,54 @@ const EnterpriseInterests = () => {
             </FeatureDescription>
           </FeatureCard>
           <FeatureCard></FeatureCard>
-        </GridContainer>
+        </GridContainer> */}
+
+        {
+          <GridContainer>
+            <FeatureCard>
+              <FeatureTitle>
+                Custom Widgets and Viewer Enhancements
+              </FeatureTitle>
+              <FeatureDescription>
+                Add new widgets, visualizations, or even customize the core
+                viewer to fit specific data sources.
+              </FeatureDescription>
+            </FeatureCard>
+            <FeatureCard>
+              <FeatureTitle>Generative 3D Model Design</FeatureTitle>
+              <FeatureDescription>
+                Modify the 3D viewer and UX to handle AI-driven or generative 3D
+                models.
+              </FeatureDescription>
+            </FeatureCard>
+            <FeatureCard>
+              <FeatureTitle>Extended Insights</FeatureTitle>
+              <FeatureDescription>
+                When deeper insights are needed beyond standard AI, additional
+                customization enables advanced analysis
+              </FeatureDescription>
+            </FeatureCard>
+            <FeatureCard
+              style={{
+                padding: 0,
+                display: "flex",
+                height: "100%",
+                alignItems: "center",
+                background: "#1E1E1E",
+              }}
+            >
+              <Box
+                sx={{
+                  width: "100%",
+                  paddingBottom: "84.6%",
+                  backgroundImage: "url(/thumbs/an1.png)",
+                  backgroundSize: "contain",
+                  margin: "auto",
+                }}
+              ></Box>
+            </FeatureCard>
+          </GridContainer>
+        }
       </Box>
     </WideScreen>
   );
