@@ -20,33 +20,41 @@ const EnterpriseFeedback = () => {
         to discuss how MDLR can streamline your projects.
       </FeatureDescription>
 
-      <a
-        href="https://calendly.com/mdlr-team/ai-strategy-implementation-with-mdlr"
-        target="_blank"
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+        }}
       >
-        <Button
-          sx={{
-            marginTop: "50px",
-            width: "200px",
-            height: "80px !important",
-            padding: "0px 30px",
-            borderRadius: "25px",
-            fontSize: "24px !important",
-            backgroundColor: "var(--button-primary) !important",
-            color: "var(--button-text-primary) !important",
-          }}
-          variant="contained"
-          size="large"
+        <a
+          href="https://calendly.com/mdlr-team/ai-strategy-implementation-with-mdlr"
+          target="_blank"
         >
-          <span
-            style={{
+          <Button
+            sx={{
+              marginTop: "50px",
+              width: "200px",
+              height: "80px !important",
+              padding: "0px 30px",
+              borderRadius: "25px",
+              fontSize: "24px !important",
+              backgroundColor: "var(--button-primary) !important",
               color: "var(--button-text-primary) !important",
             }}
+            variant="contained"
+            size="large"
           >
-            Book a Free Consultation
-          </span>
-        </Button>
-      </a>
+            <span
+              style={{
+                color: "var(--button-text-primary) !important",
+              }}
+            >
+              Book a Free Consultation
+            </span>
+          </Button>
+        </a>
+      </Box>
     </Wrapper>
   );
 };

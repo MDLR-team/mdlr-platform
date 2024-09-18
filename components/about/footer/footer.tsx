@@ -42,7 +42,7 @@ const Footer: React.FC = () => {
           Legal
         </Typography>
         <Link
-          href="mailto:hello@mdlr.app"
+          href="/feedback"
           color="inherit"
           underline="hover"
           display="block"

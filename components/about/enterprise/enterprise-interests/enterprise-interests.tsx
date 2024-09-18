@@ -133,12 +133,9 @@ const GridContainer = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: minmax(250px, auto);
   grid-gap: 0px;
-  padding: 20px;
 
   max-width: 1200px;
   align-self: center;
-
-  border: 1px solid var(--border-color);
   border-radius: 10px;
 
   @media (max-width: 576px) {

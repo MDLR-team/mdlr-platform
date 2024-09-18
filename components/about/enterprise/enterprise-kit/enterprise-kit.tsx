@@ -111,7 +111,7 @@ const EnterpriseKit = () => {
                   width: "100%",
                   paddingBottom: { xs: "110%", sm: "60%" },
                   borderRadius: "20px",
-                  border: "1px solid #000",
+                  border: "1px solid var(--border-color)",
                   overflow: "hidden",
                 }}
               >

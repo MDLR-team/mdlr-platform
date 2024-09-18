@@ -13,8 +13,6 @@ const GridContainer = styled(Box)`
 
   max-width: 1200px;
   align-self: center;
-
-  border: 1px solid var(--border-color);
   border-radius: 10px;
 
   @media (max-width: 576px) {
@@ -87,14 +85,7 @@ export const FeatureDescription = styled.p`
 const FeatureGrid = () => {
   return (
     <>
-      <GridContainer
-        sx={{
-          padding: {
-            xs: "15px",
-            sm: "20px",
-          },
-        }}
-      >
+      <GridContainer>
         <FeatureCard>
           <Badge type="viewer" />
           <FeatureTitle>
@@ -317,7 +308,7 @@ const Badge: React.FC<{
         alignItems: "center",
         gap: "10px",
         fontSize: "var(--font-size-d)",
-        border: "1px solid #212121",
+        border: "1px solid var(--border-color)",
         maxWidth: "max-content",
         padding: "5px 10px",
         borderRadius: "20px",

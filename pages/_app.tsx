@@ -27,7 +27,7 @@ const LandingPageStyles = css`
     --text-secondary: rgba(0, 0, 0, 0.8);
     --button-primary: black;
     --button-text-primary: white;
-    --border-color: rgba(0, 0, 0, 0.9);
+    --border-color: #C7C7C7;
     --bar-color: white;
     --primary-font-family: "Euclid Circular A", sans-serif;
 

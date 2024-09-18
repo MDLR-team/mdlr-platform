@@ -97,10 +97,10 @@ const IssueDescription = styled(Box)`
     font-size: var(--font-size-m);
   }
 
-  & span {
+  /* & span {
     font-weight: 700;
     color: var(--text-primary);
-  }
+  } */
   margin-bottom: 30px;
 
   @media (max-width: 576px) {
