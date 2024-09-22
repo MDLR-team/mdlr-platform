@@ -5,19 +5,31 @@ import { Avatar as MuiAvatar } from "@mui/material";
 
 const Avatar: React.FC<{
   username: string;
-  size: "large" | "small";
+  size: "xxl" | "large" | "small";
   isCount?: boolean;
   isCopilot?: boolean;
 }> = ({ username, size, isCount, isCopilot }) => {
   const initials = useMemo(() => getInitials(username), [username]);
   const color = useMemo(() => getColor(username), [username]);
 
+  const avatarSize = {
+    xxl: 52,
+    large: 32,
+    small: 24,
+  };
+
+  const avatarFontSize = {
+    xxl: 22,
+    large: 14,
+    small: 10,
+  };
+
   return (
     <MuiAvatar
       sx={{
-        width: size === "large" ? 32 : 24,
-        height: size === "large" ? 32 : 24,
-        fontSize: size === "large" ? 14 : 10,
+        width: avatarSize[size],
+        height: avatarSize[size],
+        fontSize: avatarFontSize[size],
         ...(isCopilot
           ? {
               background:

@@ -6,10 +6,13 @@ import CancelIcon from "@mui/icons-material/Cancel";
 const PromptSearchBar: React.FC<{
   extended?: boolean;
   isWhiteboard?: boolean;
-}> = ({ extended, isWhiteboard }) => {
+  prompt?: string;
+}> = ({ extended, isWhiteboard, prompt }) => {
   const [loading, setLoading] = useState(false);
 
-  const placeholder = isWhiteboard
+  const placeholder = prompt
+    ? prompt
+    : isWhiteboard
     ? "Describe your chart, including type, sorting, and key metrics. E.g., 'Bar chart of costs by phase, sorted by highest cost' or 'Line chart of task completion over time, sorted by date.'"
     : "Ask Copilot for insights or actions, e.g., 'Show project risks' or 'Download dashboard as PDF'";
 

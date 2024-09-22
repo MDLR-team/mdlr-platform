@@ -10,12 +10,27 @@ import {
   Wrapper,
 } from "@/components/ui/ui-grid.styled";
 import CommentsBlock from "@/components/ui/whiteboard-page/comment-layout/comment-layout";
+import CommentsBlockV2 from "@/components/ui/whiteboard-page/comment-layout/comment-layout-v2";
 import WhiteboardViewer from "@/components/whiteboard-viewer/whiteboard-viewer";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import "reactflow/dist/style.css";
 
 const WhiteboardPage = () => {
+  const [experience, setExperience] = useState<Experience>(Experience.V1);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.query.id) {
+      const id = router.query.id as string;
+      if (id === "v2") {
+        setExperience(Experience.V2);
+      }
+    }
+  }, [router.query.id]);
+
   return (
-    <WorkspaceProvider>
+    <WorkspaceProvider experience={experience}>
       <div
         style={{
           display: "flex",
@@ -32,7 +47,7 @@ const WhiteboardPage = () => {
             </BarWrapper>
 
             <ContentWrapper>
-              <CommentsBlock />
+              <CommentsBlockV2 />
             </ContentWrapper>
 
             <FooterWrapper style={{ justifyContent: "center" }}>
@@ -46,5 +61,10 @@ const WhiteboardPage = () => {
     </WorkspaceProvider>
   );
 };
+
+export enum Experience {
+  V1 = "v1",
+  V2 = "v2",
+}
 
 export default WhiteboardPage;

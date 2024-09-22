@@ -17,7 +17,7 @@ import "reactflow/dist/style.css";
 
 const DashboardPage = () => {
   return (
-    <WorkspaceProvider>
+    <WorkspaceProvider >
       <DashboardServiceProvider>
         <div
           style={{

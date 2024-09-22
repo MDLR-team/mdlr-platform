@@ -7,6 +7,7 @@ import WorkspaceService from "./workspace-service";
 import { useAuth } from "../../app-services/auth/auth-provider";
 import { UserMetadata } from "@supabase/supabase-js";
 import { ProjectUser } from "../../project-services/project-service/project-service";
+import { Experience } from "@/pages/whiteboard/[id]";
 
 interface WorkspaceProps {
   workspaceService: WorkspaceService;
@@ -19,11 +20,18 @@ interface WorkspaceProps {
   settingsTab: number;
   setSettingsOpened: (value: boolean) => void;
   setSettingsTab: (value: number) => void;
+  experience: Experience;
 }
 
 const WorkspaceContext = createContext<WorkspaceProps | undefined>(undefined);
 
-export function WorkspaceProvider({ children }: any) {
+export function WorkspaceProvider({
+  children,
+  experience = Experience.V1,
+}: {
+  children: React.ReactNode;
+  experience?: Experience;
+}) {
   const router = useRouter();
   const { authService } = useAuth();
 
@@ -87,6 +95,7 @@ export function WorkspaceProvider({ children }: any) {
         settingsTab,
         setSettingsOpened,
         setSettingsTab,
+        experience,
       }}
     >
       {children}

@@ -18,6 +18,9 @@ import NodeInterval from "../whiteboard/nodes/node-interval";
 import NodePrompt from "../whiteboard/nodes/node-prompt";
 import NodeForceGraph from "../whiteboard/nodes/node-force-graph";
 import NodeSticker from "../whiteboard/nodes/node-sticker";
+import NodeRecipients from "../whiteboard/nodes/node-recipients/node-recipients";
+import NodeDelivery from "../whiteboard/nodes/node-delivery/node-delivery";
+import NodeDashboard from "../whiteboard/nodes/node-dasboard/node-dashboard";
 
 const WhiteboardViewerX = () => {
   const { nodes, edges, onNodesChange, onEdgesChange } = useDashboardNode();
@@ -58,6 +61,9 @@ export const NodeTypes = {
   prompt: NodePrompt,
   forceGraph: NodeForceGraph,
   sticker: NodeSticker,
+  recipients: NodeRecipients,
+  delivery: NodeDelivery,
+  dashboard: NodeDashboard,
 };
 
 const WhiteboardViewer = () => {
