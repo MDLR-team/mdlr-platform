@@ -275,7 +275,7 @@ const ImageWrapper2 = styled(Box)`
   }
 `;
 
-const Badge: React.FC<{
+export const Badge: React.FC<{
   type: "viewer" | "whiteboard" | "dashboard";
 }> = ({ type }) => {
   const label = useMemo(() => {
@@ -312,6 +312,7 @@ const Badge: React.FC<{
         maxWidth: "max-content",
         padding: "5px 10px",
         borderRadius: "20px",
+        backgroundColor: "white",
       }}
     >
       <img src={image} width="24" height="24" />

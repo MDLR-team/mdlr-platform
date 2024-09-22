@@ -1,10 +1,12 @@
 import Bar from "@/components/about/bar/bar";
 import Cover from "@/components/about/cover/cover";
+import FAQ from "@/components/about/faq/faq";
 import FeatureGrid from "@/components/about/features-cards/features-cards";
 import Features from "@/components/about/features/features";
 import Feedback from "@/components/about/feedback/feedback";
 import Footer from "@/components/about/footer/footer";
 import UseCase from "@/components/about/use-case/use-case";
+import FeatureColumns from "@/components/feature-columns/feature-columns";
 import Screens from "@/components/screens/screens-v2";
 import { Box } from "@mui/material";
 import styled from "styled-components";
@@ -19,31 +21,25 @@ const AboutPage = () => {
 
         <IssueDescription>
           <IssueDescription>
-            <span>Mdlr addresses the challenge</span> of{" "}
-            <span>managing numerous data types</span> by providing{" "}
-            <span>a real-time collaborative environment</span> for{" "}
-            <span>quick analysis.</span>
+            Managing design and construction projects is challenging due to
+            scattered data across tools, manual reporting processes, and
+            inefficient role-based workflows.
             <br />
             <br />
-            <span>
-              Current tools fall short in analysing 3D models. Mdlr
-            </span>{" "}
-            lets you accurately <span>estimate models, share ideas</span> in a{" "}
-            <span>3D viewer, gain insights</span> from <span>charts</span> on a{" "}
-            <span>Whiteboard</span>, and{" "}
-            <span>prepare ready-to-use presentations for clients</span> on a{" "}
-            <span>Dashboard</span>.
+            Traditional methods also fail to leverage AI for deeper insights,
+            leaving teams with limited project visibility.
             <br />
             <br />
-            <span>Mdlr</span> can be used{" "}
-            <span>as a standalone tool for AEC industry professionals</span>
-            or <span>integrated via API into existing platforms.</span>
+            MDLR centralizes project data, automates reporting, and provides
+            customizable workflows for report delivery. With AI-driven insights,
+            teams can generate real-time reports, track role-based dashboards,
+            and make informed decisions with ease.
           </IssueDescription>
         </IssueDescription>
 
         <Screens />
 
-        <FeatureGrid />
+        <FeatureColumns />
 
         {/*  <UseCase
           title={"Visualise"}
@@ -72,6 +68,8 @@ const AboutPage = () => {
 
         {/* <Features /> */}
 
+        <FAQ />
+
         <Feedback />
 
         <Footer />
@@ -97,10 +95,10 @@ const IssueDescription = styled(Box)`
     font-size: var(--font-size-m);
   }
 
-  /* & span {
+  & span {
     font-weight: 700;
     color: var(--text-primary);
-  } */
+  }
   margin-bottom: 30px;
 
   @media (max-width: 576px) {

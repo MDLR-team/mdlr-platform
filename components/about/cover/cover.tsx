@@ -105,7 +105,7 @@ const CoverImage = styled(Box)`
 const Img = styled(Box)`
   position: relative;
   width: 100%;
-  padding-bottom: 23.25%;
+  padding-bottom: 26%;
   background-image: url("/thumbs/cover.svg");
   background-size: cover;
   background-position: center;

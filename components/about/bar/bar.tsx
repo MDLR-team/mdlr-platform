@@ -124,9 +124,9 @@ const Bar = () => {
           Product
         </Box>
 
-        <Link href="/enterprise">
+        {/* <Link href="/enterprise">
           <Box className="pricing-tab">Enterprise</Box>
-        </Link>
+        </Link> */}
 
         <>
           <div
@@ -297,11 +297,11 @@ const Bar = () => {
             Product
           </SectionItemMobile>
 
-          <Link href="/enterprise">
+          {/* <Link href="/enterprise">
             <SectionItemMobile onClick={toggleMobileMenu}>
               Enterprise
             </SectionItemMobile>
-          </Link>
+          </Link> */}
 
           <Accordion
             sx={{

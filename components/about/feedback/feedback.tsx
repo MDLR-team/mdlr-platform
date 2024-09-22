@@ -54,8 +54,8 @@ const Wrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  margin-top: 150px;
-  margin-bottom: 150px;
+  margin-top: 0px;
+  margin-bottom: 120px;
 `;
 
 const Form = styled.div`

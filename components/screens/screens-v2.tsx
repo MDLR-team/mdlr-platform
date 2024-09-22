@@ -4,6 +4,7 @@ import { title } from "process";
 import CheckIcon from "@mui/icons-material/Check";
 import WideScreen from "../about/layout/wide-screen";
 import WideHeader from "../about/layout/wide-header";
+import styled, { css } from "styled-components";
 
 const Screens = () => {
   // Define the slides data
@@ -17,10 +18,28 @@ const Screens = () => {
       description:
         "Leave feedback directly on 3D models—comments, drawings, and media—all in real-time with your team.",
       features: [
-        "Import any 3D model",
-        "Real-time collaboration",
-        "AI-powered comment search",
-        "Version control",
+        "Comments & Drawing Tools",
+        "Real-Time Collaboration",
+        "Media Attachments",
+        "AI-Powered Search",
+        "Custom Widgets (Enterprise)",
+      ],
+    },
+
+    {
+      badge: "Dashboard",
+      backgroundImage:
+        "url(https://images.ctfassets.net/kftzwdyauwt9/2Wet7rkEt83TBP19pRaoSU/c227e5b5949a5931c343eeb70e4bd99f/Mac_App_Hero_V1.png?w=3840&q=90&fm=webp)",
+      thumbnail: "/thumbs/c34.png",
+      title: "Interactive Reports with Real-Time Updates",
+      description:
+        "Tailored dashboards for end-users with dynamic charts, real-time data, AI insights, and multiple download formats",
+      features: [
+        "Pre-built chart components",
+        "Real-time data updates",
+        "AI-powered insights",
+        "Multiple download formats",
+        "Custom widgets (Enterprise)",
       ],
     },
     {
@@ -28,29 +47,14 @@ const Screens = () => {
       backgroundImage:
         "url(https://images.ctfassets.net/kftzwdyauwt9/2Wet7rkEt83TBP19pRaoSU/c227e5b5949a5931c343eeb70e4bd99f/Mac_App_Hero_V1.png?w=3840&q=90&fm=webp)",
       thumbnail: "/thumbs/c22.png",
-      title: "Manage, Visualize, and Summarize Data in Real-Time",
+      title: "Real-Time Data Management, Visualization, and Delivery",
       description:
-        "Retrieve and manipulate data from sources like 3D models and documents. Generate summaries, charts, and dashboards with real-time updates",
+        "Retrieve data from the 3D viewer, create dashboards, and automate delivery for different groups, specifying who receives them, how, and when.",
       features: [
-        "Data integration from multiple sources",
-        "Real-time collaboration",
-        "Auto-updating visualizations",
-        "AI-powered summaries",
-      ],
-    },
-    {
-      badge: "Dashboard",
-      backgroundImage:
-        "url(https://images.ctfassets.net/kftzwdyauwt9/2Wet7rkEt83TBP19pRaoSU/c227e5b5949a5931c343eeb70e4bd99f/Mac_App_Hero_V1.png?w=3840&q=90&fm=webp)",
-      thumbnail: "/thumbs/c34.png",
-      title: "Final, Interactive Reports with Real-Time Updates",
-      description:
-        "Tailored dashboards for end-users with dynamic charts, real-time data, AI insights, and multiple download formats",
-      features: [
-        "Prepared, customizable templates",
-        "Real-time data updates",
-        "AI-powered insights",
-        "Multiple download formats",
+        "Integrate Data from 3D Viewer",
+        "Interactive AI Setup & Delivery",
+        "Real-Time Visual Updates",
+        "Customizable Dashboard Delivery",
       ],
     },
   ];
@@ -80,11 +84,26 @@ const Screens = () => {
             >
               <Box
                 sx={{
-                  fontSize: "var(--font-size-d)",
+                  backgroundColor: "#E6E6E6",
+                  padding: "5px 10px",
+                  fontSize: "var(--font-size-p)",
+                  borderRadius: "10px",
+                  border: "1px solid #D9D9D9",
+                  maxWidth: "max-content",
+                  alignItems: "center",
+                  display: "flex",
+                  gap: "10px",
                 }}
               >
                 {slide.badge}
               </Box>
+              {/* <Box
+                sx={{
+                  fontSize: "var(--font-size-d)",
+                }}
+              >
+                {slide.badge}
+              </Box> */}
               <Box
                 sx={{
                   fontSize: "var(--font-size-3)",
@@ -121,13 +140,32 @@ const Screens = () => {
                     alignItems: "center",
                   }}
                 >
-                  <CheckIcon
-                    sx={{
-                      fontSize: "var(--font-size-d)",
-                    }}
+                  <Check
+                    color={index <= 3 ? "black" : "#1200ff"}
+                    sx={
+                      index <= 3
+                        ? {
+                            fontSize: "var(--font-size-d)",
+                          }
+                        : {
+                            fontSize: "var(--font-size-d)",
+                            color: "#1200ff !important",
+                          }
+                    }
                   />
 
-                  <Box sx={{ fontSize: "var(--font-size-d)" }}>{feature}</Box>
+                  <Box
+                    sx={
+                      index <= 3
+                        ? { fontSize: "var(--font-size-d)" }
+                        : {
+                            fontSize: "var(--font-size-d)",
+                            color: "#1200ff !important",
+                          }
+                    }
+                  >
+                    {feature}
+                  </Box>
                 </Box>
               ))}
             </Box>
@@ -170,5 +208,19 @@ const Screens = () => {
     </WideScreen>
   );
 };
+
+const Check = styled(CheckIcon)<{
+  color: string;
+  [key: string]: any;
+}>`
+  ${({ color }) =>
+    color &&
+    css`
+      &,
+      & * {
+        color: ${color} !important;
+      }
+    `};
+`;
 
 export default Screens;
