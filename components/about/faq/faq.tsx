@@ -172,7 +172,7 @@ const FAQ = () => {
             <AccordionDetails>
               <Typography>
                 Absolutely. MDLR works with your own data sources and generates
-                insights based on the data you provide. If the system can't
+                insights based on the data you provide. If the system can&apos;t
                 produce an answer, it will notify you, ensuring transparency in
                 all outputs.
               </Typography>
