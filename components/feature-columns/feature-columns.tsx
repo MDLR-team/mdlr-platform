@@ -78,9 +78,9 @@ const FeatureColumns = () => {
             },
             {
               section: "Across All Entities",
-              title: "Enterprise",
+              title: "Data Security & Compliance",
               description:
-                "HIPAA compliance, single sign-on (SSO), advanced security, priority support and more.",
+                "Ensuring global data protection with compliance to UK GDPR, ISO 27001, and SOC 2.",
             },
           ].map((item, index) => (
             <Box
@@ -138,11 +138,12 @@ const FeatureColumns = () => {
                     </Box> */}
                     <Box
                       sx={{
-                        backgroundColor: "#E6E6E6",
+                        backgroundColor: "black",
                         padding: "5px 10px",
                         fontSize: "var(--font-size-p)",
-                        borderRadius: "10px",
+                        borderRadius: "5px",
                         border: "1px solid #D9D9D9",
+                        color: "white !important",
                       }}
                     >
                       {item.section}
@@ -154,7 +155,10 @@ const FeatureColumns = () => {
                       width: "100%",
                       paddingBottom: "56%",
                       backgroundColor: "#F4F4F4",
-                      border: "1px solid #D9D9D9",
+                      backgroundImage: `url(/feature-schemas/${index + 1}.png)`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      border: "1px solid black",
                       borderRadius: "10px",
                       position: "relative",
                     }}

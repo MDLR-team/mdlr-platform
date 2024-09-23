@@ -11,6 +11,8 @@ const Screens = () => {
   const slides = [
     {
       badge: "3D Viewer",
+      lightColor: "#D2E5FA",
+      color: "#66A6EE",
       backgroundImage:
         "url(https://images.ctfassets.net/kftzwdyauwt9/2Wet7rkEt83TBP19pRaoSU/c227e5b5949a5931c343eeb70e4bd99f/Mac_App_Hero_V1.png?w=3840&q=90&fm=webp)",
       thumbnail: "/thumbs/c11.png",
@@ -28,6 +30,8 @@ const Screens = () => {
 
     {
       badge: "Dashboard",
+      lightColor: "#F9D5C9",
+      color: "#EA724B",
       backgroundImage:
         "url(https://images.ctfassets.net/kftzwdyauwt9/2Wet7rkEt83TBP19pRaoSU/c227e5b5949a5931c343eeb70e4bd99f/Mac_App_Hero_V1.png?w=3840&q=90&fm=webp)",
       thumbnail: "/thumbs/c34.png",
@@ -44,6 +48,8 @@ const Screens = () => {
     },
     {
       badge: "Whiteboard",
+      lightColor: "#F3C3CE",
+      color: "#D7375B",
       backgroundImage:
         "url(https://images.ctfassets.net/kftzwdyauwt9/2Wet7rkEt83TBP19pRaoSU/c227e5b5949a5931c343eeb70e4bd99f/Mac_App_Hero_V1.png?w=3840&q=90&fm=webp)",
       thumbnail: "/thumbs/c22.png",
@@ -84,15 +90,16 @@ const Screens = () => {
             >
               <Box
                 sx={{
-                  backgroundColor: "#E6E6E6",
+                  backgroundColor: 'black',
                   padding: "5px 10px",
                   fontSize: "var(--font-size-p)",
-                  borderRadius: "10px",
+                  borderRadius: "5px",
                   border: "1px solid #D9D9D9",
                   maxWidth: "max-content",
                   alignItems: "center",
                   display: "flex",
                   gap: "10px",
+                  color: "white !important",
                 }}
               >
                 {slide.badge}
@@ -141,31 +148,13 @@ const Screens = () => {
                   }}
                 >
                   <Check
-                    color={index <= 3 ? "black" : "#1200ff"}
-                    sx={
-                      index <= 3
-                        ? {
-                            fontSize: "var(--font-size-d)",
-                          }
-                        : {
-                            fontSize: "var(--font-size-d)",
-                            color: "#1200ff !important",
-                          }
-                    }
+                    color="black"
+                    sx={{
+                      fontSize: "var(--font-size-d)",
+                    }}
                   />
 
-                  <Box
-                    sx={
-                      index <= 3
-                        ? { fontSize: "var(--font-size-d)" }
-                        : {
-                            fontSize: "var(--font-size-d)",
-                            color: "#1200ff !important",
-                          }
-                    }
-                  >
-                    {feature}
-                  </Box>
+                  <Box sx={{ fontSize: "var(--font-size-d)" }}>{feature}</Box>
                 </Box>
               ))}
             </Box>
@@ -182,7 +171,8 @@ const Screens = () => {
               sx={{
                 padding: { xs: "5px", sm: "10px" },
                 width: "100%",
-                backgroundColor: "rgb(236, 236, 236)",
+                backgroundColor: slide.lightColor, //"rgb(236, 236, 236)",
+                border: `1.5px solid ${slide.color}`,
                 borderRadius: { xs: "15px", sm: "20px" },
               }}
             >
@@ -195,7 +185,7 @@ const Screens = () => {
                   backgroundImage: `url(${slide.thumbnail})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
-                  boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.15)",
+                  //boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.15)",
                   border: "1px solid white",
                 }}
               ></Box>
