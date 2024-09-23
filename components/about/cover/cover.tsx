@@ -24,17 +24,17 @@ const Cover = () => {
             {/* MdIr is an AI-driven data visualization, analysis, and optimization */}
             Visualise in{" "}
             <EntityLabel color="orange">
-              <img src="/previews/a1.svg" width="24" height="24" />
+              <img src="/previews/a1a.svg" width="24" height="24" />
               &nbsp;3D&nbsp;Viewer
             </EntityLabel>
             , gain valuable project insights on{" "}
             <EntityLabel color="orange">
-              <img src="/previews/a3.svg" width="24" height="24" />
+              <img src="/previews/a3a.svg" width="24" height="24" />
               &nbsp;Whiteboard
             </EntityLabel>{" "}
             , and make data-driven decisions using{" "}
             <EntityLabel color="orange">
-              <img src="/previews/a2.svg" width="24" height="24" />
+              <img src="/previews/a2a.svg" width="24" height="24" />
               &nbsp;Dashboards
             </EntityLabel>{" "}
             — all in one place.
@@ -56,7 +56,7 @@ const Cover = () => {
       <CoverImage
         sx={{
           width: {
-            xs: "70vw",
+            xs: "75vw",
             sm: "1200px",
           },
 
@@ -114,7 +114,7 @@ const Img = styled(Box)`
 const ImgMobile = styled(Box)`
   position: relative;
   width: 100%;
-  padding-bottom: 204%;
+  padding-bottom: 220%;
   background-image: url("/thumbs/cover-mobile.svg");
   background-size: cover;
   background-position: center;

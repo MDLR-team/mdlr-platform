@@ -11,6 +11,7 @@ import {
 
 import AddIcon from "@mui/icons-material/Add";
 import WideScreen from "../layout/wide-screen";
+import Link from "next/link";
 
 const FAQ = () => {
   return (
@@ -80,8 +81,22 @@ const FAQ = () => {
             <AccordionDetails>
               <Typography>
                 Currently, we don&apos;t offer a standard free trial. However,
-                you can gain access by submitting a form and booking a demo to
-                explore the platform&apos;s features.
+                you can gain access by{" "}
+                <Link href="/requestdemo">
+                  <span style={{ textDecoration: "underline" }}>
+                    submitting a form
+                  </span>
+                </Link>{" "}
+                and{" "}
+                <a
+                  href="https://calendly.com/mdlr-team/ai-strategy-implementation-with-mdlr"
+                  target="_blank"
+                >
+                  <span style={{ textDecoration: "underline" }}>
+                    booking a free consultation
+                  </span>
+                </a>{" "}
+                to explore the platform&apos;s features.
               </Typography>
             </AccordionDetails>
           </Accordion>

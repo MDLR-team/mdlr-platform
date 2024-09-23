@@ -62,7 +62,7 @@ const FeatureColumns = () => {
               section: "Dashboard & Whiteboard",
               title: "AI-Generated Insights",
               description:
-                "AI provides instant suggestions and risk assessments.",
+                "AI helps configure dashboards and delivery, while providing key metrics insights in real-time.",
             },
             {
               section: "Dashboard & Whiteboard",
