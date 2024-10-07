@@ -25,8 +25,6 @@ import NodeDashboard from "../whiteboard/nodes/node-dasboard/node-dashboard";
 const WhiteboardViewerX = () => {
   const { nodes, edges, onNodesChange, onEdgesChange } = useDashboardNode();
 
-  console.log("nodes", nodes);
-
   return (
     <Box
       className="wrapper"
