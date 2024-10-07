@@ -28,8 +28,6 @@ class ViewerServiceAggr {
     this._viewer.setProgressiveRendering(true);
     this._viewer.setGhosting(false);
 
-    console.log("configureSceneAppearance");
-
     // to home view
     this._viewer.fitToView();
 

@@ -64,8 +64,6 @@ const GraphComponent = () => {
         },
       });
 
-      console.log("graph", graph);
-
       if (graphRef.current) {
         graphRef.current.destroy();
       }
