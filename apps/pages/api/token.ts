@@ -1,11 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import querystring from "querystring";
 
-export const BIM_ACCOUNT_ID = "b.1328c7e7-d0f3-47d4-8d78-17b2906df0ae"; // 08ce7ab3-a669-4ba7-88f9-05349e0d2011
+export const BIM_ACCOUNT_ID = "b.8aedaf08-19a2-4628-b8b7-03d306e2482a";
 
-export const CLIENT_ID = "41HO6mHNxGw1VVD2tGdvsE6uVG4UcpTkABjslPpA827TWqjn";
+export const CLIENT_ID = "QubCWVBo8GkvY3PNGyodQIFdPe8onNlE9GbfG01nYE6jkFG7";
 export const CLIENT_SECRET =
-  "596AvpT9ItlMdz2RTOs7e4FMIvZ8iZLGOgJUKB1chIGcIWAgSsIC6pJTZAO8PTk8";
+  "mvG4TzKctuUvAC1ulbeLfQXJHtZfTWVOQrvtuJ5T3aNEzHh5mvyG9qk0VNQCktVG";
 export const AUTH_URL =
   "https://developer.api.autodesk.com/authentication/v2/token";
 

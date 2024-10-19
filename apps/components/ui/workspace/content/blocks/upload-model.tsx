@@ -30,7 +30,7 @@ const UploadModel = () => {
                 </Link>{" "}
                 and use the following credentials:
                 <Typography variant="body2" component="div" sx={{ mt: 1 }}>
-                  <strong>Email:</strong> mdlrrraabb@maildrop.cc
+                  <strong>Email:</strong> mdlrrraabbb@maildrop.cc
                   <br />
                   <strong>Password:</strong> A12345678
                 </Typography>
