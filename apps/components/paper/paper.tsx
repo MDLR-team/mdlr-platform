@@ -31,10 +31,10 @@ const PaperCanvas: React.FC = () => {
     <>
       <Box
         sx={{
-          width: "100vw",
-          height: "100vh",
+          width: "100%",
+          height: "100%",
           display: "flex",
-          position: "fixed",
+          position: "absolute",
           overflow: "hidden",
           top: 0,
           left: 0,

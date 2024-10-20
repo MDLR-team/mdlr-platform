@@ -2,7 +2,7 @@ import AuthProvider from "@/components/services/app-services/auth/auth-provider"
 import Wrapper from "@/components/layout/wrapper/wrapper";
 import type { AppProps } from "next/app";
 import { createGlobalStyle, css } from "styled-components";
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
@@ -42,6 +42,149 @@ const MentionListStyles = css`
     & li:hover,
     & li[aria-selected="true"] {
       background-color: rgba(0, 0, 0, 0.04);
+    }
+  }
+`;
+
+const TipTapStyles = css`
+  /* Base editor styles */
+  .tiptap-editor {
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    min-height: 100%;
+    overflow-y: auto; /* Allow scrolling when the content exceeds the height */
+    display: flex;
+  }
+
+  .tiptap.ProseMirror {
+    min-height: 100%;
+    width: 100%;
+    border: 0px !important;
+    outline: none !important;
+
+    &.ProseMirror-focused {
+      // remove the border when the editor is focused
+      border-color: transparent;
+    }
+  }
+
+  /* Paragraphs and text content */
+  .tiptap-editor p {
+    margin: 0 0 0px; /* Space between paragraphs */
+    padding: 0;
+    font-size: 15px;
+  }
+
+  /* Headings */
+  .tiptap-editor h1 {
+    font-size: 24px; /* Large heading */
+  }
+
+  .tiptap-editor h2 {
+    font-size: 20px; /* Medium heading */
+  }
+
+  .tiptap-editor h3 {
+    font-size: 18px; /* Small heading */
+  }
+
+  .tiptap-editor strong {
+    font-weight: bold; /* Bold text */
+  }
+
+  .tiptap-editor em {
+    font-style: italic; /* Italic text */
+  }
+
+  .tiptap-editor blockquote {
+    margin: 0 0 10px;
+    padding-left: 10px;
+    border-left: 3px solid #ccc; /* Blockquote styles */
+    color: #666;
+  }
+
+  .tiptap-editor ul,
+  .tiptap-editor ol {
+    padding-left: 20px; /* Indentation for lists */
+  }
+
+  .tiptap-editor li {
+    margin-bottom: 5px; /* Spacing between list items */
+  }
+
+  /* Mention styles */
+  .mention {
+    color: #007bff;
+    background-color: #e0f7ff;
+    padding: 2px 4px;
+    border-radius: 4px;
+    cursor: pointer; /* Make mentions clickable */
+  }
+
+  /* Tag styles */
+  .tag {
+    color: green;
+    background-color: #e0ffe0;
+    padding: 2px 4px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  /* Placeholder styles (if you're using placeholder extension) */
+  .tiptap-editor.is-empty::before {
+    content: attr(
+      data-placeholder
+    ); /* Placeholder text from the data-placeholder attribute */
+    color: #aaa;
+    font-style: italic;
+  }
+
+  /* Popup suggestion styles */
+  .suggestion-popup {
+    z-index: 100;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 8px;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .suggestion-popup div {
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+
+  .suggestion-popup div:hover {
+    background-color: #f0f0f0; /* Highlight hovered suggestion */
+  }
+`;
+
+const MuiTreeStyles = css`
+  .MuiRichTreeView-root {
+    &,
+    & * {
+      font-size: 14px !important;
+      color: #686868 !important;
+    }
+  }
+`;
+
+const ReactSplitStyles = css`
+  .gutter.gutter-horizontal {
+    &:hover,
+    &.gutter-dragging {
+      background-color: #ec6033 !important;
+      outline: 1px solid #ec6033 !important;
+      cursor: col-resize !important;
+
+      z-index: 1000 !important;
     }
   }
 `;
@@ -397,6 +540,15 @@ const GlobalStyle = createGlobalStyle`
 
   // Mentions
   ${MentionListStyles}
+
+  // TipTap
+  ${TipTapStyles}
+
+  // React Split
+  ${ReactSplitStyles}
+
+  // MuiTree
+  ${MuiTreeStyles}
 `;
 
 export default App;

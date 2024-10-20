@@ -27,6 +27,7 @@ class ViewerServiceAggr {
     this._viewer.setGroundReflection(false);
     this._viewer.setProgressiveRendering(true);
     this._viewer.setGhosting(false);
+    this._viewer.setDisplayEdges(false);
 
     // to home view
     this._viewer.fitToView();
@@ -38,6 +39,26 @@ class ViewerServiceAggr {
     } catch (e) {
       console.error(e);
     }
+  }
+
+  public applyGreyThemingToAllElements() {
+    const Autodesk = (window as any).Autodesk;
+
+    // Assuming `allDbIds` is an array of all element IDs
+    // you want to apply theming colors to.
+    this._viewer.model.getData().instanceTree.enumNodeFragments(
+      this._viewer.model.getRootId(),
+      (dbId: number) => {
+        const THREE = (window as any).THREE;
+
+        // Grey color in RGB
+        const greyColor = new THREE.Vector4(0.9, 0.9, 0.9, 0);
+
+        // Apply the theming color
+        this._viewer.setThemingColor(dbId, greyColor);
+      },
+      true
+    );
   }
 
   public loadDocuments(urns: string[]): Promise<void> {
@@ -61,6 +82,9 @@ class ViewerServiceAggr {
       // Wait for OBJECT_TREE_CREATED_EVENT
       const objectTreeCreatedHandler = (e: any) => {
         this.configureSceneAppearance();
+
+        // Apply theming color once all documents are loaded
+        this.applyGreyThemingToAllElements();
 
         if (callbackAmount === urns.length - 1) {
           resolve();
