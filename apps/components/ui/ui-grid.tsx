@@ -13,32 +13,80 @@ import {
   Grid,
   Wrapper,
 } from "./ui-grid.styled";
+import LeftSidebar from "./left-sidebar/left-sidebar";
+import { Box } from "@mui/material";
+import Split from "react-split";
+import ViewerW from "../forge/viewer-w";
 
 const UIGrid = () => {
   return (
     <>
-      <ViewStateMode />
-
-      <FloatingWrapper>
-        <CommentForm />
-        <ActiveCommentDialog />
-      </FloatingWrapper>
-
       <Wrapper>
-        <Grid>
-          <BarWrapper>
-            <Bar />
-            <Share />
-          </BarWrapper>
+        <Split
+          sizes={[40, 60]}
+          minSize={200}
+          gutterSize={1}
+          gutterAlign="center"
+          direction="horizontal"
+          style={{ display: "flex", width: "100%", height: "100%" }}
+        >
+          <LeftSidebar />
 
-          <ContentWrapper>
-            <CommentsBlock />
-          </ContentWrapper>
+          <Box
+            sx={{
+              width: "100%",
+              position: "relative",
+            }}
+            className="viewer"
+          >
+            <ViewStateMode />
 
-          <FooterWrapper style={{ justifyContent: "center" }}>
-            <ToolPanel />
-          </FooterWrapper>
-        </Grid>
+            <FloatingWrapper className="floating-wrapper">
+              <CommentForm />
+              <ActiveCommentDialog />
+            </FloatingWrapper>
+
+            <Box
+              sx={{
+                position: "absolute",
+                width: "100%",
+                height: "100%",
+                display: "flex",
+              }}
+            >
+              <ViewerW />
+            </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+                height: "100%",
+                position: "relative",
+                zIndex: 21,
+                pointerEvents: "none",
+              }}
+            >
+              {/* <TopBar /> */}
+
+              <Grid>
+                <BarWrapper>
+                  <Bar />
+                  <Share />
+                </BarWrapper>
+
+                <ContentWrapper>
+                  <CommentsBlock />
+                </ContentWrapper>
+
+                <FooterWrapper style={{ justifyContent: "center" }}>
+                  <ToolPanel />
+                </FooterWrapper>
+              </Grid>
+            </Box>
+          </Box>
+        </Split>
       </Wrapper>
     </>
   );

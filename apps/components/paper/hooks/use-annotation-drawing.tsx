@@ -33,7 +33,7 @@ const useAnnotationDrawing = (
       const path = new Path({
         segments: [event.point],
         strokeColor: "red",
-        strokeWidth: 2,
+        strokeWidth: 5,
         fullySelected: false,
         data: {
           drawnBy: "user2",

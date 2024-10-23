@@ -33,7 +33,6 @@ const Wrapper = styled.div`
 
   display: flex;
   flex-direction: column;
-  pointer-events: none;
 
   && *[data-type="user-profile"] {
     &: hover {

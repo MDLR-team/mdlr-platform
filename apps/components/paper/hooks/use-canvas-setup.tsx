@@ -100,7 +100,7 @@ const useCanvasSetup = (
             comment.annotation.forEach((line) => {
               const path = new Path({
                 strokeColor: "blue",
-                strokeWidth: 2,
+                strokeWidth: 5,
                 data: { loadedFromComments: true }, // Mark this path as loaded from comments
               });
               line.forEach((point: any) => {

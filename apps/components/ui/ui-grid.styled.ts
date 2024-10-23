@@ -3,12 +3,11 @@ import styled from "styled-components";
 export const FloatingWrapper = styled.div`
   width: 100%;
   height: 100%;
-  position: fixed;
+  position: absolute;
+  pointer-events: none;
   z-index: 4;
   top: 0;
   left: 0;
-
-  pointer-events: none;
 `;
 
 export const Wrapper = styled.div`
@@ -21,12 +20,13 @@ export const Wrapper = styled.div`
   z-index: 5;
 
   display: flex;
-  pointer-events: none;
 `;
 
 export const Grid = styled.div`
-  margin: 9px;
+  padding: 9px;
   width: 100%;
+  height: 100%;
+  pointer-events: none;
 
   display: grid;
   grid-template-rows: 45px auto 45px;
