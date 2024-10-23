@@ -117,8 +117,7 @@ const TipTapStyles = css`
 
   /* Mention styles */
   .mention {
-    color: #007bff;
-    background-color: #e0f7ff;
+    color: blue;
     padding: 2px 4px;
     border-radius: 4px;
     cursor: pointer; /* Make mentions clickable */
@@ -164,6 +163,80 @@ const TipTapStyles = css`
   .suggestion-popup div:hover {
     background-color: #f0f0f0; /* Highlight hovered suggestion */
   }
+
+  .dropdown-menu {
+    background: var(--white);
+    border: 1px solid var(--gray-1);
+    border-radius: 0.7rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    overflow: auto;
+    padding: 0.4rem;
+    position: relative;
+
+    & button.is-selected {
+      background-color: var(--gray-2);
+    }
+
+    & button {
+      align-items: center;
+      background-color: transparent;
+      display: flex;
+      gap: 0.25rem;
+      text-align: left;
+      width: 100%;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--gray-2);
+      }
+
+      border-radius: 0.5rem;
+      border: none;
+      color: var(--black);
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 1.15;
+      margin: none;
+      padding: 0.375rem 0.625rem;
+      transition: all 0.2s cubic-bezier(0.65, 0.05, 0.36, 1);
+    }
+  }
+
+  // Comment References
+  .ed-comment-ref {
+    display: flex;
+    gap: 5px;
+    margin: 5px;
+
+    max-width: max-content;
+    border: 1px solid var(--gray-4);
+
+    border-radius: 9px;
+    padding: 2px;
+
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+
+    & .ed-comment-avatar {
+      min-width: 20px;
+      max-width: 20px;
+      min-height: 20px;
+      max-height: 20px;
+      background-color: #309b57;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 `;
 
 const MuiTreeStyles = css`
@@ -198,6 +271,25 @@ const GlobalStyle = createGlobalStyle`
     --color-secondary: #0E1931;
 
     --color-error-500: #DE3830;
+
+    --white: #FFF;
+    --black: #2E2B29;
+    --black-contrast: #110F0E;
+    --gray-1: rgba(61, 37, 20, .05);
+    --gray-2: rgba(61, 37, 20, .08);
+    --gray-3: rgba(61, 37, 20, .12);
+    --gray-4: rgba(53, 38, 28, .3);
+    --gray-5: rgba(28, 25, 23, .6);
+    --green: #22C55E;
+    --purple: #6A00F5;
+    --purple-contrast: #5800CC;
+    --purple-light: rgba(88, 5, 255, .05);
+    --yellow-contrast: #FACC15;
+    --yellow: rgba(250, 204, 21, .4);
+    --yellow-light: #FFFAE5;
+    --red: #FF5C33;
+    --red-light: #FFEBE5;
+    --shadow: 0px 12px 33px 0px rgba(0, 0, 0, .06), 0px 3.618px 9.949px 0px rgba(0, 0, 0, .04);
   }
 
   body {

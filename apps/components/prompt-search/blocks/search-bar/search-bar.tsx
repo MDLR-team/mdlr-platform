@@ -1,19 +1,9 @@
 import { useEffect, useState } from "react";
-import {
-  TextField,
-  Button,
-  Box,
-  CircularProgress,
-  IconButton,
-} from "@mui/material";
+import { TextField, Button, Box, CircularProgress } from "@mui/material";
 import { useProject } from "@/components/services/project-services/project-service/project-provider";
 import { useComment } from "@/components/services/project-services/comment-service/comment-provider";
 import styled from "styled-components";
 import CancelIcon from "@mui/icons-material/Cancel";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
-import AIGradient from "../ai-gradient";
-import InsightsIcon from "@mui/icons-material/Insights";
 import DataSaverOffIcon from "@mui/icons-material/DataSaverOff";
 import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
 

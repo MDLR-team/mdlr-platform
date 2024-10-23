@@ -13,11 +13,8 @@ import {
   Grid,
   Wrapper,
 } from "./ui-grid.styled";
-import ShortcutPanel from "./left-sidebar/blocks/shortcut-panel/shortcut-panel";
-import NoteArea from "./left-sidebar/blocks/note-area/note-area";
 import LeftSidebar from "./left-sidebar/left-sidebar";
 import { Box } from "@mui/material";
-import TopBar from "./top-bar/top-bar";
 import Split from "react-split";
 import ViewerW from "../forge/viewer-w";
 
@@ -26,7 +23,7 @@ const UIGrid = () => {
     <>
       <Wrapper>
         <Split
-          sizes={[30, 70]}
+          sizes={[40, 60]}
           minSize={200}
           gutterSize={1}
           gutterAlign="center"
@@ -71,7 +68,7 @@ const UIGrid = () => {
                 pointerEvents: "none",
               }}
             >
-              <TopBar />
+              {/* <TopBar /> */}
 
               <Grid>
                 <BarWrapper>

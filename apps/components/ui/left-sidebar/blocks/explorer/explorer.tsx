@@ -33,14 +33,6 @@ const Explorer = () => {
         </IconButton>
 
         <IconButton>
-          <CommentIcon />
-        </IconButton>
-
-        <IconButton>
-          <FolderAddIcon />
-        </IconButton>
-
-        <IconButton>
           <FilterLineIcon />
         </IconButton>
       </Box>

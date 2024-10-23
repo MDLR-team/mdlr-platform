@@ -2,6 +2,7 @@ import Avatar from "@/components/layout/avatar/avatar";
 import { useComment } from "@/components/services/project-services/comment-service/comment-provider";
 import { Comment } from "@/components/services/project-services/comment-service/comment-service";
 import ResolveIcon from "@/components/ui/icons/resolve-icon";
+import InsertLinkIcon from "@mui/icons-material/InsertLink";
 import { Box, IconButton } from "@mui/material";
 import moment from "moment";
 import { useMemo } from "react";
@@ -37,6 +38,13 @@ const MessageItem: React.FC<MessageItemProps> = ({
   const handleResolveComment = (e: any) => {
     e.stopPropagation();
     commentService.handleResolveComment(id, true);
+  };
+
+  const handleCopyLink = (e: any) => {
+    e.stopPropagation();
+
+    // copy to clipboard id of the comment like `$121212212`
+    navigator.clipboard.writeText(`$${id}`);
   };
 
   const allTags = useMemo(() => {
@@ -83,6 +91,14 @@ const MessageItem: React.FC<MessageItemProps> = ({
             sx={{ display: "flex", gap: "0px" }}
             data-hideactions={hideActions ? "true" : "false"}
           >
+            <IconButton onClick={handleCopyLink}>
+              <InsertLinkIcon
+                sx={{
+                  fontSize: "16px",
+                }}
+              />
+            </IconButton>
+
             <IconButton onClick={handleResolveComment}>
               <ResolveIcon />
             </IconButton>

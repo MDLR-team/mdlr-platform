@@ -1,30 +1,20 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import OpenAI from "openai";
 
 export default async function createMessage(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const { messages } = req.body;
-  const apiKey = process.env.OPENAI_API_KEY;
-  const url = "https://api.openai.com/v1/chat/completions";
-
-  const body = JSON.stringify({
-    messages: messages,
-    model: "gpt-4o-mini", //"gpt-3.5-turbo",
-    stream: false,
-  });
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_SECRET_KEY });
 
   try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body,
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o-mini", // or "gpt-3.5-turbo"
+      messages: messages,
     });
-    const data = await response.json();
-    res.status(200).json({ data });
+
+    res.status(200).json({ data: response });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }

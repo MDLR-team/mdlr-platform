@@ -21,6 +21,8 @@ const ViewerPage = () => {
                     display: "flex",
                     width: "100vw",
                     height: "100vh",
+                    maxHeight: "100vh",
+                    overflow: "hidden",
                     position: "relative",
                   }}
                 >

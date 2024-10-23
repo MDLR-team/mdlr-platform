@@ -2,92 +2,73 @@ import { ReactRenderer } from "@tiptap/react";
 import tippy from "tippy.js";
 
 import { MentionList } from "./MentionList";
+import { ProjectUser } from "@/components/services/project-services/project-service/project-service";
+import WorkspaceService from "@/components/services/workspace-services/workspace/workspace-service";
 
-export default {
-  items: ({ query }: any) => {
-    return [
-      "Lea Thompson",
-      "Cyndi Lauper",
-      "Tom Cruise",
-      "Madonna",
-      "Jerry Hall",
-      "Joan Collins",
-      "Winona Ryder",
-      "Christina Applegate",
-      "Alyssa Milano",
-      "Molly Ringwald",
-      "Ally Sheedy",
-      "Debbie Harry",
-      "Olivia Newton-John",
-      "Elton John",
-      "Michael J. Fox",
-      "Axl Rose",
-      "Emilio Estevez",
-      "Ralph Macchio",
-      "Rob Lowe",
-      "Jennifer Grey",
-      "Mickey Rourke",
-      "John Cusack",
-      "Matthew Broderick",
-      "Justine Bateman",
-      "Lisa Bonet",
-    ]
-      .filter((item) => item.toLowerCase().startsWith(query.toLowerCase()))
-      .slice(0, 5);
-  },
+export default function suggestions(workspaceService: WorkspaceService) {
+  return {
+    items: ({ query }: any) => {
+      const users: ProjectUser[] = workspaceService.workspaceUsers$.value;
 
-  render: () => {
-    let reactRenderer: ReactRenderer;
-    let popup: any;
+      return users
+        .map((user) => user.username)
+        .filter((item) => item.toLowerCase().startsWith(query.toLowerCase()))
+        .slice(0, 7);
+    },
 
-    return {
-      onStart: (props: any) => {
-        if (!props.clientRect) {
-          return;
-        }
+    render: () => {
+      let reactRenderer: ReactRenderer;
+      let popup: any;
 
-        reactRenderer = new ReactRenderer(MentionList, {
-          props,
-          editor: props.editor,
-        });
+      return {
+        onStart: (props: any) => {
+          if (!props.clientRect) {
+            return;
+          }
 
-        popup = tippy("body", {
-          getReferenceClientRect: props.clientRect,
-          appendTo: () => document.body,
-          content: reactRenderer.element,
-          showOnCreate: true,
-          interactive: true,
-          trigger: "manual",
-          placement: "bottom-start",
-        });
-      },
+          reactRenderer = new ReactRenderer(MentionList, {
+            props,
+            editor: props.editor,
+          });
 
-      onUpdate(props: any) {
-        reactRenderer.updateProps(props);
+          popup = tippy("body", {
+            getReferenceClientRect: props.clientRect,
+            appendTo: () => document.body,
+            content: reactRenderer.element,
+            showOnCreate: true,
+            interactive: true,
+            trigger: "manual",
+            placement: "bottom-start",
+          });
+        },
 
-        if (!props.clientRect) {
-          return;
-        }
+        onUpdate(props: any) {
+          reactRenderer.updateProps(props);
 
-        popup[0].setProps({
-          getReferenceClientRect: props.clientRect,
-        });
-      },
+          if (!props.clientRect) {
+            return;
+          }
 
-      onKeyDown(props: any) {
-        if (props.event.key === "Escape") {
-          popup[0].hide();
+          popup[0].setProps({
+            getReferenceClientRect: props.clientRect,
+          });
+        },
 
-          return true;
-        }
+        onKeyDown(props: any) {
+          if (props.event.key === "Escape") {
+            popup[0].hide();
 
-        return (reactRenderer.ref as any)?.onKeyDown(props);
-      },
+            return true;
+          }
 
-      onExit() {
-        popup[0].destroy();
-        reactRenderer.destroy();
-      },
-    };
-  },
-};
+          return (reactRenderer.ref as any)?.onKeyDown(props);
+        },
+
+        onExit() {
+          popup[0].destroy();
+          reactRenderer.destroy();
+        },
+      };
+    },
+  };
+}

@@ -8,7 +8,10 @@ const LeftSidebar = () => {
   return (
     <Box
       sx={{
+        position: "relative",
         height: "100%",
+        maxHeight: "100vh",
+        overflow: "hidden",
         display: "flex",
         flexDirection: "column",
         pointerEvents: "all",
@@ -20,26 +23,28 @@ const LeftSidebar = () => {
 
       <Box
         sx={{
+          position: "relative",
           display: "flex",
           height: "100%",
+          maxHeight: "100%",
+          overflow: "hidden",
           width: "100%",
         }}
       >
-        <Split
-          sizes={[30, 70]} // initial split percentage between Explorer and NoteArea
-          minSize={200} // minimum size of each panel in pixels
-          gutterSize={5} // size of the draggable area (resizer)
-          gutterAlign="center"
-          direction="horizontal"
-          style={{ display: "flex", width: "100%", height: "100%" }}
+        <Box
+          sx={{
+            height: "100%",
+            minWidth: "240px",
+            maxWidth: "240px",
+            overflow: "auto",
+          }}
         >
-          <Box sx={{ height: "100%", overflow: "auto" }}>
-            <Explorer />
-          </Box>
-          <Box sx={{ height: "100%", overflow: "auto" }}>
-            <NoteArea />
-          </Box>
-        </Split>
+          <Explorer />
+        </Box>
+        
+        <Box sx={{ height: "100%", maxHeight: "100%", overflow: "hidden" }}>
+          <NoteArea />
+        </Box>
       </Box>
     </Box>
   );
