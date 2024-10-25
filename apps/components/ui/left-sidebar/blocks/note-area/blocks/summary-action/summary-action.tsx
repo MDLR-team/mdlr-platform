@@ -2,9 +2,15 @@ import { Box, Button, TextField, CircularProgress } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useEffect, useState } from "react";
 import { useActionArea } from "../actions-area/actions-area";
+import { useComment } from "@/components/services/project-services/comment-service/comment-provider";
+import { useProject } from "@/components/services/project-services/project-service/project-provider";
 
 const SummaryAction = () => {
   const { actionType, editor } = useActionArea();
+  const { projectService } = useProject();
+  const { comments } = useComment();
+
+  const promptSearchService = projectService.promptSearchService;
 
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
@@ -13,7 +19,17 @@ const SummaryAction = () => {
     setLoading(true);
 
     if (editor) {
-      const wrappedValue = `[realtime-summary]${value}[/realtime-summary]`;
+      const systemMessage = `Summarize the AEC-related comments based on the user's prompt: "${value}". Use only the comments provided, keeping the response within 1000 characters, and divide it into paragraphs for clear readability. No additional information beyond these comments.`;
+      const userMessage = comments
+        .map((comment) => `[${comment.author_username}]: ${comment.content}`)
+        .join("\n");
+
+      const result = await promptSearchService.sendGptRequest(
+        systemMessage,
+        userMessage
+      );
+
+      const wrappedValue = `[realtime-summary]${result}[/realtime-summary]`;
 
       editor.chain().focus().insertContent(wrappedValue).run();
     }
