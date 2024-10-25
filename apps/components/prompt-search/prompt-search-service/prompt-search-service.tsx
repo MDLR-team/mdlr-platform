@@ -195,6 +195,10 @@ class PromptSearchService {
     this.loading$.next(false);
   }
 
+  public sendGptRequest(systemMessage: string, userMessage: string) {
+    return this._sendGptRequest(systemMessage, userMessage);
+  }
+
   public clearFilteredIds() {
     this.filteredIds$.next(null);
   }
