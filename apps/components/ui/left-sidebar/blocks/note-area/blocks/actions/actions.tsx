@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Button, Box } from "@mui/material";
 import { useActionArea } from "../actions-area/actions-area";
 import { ActionType } from "../actions-area/actions-area.types";
+import AiIcon from "@/components/ui/icons/ai-icon";
 
 const Actions = () => {
   const { actionType, handleAction } = useActionArea();
@@ -49,9 +50,13 @@ const Actions = () => {
             border: "1px solid var(--gray-3)",
             fontWeight: "bold",
             padding: "8px 16px",
+            minHeight: "48px",
+            borderRadius: "var(--mr-border-radius)",
+            backgroundColor: "#fff",
           }}
           size="large"
           onClick={handleButtonClick}
+          startIcon={<AiIcon />} // Add your icon component here
         >
           Actions
         </Button>

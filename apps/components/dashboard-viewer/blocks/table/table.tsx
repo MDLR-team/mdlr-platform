@@ -121,7 +121,7 @@ const TableWrapper = styled.div`
   width: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
-  border-bottom: 2px solid #e0e0e0;
+  border-bottom: 2px solid var(--mr-border-color);
 `;
 
 const TableLayout = styled.div`

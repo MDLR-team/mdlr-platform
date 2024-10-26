@@ -120,6 +120,7 @@ const TipTapStyles = css`
     color: blue;
     padding: 2px 4px;
     border-radius: 4px;
+    font-size: inherit;
     cursor: pointer; /* Make mentions clickable */
   }
 
@@ -215,7 +216,7 @@ const TipTapStyles = css`
     max-width: max-content;
     border: 1px solid var(--gray-4);
 
-    border-radius: 9px;
+    border-radius: var(--mr-border-radius);
     padding: 2px;
 
     cursor: pointer;
@@ -235,6 +236,10 @@ const TipTapStyles = css`
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+
+    & .ed-comment-text {
+      font-size: 15px;
     }
   }
 `;
@@ -290,6 +295,14 @@ const GlobalStyle = createGlobalStyle`
     --red: #FF5C33;
     --red-light: #FFEBE5;
     --shadow: 0px 12px 33px 0px rgba(0, 0, 0, .06), 0px 3.618px 9.949px 0px rgba(0, 0, 0, .04);
+
+    --mr-border-radius: 9px;
+    --mr-border-color: #E0E0E0;
+    --mr-border: 1px solid var(--mr-border-color);
+
+    --mr-icon-scale: 1.2;
+
+    --mr-gap-m: 10px;
   }
 
   body {
@@ -376,9 +389,9 @@ const GlobalStyle = createGlobalStyle`
   & .MuiPaper-root {
     & {
       & {
-        border-radius: 8px !important;
-        border: 1px solid #E0E0E0 !important;
-        box-shadow: none !important;
+        border-radius: var(--mr-border-radius) !important;
+        border: var(--mr-border) !important;
+        box-shadow: var(--shadow) !important;
         position: relative;
         display: flex;
         gap: 9px;

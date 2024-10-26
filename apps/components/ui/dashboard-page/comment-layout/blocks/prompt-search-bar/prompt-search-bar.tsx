@@ -75,7 +75,7 @@ const PromptSearchBar: React.FC<{
                   sx={{
                     background: "white",
                     color: "black",
-                    border: "1px solid #E0E0E0",
+                    border: "var(--mr-border)",
                     backgroundColor: "#F3F4F6 !important",
                     borderRadius: "9px",
                     textTransform: "none",

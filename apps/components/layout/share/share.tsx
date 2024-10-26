@@ -56,7 +56,7 @@ const Share = () => {
 
   return (
     <>
-      <Box sx={{ display: "flex", columnGap: "9px" }}>
+      <Box sx={{ display: "flex", alignItems: "center", columnGap: "9px" }}>
         <AvatarGroup max={100}>
           {projectUsers.map((projectUser, i) => (
             <Avatar key={i} username={projectUser.username} size="large" />
@@ -67,7 +67,18 @@ const Share = () => {
           sx={{ minWidth: "97px" }}
           color="primary"
           variant="contained"
-          startIcon={<ShareIcon />}
+          startIcon={
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                height: "100%",
+                transform: "scale(var(--mr-icon-scale))",
+              }}
+            >
+              <ShareIcon />
+            </Box>
+          }
           onClick={handleOpen}
         >
           Share

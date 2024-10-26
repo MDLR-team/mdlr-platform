@@ -103,7 +103,7 @@ const SyncExplorer = () => {
           sx={{
             maxHeight: "max-content !important",
             display: "block",
-            border: "0px solid #e0e0e0 !important",
+            border: "0px !important",
           }}
         >
           <Button

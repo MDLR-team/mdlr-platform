@@ -5,39 +5,56 @@ import FolderAddIcon from "@/components/ui/icons/folder-add-icon";
 import FilterLineIcon from "@/components/ui/icons/filter-line-icon";
 import CommentsIcon from "@/components/ui/icons/comments-icon";
 import CommentIcon from "@/components/ui/icons/comment-icon";
+import { useLeftSidebar } from "../../use-left-sidebar";
 
 const Explorer = () => {
+  const { isExplorerOpen } = useLeftSidebar();
+
+  if (!isExplorerOpen) {
+    return null;
+  }
+
   return (
     <Box
       sx={{
         height: "100%",
-        borderRight: "1px solid #e0e0e0",
-        backgroundColor: "#F6F6F6",
-        display: "flex",
-        flexDirection: "column",
-        padding: "10px",
-        gap: "20px",
+        minWidth: "240px",
+        maxWidth: "240px",
+        overflow: "auto",
+        transition: "all 0.3s",
       }}
     >
       <Box
         sx={{
+          height: "100%",
+          borderRight: "var(--mr-border)",
+          backgroundColor: "#F6F6F6",
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "10px",
-          width: "100%",
+          flexDirection: "column",
+          padding: "10px",
+          gap: "20px",
         }}
       >
-        <IconButton>
-          <NoteAddIcon />
-        </IconButton>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "10px",
+            width: "100%",
+          }}
+        >
+          <IconButton>
+            <NoteAddIcon />
+          </IconButton>
 
-        <IconButton>
-          <FilterLineIcon />
-        </IconButton>
+          <IconButton>
+            <FilterLineIcon />
+          </IconButton>
+        </Box>
+
+        <Tree />
       </Box>
-
-      <Tree />
     </Box>
   );
 };

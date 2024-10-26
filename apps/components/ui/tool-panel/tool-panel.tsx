@@ -47,8 +47,19 @@ const ToolPanel = () => {
     <Box sx={{ position: "relative" }}>
       <SelectionPanel />
 
-      <Paper sx={{ display: "flex", gap: "6px", minWidth: "max-content" }}>
-        <IconButton data-active="true">
+      <Paper
+        sx={{
+          display: "flex",
+          gap: "var(--mr-gap-m)",
+          minWidth: "max-content",
+        }}
+      >
+        <IconButton
+          data-active="true"
+          sx={{
+            transform: "scale(var(--mr-icon-scale))",
+          }}
+        >
           <CursorIcon />
         </IconButton>
 
@@ -56,6 +67,9 @@ const ToolPanel = () => {
           data-active={commentAdding ? "true" : "false"}
           onClick={() => {
             markupService.activateTool("ADD_COMMENT");
+          }}
+          sx={{
+            transform: "scale(var(--mr-icon-scale))",
           }}
         >
           <CommentIcon />
@@ -66,6 +80,9 @@ const ToolPanel = () => {
           onClick={() => {
             markupService.activateTool("MEASURE");
           }}
+          sx={{
+            transform: "scale(var(--mr-icon-scale))",
+          }}
         >
           <MeasureIcon />
         </IconButton>
@@ -74,6 +91,9 @@ const ToolPanel = () => {
           <IconButton
             data-active={measureEnabled ? "true" : "false"}
             onClick={openStructurePanel}
+            sx={{
+              transform: "scale(var(--mr-icon-scale))",
+            }}
           >
             <ConfigsIcon />
           </IconButton>

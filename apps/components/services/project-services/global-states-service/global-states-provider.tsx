@@ -14,6 +14,7 @@ interface GlobalStatesProps {
   globalStatesService: GlobalStatesService;
   isSettingsPanelOpen: boolean;
   isCommentsPanelOpen: boolean;
+  isNotePanelOpen: boolean;
   commentAdding: boolean;
   commentAwaitingSelection: boolean;
   commentPointSelected: boolean;
@@ -47,6 +48,7 @@ export const GlobalStatesProvider: React.FC<ProviderProps> = ({ children }) => {
   // UI Panel States
   const [isSettingsPanelOpen, setIsSettingsPanelOpen] = useState(false);
   const [isCommentsPanelOpen, setIsCommentsPanelOpen] = useState(false);
+  const [isNotePanelOpen, setIsNotePanelOpen] = useState(true);
   const [isAiTopicsOpen, setIsAiTopicsOpen] = useState(false);
 
   // States related to the comment adding process
@@ -67,6 +69,7 @@ export const GlobalStatesProvider: React.FC<ProviderProps> = ({ children }) => {
       setCommentAdding,
       setCommentAwaitingSelection,
       setCommentPointSelected,
+      setIsNotePanelOpen,
     });
   }, [router?.isReady]); // Depend on router readiness
 
@@ -75,6 +78,7 @@ export const GlobalStatesProvider: React.FC<ProviderProps> = ({ children }) => {
     globalStatesService,
     isSettingsPanelOpen,
     isCommentsPanelOpen,
+    isNotePanelOpen,
     commentAdding,
     commentAwaitingSelection,
     commentPointSelected,

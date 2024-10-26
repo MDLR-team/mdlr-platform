@@ -23,7 +23,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Grid = styled.div`
-  padding: 9px;
+  padding: var(--mr-gap-m);
   width: 100%;
   height: 100%;
   pointer-events: none;

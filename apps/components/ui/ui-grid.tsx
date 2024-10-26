@@ -17,15 +17,18 @@ import LeftSidebar from "./left-sidebar/left-sidebar";
 import { Box } from "@mui/material";
 import Split from "react-split";
 import ViewerW from "../forge/viewer-w";
+import { useGlobalStates } from "../services/project-services/global-states-service/global-states-provider";
 
 const UIGrid = () => {
+  const { isNotePanelOpen } = useGlobalStates();
+
   return (
     <>
       <Wrapper>
         <Split
-          sizes={[40, 60]}
-          minSize={200}
-          gutterSize={1}
+          sizes={isNotePanelOpen ? [40, 60] : [0, 100]} // Adjust sizes based on sidebar state
+          minSize={isNotePanelOpen ? 200 : 0} // Minimum size when sidebar is open
+          gutterSize={isNotePanelOpen ? 1 : 0}
           gutterAlign="center"
           direction="horizontal"
           style={{ display: "flex", width: "100%", height: "100%" }}

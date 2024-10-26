@@ -26,7 +26,7 @@ const SidebarContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  border-right: 1px solid #e0e0e0;
+  border-right: var(--mr-border);
 
   & .MuiButtonBase-root:hover {
     background-color: #dfdfdf;

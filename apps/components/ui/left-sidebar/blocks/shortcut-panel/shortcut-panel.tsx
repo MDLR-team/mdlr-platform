@@ -12,7 +12,7 @@ const Panel = styled(Box)({
   flexDirection: "column",
   alignItems: "center",
   backgroundColor: "#f0f0f0",
-  borderRight: "1px solid #e0e0e0",
+  borderRight: "var(--mr-border)",
   padding: "10px 0",
 });
 

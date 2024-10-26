@@ -8,7 +8,7 @@ const TopBar = () => {
         height: "45px",
         minHeight: "45px",
         backgroundColor: "rgba(255, 255, 255, 0.7)",
-        borderBottom: "1px solid #e0e0e0",
+        borderBottom: "var(--mr-border)",
         paddingLeft: "20px",
         padding: "5px 5px 0px 5px",
         pointerEvents: "all",
@@ -25,7 +25,7 @@ const TopBar = () => {
               padding: "0px 14px",
               display: "flex",
               alignItems: "center",
-              borderRight: "1px solid #e0e0e0",
+              borderRight: "var(--mr-border)",
               cursor: "pointer",
               backgroundColor:
                 i === 2 ? "rgba(255, 255, 255, 1)" : "transparent",

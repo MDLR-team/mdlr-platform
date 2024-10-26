@@ -18,7 +18,7 @@ const PagesPanel = () => {
         variant="contained"
         sx={{
           backgroundColor: false ? "#FEFAE5 !important" : "white !important",
-          border: false ? "1px solid #E0E0E0 !important" : "none",
+          border: false ? "var(--mr-border) !important" : "none",
           color: "black",
           display: "flex",
           alignItems: "center",
@@ -37,7 +37,7 @@ const PagesPanel = () => {
           variant="contained"
           sx={{
             backgroundColor: false ? "#FEFAE5 !important" : "white !important",
-            border: false ? "1px solid #E0E0E0 !important" : "none",
+            border: false ? "var(--mr-border) !important" : "none",
             color: "black",
             display: "flex",
             alignItems: "center",

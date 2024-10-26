@@ -6,10 +6,15 @@ import CommentsIcon from "../icons/comments-icon";
 import SettingsPanel from "./blocks/settings-panel/settings-panel";
 import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
 import DynamicTitle from "./blocks/dynamic-title/dynamic-title";
+import NoteIcon from "../icons/note-icon";
 
 const Bar = () => {
-  const { globalStatesService, isSettingsPanelOpen, isCommentsPanelOpen } =
-    useGlobalStates();
+  const {
+    globalStatesService,
+    isSettingsPanelOpen,
+    isCommentsPanelOpen,
+    isNotePanelOpen,
+  } = useGlobalStates();
 
   return (
     <>
@@ -39,17 +44,41 @@ const Bar = () => {
             </TitleWrapper>
           </Box>
 
-          <Box sx={{ display: "flex", columnGap: "6px" }}>
+          <Box sx={{ display: "flex", columnGap: "var(--mr-gap-m)" }}>
             <IconButton
               onClick={() => globalStatesService.toggleCommentsPanel()}
               data-active={isCommentsPanelOpen ? "true" : "false"}
+              sx={{
+                transform: "scale(var(--mr-icon-scale))",
+              }}
             >
-              <CommentsIcon />
+              <Box
+                sx={{
+                  transform: "scale(1.1)",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <CommentsIcon />
+              </Box>
+            </IconButton>
+
+            <IconButton
+              onClick={() => globalStatesService.toggleNotePanel()}
+              data-active={isNotePanelOpen ? "true" : "false"}
+              sx={{
+                transform: "scale(var(--mr-icon-scale))",
+              }}
+            >
+              <NoteIcon />
             </IconButton>
 
             <IconButton
               onClick={() => globalStatesService.toggleSettingsPanel()}
               data-active={isSettingsPanelOpen ? "true" : "false"}
+              sx={{
+                transform: "scale(var(--mr-icon-scale))",
+              }}
             >
               <SettingsIcon />
             </IconButton>
