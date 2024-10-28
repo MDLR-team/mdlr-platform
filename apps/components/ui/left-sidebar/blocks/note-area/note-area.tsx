@@ -31,7 +31,7 @@ const NoteArea = () => {
       CommentReference,
       RealtimeSummary,
     ],
-    content: `<h1>Roof Drainage System Review</h1><p>Today, we focused on reviewing the roof drainage system for the new civic center. There’s been ongoing concern about whether the current system can handle the expected rainfall levels, especially with the increasing unpredictability of weather patterns</p><p></p><p><span class="mention" data-type="mention" data-id="Christina Applegate">@Christina Applegate</span> pointed out a potential risk of overflow during heavy rains. I’ve tagged Charlie Davies to check the system’s capacity, but there seems to be an underlying feeling that we might need to upgrade the drainage system entirely.</p><p></p><p><span class="mention" data-type="mention" data-id="Cyndi Lauper">@Cyndi Lauper</span> I’m still reflecting on how this decision will impact the project timeline and budget, but better to raise these concerns now than deal with them later when issues become more costly to fix. Tomorrow, I’ll have to schedule a meeting to review potential design revisions based on today’s findings.</p>`,
+    content: `<h1>Untitled Document</h1><p>Click "Actions" to add any AI actions, or use mentions to tag someone.</p>`,
     onUpdate: ({ editor }) => {
       const text = editor.getText();
 
@@ -83,6 +83,8 @@ const NoteArea = () => {
       while ((match = summaryPattern.exec(text)) !== null) {
         const summaryText = match[1]; // Extract the summary text
 
+        console.log("summaryText", summaryText);
+
         // Find the position of the matched [realtime-summary]...[/realtime-summary] in the document
         editor.state.doc.descendants((node, pos) => {
           if (
@@ -125,7 +127,26 @@ const NoteArea = () => {
   });
 
   return (
-    <Wrapper style={{ position: "relative" }} className="note-area">
+    <Wrapper
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        width: "100%",
+        height: "100%",
+      }}
+      className="note-area"
+    >
+      <Box
+        sx={{
+          position: "absolute",
+          width: "100%",
+          height: "100%",
+          overflow: "scroll",
+        }}
+      >
+        <EditorContent editor={editor} className="tiptap-editor" />
+      </Box>
+
       <Box
         sx={{
           position: "absolute",
@@ -141,10 +162,6 @@ const NoteArea = () => {
         }}
       >
         <ActionsArea editor={editor} />
-      </Box>
-
-      <Box sx={{ position: "relative", width: "100%", height: "100%" }}>
-        <EditorContent editor={editor} className="tiptap-editor" />
       </Box>
     </Wrapper>
   );

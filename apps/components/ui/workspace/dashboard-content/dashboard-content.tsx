@@ -30,7 +30,7 @@ const Content = () => {
           <InputBase
             sx={{
               flex: 1,
-              border: "0px solid #e0e0e0",
+              border: "0px",
               borderRadius: "9px",
               height: "33px",
               fontSize: "12px",

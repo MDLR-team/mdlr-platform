@@ -3,8 +3,13 @@ import FolderIcon from "@/components/ui/icons/folder-icon";
 import SearchIcon from "@/components/ui/icons/search-icon";
 import SidebarIcon from "@/components/ui/icons/sidebar-icon";
 import { Box, IconButton } from "@mui/material";
+import { useLeftSidebar } from "../../use-left-sidebar";
+import { useGlobalStates } from "@/components/services/project-services/global-states-service/global-states-provider";
 
 const NavBar = () => {
+  const { isExplorerOpen, handleExplorerToggle } = useLeftSidebar();
+  const { globalStatesService } = useGlobalStates();
+
   return (
     <Box
       sx={{
@@ -12,10 +17,41 @@ const NavBar = () => {
         width: "100%",
         height: "45px",
         minHeight: "45px",
+        justifyContent: "space-between",
         backgroundColor: "#FCFCFC",
-        borderBottom: "1px solid #e0e0e0",
+        borderBottom: "var(--mr-border)",
       }}
     >
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          gap: "var(--mr-gap-m)",
+          alignItems: "center",
+          paddingLeft: "10px",
+          pointerEvents: "all",
+        }}
+      >
+        <IconButton
+          sx={{
+            transform: "scale(var(--mr-icon-scale))",
+          }}
+          data-active={isExplorerOpen ? "true" : "false"}
+          onClick={handleExplorerToggle}
+        >
+          <FolderIcon />
+        </IconButton>
+
+        <IconButton
+          sx={{
+            transform: "scale(var(--mr-icon-scale))",
+          }}
+        >
+          <SearchIcon />
+        </IconButton>
+      </Box>
+
       <Box
         sx={{
           minWidth: "50px",
@@ -24,30 +60,13 @@ const NavBar = () => {
           justifyContent: "center",
         }}
       >
-        <SidebarIcon />
-      </Box>
-
-      <Box
-        sx={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          gap: "10px",
-          alignItems: "center",
-          paddingLeft: "10px",
-          pointerEvents: "all",
-        }}
-      >
-        <IconButton data-active="active">
-          <FolderIcon />
-        </IconButton>
-
-        <IconButton>
-          <SearchIcon />
-        </IconButton>
-
-        <IconButton>
-          <BookmarkIcon />
+        <IconButton
+          sx={{
+            transform: "scale(var(--mr-icon-scale))",
+          }}
+          onClick={() => globalStatesService.toggleNotePanel()}
+        >
+          <SidebarIcon />
         </IconButton>
       </Box>
     </Box>

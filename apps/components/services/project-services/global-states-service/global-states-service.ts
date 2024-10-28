@@ -4,6 +4,7 @@ import ProjectService from "../project-service/project-service";
 class GlobalStatesService {
   private _isSettingsPanelOpen: boolean = false;
   private _isCommentsPanelOpen: boolean = false;
+  private _isNotePanelOpen: boolean = false;
 
   private _commentAdding: boolean = false;
   private _commentAwaitingSelection: boolean = false;
@@ -14,6 +15,7 @@ class GlobalStatesService {
   private $setCommentAdding: any;
   private $setCommentAwaitingSelection: any;
   private $setCommentPointSelected: any;
+  private $setIsNotePanelOpen: any;
 
   constructor(private _projectService: ProjectService) {}
 
@@ -29,6 +31,12 @@ class GlobalStatesService {
       v !== undefined ? v : !this._isCommentsPanelOpen;
 
     this.$setIsCommentsPanelOpen(this._isCommentsPanelOpen);
+  }
+
+  public toggleNotePanel(v?: boolean) {
+    this._isNotePanelOpen = v !== undefined ? v : !this._isNotePanelOpen;
+
+    this.$setIsNotePanelOpen(this._isNotePanelOpen);
   }
 
   public toggleCommentAdding(v?: boolean) {
@@ -59,6 +67,7 @@ class GlobalStatesService {
   public provideStates(states: States) {
     this.$setIsSettingsPanelOpen = states.setIsSettingsPanelOpen;
     this.$setIsCommentsPanelOpen = states.setIsCommentsPanelOpen;
+    this.$setIsNotePanelOpen = states.setIsNotePanelOpen;
 
     this.$setCommentAdding = states.setCommentAdding;
     this.$setCommentAwaitingSelection = states.setCommentAwaitingSelection;
@@ -68,6 +77,7 @@ class GlobalStatesService {
   public setInitalValues() {
     this.$setIsSettingsPanelOpen(this._isSettingsPanelOpen);
     this.$setIsCommentsPanelOpen(this._isCommentsPanelOpen);
+    this.$setIsNotePanelOpen(this._isNotePanelOpen);
 
     this.$setCommentAdding(this._commentAdding);
     this.$setCommentAwaitingSelection(this._commentAwaitingSelection);
@@ -83,6 +93,7 @@ interface States {
   setCommentAdding: any;
   setCommentAwaitingSelection: any;
   setCommentPointSelected: any;
+  setIsNotePanelOpen: any;
 }
 
 export default GlobalStatesService;

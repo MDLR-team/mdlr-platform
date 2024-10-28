@@ -220,7 +220,7 @@ const CommentMessage: React.FC<{}> = () => {
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     borderRadius: "8px",
-                    border: "1px solid #E0E0E0",
+                    border: "var(--mr-border)",
                   }}
                 ></Box>
               ))}
