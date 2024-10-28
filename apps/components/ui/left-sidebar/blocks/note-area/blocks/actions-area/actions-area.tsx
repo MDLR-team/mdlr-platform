@@ -7,7 +7,7 @@ import { Editor } from "@tiptap/react";
 // Define the context type
 interface ActionAreaContextType {
   actionType: ActionType | null;
-  handleAction: (type: ActionType) => void;
+  handleAction: (type: ActionType | null) => void;
   editor: Editor;
 }
 
@@ -26,7 +26,7 @@ const ActionAreaProvider = ({
 }) => {
   const [actionType, setActionType] = useState<ActionType | null>(null);
 
-  const handleAction = (type: ActionType) => {
+  const handleAction = (type: ActionType | null) => {
     setActionType(type);
   };
 

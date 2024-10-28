@@ -31,10 +31,9 @@ const NoteArea = () => {
       CommentReference,
       RealtimeSummary,
     ],
-    content: `<h1>Roof Drainage System Review</h1><p>Today, we focused on reviewing the roof drainage system for the new civic center. There’s been ongoing concern about whether the current system can handle the expected rainfall levels, especially with the increasing unpredictability of weather patterns</p><p></p><p><span class="mention" data-type="mention" data-id="Christina Applegate">@Christina Applegate</span> pointed out a potential risk of overflow during heavy rains. I’ve tagged Charlie Davies to check the system’s capacity, but there seems to be an underlying feeling that we might need to upgrade the drainage system entirely.</p><p></p><p><span class="mention" data-type="mention" data-id="Cyndi Lauper">@Cyndi Lauper</span> I’m still reflecting on how this decision will impact the project timeline and budget, but better to raise these concerns now than deal with them later when issues become more costly to fix. Tomorrow, I’ll have to schedule a meeting to review potential design revisions based on today’s findings.</p>`,
+    content: `<h1>Untitled Document</h1><p>Click "Actions" to add any AI actions, or use mentions to tag someone.</p>`,
     onUpdate: ({ editor }) => {
       const text = editor.getText();
-      console.log(text);
 
       const ticketPattern = /\$([0-9]+)/g; // Match $ followed by a number (e.g., $575)
       const summaryPattern = /\[realtime-summary\](.*?)\[\/realtime-summary\]/g; // Match [realtime-summary]...[/realtime-summary]
