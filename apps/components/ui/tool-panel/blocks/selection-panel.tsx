@@ -1,4 +1,4 @@
-import { useViewer } from "@/components/forge/viewer-provider";
+import { useViewer } from "@/components/viewer-entity/forge-viewer/viewer-provider";
 import { Box, Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 

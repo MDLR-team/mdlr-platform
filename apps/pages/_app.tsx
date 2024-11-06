@@ -303,6 +303,10 @@ const GlobalStyle = createGlobalStyle`
     --mr-icon-scale: 1.2;
 
     --mr-gap-m: 10px;
+
+    --beidge: #F1F0EE;
+
+    --viewer-background: var(--beidge);
   }
 
   body {
