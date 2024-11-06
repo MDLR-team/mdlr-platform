@@ -1,5 +1,5 @@
 import NodeService from "@/components/canvas/node-service/node-service";
-import { ForgeTokenResponse } from "@/components/forge/viewer-aggr";
+import { ForgeTokenResponse } from "@/components/viewer-entity/forge-viewer/viewer-aggr";
 import { ProjectTopic } from "@/components/services/project-services/project-service/project-service";
 import { supabase } from "@/components/supabase-client";
 import { Project } from "@/components/types/supabase-data.types";

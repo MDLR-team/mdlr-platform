@@ -1,6 +1,6 @@
 import { CommentProvider } from "@/components/services/project-services/comment-service/comment-provider";
-import { ViewerProvider } from "@/components/forge/viewer-provider";
-import ViewerW from "@/components/forge/viewer-w";
+import { ViewerProvider } from "@/components/viewer-entity/forge-viewer/viewer-provider";
+import ViewerW from "@/components/viewer-entity/forge-viewer/viewer-w";
 import { ProjectProvider } from "@/components/services/project-services/project-service/project-provider";
 import UIGrid from "@/components/ui/ui-grid";
 import { GlobalStatesProvider } from "@/components/services/project-services/global-states-service/global-states-provider";

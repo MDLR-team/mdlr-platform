@@ -32,7 +32,7 @@ const WhiteboardViewerX = () => {
         width: "100%",
         height: "100%",
         overflow: "hidden",
-        backgroundColor: "rgba(0,0,0,0.8)",
+        backgroundColor: "var(--viewer-background)",
       }}
     >
       <ReactFlow

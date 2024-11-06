@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import ViewerServiceAggr from "./viewer-service-aggr";
-import ProjectService from "../services/project-services/project-service/project-service";
+import ProjectService from "../../services/project-services/project-service/project-service";
 
 class Viewer extends React.Component {
   private _isViewerInitialized: boolean;

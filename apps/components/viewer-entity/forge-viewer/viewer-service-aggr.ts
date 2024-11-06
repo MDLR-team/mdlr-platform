@@ -1,5 +1,5 @@
 import { BehaviorSubject } from "rxjs";
-import ProjectService from "../services/project-services/project-service/project-service";
+import ProjectService from "../../services/project-services/project-service/project-service";
 import Viewer from "./viewer-aggr";
 
 class ViewerServiceAggr {

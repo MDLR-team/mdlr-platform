@@ -1,7 +1,7 @@
 import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
 import ProjectService from "../project-services/project-service/project-service";
 import axios from "axios";
-import { ForgeTokenResponse } from "@/components/forge/viewer-aggr";
+import { ForgeTokenResponse } from "@/components/viewer-entity/forge-viewer/viewer-aggr";
 
 class ApsService {
   constructor(private projectService: ProjectService) {}

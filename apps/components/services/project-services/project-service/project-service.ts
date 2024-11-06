@@ -4,7 +4,7 @@ import { SupabaseClient } from "@supabase/supabase-js";
 import { Project } from "@/components/types/supabase-data.types";
 import GlobalStatesService from "../global-states-service/global-states-service";
 import CommentService from "../comment-service/comment-service";
-import ViewerServiceAggr from "@/components/forge/viewer-service-aggr";
+import ViewerServiceAggr from "@/components/viewer-entity/forge-viewer/viewer-service-aggr";
 import AuthService from "../../app-services/auth/auth-service";
 import { CLIENT_ID } from "@/pages/api/token";
 import { BehaviorSubject } from "rxjs";

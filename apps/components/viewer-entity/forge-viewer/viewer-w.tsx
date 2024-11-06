@@ -2,8 +2,9 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useViewer } from "./viewer-provider";
 import Viewer from "./viewer-aggr";
-import { useProject } from "../services/project-services/project-service/project-provider";
-import { useGlobalStates } from "../services/project-services/global-states-service/global-states-provider";
+import { useProject } from "../../services/project-services/project-service/project-provider";
+import { useGlobalStates } from "../../services/project-services/global-states-service/global-states-provider";
+import WhiteboardViewer from "../../whiteboard-viewer/whiteboard-viewer";
 
 const ViewerW = () => {
   const { projectService } = useProject();

@@ -6,7 +6,7 @@ import MeasureIcon from "../icons/measure-icon";
 import { useMarkup } from "@/components/services/markup-service/markup-provider";
 import { useEffect, useState } from "react";
 import { useProject } from "@/components/services/project-services/project-service/project-provider";
-import { useViewer } from "@/components/forge/viewer-provider";
+import { useViewer } from "@/components/viewer-entity/forge-viewer/viewer-provider";
 import ConfigsIcon from "../icons/configs-icon";
 import SelectionPanel from "./blocks/selection-panel";
 
