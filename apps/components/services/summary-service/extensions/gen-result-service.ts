@@ -36,6 +36,44 @@ class GenResultService {
     );
 
     await this._summaryService.updateSummary(activeSummary.id, { content });
+
+    // Create a system message for relevance checking
+    const relevanceSystemMessage = `Given the user's prompt: "${userPrompt}" and the following comments, indicate for each comment whether it is relevant to the summary based on the user's prompt. For each comment, respond with "Yes" or "No" in the same order as the comments provided. Please only provide "Yes" or "No" for each comment, in the same order, separated by newlines.`;
+
+    // Send the relevance checking request
+    const relevanceResponse = await this._summaryService.sendGptRequest(
+      relevanceSystemMessage,
+      userMessage
+    );
+
+    // Process the response
+    const relevanceArray = relevanceResponse
+      .split("\n")
+      .map((line) => line.trim());
+
+    if (relevanceArray.length !== comments.length) {
+      // Handle error: mismatch in lengths
+      console.error("Mismatch between comments and relevance response lengths");
+      // Optionally, you can throw an error or handle it as per your application's logic
+    }
+
+    // Map each comment to its relevance
+    const commentsWithRelevance = comments
+      .map((comment, index) => ({
+        ...comment,
+        isRelevant: relevanceArray[index].toLowerCase() === "yes",
+      }))
+      .filter((comment) => comment.isRelevant);
+
+    // add them to content with a separator and as $id
+    const contentWithRelevance = commentsWithRelevance
+      .map((comment) => `$${comment.id}`)
+      .join("\n\n");
+
+    // Add the content with relevance to the summary
+    await this._summaryService.updateSummary(activeSummary.id, {
+      content: `${content}\n\n${contentWithRelevance}`,
+    });
   };
 
   public dispose() {}
