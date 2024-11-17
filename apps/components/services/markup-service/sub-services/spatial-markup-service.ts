@@ -126,8 +126,16 @@ class SpatialMarkupService {
    * @param markup - The markup to set the position for.
    */
   private setPosition = (markup: Markup2D): void => {
-    const canvas = this.markupService.svg2DCanvas;
+    let canvas = this.markupService.svg2DCanvas;
+    if (!canvas) {
+      this.markupService.checkCanvases();
+      canvas = this.markupService.svg2DCanvas;
+    }
+
     const { x, y } = deparseNormalizedCoords(markup.position, canvas!);
+
+    console.log("Setting position", x, y);
+
     markup.svg.setAttribute("transform", `translate(${x}, ${y - 27})`);
     if (markup.htmlElement) {
       markup.htmlElement.style.left = `${x + 37}px`;
@@ -158,7 +166,12 @@ class SpatialMarkupService {
 
     // Update tempEnt3D positions
     this.markupService.tempEnt2D$.value.forEach((tempEnt2D) => {
-      const canvas = this.markupService.svg2DCanvas;
+      let canvas = this.markupService.svg2DCanvas;
+      if (!canvas) {
+        this.markupService.checkCanvases();
+        canvas = this.markupService.svg2DCanvas;
+      }
+
       const { x, y } = deparseNormalizedCoords(tempEnt2D.position, canvas!);
       tempEnt2D.callback({ x, y });
     });

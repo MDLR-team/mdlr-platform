@@ -11,8 +11,6 @@ const Content = () => {
 
   const { setSettingsOpened, setSettingsTab } = useWorkspace();
 
-  console.log("projects", projects);
-
   return (
     <Wrapper>
       <Box
