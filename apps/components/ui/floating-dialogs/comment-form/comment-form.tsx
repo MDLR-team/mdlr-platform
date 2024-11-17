@@ -14,6 +14,7 @@ import { useProject } from "@/components/services/project-services/project-servi
 import handleImageUpload from "./blocks/utils/handle-image-upload";
 
 export const FloatingComment = () => {
+  const { viewerType } = useProject();
   const { markupService } = useMarkup();
 
   const [pendingComment, setPendingComment] = useState<Partial<Comment> | null>(
@@ -22,23 +23,25 @@ export const FloatingComment = () => {
   const [xy, setXY] = useState<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
-    const sub1 = markupService.pendingComment$.subscribe((comment) =>
-      setPendingComment(comment)
-    );
+    const sub1 = markupService.pendingComment$.subscribe((comment) => {
+      setPendingComment(comment);
+    });
 
-    const sub2 = markupService.pendingCommentService.xy$.subscribe((xy) =>
-      setXY(xy)
-    );
+    const sub2 = markupService.pendingCommentService.xy$.subscribe((xy) => {
+      setXY(xy);
+    });
 
     return () => {
       sub1.unsubscribe();
       sub2.unsubscribe();
     };
-  });
+  }, [viewerType]);
 
-  if (!pendingComment || !xy) return <></>;
+  if (!pendingComment || !xy) return null;
 
-  return <CommentForm markupPosition={xy} />;
+  const tweakedXY = viewerType === "es" ? { x: 400, y: 500 - 50 } : xy;
+
+  return <CommentForm markupPosition={tweakedXY} />;
 };
 
 const CommentForm: React.FC<{

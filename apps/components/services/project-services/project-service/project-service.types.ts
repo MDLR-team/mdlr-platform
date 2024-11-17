@@ -1,1 +1,1 @@
-export type ViewerType = null | "aps" | "rf";
+export type ViewerType = null | "aps" | "rf" | "es";

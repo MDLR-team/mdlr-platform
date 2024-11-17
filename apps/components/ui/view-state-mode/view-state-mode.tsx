@@ -27,6 +27,7 @@ const ViewStateMode = () => {
     };
   }, [markupService]);
 
+  if (viewerType === "es") return null;
   if (!enabled2D && !enabledViewState && viewerType === "aps") return null;
 
   return (

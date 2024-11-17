@@ -142,6 +142,8 @@ const NoteArea = () => {
           width: "100%",
           height: "100%",
           overflow: "scroll",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         <EditorContent editor={editor} className="tiptap-editor" />

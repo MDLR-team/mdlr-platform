@@ -9,8 +9,10 @@ import { useMarkup } from "@/components/services/markup-service/markup-provider"
 import { useEffect, useState } from "react";
 import { Comment } from "@/components/services/project-services/comment-service/comment-service";
 import SubcommentForm from "./blocks/subcomment-form";
+import { useProject } from "@/components/services/project-services/project-service/project-provider";
 
 const ActiveCommentDialog = () => {
+  const { viewerType } = useProject();
   const { markupService } = useMarkup();
   const activeCommentService = markupService.activeCommentService;
 
@@ -34,6 +36,15 @@ const ActiveCommentDialog = () => {
       sub3.unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    if (viewerType === "es") {
+      setXY({
+        x: 500,
+        y: 500,
+      });
+    }
+  }, [viewerType]);
 
   if (!activeComment || !xy) return null;
 

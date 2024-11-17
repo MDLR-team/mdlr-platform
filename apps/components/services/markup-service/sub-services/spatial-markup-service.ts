@@ -132,9 +132,15 @@ class SpatialMarkupService {
       canvas = this.markupService.svg2DCanvas;
     }
 
-    const { x, y } = deparseNormalizedCoords(markup.position, canvas!);
+    let { x, y } = { x: 0, y: 0 };
 
-    console.log("Setting position", x, y);
+    try {
+      const xy = deparseNormalizedCoords(markup.position, canvas!);
+      x = xy.x;
+      y = xy.y;
+    } catch (e) {
+      console.error(e);
+    }
 
     markup.svg.setAttribute("transform", `translate(${x}, ${y - 27})`);
     if (markup.htmlElement) {
@@ -172,7 +178,16 @@ class SpatialMarkupService {
         canvas = this.markupService.svg2DCanvas;
       }
 
-      const { x, y } = deparseNormalizedCoords(tempEnt2D.position, canvas!);
+      let { x, y } = { x: 0, y: 0 };
+
+      try {
+        const xy = deparseNormalizedCoords(tempEnt2D.position, canvas!);
+        x = xy.x;
+        y = xy.y;
+      } catch (e) {
+        console.error(e);
+      }
+
       tempEnt2D.callback({ x, y });
     });
   };
