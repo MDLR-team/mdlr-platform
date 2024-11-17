@@ -1,14 +1,19 @@
 import { Box, IconButton } from "@mui/material";
 import Tree from "./blocks/tree/tree";
 import NoteAddIcon from "@/components/ui/icons/note-add-icon";
-import FolderAddIcon from "@/components/ui/icons/folder-add-icon";
 import FilterLineIcon from "@/components/ui/icons/filter-line-icon";
-import CommentsIcon from "@/components/ui/icons/comments-icon";
-import CommentIcon from "@/components/ui/icons/comment-icon";
 import { useLeftSidebar } from "../../use-left-sidebar";
+import { useProject } from "@/components/services/project-services/project-service/project-provider";
 
 const Explorer = () => {
+  const { projectService } = useProject();
   const { isExplorerOpen } = useLeftSidebar();
+
+  const summaryService = projectService.summaryService;
+
+  const createSummary = () => {
+    summaryService.createSummary("");
+  };
 
   if (!isExplorerOpen) {
     return null;
@@ -44,7 +49,7 @@ const Explorer = () => {
             width: "100%",
           }}
         >
-          <IconButton>
+          <IconButton onClick={createSummary}>
             <NoteAddIcon />
           </IconButton>
 

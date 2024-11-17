@@ -271,10 +271,13 @@ class PendingMarkupService {
       "paper-canvas"
     )[0] as HTMLElement;
 
-    const normilizedCoords = transformPointToNormalizedCoords(
-      { x, y },
-      canvasRef!
-    );
+    let normilizedCoords = { x, y };
+
+    const viewerType = this.projectService.viewerType$.value;
+
+    if (viewerType !== "es") {
+      normilizedCoords = transformPointToNormalizedCoords({ x, y }, canvasRef!);
+    }
 
     this.markupService.pendingCommentService.activate(normilizedCoords, "2D");
   };
@@ -312,11 +315,12 @@ class PendingMarkupService {
       "paper-canvas"
     )[0] as HTMLElement;
 
-    console.log("AAAa");
-    console.log(canvas);
-
     canvas?.addEventListener("mousemove", this.handleMouseMove2D);
     canvas?.addEventListener("mousedown", this.handleMouseDown2D);
+
+    if (this.projectService.viewerType$.value === "es") {
+      this.handleMouseDown2D({ clientX: 0, clientY: 0 });
+    }
   }
 
   /**

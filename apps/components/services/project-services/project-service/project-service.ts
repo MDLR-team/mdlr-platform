@@ -16,6 +16,7 @@ import PromptSearchService from "@/components/prompt-search/prompt-search-servic
 import WorkspaceService from "../../workspace-services/workspace/workspace-service";
 import html2canvas from "html2canvas";
 import { ViewerType } from "./project-service.types";
+import SummaryService from "../../summary-service/summary-service";
 
 class ProjectService {
   private _wasInitialized: boolean = false;
@@ -64,6 +65,8 @@ class ProjectService {
   private _apsService: ApsService;
   private _promptSearchService: PromptSearchService;
 
+  private _summaryService: SummaryService;
+
   constructor(
     private _supabase: SupabaseClient,
     private _authService: AuthService,
@@ -77,6 +80,8 @@ class ProjectService {
     this._viewerServiceAggr = new ViewerServiceAggr(this);
     this._apsService = new ApsService(this);
     this._promptSearchService = new PromptSearchService(this);
+
+    this._summaryService = new SummaryService(this);
 
     this.projectUsers = new Map();
 
@@ -299,6 +304,7 @@ class ProjectService {
         this.isReady$.next(true);
 
         this._commentService.init();
+        this._summaryService.init();
       }
     }
   }
@@ -348,6 +354,10 @@ class ProjectService {
 
   public get promptSearchService() {
     return this._promptSearchService;
+  }
+
+  public get summaryService() {
+    return this._summaryService;
   }
 
   public get supabase() {

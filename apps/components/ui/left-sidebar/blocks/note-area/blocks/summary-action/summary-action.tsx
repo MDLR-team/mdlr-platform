@@ -1,16 +1,20 @@
 import { Box, Button, TextField, CircularProgress } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useActionArea } from "../actions-area/actions-area";
 import { useComment } from "@/components/services/project-services/comment-service/comment-provider";
 import { useProject } from "@/components/services/project-services/project-service/project-provider";
+import { Summary } from "@/components/services/summary-service/summary-service.types";
 
 const SummaryAction = () => {
   const { actionType, editor, handleAction } = useActionArea();
   const { projectService } = useProject();
+  const summaryService = projectService.summaryService;
   const { comments } = useComment();
 
-  const promptSearchService = projectService.promptSearchService;
+  const [activeSummary, setActiveSummary] = useState<Summary | null>(null);
+
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
@@ -62,43 +66,51 @@ const SummaryAction = () => {
   };
 
   const typeTextToEditor = async (text: string) => {
-    const segments = text.split(/(\s+|,|\.|\n)/); // Split by spaces, punctuation, and newlines
+    // check if interval is already running and clear it
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
 
-    console.log("text", text);
+    const segments = [text];
+    //const segments = text.split(/(\s+|,|\.|\n)/); // Split by spaces, punctuation, and newlines
 
     let index = 0;
-    const interval = setInterval(() => {
+    intervalRef.current = setInterval(() => {
       if (index < segments.length) {
         const textSegment = segments[index];
         insertStructuredContent(textSegment); // Send the entire segment to `insertStructuredContent`
         index++;
       } else {
-        clearInterval(interval); // Stop the typing effect once done
+        if (intervalRef.current) clearInterval(intervalRef.current); // Stop the typing effect once done
         setLoading(false);
       }
     }, 20); // Adjust speed by changing the interval duration
   };
 
   const onComplete = async () => {
-    setLoading(true);
+    const activeSummary = summaryService.activeSummary$.getValue();
 
-    if (editor) {
-      const systemMessage = `Summarize the AEC-related comments based on the user's prompt: "${value}". Use only the comments provided, keeping the response within 1000 characters, and divide it into paragraphs for clear readability. If mentioning a user, format their name exactly as @First_Last (using an underscore between first and last names. important!). No additional information beyond these comments.`;
-      const userMessage = comments
-        .map(
-          (comment) =>
-            `[${comment.author_username.replace(/\s+/g, "_")}: ${
-              comment.content
-            }`
-        )
-        .join("\n");
+    if (!activeSummary) {
+      return;
+    }
 
-      // First request: Generate the title
-      const titleSystemMessage = `Generate a concise title for the following content based on the user's prompt: "${value}". The title should be short, informative, and capture the essence of the content.`;
-      const title = await promptSearchService.sendGptRequest(
-        titleSystemMessage,
-        userMessage
-      );
+    await summaryService.updateSummary(activeSummary.id, {
+      user_prompt: value,
+    });
+
+    summaryService.generateSummary();
+  };
+
+  useEffect(() => {
+    const sub = summaryService.activeSummary$.subscribe(setActiveSummary);
+
+    return () => sub.unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    if (activeSummary && editor) {
+      const title = activeSummary.title;
+      const content = activeSummary.content;
 
       // Clear editor content first to ensure a clean slate
       editor
@@ -121,23 +133,13 @@ const SummaryAction = () => {
       // Insert a paragraph node or line break to reset styling
       editor.chain().focus().insertContent("<p>  </p>").run();
 
-      const result = await promptSearchService.sendGptRequest(
-        systemMessage,
-        userMessage
-      );
-
-      const wrappedValue = `${result}`;
+      const wrappedValue = `${content}`;
 
       // Clear editor content and start typing the result
       editor.chain().focus().run();
-      typeTextToEditor(wrappedValue); // Use typing effect for result text
+      typeTextToEditor(wrappedValue);
     }
-
-    // Perform the action
-    setLoading(false);
-    setValue("");
-    handleAction(null);
-  };
+  }, [activeSummary, editor]);
 
   const clearQuery = () => {
     setValue("");
