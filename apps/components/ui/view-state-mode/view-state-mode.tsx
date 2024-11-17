@@ -1,10 +1,12 @@
 import PaperCanvas from "@/components/paper/paper";
 import { useMarkup } from "@/components/services/markup-service/markup-provider";
+import { useProject } from "@/components/services/project-services/project-service/project-provider";
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const ViewStateMode = () => {
+  const { viewerType } = useProject();
   const { markupService } = useMarkup();
 
   const [enabled2D, setEnabled2D] = useState(false);
@@ -25,25 +27,27 @@ const ViewStateMode = () => {
     };
   }, [markupService]);
 
-  if (!enabled2D && !enabledViewState) return null;
+  if (!enabled2D && !enabledViewState && viewerType === "aps") return null;
 
   return (
     <>
-      <FloatingWrapper
-        data-mode={/* isPaperMode && isPaperEditing ? "edit" : */ "workspace"}
-      >
-        <Darkarea />
-        <Darkarea />
-        <Darkarea />
-        <Darkarea />
-        <Box sx={{ border: "2px solid black" }}></Box>
-        <Darkarea />
-        <Darkarea />
-        <Darkarea />
-        <Darkarea />
-      </FloatingWrapper>
+      {viewerType !== "rf" && (
+        <FloatingWrapper
+          data-mode={/* isPaperMode && isPaperEditing ? "edit" : */ "workspace"}
+        >
+          <Darkarea />
+          <Darkarea />
+          <Darkarea />
+          <Darkarea />
+          <Box sx={{ border: "2px solid black" }}></Box>
+          <Darkarea />
+          <Darkarea />
+          <Darkarea />
+          <Darkarea />
+        </FloatingWrapper>
+      )}
 
-      {(enabled2D || enabledViewState) && (
+      {(enabled2D || enabledViewState || viewerType !== "aps") && (
         <FloatingWrapper data-type="draw">
           <PaperCanvas />
         </FloatingWrapper>

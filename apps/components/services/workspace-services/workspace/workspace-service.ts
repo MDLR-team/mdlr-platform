@@ -71,9 +71,6 @@ class WorkspaceService {
       .from("projects")
       .select(`*`)
       .eq("workspace_id", activeWorkspace.id)
-      .not("bim_id", "is", null)
-      .eq("bim_client_id", CLIENT_ID)
-      .not("bim_urn", "is", null)
       .order("created_at", { ascending: false });
 
     if (projectError) {

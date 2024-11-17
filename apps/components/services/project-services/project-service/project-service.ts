@@ -15,6 +15,7 @@ import defaultProjectTopics from "./topics.json";
 import PromptSearchService from "@/components/prompt-search/prompt-search-service/prompt-search-service";
 import WorkspaceService from "../../workspace-services/workspace/workspace-service";
 import html2canvas from "html2canvas";
+import { ViewerType } from "./project-service.types";
 
 class ProjectService {
   private _wasInitialized: boolean = false;
@@ -44,6 +45,9 @@ class ProjectService {
   public thumbnail$ = new BehaviorSubject<string | null>(null);
   public projectUsers$ = new BehaviorSubject<ProjectUser[]>([]);
   public workspaceId$ = new BehaviorSubject<number | null>(null);
+  public metadata$ = new BehaviorSubject<any>(null);
+
+  public viewerType$ = new BehaviorSubject<ViewerType>(null);
 
   private _globalStatesService: GlobalStatesService;
   private _commentService: CommentService;
@@ -64,7 +68,7 @@ class ProjectService {
     private _supabase: SupabaseClient,
     private _authService: AuthService,
     private _workspaceService: WorkspaceService,
-    private _urn: string
+    private _id: string
   ) {
     this._globalStatesService = new GlobalStatesService(this);
     this._topicsService = new TopicsService(this);
@@ -86,10 +90,9 @@ class ProjectService {
   }
 
   private async init() {
-    const urn = this._urn;
-    if (!urn) return;
+    const project_id = this._id;
+    if (!project_id) return;
 
-    const bimId = this._getBim360ProjectId(urn as string);
     const supabase = this._supabase;
 
     let { data: projects, error: findError } = await supabase
@@ -103,9 +106,13 @@ class ProjectService {
         )
       `
       )
-      .eq("bim_id", bimId)
-      .eq("bim_client_id", CLIENT_ID)
+      .eq("id", project_id)
       .single();
+
+    this.metadata$.next(projects);
+
+    // detect if the viewer is APS or RF
+    this.viewerType$.next(projects?.viewer_type);
 
     let { data: profileData, error: profileError } = await supabase
       .from("profiles")
@@ -120,13 +127,15 @@ class ProjectService {
     }
 
     // If the project was not found, create a new one
+    // TODO: Return project creation based on forge viewer later
+    return;
     const { data: newProject, error: createError } = await supabase
       .from("projects")
       .insert([
         {
           title: "No name",
-          bim_id: bimId,
-          bim_urn: urn,
+          //bim_id: bimId,
+          //bim_urn: urn,
           bim_client_id: CLIENT_ID,
         },
       ])
@@ -142,20 +151,6 @@ class ProjectService {
 
     // Return the newly created project
     return { project: newProject, error: null };
-  }
-
-  private _getBim360ProjectId(urn: string): string {
-    const decoded = base64url.decode(urn as string);
-
-    const parts = decoded.split(":");
-    const lastPart = parts[parts.length - 1];
-
-    // Extract the substring after 'vf.' and before '?'
-    const startIndex = lastPart.indexOf("vf.") + 3; // Add 3 to skip 'vf.'
-    const endIndex = lastPart.indexOf("?");
-    const projectId = lastPart.substring(startIndex, endIndex);
-
-    return projectId;
   }
 
   public async updateMetadata(metadata: Partial<Project>) {
@@ -260,7 +255,11 @@ class ProjectService {
 
     this._wasInitialized = true;
 
+    console.log("Initializing project service...");
+
     const data = await this.init();
+
+    console.log("data.", data);
 
     if (data) {
       const { project, profiles } = data;
@@ -327,25 +326,9 @@ class ProjectService {
     return this._commentService;
   }
 
-  /* public get activeCommentService() {
-    return this._activeCommentService;
-  } */
-
-  /*  public get hotkeyService() {
-    return this._hotkeyService;
-  } */
-
   public get viewerServiceAggr() {
     return this._viewerServiceAggr;
   }
-
-  /* public get markup3DService() {
-    return this._markup3DService;
-  }
-
-  public get markup2DService() {
-    return this._markup2DService;
-  } */
 
   public get markupService() {
     return this._markupService;
@@ -388,17 +371,16 @@ class ProjectService {
 
     this._globalStatesService.dispose();
     this._commentService.dispose();
-    //this._activeCommentService.dispose();
     this._viewerServiceAggr.dispose();
 
-    /* this._markup3DService.dispose();
-    this._markup2DService.dispose(); */
-    this._markupService.dispose();
+    this.metadata$.complete();
 
-    //this._hotkeyService.dispose();
+    this._markupService.dispose();
 
     this._topicsService.dispose();
     this._apsService.dispose();
+
+    this.viewerType$.complete();
   }
 }
 

@@ -16,7 +16,6 @@ import {
 import LeftSidebar from "./left-sidebar/left-sidebar";
 import { Box } from "@mui/material";
 import Split from "react-split";
-import ViewerW from "../viewer-entity/forge-viewer/viewer-w";
 import { useGlobalStates } from "../services/project-services/global-states-service/global-states-provider";
 import ViewerEntity from "../viewer-entity/viewer-entity";
 

@@ -8,9 +8,9 @@ import React, {
 import { useRouter } from "next/router"; // Assuming you are using Next.js
 import ProjectService, { ProjectUser } from "./project-service";
 import { supabase } from "@/components/supabase-client";
-import AuthService from "../../app-services/auth/auth-service";
 import { useAuth } from "../../app-services/auth/auth-provider";
 import { useWorkspace } from "../../workspace-services/workspace/workspace-provider";
+import { ViewerType } from "./project-service.types";
 
 interface ProjectProviderProps {
   children: React.ReactNode;
@@ -22,6 +22,8 @@ interface ProjectProviderState {
   projectUsers: ProjectUser[];
   isReady: boolean;
   projectService: ProjectService;
+  metadata: any;
+  viewerType: ViewerType | null;
 }
 
 const ProjectContext = createContext<ProjectProviderState | undefined>(
@@ -38,12 +40,17 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
   const [thumbnail, setThumbnail] = useState<string | null>(null);
   const [projectUsers, setProjectUsers] = useState<ProjectUser[]>([]);
   const [isReady, setIsReady] = useState<boolean>(false);
+  const [metadata, setMetadata] = useState<any>(null);
+  const [viewerType, setViewerType] = useState<ViewerType | null>(null);
 
   const router = useRouter();
-  const { urn } = router.query as { urn: string };
+  const { project_id } = router.query as {
+    project_id: string;
+  };
 
   const [projectService] = useState(
-    () => new ProjectService(supabase, authService, workspaceService, urn)
+    () =>
+      new ProjectService(supabase, authService, workspaceService, project_id)
   );
 
   const projectServiceRef = useRef<ProjectService | null>(null);
@@ -55,6 +62,8 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
     const th = projectService.thumbnail$.subscribe(setThumbnail);
     const pu = projectService.projectUsers$.subscribe(setProjectUsers);
     const r = projectService.isReady$.subscribe(setIsReady);
+    const m = projectService.metadata$.subscribe(setMetadata);
+    const vt = projectService.viewerType$.subscribe(setViewerType);
 
     const wp = projectService.workspaceId$.subscribe(async (workspaceId) => {
       if (workspaceId) {
@@ -69,8 +78,9 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
       th.unsubscribe();
       pu.unsubscribe();
       r.unsubscribe();
-
+      m.unsubscribe();
       wp.unsubscribe();
+      vt.unsubscribe();
     };
   }, [router.isReady]);
 
@@ -84,6 +94,8 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
         projectUsers,
         isReady,
         projectService: projectServiceRef.current,
+        metadata,
+        viewerType,
       }}
     >
       {isReady && children}

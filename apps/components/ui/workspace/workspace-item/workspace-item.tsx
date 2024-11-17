@@ -29,7 +29,7 @@ const CatalogItem: React.FC<WorkspaceItemProps> = ({ data, isDashboard }) => {
       // Navigate without a full page reload
       window.location.href = `/dashboard/${data.id}`;
     } else {
-      window.location.href = `/viewer/${data.bim_urn}`;
+      window.location.href = `/viewer/${data.id}`;
     } // Navigate with a full page reload
   };
 

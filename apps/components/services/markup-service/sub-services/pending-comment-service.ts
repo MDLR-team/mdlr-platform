@@ -161,6 +161,8 @@ class PendingCommentService {
    */
   private cleanupMarkup2D() {
     if (this.markup2D) {
+      console.log("this.markup2D", this.markup2D);
+
       this.markupService.svg2DCanvas?.removeChild(this.markup2D.svg);
       this.markupService.removeTempEnt2D("pendingComment");
       this.markup2D = null;

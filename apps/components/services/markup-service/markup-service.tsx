@@ -3,7 +3,7 @@ import ProjectService from "../project-services/project-service/project-service"
 import { Comment } from "../project-services/comment-service/comment-service";
 import TopMarkupService from "./sub-services/top-markup-service";
 import ActiveCommentService from "./sub-services/active-comment-service";
-import PendingMarkupService from "./sub-services/pending-markup-service";
+import PendingMarkupService from "./sub-services/pending-markup-service/pending-markup-service";
 import SpatialMarkupService from "./sub-services/spatial-markup-service";
 import PendingCommentService from "./sub-services/pending-comment-service";
 import MeasureService from "./sub-services/measure-service";
@@ -75,11 +75,7 @@ class MarkupService {
 
     this.projectService.viewerServiceAggr.viewer$.subscribe((viewer) => {
       this.viewer$.next(viewer);
-
-      this.svg3DCanvas = document.getElementById("markup_3d_layer");
-      this.svg2DCanvas = document.getElementById("markup_2d_layer");
-      this.html2DCanvas = document.getElementById("comment_2d_layer");
-
+      this.checkCanvases();
       this.updateMarkups();
     });
 
@@ -87,6 +83,12 @@ class MarkupService {
       this.updateMarkups();
     });
   }
+
+  public checkCanvases = () => {
+    this.svg3DCanvas = document.getElementById("markup_3d_layer");
+    this.svg2DCanvas = document.getElementById("markup_2d_layer");
+    this.html2DCanvas = document.getElementById("comment_2d_layer");
+  };
 
   /**
    * Updates the markups based on the current viewer state and comments.

@@ -28,7 +28,7 @@ class MeasureService {
     if (!viewer) return;
 
     const measureTool = viewer.toolController.getTool("measure");
-    console.log("measureTool", measureTool);
+
     measureTool.deleteMeasurements();
     measureTool.deactivate();
 

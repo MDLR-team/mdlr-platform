@@ -1,10 +1,10 @@
-import { transformPointToNormalizedCoords } from "./utils/point-2-normalized-coord";
-import { createMarkupSvg, MarkupSVGType } from "./utils/create-markup-svg";
-import { getPointer } from "./utils/get-pointer";
-import ProjectService from "../../project-services/project-service/project-service";
-import MarkupService from "../markup-service";
-import { Markup2D } from "./spatial-markup-service";
-import { Markup3D } from "./top-markup-service";
+import { transformPointToNormalizedCoords } from "../utils/point-2-normalized-coord";
+import { createMarkupSvg, MarkupSVGType } from "../utils/create-markup-svg";
+import { getPointer } from "../utils/get-pointer";
+import ProjectService from "../../../project-services/project-service/project-service";
+import MarkupService from "../../markup-service";
+import { Markup2D } from "../spatial-markup-service";
+import { Markup3D } from "../top-markup-service";
 import hotkeys from "hotkeys-js";
 
 export interface PendingCommentOptions {
@@ -49,14 +49,26 @@ class PendingMarkupService {
    * Handles changes to the enabling state of adding markups, activating or deactivating the appropriate mode.
    */
   private handleEnabledAddingChange = (enabled: boolean) => {
-    const viewer = this.markupService.viewer$.value;
-    if (!viewer) return;
+    const viewerType = this.projectService.viewerType$.value;
 
-    if (enabled) {
-      this.is3DMode ? this.activate3DMode(viewer) : this.activate2DMode();
+    if (viewerType === "aps") {
+      // APS viewer
+      const viewer = this.markupService.viewer$.value;
+      if (!viewer) return;
+
+      if (enabled) {
+        this.is3DMode ? this.activate3DMode(viewer) : this.activate2DMode();
+      } else {
+        this.deactivate3DMode(viewer);
+        this.deactivate2DMode();
+      }
     } else {
-      this.deactivate3DMode(viewer);
-      this.deactivate2DMode();
+      // 2D viewer
+      if (enabled) {
+        this.activate2DMode();
+      } else {
+        this.deactivate2DMode();
+      }
     }
   };
 
@@ -123,6 +135,8 @@ class PendingMarkupService {
    */
   private cleanupMarkup2D() {
     if (this.markup2D) {
+      console.log("this.markup2D", this.markup2D);
+
       this.markupService.svg2DCanvas?.removeChild(this.markup2D.svg);
       this.markupService.removeTempEnt2D("pending");
       this.markup2D = null;
@@ -238,6 +252,9 @@ class PendingMarkupService {
       { x, y },
       canvasRef!
     );
+
+    console.log(normilizedCoords);
+
     this.markupService.updateTempEnt2D("pending", normilizedCoords);
   };
 
@@ -294,6 +311,9 @@ class PendingMarkupService {
     const canvas = document.getElementsByClassName(
       "paper-canvas"
     )[0] as HTMLElement;
+
+    console.log("AAAa");
+    console.log(canvas);
 
     canvas?.addEventListener("mousemove", this.handleMouseMove2D);
     canvas?.addEventListener("mousedown", this.handleMouseDown2D);
